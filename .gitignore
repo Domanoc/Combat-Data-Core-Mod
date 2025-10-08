@@ -1,0 +1,9 @@
+# Ignore everything
+*
+
+# Except this specific folder and its contents
+!3581427607/
+!3581427607/**
+
+# Unignore readme.txt file
+!/readme.txt

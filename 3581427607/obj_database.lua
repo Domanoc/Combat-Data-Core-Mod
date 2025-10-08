@@ -1,0 +1,536 @@
+--Game is made in GameMaker
+--See the gamemaker documentation for the implimentation of the global functions
+--example: variable_global_set, ds_map_add, sprite_add
+
+function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in any create event as a second argument
+
+	--path to the current file
+	local current_file_path = (mod_info[v_modid]):gsub("obj_database.lua","");
+	variable_global_set("current_file_path", current_file_path);
+
+	--Copy the array to the working set
+	local mech_stat_array = {};
+	mech_stat_array = q.mech_stat;
+
+	--Module identifiers
+	local aux_module = 1;
+	local motor_module = 2;
+	local reactor_module = 3;
+	local gun_module = 4;
+	local cabin_module = 5;
+
+	-----------------
+	--NOVA MECH------
+	-----------------
+	local nova_mech_index = #mech_stat_array + 1;
+	variable_global_set("nova_mech_num", #mech_stat_array);
+	mech_stat_array[nova_mech_index] = ds_map_create();
+	local nova_mech = mech_stat_array[nova_mech_index];
+
+	--ENGINEERING PRICE
+	ds_map_add(nova_mech, "price_metallite",	400);
+	ds_map_add(nova_mech, "price_bjorn",		200);
+	ds_map_add(nova_mech, "price_munilon",		320);
+	ds_map_add(nova_mech, "price_skalaknit",	220);
+	ds_map_add(nova_mech, "price_staff",		245);
+	ds_map_add(nova_mech, "days",				4);
+
+	--RESISTANCES
+	ds_map_add(nova_mech, "heat_resist",		20);
+	ds_map_add(nova_mech, "impact_resist",		15);
+	ds_map_add(nova_mech, "current_resist",		40);
+
+	--STATS
+	ds_map_add(nova_mech, "hp", 				1000);
+	ds_map_add(nova_mech, "melee_option",		1);		--0 = false, 1 = true
+	ds_map_add(nova_mech, "armor",				2);
+	ds_map_add(nova_mech, "weight",				65);
+	ds_map_add(nova_mech, "speed",				0.4);
+	ds_map_add(nova_mech, "reload_time",		3);
+	ds_map_add(nova_mech, "battle_time",		3);
+	ds_map_add(nova_mech, "number_of_weapons",	2);
+	ds_map_add(nova_mech, "number_of_aux",		7);
+
+	--MODULE CELLS
+	local cell_num = 1;
+	ds_map_add(nova_mech, "cell_"..   cell_num, 	motor_module);	--motor 1
+	ds_map_add(nova_mech, "cell_x_".. cell_num, 	7);
+	ds_map_add(nova_mech, "cell_y_".. cell_num, 	6);
+	cell_num = cell_num + 1;
+	ds_map_add(nova_mech, "cell_"..   cell_num, 	motor_module);	--motor 2
+	ds_map_add(nova_mech, "cell_x_".. cell_num, 	-7);
+	ds_map_add(nova_mech, "cell_y_".. cell_num, 	6);
+	cell_num = cell_num + 1;
+	ds_map_add(nova_mech, "cell_"..   cell_num, 	motor_module);	--motor 3
+	ds_map_add(nova_mech, "cell_x_".. cell_num, 	7);
+	ds_map_add(nova_mech, "cell_y_".. cell_num, 	11);
+	cell_num = cell_num + 1;
+	ds_map_add(nova_mech, "cell_"..   cell_num, 	motor_module);	--motor 4
+	ds_map_add(nova_mech, "cell_x_".. cell_num, 	-7);
+	ds_map_add(nova_mech, "cell_y_".. cell_num, 	11);
+	cell_num = cell_num + 1;
+	ds_map_add(nova_mech, "cell_"..   cell_num, 	motor_module);	--motor 5
+	ds_map_add(nova_mech, "cell_x_".. cell_num, 	7);
+	ds_map_add(nova_mech, "cell_y_".. cell_num, 	16);
+	cell_num = cell_num + 1;
+	ds_map_add(nova_mech, "cell_"..   cell_num, 	motor_module);	--motor 6
+	ds_map_add(nova_mech, "cell_x_".. cell_num, 	-7);
+	ds_map_add(nova_mech, "cell_y_".. cell_num, 	16);
+	cell_num = cell_num + 1;
+	ds_map_add(nova_mech, "cell_"..   cell_num, 	reactor_module);--reactor
+	ds_map_add(nova_mech, "cell_x_".. cell_num, 	0);
+	ds_map_add(nova_mech, "cell_y_".. cell_num, 	18);
+	cell_num = cell_num + 1;
+	ds_map_add(nova_mech, "cell_"..   cell_num, 	gun_module);	--gun 1
+	ds_map_add(nova_mech, "cell_x_".. cell_num, 	14);
+	ds_map_add(nova_mech, "cell_y_".. cell_num, 	20);
+	cell_num = cell_num + 1;
+	ds_map_add(nova_mech, "cell_"..   cell_num, 	gun_module);	--gun 2
+	ds_map_add(nova_mech, "cell_x_".. cell_num, 	-14);
+	ds_map_add(nova_mech, "cell_y_".. cell_num, 	20);
+	cell_num = cell_num + 1;
+	ds_map_add(nova_mech, "cell_"..   cell_num, 	cabin_module);	--cabin
+	ds_map_add(nova_mech, "cell_x_".. cell_num, 	0);
+	ds_map_add(nova_mech, "cell_y_".. cell_num, 	25);
+	cell_num = cell_num + 1;
+	ds_map_add(nova_mech, "cell_"..   cell_num, 	aux_module);	--aux 1
+	ds_map_add(nova_mech, "cell_x_".. cell_num, 	6);
+	ds_map_add(nova_mech, "cell_y_".. cell_num, 	21);
+	cell_num = cell_num + 1;
+	ds_map_add(nova_mech, "cell_"..   cell_num, 	aux_module);	--aux 2
+	ds_map_add(nova_mech, "cell_x_".. cell_num, 	-6);
+	ds_map_add(nova_mech, "cell_y_".. cell_num, 	21);
+	cell_num = cell_num + 1;
+	ds_map_add(nova_mech, "cell_"..   cell_num, 	aux_module);	--aux 3
+	ds_map_add(nova_mech, "cell_x_".. cell_num, 	6);
+	ds_map_add(nova_mech, "cell_y_".. cell_num, 	27);
+	cell_num = cell_num + 1;
+	ds_map_add(nova_mech, "cell_"..   cell_num, 	aux_module);	--aux 4
+	ds_map_add(nova_mech, "cell_x_".. cell_num, 	-6);
+	ds_map_add(nova_mech, "cell_y_".. cell_num, 	27);
+	cell_num = cell_num + 1;
+	ds_map_add(nova_mech, "cell_"..   cell_num, 	aux_module);	--aux 5
+	ds_map_add(nova_mech, "cell_x_".. cell_num, 	11);
+	ds_map_add(nova_mech, "cell_y_".. cell_num, 	27);
+	cell_num = cell_num + 1;
+	ds_map_add(nova_mech, "cell_"..   cell_num, 	aux_module);	--aux 6
+	ds_map_add(nova_mech, "cell_x_".. cell_num, 	-11);
+	ds_map_add(nova_mech, "cell_y_".. cell_num, 	27);
+	cell_num = cell_num + 1;
+	ds_map_add(nova_mech, "cell_"..   cell_num, 	aux_module);	--aux 7
+	ds_map_add(nova_mech, "cell_x_".. cell_num, 	0);
+	ds_map_add(nova_mech, "cell_y_".. cell_num, 	33);
+
+	ds_map_add(nova_mech, "number_of_cells", cell_num);
+
+	--SPRITES
+	--small sprite
+	local nova_mech_sprite = sprite_add(current_file_path.."sprites/nova_small.png", 0, false, false, 23,49);
+	variable_global_set("nova_spr_small", nova_mech_sprite);
+	ds_map_add(nova_mech, "sprite_small", nova_mech_sprite);
+	--big sprite
+	nova_mech_sprite = sprite_add(current_file_path.."sprites/nova_big.png", 0, false, false, 199, 343);				
+	ds_map_add(nova_mech, "sprite_big", nova_mech_sprite);
+	--battle sprite
+	nova_mech_sprite = sprite_add(current_file_path.."sprites/nova_battle.png", 2, true, false, 25, 25);				
+	ds_map_add(nova_mech, "sprite_battle", nova_mech_sprite);
+	--dead sprite
+	nova_mech_sprite = sprite_add(current_file_path.."sprites/nova_dead.png", 1, true, false, 23, 23);				
+	ds_map_add(nova_mech, "sprite_battle_dead", nova_mech_sprite);
+	--melee vertical
+	nova_mech_sprite = sprite_add(current_file_path.."sprites/nova_melee_vertical.png", 7, true, false, 17, 25);		
+	ds_map_add(nova_mech, "sprite_battle_melee_ver", nova_mech_sprite);
+	--melee horizontal
+	nova_mech_sprite = sprite_add(current_file_path.."sprites/nova_melee_horizontal.png", 7, true, false, 25, 25);	
+	ds_map_add(nova_mech, "sprite_battle_melee_hor", nova_mech_sprite);
+
+	-----------------
+	--SENTINEL MECH--
+	-----------------
+	local sentinel_mech_index = #mech_stat_array + 1;
+	variable_global_set("sentinel_mech_num", #mech_stat_array);
+	mech_stat_array[sentinel_mech_index] = ds_map_create();
+	local sentinel_mech = mech_stat_array[sentinel_mech_index];
+	
+	--ENGINEERING PRICE
+	ds_map_add(sentinel_mech, "price_metallite",	1050);
+	ds_map_add(sentinel_mech, "price_bjorn",		730);
+	ds_map_add(sentinel_mech, "price_munilon",		1030);
+	ds_map_add(sentinel_mech, "price_skalaknit",	880);
+	ds_map_add(sentinel_mech, "price_staff",		325);
+	ds_map_add(sentinel_mech, "days",				6);
+
+	--RESISTANCES
+	ds_map_add(sentinel_mech, "heat_resist",		25);
+	ds_map_add(sentinel_mech, "impact_resist",		90);
+	ds_map_add(sentinel_mech, "current_resist",		80);
+
+	--STATS
+	ds_map_add(sentinel_mech, "hp", 				1000);		--1000 is the default for all mechs
+	ds_map_add(sentinel_mech, "melee_option",		1);			--0 = false, 1 = true
+	ds_map_add(sentinel_mech, "armor",				5);
+	ds_map_add(sentinel_mech, "weight",				70);
+	ds_map_add(sentinel_mech, "speed",				0.2);
+	ds_map_add(sentinel_mech, "reload_time",		5);
+	ds_map_add(sentinel_mech, "battle_time",		5);
+	ds_map_add(sentinel_mech, "number_of_weapons",	4);
+	ds_map_add(sentinel_mech, "number_of_aux",		8);
+
+	--MODULE CELLS
+	local cell_num = 1;
+	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	motor_module);	--motor 1
+	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	8);
+	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	6);
+	cell_num = cell_num + 1;
+	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	motor_module);	--motor 2
+	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	-8);
+	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	6);
+	cell_num = cell_num + 1;
+	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	motor_module);	--motor 3
+	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	8);
+	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	11);
+	cell_num = cell_num + 1;
+	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	motor_module);	--motor 4
+	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	-8);
+	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	11);
+	cell_num = cell_num + 1;
+	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	motor_module);	--motor 5
+	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	7);
+	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	16);
+	cell_num = cell_num + 1;
+	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	motor_module);	--motor 6
+	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	-7);
+	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	16);
+	cell_num = cell_num + 1;
+	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	reactor_module);--reactor
+	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	0);
+	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	24);
+	cell_num = cell_num + 1;
+	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	gun_module);	--gun 1
+	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	14);
+	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	22);
+	cell_num = cell_num + 1;
+	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	gun_module);	--gun 2
+	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	-14);
+	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	22);
+	cell_num = cell_num + 1;
+	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	gun_module);	--gun 3
+	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	7);
+	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	41);
+	cell_num = cell_num + 1;
+	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	gun_module);	--gun 4
+	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	-7);
+	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	41);
+	cell_num = cell_num + 1;
+	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	cabin_module);	--cabin
+	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	0);
+	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	32);
+	cell_num = cell_num + 1;
+	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	aux_module);	--aux 1
+	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	6);
+	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	22);
+	cell_num = cell_num + 1;
+	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	aux_module);	--aux 2
+	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	-6);
+	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	22);
+	cell_num = cell_num + 1;
+	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	aux_module);	--aux 3
+	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	6);
+	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	35);
+	cell_num = cell_num + 1;
+	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	aux_module);	--aux 4
+	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	-6);
+	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	35);
+	cell_num = cell_num + 1;
+	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	aux_module);	--aux 5
+	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	6);
+	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	29);
+	cell_num = cell_num + 1;
+	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	aux_module);	--aux 6
+	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	-6);
+	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	29);
+	cell_num = cell_num + 1;
+	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	aux_module);	--aux 7
+	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	11);
+	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	33);
+	cell_num = cell_num + 1;
+	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	aux_module);	--aux 8
+	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	-11);
+	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	33);
+
+	ds_map_add(sentinel_mech, "number_of_cells", cell_num);
+
+	--SPRITES
+	--small sprite
+	local sentinel_mech_sprite = sprite_add(current_file_path.."sprites/sentinel_small.png", 0, false, false, 23,49);
+	variable_global_set("sentinel_spr_small", sentinel_mech_sprite);
+	ds_map_add(sentinel_mech, "sprite_small", sentinel_mech_sprite);
+	--big sprite
+	sentinel_mech_sprite = sprite_add(current_file_path.."sprites/sentinel_big.png", 0, false, false, 199, 343);				
+	ds_map_add(sentinel_mech, "sprite_big", sentinel_mech_sprite);
+	--battle sprite
+	sentinel_mech_sprite = sprite_add(current_file_path.."sprites/sentinel_battle.png", 2, true, false, 25, 25);				
+	ds_map_add(sentinel_mech, "sprite_battle", sentinel_mech_sprite);
+	--dead sprite
+	sentinel_mech_sprite = sprite_add(current_file_path.."sprites/sentinel_dead.png", 1, true, false, 23, 23);				
+	ds_map_add(sentinel_mech, "sprite_battle_dead", sentinel_mech_sprite);
+	--melee vertical
+	sentinel_mech_sprite = sprite_add(current_file_path.."sprites/sentinel_melee_vertical.png", 7, true, false, 17, 25);		
+	ds_map_add(sentinel_mech, "sprite_battle_melee_ver", sentinel_mech_sprite);
+	--melee horizontal
+	sentinel_mech_sprite = sprite_add(current_file_path.."sprites/sentinel_melee_horizontal.png", 7, true, false, 25, 25);	
+	ds_map_add(sentinel_mech, "sprite_battle_melee_hor", sentinel_mech_sprite);
+
+	-----------------
+	--BEHEMOTH MECH--
+	-----------------
+	local behemoth_mech_index = #mech_stat_array + 1;
+	variable_global_set("behemoth_mech_num", #mech_stat_array);
+	mech_stat_array[behemoth_mech_index] = ds_map_create();
+	local behemoth_mech = mech_stat_array[behemoth_mech_index];
+	
+	--ENGINEERING PRICE
+	ds_map_add(behemoth_mech, "price_metallite",	4130);
+	ds_map_add(behemoth_mech, "price_bjorn",		1460);
+	ds_map_add(behemoth_mech, "price_munilon",		2300);
+	ds_map_add(behemoth_mech, "price_skalaknit",	2020);
+	ds_map_add(behemoth_mech, "price_staff",		600);
+	ds_map_add(behemoth_mech, "days",				8);
+
+	--RESISTANCES
+	ds_map_add(behemoth_mech, "heat_resist",		45);
+	ds_map_add(behemoth_mech, "impact_resist",		95);
+	ds_map_add(behemoth_mech, "current_resist",		95);
+
+	--STATS
+	ds_map_add(behemoth_mech, "hp", 				1000);		--1000 is the default for all mechs
+	ds_map_add(behemoth_mech, "melee_option",		1);			--0 = false, 1 = true
+	ds_map_add(behemoth_mech, "armor",				10);
+	ds_map_add(behemoth_mech, "weight",				134);
+	ds_map_add(behemoth_mech, "speed",				0.1);
+	ds_map_add(behemoth_mech, "reload_time",		3);
+	ds_map_add(behemoth_mech, "battle_time",		12);
+	ds_map_add(behemoth_mech, "number_of_weapons",	14);
+	ds_map_add(behemoth_mech, "number_of_aux",		8);
+
+	--MODULE CELLS
+	local cell_num = 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	motor_module);	--motor 1
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	7);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	5);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	motor_module);	--motor 2
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-7);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	5);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	motor_module);	--motor 3
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	7);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	9);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	motor_module);	--motor 4
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-7);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	9);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	motor_module);	--motor 5
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	7);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	13);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	motor_module);	--motor 6
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-7);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	13);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	motor_module);	--motor 7
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	7);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	17);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	motor_module);	--motor 8
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-7);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	17);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	reactor_module);--reactor
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	0);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	22);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	gun_module);	--gun 1
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	15);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	27);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	gun_module);	--gun 2
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-15);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	27);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	gun_module);	--gun 3
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	24);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	27);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	gun_module);	--gun 4
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-24);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	27);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	gun_module);	--gun 5
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	15);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	21);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	gun_module);	--gun 6
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-15);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	21);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	gun_module);	--gun 7
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	24);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	21);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	gun_module);	--gun 8
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-24);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	21);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	gun_module);	--gun 9
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	15);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	15);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	gun_module);	--gun 10
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-15);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	15);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	gun_module);	--gun 11
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	24);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	15);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	gun_module);	--gun 12
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-24);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	15);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	gun_module);	--gun 13
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	8);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	42);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	gun_module);	--gun 14
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-8);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	42);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	cabin_module);	--cabin
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	0);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	30);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	aux_module);	--aux 1
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	6);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	36);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	aux_module);	--aux 2
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-6);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	36);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	aux_module);	--aux 3
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	11);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	36);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	aux_module);	--aux 4
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-11);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	36);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	aux_module);	--aux 5
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	6);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	31);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	aux_module);	--aux 6
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-6);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	31);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	aux_module);	--aux 7
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	6);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	26);
+	cell_num = cell_num + 1;
+	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	aux_module);	--aux 8
+	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-6);
+	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	26);
+	
+
+	ds_map_add(behemoth_mech, "number_of_cells", cell_num);
+
+	--SPRITES
+	--small sprite
+	local behemoth_mech_sprite = sprite_add(current_file_path.."sprites/behemoth_small.png", 0, false, false, 23,49);
+	variable_global_set("behemoth_spr_small", behemoth_mech_sprite);
+	ds_map_add(behemoth_mech, "sprite_small", behemoth_mech_sprite);
+	--big sprite
+	behemoth_mech_sprite = sprite_add(current_file_path.."sprites/behemoth_big.png", 0, false, false, 199, 343);				
+	ds_map_add(behemoth_mech, "sprite_big", behemoth_mech_sprite);
+	--battle sprite
+	behemoth_mech_sprite = sprite_add(current_file_path.."sprites/behemoth_battle.png", 2, true, false, 25, 25);				
+	ds_map_add(behemoth_mech, "sprite_battle", behemoth_mech_sprite);
+	--dead sprite
+	behemoth_mech_sprite = sprite_add(current_file_path.."sprites/behemoth_dead.png", 1, true, false, 23, 23);				
+	ds_map_add(behemoth_mech, "sprite_battle_dead", behemoth_mech_sprite);
+	--melee vertical
+	behemoth_mech_sprite = sprite_add(current_file_path.."sprites/behemoth_melee_vertical.png", 7, true, false, 17, 25);		
+	ds_map_add(behemoth_mech, "sprite_battle_melee_ver", behemoth_mech_sprite);
+	--melee horizontal
+	behemoth_mech_sprite = sprite_add(current_file_path.."sprites/behemoth_melee_horizontal.png", 7, true, false, 25, 25);	
+	ds_map_add(behemoth_mech, "sprite_battle_melee_hor", behemoth_mech_sprite);
+
+
+	--return new data
+	q.mech_stat = mech_stat_array;
+end
+
+function save_game_pre_event(q)
+	--saving system deletes the file and creates new one before saving new info
+end
+
+function save_game_post_event(q)
+end
+
+function load_game_pre_event(q)
+end
+
+function load_game_post_event(q)
+	--Modded sprite data is not saved so we need to fix this after load
+	local v_shop = asset_get_index("obj_component_shop");
+	local v_hangar_list = {};
+	v_hangar_list = v_shop.hanger_mass;
+
+	--Hanger identifiers
+	local hanger_mass_item_index = 3;
+	local hanger_mass_logo = 5;
+	local hanger_mass_logo_index = 11;
+
+	--Our modded item indexes
+	local nova_mech = variable_global_get("nova_mech_num");
+	local sentinel_mech = variable_global_get("sentinel_mech_num");
+	local behemoth_mech = variable_global_get("behemoth_mech_num");
+
+	--Our Modded sprites
+	local nova_sprite = variable_global_get("nova_spr_small");
+	local sentinel_sprite = variable_global_get("sentinel_spr_small");
+	local behemoth_sprite = variable_global_get("behemoth_spr_small");
+
+	
+	--We step through the hanger/production items to find our modded items
+	for i, v_hangar in ipairs(v_hangar_list) do
+		if (v_hangar[2] == 1) then
+			--When the reference matches the modded element we set the relevant mod sprite to the logo and logo indexes.
+			if (v_hangar[hanger_mass_item_index] == nova_mech) then
+				v_hangar[hanger_mass_logo] = nova_sprite;
+				v_hangar[hanger_mass_logo_index] = v_hangar[hanger_mass_logo];
+			elseif (v_hangar[hanger_mass_item_index] == sentinel_mech) then
+				v_hangar[hanger_mass_logo] = sentinel_sprite;
+				v_hangar[hanger_mass_logo_index] = v_hangar[hanger_mass_logo];
+			elseif (v_hangar[hanger_mass_item_index] == behemoth_mech) then
+				v_hangar[hanger_mass_logo] = behemoth_sprite;
+				v_hangar[hanger_mass_logo_index] = v_hangar[hanger_mass_logo];
+			end
+		end
+	end
+
+	v_shop.hanger_mass = v_hangar_list;
+end
+
+function draw_top_menu(q)
+end
+
+function draw_debug(q)
+	--local my_table={};
+	--my_table=variable_instance_get_names(database);--saving variable names to the table
+	--for i,v in ipairs(my_table) do
+	--	draw_text(350+(math.floor(i/80))*210,40+(math.fmod(i,80))*11, tostring(v));
+	--end
+end
