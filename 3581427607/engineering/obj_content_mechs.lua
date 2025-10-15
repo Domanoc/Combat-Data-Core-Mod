@@ -114,7 +114,7 @@ end
 function dump_struct_to_message(id)
 	local values = {};
     for k, v in pairs(struct_get_names(id)) do
-        table.insert(values, tostring(k).."::"..tostring(v));
+        table.insert(values, tostring(k).."::"..tostring(v).."::"..tostring(id[v]));
     end
     local message = table.concat(values, ",\n");
 	show_message(message);

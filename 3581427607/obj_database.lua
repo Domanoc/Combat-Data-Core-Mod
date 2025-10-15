@@ -1,14 +1,19 @@
 --Game is made in GameMaker
 --See the gamemaker documentation for the implimentation of the global functions
 --example: variable_global_set, ds_map_add, sprite_add
+--the exposed functions can be found in the list_of_functions.txt file found in the example mod
 
 function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in any create event as a second argument
-	local debug_mode = true;
+	local debug_mode = false;
 	variable_global_set("debug_mode", debug_mode);
 
 	--path to the current file
 	local current_file_path = (mod_info[v_modid]):gsub("obj_database.lua","");
 	variable_global_set("current_file_path", current_file_path);
+
+	-----------------
+	--MECHS----------
+	-----------------
 
 	--Copy the array to the working set
 	local mech_stat_array = {};
@@ -603,6 +608,46 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 
 	--return new data
 	q.mech_stat = mech_stat_array;
+
+	-----------------
+	--SOLENOIDS------
+	-----------------
+
+	--Copy the array to the working set
+	local solenoid_stat_array = {};
+	solenoid_stat_array = q.solenoid_stat;
+
+	----------------------
+	--HIGH TECH SOLONOID--
+	----------------------
+	local solenoid_index = #solenoid_stat_array + 1;
+	variable_global_set("high_tech_solenoid_num", #solenoid_stat_array);
+	solenoid_stat_array[solenoid_index] = ds_map_create();
+	local high_tech_solenoid = solenoid_stat_array[solenoid_index];
+
+	--ENGINEERING PRICE
+	ds_map_add(high_tech_solenoid, "price_metallite",	150);
+	ds_map_add(high_tech_solenoid, "price_bjorn",		150);
+	ds_map_add(high_tech_solenoid, "price_munilon",		200);
+	ds_map_add(high_tech_solenoid, "price_skalaknit",	25);
+	ds_map_add(high_tech_solenoid, "price_staff",		70);
+	ds_map_add(high_tech_solenoid, "days",				2);
+
+	--STATS
+	ds_map_add(high_tech_solenoid, "hp",				1000);
+	ds_map_add(high_tech_solenoid, "power",				3);		--Lower numbers give more heat resist on reactor
+	ds_map_add(high_tech_solenoid, "induction",			1);		--any deviation from 1 give worse energy stats
+	ds_map_add(high_tech_solenoid, "weight",			2);		--cant find an effect on the reactor so i left it at the same value as a regular solenoid
+	ds_map_add(high_tech_solenoid, "type",				1);		--As far as i can see there is only type 1 for solenoids
+
+	--SPRITE
+	local high_tech_solenoid_sprite = sprite_add(current_file_path.."sprites/high_tech_solenoid.png", 0, false, false, 0,0);
+	variable_global_set("high_tech_solenoid_sprite", high_tech_solenoid_sprite);
+	ds_map_add(high_tech_solenoid, "sprite", high_tech_solenoid_sprite);
+
+
+	--return new data
+	q.solenoid_stat = solenoid_stat_array;
 end
 
 function save_game_pre_event(q)
@@ -631,12 +676,14 @@ function load_game_post_event(q)
 	local sentinel_mech = variable_global_get("sentinel_mech_num");
 	local behemoth_mech = variable_global_get("behemoth_mech_num");
 	local echo_mech = variable_global_get("echo_mech_num");
+	local high_tech_solenoid = variable_global_get("high_tech_solenoid_num");
 
 	--Our Modded sprites
 	local nova_sprite = variable_global_get("nova_spr_small");
 	local sentinel_sprite = variable_global_get("sentinel_spr_small");
 	local behemoth_sprite = variable_global_get("behemoth_spr_small");
 	local echo_sprite = variable_global_get("echo_spr_small");
+	local high_tech_solenoid_sprite = variable_global_get("high_tech_solenoid_sprite");
 	
 	--We step through the hanger/production items to find our modded items
 	for i, v_hangar in ipairs(v_hangar_list) do
@@ -653,6 +700,9 @@ function load_game_post_event(q)
 				v_hangar[hanger_mass_logo_index] = v_hangar[hanger_mass_logo];
 			elseif (v_hangar[hanger_mass_item_index] == echo_mech) then
 				v_hangar[hanger_mass_logo] = echo_sprite;
+				v_hangar[hanger_mass_logo_index] = v_hangar[hanger_mass_logo];
+			elseif (v_hangar[hanger_mass_item_index] == high_tech_solenoid) then
+				v_hangar[hanger_mass_logo] = high_tech_solenoid_sprite;
 				v_hangar[hanger_mass_logo_index] = v_hangar[hanger_mass_logo];
 			end
 		end
@@ -687,7 +737,7 @@ end
 function dump_struct_to_message(id)
 	local values = {};
     for k, v in pairs(struct_get_names(id)) do
-        table.insert(values, tostring(k).."::"..tostring(v));
+        table.insert(values, tostring(k).."::"..tostring(v).."::"..tostring(id[v]));
     end
     local message = table.concat(values, ",\n");
 	show_message(message);
