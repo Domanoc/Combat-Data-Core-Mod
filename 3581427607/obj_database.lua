@@ -3,6 +3,8 @@
 --example: variable_global_set, ds_map_add, sprite_add
 
 function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in any create event as a second argument
+	local debug_mode = true;
+	variable_global_set("debug_mode", debug_mode);
 
 	--path to the current file
 	local current_file_path = (mod_info[v_modid]):gsub("obj_database.lua","");
@@ -171,7 +173,7 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	ds_map_add(sentinel_mech, "armor",				5);
 	ds_map_add(sentinel_mech, "weight",				70);
 	ds_map_add(sentinel_mech, "speed",				0.2);
-	ds_map_add(sentinel_mech, "reload_time",		5);
+	ds_map_add(sentinel_mech, "reload_time",		4);
 	ds_map_add(sentinel_mech, "battle_time",		5);
 	ds_map_add(sentinel_mech, "number_of_weapons",	4);
 	ds_map_add(sentinel_mech, "number_of_aux",		8);
@@ -306,11 +308,11 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	ds_map_add(behemoth_mech, "hp", 				1000);		--1000 is the default for all mechs
 	ds_map_add(behemoth_mech, "melee_option",		1);			--0 = false, 1 = true
 	ds_map_add(behemoth_mech, "armor",				10);
-	ds_map_add(behemoth_mech, "weight",				134);
+	ds_map_add(behemoth_mech, "weight",				108);
 	ds_map_add(behemoth_mech, "speed",				0.1);
 	ds_map_add(behemoth_mech, "reload_time",		3);
 	ds_map_add(behemoth_mech, "battle_time",		12);
-	ds_map_add(behemoth_mech, "number_of_weapons",	14);
+	ds_map_add(behemoth_mech, "number_of_weapons",	12);
 	ds_map_add(behemoth_mech, "number_of_aux",		8);
 
 	--MODULE CELLS
@@ -398,14 +400,17 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	gun_module);	--gun 12
 	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-24);
 	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	15);
-	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	gun_module);	--gun 13
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	8);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	42);
-	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	gun_module);	--gun 14
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-8);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	42);
+	--Had to remove the last 2 weapon slots since the game has a hard limit of 12
+	--If you have a save with more than 12 weapons installed you can uncomment the 2 slots,
+	--Load the save and remove the weapons, save and then comment out the weapons slots again.
+	--cell_num = cell_num + 1;
+	--ds_map_add(behemoth_mech, "cell_"..   cell_num, 	gun_module);	--gun 13
+	--ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	8);
+	--ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	42);
+	--cell_num = cell_num + 1;
+	--ds_map_add(behemoth_mech, "cell_"..   cell_num, 	gun_module);	--gun 14
+	--ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-8);
+	--ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	42);
 	cell_num = cell_num + 1;
 	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	cabin_module);	--cabin
 	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	0);
@@ -443,7 +448,6 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-6);
 	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	26);
 	
-
 	ds_map_add(behemoth_mech, "number_of_cells", cell_num);
 
 	--SPRITES
@@ -466,6 +470,135 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	--melee horizontal
 	behemoth_mech_sprite = sprite_add(current_file_path.."sprites/behemoth_melee_horizontal.png", 7, true, false, 25, 25);	
 	ds_map_add(behemoth_mech, "sprite_battle_melee_hor", behemoth_mech_sprite);
+
+	-----------------
+	--ECHO MECH------
+	-----------------
+	local echo_mech_index = #mech_stat_array + 1;
+	variable_global_set("echo_mech_num", #mech_stat_array);
+	mech_stat_array[echo_mech_index] = ds_map_create();
+	local echo_mech = mech_stat_array[echo_mech_index];
+
+	--ENGINEERING PRICE
+	ds_map_add(echo_mech, "price_metallite",	620);
+	ds_map_add(echo_mech, "price_bjorn",		275);
+	ds_map_add(echo_mech, "price_munilon",		520);
+	ds_map_add(echo_mech, "price_skalaknit",	400);
+	ds_map_add(echo_mech, "price_staff",		265);
+	ds_map_add(echo_mech, "days",				5);
+
+	--RESISTANCES
+	ds_map_add(echo_mech, "heat_resist",		20);
+	ds_map_add(echo_mech, "impact_resist",		30);
+	ds_map_add(echo_mech, "current_resist",		20);
+
+	--STATS
+	ds_map_add(echo_mech, "hp", 				1000);
+	ds_map_add(echo_mech, "melee_option",		0);		--0 = false, 1 = true
+	ds_map_add(echo_mech, "armor",				3);
+	ds_map_add(echo_mech, "weight",				80);
+	ds_map_add(echo_mech, "speed",				0.4);
+	ds_map_add(echo_mech, "reload_time",		2);
+	ds_map_add(echo_mech, "battle_time",		4);
+	ds_map_add(echo_mech, "number_of_weapons",	3);
+	ds_map_add(echo_mech, "number_of_aux",		6);
+
+	--MODULE CELLS
+	local cell_num = 1;
+	ds_map_add(echo_mech, "cell_"..   cell_num, 	motor_module);	--motor 1
+	ds_map_add(echo_mech, "cell_x_".. cell_num, 	9);
+	ds_map_add(echo_mech, "cell_y_".. cell_num, 	7);
+	cell_num = cell_num + 1;
+	ds_map_add(echo_mech, "cell_"..   cell_num, 	motor_module);	--motor 2
+	ds_map_add(echo_mech, "cell_x_".. cell_num, 	-9);
+	ds_map_add(echo_mech, "cell_y_".. cell_num, 	7);
+	cell_num = cell_num + 1;
+	ds_map_add(echo_mech, "cell_"..   cell_num, 	motor_module);	--motor 3
+	ds_map_add(echo_mech, "cell_x_".. cell_num, 	6);
+	ds_map_add(echo_mech, "cell_y_".. cell_num, 	12);
+	cell_num = cell_num + 1;
+	ds_map_add(echo_mech, "cell_"..   cell_num, 	motor_module);	--motor 4
+	ds_map_add(echo_mech, "cell_x_".. cell_num, 	-6);
+	ds_map_add(echo_mech, "cell_y_".. cell_num, 	12);
+	cell_num = cell_num + 1;
+	ds_map_add(echo_mech, "cell_"..   cell_num, 	motor_module);	--motor 5
+	ds_map_add(echo_mech, "cell_x_".. cell_num, 	13);
+	ds_map_add(echo_mech, "cell_y_".. cell_num, 	15);
+	cell_num = cell_num + 1;
+	ds_map_add(echo_mech, "cell_"..   cell_num, 	motor_module);	--motor 6
+	ds_map_add(echo_mech, "cell_x_".. cell_num, 	-13);
+	ds_map_add(echo_mech, "cell_y_".. cell_num, 	15);
+	cell_num = cell_num + 1;
+	ds_map_add(echo_mech, "cell_"..   cell_num, 	motor_module);	--motor 7
+	ds_map_add(echo_mech, "cell_x_".. cell_num, 	0);
+	ds_map_add(echo_mech, "cell_y_".. cell_num, 	16);
+	cell_num = cell_num + 1;
+	ds_map_add(echo_mech, "cell_"..   cell_num, 	reactor_module);--reactor
+	ds_map_add(echo_mech, "cell_x_".. cell_num, 	0);
+	ds_map_add(echo_mech, "cell_y_".. cell_num, 	22);
+	cell_num = cell_num + 1;
+	ds_map_add(echo_mech, "cell_"..   cell_num, 	gun_module);	--gun 1
+	ds_map_add(echo_mech, "cell_x_".. cell_num, 	13);
+	ds_map_add(echo_mech, "cell_y_".. cell_num, 	28);
+	cell_num = cell_num + 1;
+	ds_map_add(echo_mech, "cell_"..   cell_num, 	gun_module);	--gun 2
+	ds_map_add(echo_mech, "cell_x_".. cell_num, 	-13);
+	ds_map_add(echo_mech, "cell_y_".. cell_num, 	28);
+	cell_num = cell_num + 1;
+	ds_map_add(echo_mech, "cell_"..   cell_num, 	gun_module);	--gun 3
+	ds_map_add(echo_mech, "cell_x_".. cell_num, 	7);
+	ds_map_add(echo_mech, "cell_y_".. cell_num, 	35);
+	cell_num = cell_num + 1;
+	ds_map_add(echo_mech, "cell_"..   cell_num, 	cabin_module);	--cabin
+	ds_map_add(echo_mech, "cell_x_".. cell_num, 	0);
+	ds_map_add(echo_mech, "cell_y_".. cell_num, 	29);
+	cell_num = cell_num + 1;
+	ds_map_add(echo_mech, "cell_"..   cell_num, 	aux_module);	--aux 1
+	ds_map_add(echo_mech, "cell_x_".. cell_num, 	7);
+	ds_map_add(echo_mech, "cell_y_".. cell_num, 	19);
+	cell_num = cell_num + 1;
+	ds_map_add(echo_mech, "cell_"..   cell_num, 	aux_module);	--aux 2
+	ds_map_add(echo_mech, "cell_x_".. cell_num, 	-7);
+	ds_map_add(echo_mech, "cell_y_".. cell_num, 	19);
+	cell_num = cell_num + 1;
+	ds_map_add(echo_mech, "cell_"..   cell_num, 	aux_module);	--aux 3
+	ds_map_add(echo_mech, "cell_x_".. cell_num, 	6);
+	ds_map_add(echo_mech, "cell_y_".. cell_num, 	24);
+	cell_num = cell_num + 1;
+	ds_map_add(echo_mech, "cell_"..   cell_num, 	aux_module);	--aux 4
+	ds_map_add(echo_mech, "cell_x_".. cell_num, 	-6);
+	ds_map_add(echo_mech, "cell_y_".. cell_num, 	24);
+	cell_num = cell_num + 1;
+	ds_map_add(echo_mech, "cell_"..   cell_num, 	aux_module);	--aux 5
+	ds_map_add(echo_mech, "cell_x_".. cell_num, 	5);
+	ds_map_add(echo_mech, "cell_y_".. cell_num, 	29);
+	cell_num = cell_num + 1;
+	ds_map_add(echo_mech, "cell_"..   cell_num, 	aux_module);	--aux 6
+	ds_map_add(echo_mech, "cell_x_".. cell_num, 	-5);
+	ds_map_add(echo_mech, "cell_y_".. cell_num, 	29);
+
+	ds_map_add(echo_mech, "number_of_cells", cell_num);
+
+	--SPRITES
+	--small sprite
+	local echo_mech_sprite = sprite_add(current_file_path.."sprites/echo_small.png", 0, false, false, 23,49);
+	variable_global_set("echo_spr_small", echo_mech_sprite);
+	ds_map_add(echo_mech, "sprite_small", echo_mech_sprite);
+	--big sprite
+	echo_mech_sprite = sprite_add(current_file_path.."sprites/echo_big.png", 0, false, false, 199, 343);				
+	ds_map_add(echo_mech, "sprite_big", echo_mech_sprite);
+	--battle sprite
+	echo_mech_sprite = sprite_add(current_file_path.."sprites/echo_battle.png", 2, true, false, 25, 25);				
+	ds_map_add(echo_mech, "sprite_battle", echo_mech_sprite);
+	--dead sprite
+	echo_mech_sprite = sprite_add(current_file_path.."sprites/echo_dead.png", 1, true, false, 23, 23);				
+	ds_map_add(echo_mech, "sprite_battle_dead", echo_mech_sprite);
+	--melee vertical
+	echo_mech_sprite = sprite_add(current_file_path.."sprites/echo_melee_vertical.png", 7, true, false, 17, 25);		
+	ds_map_add(echo_mech, "sprite_battle_melee_ver", echo_mech_sprite);
+	--melee horizontal
+	echo_mech_sprite = sprite_add(current_file_path.."sprites/echo_melee_horizontal.png", 7, true, false, 25, 25);	
+	ds_map_add(echo_mech, "sprite_battle_melee_hor", echo_mech_sprite);
 
 
 	--return new data
@@ -497,12 +630,13 @@ function load_game_post_event(q)
 	local nova_mech = variable_global_get("nova_mech_num");
 	local sentinel_mech = variable_global_get("sentinel_mech_num");
 	local behemoth_mech = variable_global_get("behemoth_mech_num");
+	local echo_mech = variable_global_get("echo_mech_num");
 
 	--Our Modded sprites
 	local nova_sprite = variable_global_get("nova_spr_small");
 	local sentinel_sprite = variable_global_get("sentinel_spr_small");
 	local behemoth_sprite = variable_global_get("behemoth_spr_small");
-
+	local echo_sprite = variable_global_get("echo_spr_small");
 	
 	--We step through the hanger/production items to find our modded items
 	for i, v_hangar in ipairs(v_hangar_list) do
@@ -516,6 +650,9 @@ function load_game_post_event(q)
 				v_hangar[hanger_mass_logo_index] = v_hangar[hanger_mass_logo];
 			elseif (v_hangar[hanger_mass_item_index] == behemoth_mech) then
 				v_hangar[hanger_mass_logo] = behemoth_sprite;
+				v_hangar[hanger_mass_logo_index] = v_hangar[hanger_mass_logo];
+			elseif (v_hangar[hanger_mass_item_index] == echo_mech) then
+				v_hangar[hanger_mass_logo] = echo_sprite;
 				v_hangar[hanger_mass_logo_index] = v_hangar[hanger_mass_logo];
 			end
 		end
@@ -533,4 +670,51 @@ function draw_debug(q)
 	--for i,v in ipairs(my_table) do
 	--	draw_text(350+(math.floor(i/80))*210,40+(math.fmod(i,80))*11, tostring(v));
 	--end
+end
+
+
+
+
+
+
+--------------------------
+--DEBUG HELPER FUNCTIONS--
+--------------------------
+
+--Prints a messagebox with the key and values of the table
+--provide the reference id to the table
+--The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
+function dump_struct_to_message(id)
+	local values = {};
+    for k, v in pairs(struct_get_names(id)) do
+        table.insert(values, tostring(k).."::"..tostring(v));
+    end
+    local message = table.concat(values, ",\n");
+	show_message(message);
+end
+
+--Prints a messagebox with the key and values of the table
+--provide the reference id to the table
+--The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
+function dump_table_to_message(id)
+	local values = {};
+    for k, v in pairs(id) do
+        table.insert(values, tostring(k).."::"..tostring(v));
+    end
+    local message = table.concat(values, ",\n");
+	show_message(message);
+end
+
+--Prints a messagebox with the key and values of the ds_map
+--provide the reference id to the ds_map
+--The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
+function dump_ds_map_to_message(id)
+	--dump_table_to_message(ds_map_keys_to_array(id));
+	--show_message(tostring(ds_map_find_value(map, "price_staff")));
+	local values = {};
+    for k, v in pairs(ds_map_keys_to_array(id)) do
+        table.insert(values, tostring(k).."::"..tostring(v).."::"..tostring(ds_map_find_value(id, v)));
+    end
+    local message = table.concat(values, ",\n");
+	show_message(message);
 end

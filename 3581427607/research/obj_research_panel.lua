@@ -9,7 +9,6 @@ array_lua[1]=9;
 ]]
 
 function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in any create event as a second argument
-
 	--path to the current file
 	local current_file_path = (mod_info[v_modid]):gsub("research/obj_research_panel.lua", "");
 	--get the count of researches and increase it by 1
@@ -188,7 +187,7 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 	variable_global_set("sentinel_res_num", research_count);
 	q.number_of_res = research_count;
 	
-	research_array[sentinel_mech_index][research_position] = 141; 		--position number on the research tree. You can see positions in the game with f6 (debug mode)
+	research_array[sentinel_mech_index][research_position] = 132; 		--position number on the research tree. You can see positions in the game with f6 (debug mode)
 	research_array[sentinel_mech_index][research_link_1] = -4; 			--link 1;	--Link to open next research. Should contain number of the research from the array
 	research_array[sentinel_mech_index][research_link_2] = -4; 			--link 2;	--
 	research_array[sentinel_mech_index][research_link_3] = -4; 			--link 3;	--
@@ -240,7 +239,44 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 	
 	--add research sprite
 	tmp_sprite = sprite_add(current_file_path.."sprites/behemoth_research.png", 0, false, false, 0, 0);	--research sprite
-	research_sprite_index = variable_global_get("research_items_spr");	--get the current sprite
+	research_sprite_index = variable_global_get("research_items_spr");			--get the current sprite
+	researh_sprites = "";
+    if (research_sprite_index ~= -4) then
+    	researh_sprites = sprite_duplicate(research_sprite_index);
+    else
+        research_sprite_index = asset_get_index("spr_research_items");
+        researh_sprites = sprite_duplicate(research_sprite_index);
+    end
+    sprite_merge(researh_sprites, tmp_sprite);							--adds to the end of the subimg
+	variable_global_set("research_items_spr", researh_sprites);			--update the sprite variable
+	sprite_delete(tmp_sprite);											--delete only tmp_sprite. researh_sprites still contains id
+
+	-----------------
+	--ECHO MECH------
+	-----------------
+	research_count = research_count + 1
+	--index for v_array, +1 because lua arrays start with 1
+	local echo_mech_index = research_count + 1;
+
+	variable_global_set("echo_res_num", research_count);
+	q.number_of_res = research_count;
+	
+	research_array[echo_mech_index][research_position] = 141; 				--position number on the research tree. You can see positions in the game with f6 (debug mode)
+	research_array[echo_mech_index][research_link_1] = -4; 					--link 1;	--Link to open next research. Should contain number of the research from the array
+	research_array[echo_mech_index][research_link_2] = -4; 					--link 2;	--
+	research_array[echo_mech_index][research_link_3] = -4; 					--link 3;	--
+	research_array[echo_mech_index][research_condition] = 0; 				--condition (0-closed, 1-opened, 2-researching, 3-researched)
+	research_array[echo_mech_index][research_require_days] = 6; 			--require days
+	research_array[echo_mech_index][research_require_staff] = 120; 			--require science staff
+	research_array[echo_mech_index][research_type] = 1; 					--research type (0-combat, 1-production, 2-passability)
+	research_array[echo_mech_index][research_subtybe] = 1; 					--research subtype (see left column in the game in research menu)
+	research_array[echo_mech_index][research_text] = 						--research text
+		"NEW MECH: ECHO#3 guns, 3 armor, 30 impact resistance, 20 water resistance. A armored mech with high mobility.";
+	research_array[nova_mech_index][research_link_1] = research_count;		--set link from other research, add 1 to the research number shown in debug mode, as lua starts lists with 1. For the second number, use either link 1,2 or 3
+	
+	--add research sprite
+	tmp_sprite = sprite_add(current_file_path.."sprites/echo_research.png", 0, false, false, 0, 0);	--research sprite
+	research_sprite_index = variable_global_get("research_items_spr");		--get the current sprite
 	researh_sprites = "";
     if (research_sprite_index ~= -4) then
     	researh_sprites = sprite_duplicate(research_sprite_index);
@@ -254,8 +290,9 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 	
 
 	--Use for debugging to set all to researching
-	local debug = false;
-	if(debug == true) then
+	--Debug flag is set in "obj_database.lua"
+	local debug_mode = variable_global_get("debug_mode");
+	if(debug_mode == true) then
 		for i,v in ipairs(research_array) do
 			research_array[i][research_condition] = 2;
 			research_array[i][research_require_days] = 1;
@@ -271,4 +308,50 @@ function step(q)	--if activated = true
 end
 
 function draw(q)	--if activated = true
+end
+
+
+
+
+
+--------------------------
+--DEBUG HELPER FUNCTIONS--
+--------------------------
+
+--Prints a messagebox with the key and values of the table
+--provide the reference id to the table
+--The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
+function dump_struct_to_message(id)
+	local values = {};
+    for k, v in pairs(struct_get_names(id)) do
+        table.insert(values, tostring(k).."::"..tostring(v));
+    end
+    local message = table.concat(values, ",\n");
+	show_message(message);
+end
+
+--Prints a messagebox with the key and values of the table
+--provide the reference id to the table
+--The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
+function dump_table_to_message(id)
+	local values = {};
+    for k, v in pairs(id) do
+        table.insert(values, tostring(k).."::"..tostring(v));
+    end
+    local message = table.concat(values, ",\n");
+	show_message(message);
+end
+
+--Prints a messagebox with the key and values of the ds_map
+--provide the reference id to the ds_map
+--The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
+function dump_ds_map_to_message(id)
+	--dump_table_to_message(ds_map_keys_to_array(id));
+	--show_message(tostring(ds_map_find_value(map, "price_staff")));
+	local values = {};
+    for k, v in pairs(ds_map_keys_to_array(id)) do
+        table.insert(values, tostring(k).."::"..tostring(v).."::"..tostring(ds_map_find_value(id, v)));
+    end
+    local message = table.concat(values, ",\n");
+	show_message(message);
 end

@@ -1,6 +1,9 @@
 --production menu
 	
 function create(q)--one time script when save is loaded
+	-----------------
+	--MECHS----------
+	-----------------
 	local v_comp_mech = {};							--create table
 	v_comp_mech = q.comp_mech;						--copy array, because we can't work with it directly.
 
@@ -58,8 +61,27 @@ function create(q)--one time script when save is loaded
 	v_index.size = 5;								--number of slots used in construction use 1 or 5
 	v_index.researched = 0;							--1 for researched or 0 for not
 	
+	-----------------
+	--ECHO MECH------
+	-----------------
+	v_array_size = #v_comp_mech;
+	v_mech_loc_x = v_array_size % 5;
+	v_mech_loc_y = v_array_size // 5;
+	local echo_mech_num = variable_global_get("echo_mech_num");
+	v_index = asset_get_index("obj_component");
+
+	variable_global_set("echo_comp_num", v_array_size + 1);
+	v_index = instance_create_depth(q.mech_start_x + 96 * v_mech_loc_x, q.mech_start_y + 96 * v_mech_loc_y, -500, v_index);
+	v_comp_mech[v_array_size + 1] = v_index;		--lua starts with 1
+	v_index.comp_type = 1;							--mech
+	v_index.comp_data_type = echo_mech_num;			--number in database
+	v_index.logo = -4; 								--auto assign based on obj_database info
+	v_index.size = 5;								--number of slots used in construction use 1 or 5
+	v_index.researched = 0;							--1 for researched or 0 for not
+	
+
 	--send array back
-	q.comp_mech = v_comp_mech;					
+	q.comp_mech = v_comp_mech;
 end
 
 
@@ -70,4 +92,51 @@ function done(q, i)	--if component is read. i=number of the hangar to check (fro
 end
 
 function draw_item_text(q, cut_item_type)	--draw when item is placed on the table to watch its stats
+end
+
+
+
+
+
+
+--------------------------
+--DEBUG HELPER FUNCTIONS--
+--------------------------
+
+--Prints a messagebox with the key and values of the table
+--provide the reference id to the table
+--The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
+function dump_struct_to_message(id)
+	local values = {};
+    for k, v in pairs(struct_get_names(id)) do
+        table.insert(values, tostring(k).."::"..tostring(v));
+    end
+    local message = table.concat(values, ",\n");
+	show_message(message);
+end
+
+--Prints a messagebox with the key and values of the table
+--provide the reference id to the table
+--The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
+function dump_table_to_message(id)
+	local values = {};
+    for k, v in pairs(id) do
+        table.insert(values, tostring(k).."::"..tostring(v));
+    end
+    local message = table.concat(values, ",\n");
+	show_message(message);
+end
+
+--Prints a messagebox with the key and values of the ds_map
+--provide the reference id to the ds_map
+--The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
+function dump_ds_map_to_message(id)
+	--dump_table_to_message(ds_map_keys_to_array(id));
+	--show_message(tostring(ds_map_find_value(map, "price_staff")));
+	local values = {};
+    for k, v in pairs(ds_map_keys_to_array(id)) do
+        table.insert(values, tostring(k).."::"..tostring(v).."::"..tostring(ds_map_find_value(id, v)));
+    end
+    local message = table.concat(values, ",\n");
+	show_message(message);
 end
