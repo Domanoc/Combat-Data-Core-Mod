@@ -109,8 +109,6 @@ end
 --provide the reference id to the ds_map
 --The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
 function dump_ds_map_to_message(id)
-	--dump_table_to_message(ds_map_keys_to_array(id));
-	--show_message(tostring(ds_map_find_value(map, "price_staff")));
 	local values = {};
     for k, v in pairs(ds_map_keys_to_array(id)) do
         table.insert(values, tostring(k).."::"..tostring(v).."::"..tostring(ds_map_find_value(id, v)));
