@@ -1,3 +1,9 @@
+v1.2
+Added Echo mech
+Added new endgame solenoid
+Added 240mm Cannon
+Fixed the weapon overflow on the Behemoth by removing the last 2 weapon slots
+
 v1.1
 Fix crash when loading with modded mechs in the production queue.
 Added load event to restore modded sprite references.
