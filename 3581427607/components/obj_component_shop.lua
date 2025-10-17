@@ -50,11 +50,11 @@ function create(q)--one time script when save is loaded
 	variable_global_set("nova_component_index", v_array_size + 1);
 	v_index = instance_create_depth(q.mech_start_x + icon_pixel_size * v_mech_loc_x, q.mech_start_y + icon_pixel_size * v_mech_loc_y, -500, v_index);
 	comp_mech[v_array_size + 1] = v_index;		--lua starts with 1
-	v_index.comp_type = comp_types.mech;			--mech
-	v_index.comp_data_type = nova_mech_index;		--number in database
-	v_index.logo = -4; 								--auto assign based on obj_database info
-	v_index.size = comp_sizes.large;				--number of slots used in construction
-	v_index.researched = 0;							--1 for researched or 0 for not
+	v_index.comp_type = comp_types.mech;		--mech
+	v_index.comp_data_type = nova_mech_index;	--number in database
+	v_index.logo = -4; 							--auto assign based on obj_database info
+	v_index.size = comp_sizes.large;			--number of slots used in construction
+	v_index.researched = 0;						--1 for researched or 0 for not
 
 	-----------------
 	--ECHO MECH------
@@ -68,11 +68,11 @@ function create(q)--one time script when save is loaded
 	variable_global_set("echo_component_index", v_array_size + 1);
 	v_index = instance_create_depth(q.mech_start_x + icon_pixel_size * v_mech_loc_x, q.mech_start_y + icon_pixel_size * v_mech_loc_y, -500, v_index);
 	comp_mech[v_array_size + 1] = v_index;		--lua starts with 1
-	v_index.comp_type = comp_types.mech;			--mech
-	v_index.comp_data_type = echo_mech_index;		--number in database
-	v_index.logo = -4; 								--auto assign based on obj_database info
-	v_index.size = comp_sizes.large;				--number of slots used in construction
-	v_index.researched = 0;							--1 for researched or 0 for not
+	v_index.comp_type = comp_types.mech;		--mech
+	v_index.comp_data_type = echo_mech_index;	--number in database
+	v_index.logo = -4; 							--auto assign based on obj_database info
+	v_index.size = comp_sizes.large;			--number of slots used in construction
+	v_index.researched = 0;						--1 for researched or 0 for not
 
 	-----------------
 	--SENTINEL MECH--
@@ -85,7 +85,7 @@ function create(q)--one time script when save is loaded
 
 	variable_global_set("sentinel_component_index", v_array_size + 1);
 	v_index = instance_create_depth(q.mech_start_x + icon_pixel_size * v_mech_loc_x, q.mech_start_y + icon_pixel_size * v_mech_loc_y, -500, v_index);
-	comp_mech[v_array_size + 1] = v_index;		--lua starts with 1
+	comp_mech[v_array_size + 1] = v_index;			--lua starts with 1
 	v_index.comp_type = comp_types.mech;			--mech
 	v_index.comp_data_type = sentinel_mech_index;	--number in database
 	v_index.logo = -4; 								--auto assign based on obj_database info
@@ -103,9 +103,9 @@ function create(q)--one time script when save is loaded
 
 	variable_global_set("behemoth_component_index", v_array_size + 1);
 	v_index = instance_create_depth(q.mech_start_x + icon_pixel_size * v_mech_loc_x, q.mech_start_y + icon_pixel_size * v_mech_loc_y, -500, v_index);
-	comp_mech[v_array_size + 1] = v_index;		--lua starts with 1
+	comp_mech[v_array_size + 1] = v_index;			--lua starts with 1
 	v_index.comp_type = comp_types.mech;			--mech
-	v_index.comp_data_type = behemoth_mech_index;		--number in database
+	v_index.comp_data_type = behemoth_mech_index;	--number in database
 	v_index.logo = -4; 								--auto assign based on obj_database info
 	v_index.size = comp_sizes.large;				--number of slots used in construction
 	v_index.researched = 0;							--1 for researched or 0 for not	
@@ -132,7 +132,7 @@ function create(q)--one time script when save is loaded
 
 	variable_global_set("high_tech_solenoid_component_index", #comp_solenoid + 1);
 	v_index = instance_create_depth(q.reactor_start_x + icon_pixel_size * column, q.reactor_start_y + icon_pixel_size * row, -500, v_index);
-	comp_solenoid[#comp_solenoid + 1] = v_index;
+	comp_solenoid[#comp_solenoid + 1] = v_index;		--lua starts with 1
 	v_index.comp_type = comp_types.solenoid;			--solenoid
 	v_index.comp_data_type = high_tech_solenoid_index;	--number in database
 	v_index.logo = -4; 									--auto assign based on obj_database info
@@ -162,7 +162,7 @@ function create(q)--one time script when save is loaded
 
 	variable_global_set("howitzer_component_index", #comp_weapon + 1);
 	v_index = instance_create_depth(q.weapon_start_x + icon_pixel_size * v_wep_loc_x, q.weapon_start_y + icon_pixel_size * v_wep_loc_y, -500, v_index);
-	comp_weapon[v_array_size + 1] = v_index;
+	comp_weapon[v_array_size + 1] = v_index;		--lua starts with 1
 	v_index.comp_type = comp_types.weapon;			--weapon
 	v_index.comp_data_type = howitzer_weapon_index;	--number in database
 	v_index.logo = -4; 								--auto assign based on obj_database info

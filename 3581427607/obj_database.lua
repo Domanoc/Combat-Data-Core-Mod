@@ -691,9 +691,9 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	--STATS
 	ds_map_add(howitzer, "hp",					1000);
 	ds_map_add(howitzer, "type",				weapon_types.white); --type of weapon ("white", "red", "blue", "yellow")
-	ds_map_add(howitzer, "number",				4);		--doesn't seem to do anything
+	ds_map_add(howitzer, "number",				3);		--doesn't seem to do anything
 	ds_map_add(howitzer, "start_fire_speed",	25);	--600 with full firespeed points will fill the firespeed bar completely
-	ds_map_add(howitzer, "start_weight",		48);	--
+	ds_map_add(howitzer, "start_weight",		48);	--base weight
 	ds_map_add(howitzer, "start_accuracy",		1.5);	--acceracy in degrees, 0 is perfect acceracy
 	ds_map_add(howitzer, "start_energy",		5);		--energy requirement
 	ds_map_add(howitzer, "start_damage",		80);	--base damage value
