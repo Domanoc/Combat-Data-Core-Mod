@@ -1,43 +1,92 @@
---[[
-Growable structure and array for LUA scripts to use within the current object
-st_lua=
-{
-	a_st:10
-};
-array_lua[0]=5;
-array_lua[1]=9;
-]]
 
---		v_array[v_items_num-1]=instance_create_depth(0,0,0,v_index);
---        v_index=v_array[v_items_num];								--get id of the object, to change values in it
---		v_index.my_num=v_items_num-1;
 
 function create(q)--one time script when save is loaded
-	--getting global value to create weapon at the start of a new save
-	local v_load = variable_global_get("mech_engineer_load");
-	if (v_load == false) then
-		-- Replace two missile launchers with autocannons instead, to prevent my mod from giving players too many free resources.
-		local v_items_num = q.number_of_items;
-		v_array = {};									--create table
-		v_array = q.list_weapon;						--12 is the last position, but we are using 13 instead of 12 because lua starts tables with 1, not 0
-		
-		local v_index = asset_get_index("obj_weapon_item");
-		v_index = v_array[6];												--get id of the object, to change values in it
-		v_index.my_num = 5;													--last weapon in the list
-		v_index.weapon_number = variable_global_get("long_laser_num");		--position in list from obj_database
-		v_index.start_x = 8;
-		v_index.start_y = 266;
-		
-		local v_index = asset_get_index("obj_weapon_item");
-		v_index = v_array[7];												--get id of the object, to change values in it
-		v_index.my_num = 6;													--last weapon in the list
-		v_index.weapon_number = variable_global_get("mining_laser_num");	--position in list from obj_database
-		v_index.start_x = 8;
-		v_index.start_y = 266;
-		
-		q.number_of_items = v_items_num;
-		q.list_weapon = v_array;			--send array back
+	--Debug flag is set in "obj_database.lua"
+	local debug_spawn_test_weapons = variable_global_get("debug_spawn_test_weapons");	
+	if(debug_spawn_test_weapons == false) then
+		return
 	end
-		
+	
+	--if the mech_engineer_load is set its not a new game
+	local is_loaded_game = variable_global_get("mech_engineer_load");
+	if(is_loaded_game == true) then
+		return
+	end
 
+	--Copy the array to the working set
+	local list_weapon = {};
+	list_weapon = q.list_weapon;
+
+
+	-- add a howitzer weapon on a new save
+	local number_of_items = q.number_of_items + 1;
+	local obj_weapon_item = asset_get_index("obj_weapon_item");
+	list_weapon[number_of_items] = instance_create_depth(0, 0, 0, obj_weapon_item);
+	local added_weapon = list_weapon[number_of_items];
+	added_weapon.my_num = 			number_of_items - 1;
+	added_weapon.weapon_number = 	variable_global_get("howitzer_weapon_index");
+	added_weapon.start_x = 			8;
+	added_weapon.start_y = 			266;
+
+	-- add a howitzer weapon (huge) on a new save
+	number_of_items = number_of_items + 1;
+	obj_weapon_item = asset_get_index("obj_weapon_item");
+	list_weapon[number_of_items] = instance_create_depth(0, 0, 0, obj_weapon_item);
+	added_weapon = list_weapon[number_of_items];
+	added_weapon.my_num = 			number_of_items - 1;
+	added_weapon.weapon_number = 	variable_global_get("howitzer_weapon_index");
+	added_weapon.start_x = 			8;
+	added_weapon.start_y = 			266;
+	added_weapon.size_huge = 		true;
+	
+	--return new data
+	q.list_weapon = list_weapon;
+	q.number_of_items = number_of_items;
+end
+
+
+
+
+
+
+--------------------------
+--DEBUG HELPER FUNCTIONS--
+--------------------------
+
+--Prints a messagebox with the key and values of the table
+--provide the reference id to the table
+--The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
+function dump_struct_to_message(id)
+	local values = {};
+    for k, v in pairs(struct_get_names(id)) do
+        table.insert(values, tostring(k).."::"..tostring(v).."::"..tostring(id[v]));
+    end
+    local message = table.concat(values, ",\n");
+	show_message(message);
+end
+
+--Prints a messagebox with the key and values of the table
+--provide the reference id to the table
+--The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
+function dump_table_to_message(id)
+	local values = {};
+    for k, v in pairs(id) do
+        table.insert(values, tostring(k).."::"..tostring(v));
+    end
+    local message = table.concat(values, ",\n");
+	show_message(message);
+end
+
+--Prints a messagebox with the key and values of the ds_map
+--provide the reference id to the ds_map
+--The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
+function dump_ds_map_to_message(id)
+	--dump_table_to_message(ds_map_keys_to_array(id));
+	--show_message(tostring(ds_map_find_value(map, "price_staff")));
+	local values = {};
+    for k, v in pairs(ds_map_keys_to_array(id)) do
+        table.insert(values, tostring(k).."::"..tostring(v).."::"..tostring(ds_map_find_value(id, v)));
+    end
+    local message = table.concat(values, ",\n");
+	show_message(message);
 end

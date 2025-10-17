@@ -334,8 +334,8 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 
 	--Use for debugging to set all to researching
 	--Debug flag is set in "obj_database.lua"
-	local debug_mode = variable_global_get("debug_unlock_research");
-	if(debug_mode == true) then
+	local debug_unlock_research = variable_global_get("debug_unlock_research");
+	if(debug_unlock_research == true) then
 		for i,v in ipairs(research_array) do
 			research_array[i][research.condition] = research_conditions.researching;
 			research_array[i][research.required_days] = 1;
