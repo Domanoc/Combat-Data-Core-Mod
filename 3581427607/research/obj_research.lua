@@ -178,9 +178,7 @@ function research_done(q, res_number)	--if research is done and when loading the
 			added_weapon.start_x = 			8;
 			added_weapon.start_y = 			266;
 			added_weapon.new_module = 		1;
-
-			--dump_struct_to_message(list_weapon[number_of_items]);
-
+			
 			obj_content_weapons.list_weapon = list_weapon;
 			obj_content_weapons.number_of_items = number_of_items;
 		end
