@@ -35,13 +35,13 @@ function create(q)--one time script when save is loaded
 	-----------------
 	
 	--Copy the array to the working set
-	local v_comp_mech = {};
-	v_comp_mech = q.comp_mech;
+	local comp_mech = {};
+	comp_mech = q.comp_mech;
 
 	-----------------
 	--NOVA MECH------
 	-----------------
-	local v_array_size = #v_comp_mech;
+	local v_array_size = #comp_mech;
 	local v_mech_loc_x = v_array_size % 5;
 	local v_mech_loc_y = v_array_size // 5;
 	local nova_mech_index = variable_global_get("nova_mech_index");
@@ -49,7 +49,7 @@ function create(q)--one time script when save is loaded
 
 	variable_global_set("nova_component_index", v_array_size + 1);
 	v_index = instance_create_depth(q.mech_start_x + icon_pixel_size * v_mech_loc_x, q.mech_start_y + icon_pixel_size * v_mech_loc_y, -500, v_index);
-	v_comp_mech[v_array_size + 1] = v_index;		--lua starts with 1
+	comp_mech[v_array_size + 1] = v_index;		--lua starts with 1
 	v_index.comp_type = comp_types.mech;			--mech
 	v_index.comp_data_type = nova_mech_index;		--number in database
 	v_index.logo = -4; 								--auto assign based on obj_database info
@@ -59,7 +59,7 @@ function create(q)--one time script when save is loaded
 	-----------------
 	--ECHO MECH------
 	-----------------
-	v_array_size = #v_comp_mech;
+	v_array_size = #comp_mech;
 	v_mech_loc_x = v_array_size % 5;
 	v_mech_loc_y = v_array_size // 5;
 	local echo_mech_index = variable_global_get("echo_mech_index");
@@ -67,7 +67,7 @@ function create(q)--one time script when save is loaded
 
 	variable_global_set("echo_component_index", v_array_size + 1);
 	v_index = instance_create_depth(q.mech_start_x + icon_pixel_size * v_mech_loc_x, q.mech_start_y + icon_pixel_size * v_mech_loc_y, -500, v_index);
-	v_comp_mech[v_array_size + 1] = v_index;		--lua starts with 1
+	comp_mech[v_array_size + 1] = v_index;		--lua starts with 1
 	v_index.comp_type = comp_types.mech;			--mech
 	v_index.comp_data_type = echo_mech_index;		--number in database
 	v_index.logo = -4; 								--auto assign based on obj_database info
@@ -77,7 +77,7 @@ function create(q)--one time script when save is loaded
 	-----------------
 	--SENTINEL MECH--
 	-----------------
-	v_array_size = #v_comp_mech;
+	v_array_size = #comp_mech;
 	v_mech_loc_x = v_array_size % 5;
 	v_mech_loc_y = v_array_size // 5;
 	local sentinel_mech_index = variable_global_get("sentinel_mech_index");
@@ -85,7 +85,7 @@ function create(q)--one time script when save is loaded
 
 	variable_global_set("sentinel_component_index", v_array_size + 1);
 	v_index = instance_create_depth(q.mech_start_x + icon_pixel_size * v_mech_loc_x, q.mech_start_y + icon_pixel_size * v_mech_loc_y, -500, v_index);
-	v_comp_mech[v_array_size + 1] = v_index;		--lua starts with 1
+	comp_mech[v_array_size + 1] = v_index;		--lua starts with 1
 	v_index.comp_type = comp_types.mech;			--mech
 	v_index.comp_data_type = sentinel_mech_index;	--number in database
 	v_index.logo = -4; 								--auto assign based on obj_database info
@@ -95,7 +95,7 @@ function create(q)--one time script when save is loaded
 	-----------------
 	--BEHEMOTH MECH--
 	-----------------
-	v_array_size = #v_comp_mech;
+	v_array_size = #comp_mech;
 	v_mech_loc_x = v_array_size % 5;
 	v_mech_loc_y = v_array_size // 5;
 	local behemoth_mech_index = variable_global_get("behemoth_mech_index");
@@ -103,7 +103,7 @@ function create(q)--one time script when save is loaded
 
 	variable_global_set("behemoth_component_index", v_array_size + 1);
 	v_index = instance_create_depth(q.mech_start_x + icon_pixel_size * v_mech_loc_x, q.mech_start_y + icon_pixel_size * v_mech_loc_y, -500, v_index);
-	v_comp_mech[v_array_size + 1] = v_index;		--lua starts with 1
+	comp_mech[v_array_size + 1] = v_index;		--lua starts with 1
 	v_index.comp_type = comp_types.mech;			--mech
 	v_index.comp_data_type = behemoth_mech_index;		--number in database
 	v_index.logo = -4; 								--auto assign based on obj_database info
@@ -111,15 +111,15 @@ function create(q)--one time script when save is loaded
 	v_index.researched = 0;							--1 for researched or 0 for not	
 
 	--send array back
-	q.comp_mech = v_comp_mech;
+	q.comp_mech = comp_mech;
 
 	-----------------
 	--SOLENOIDS------
 	-----------------
 	
 	--Copy the array to the working set
-	local v_comp_solenoid = {};
-	v_comp_solenoid = q.comp_solenoid;
+	local comp_solenoid = {};
+	comp_solenoid = q.comp_solenoid;
 
 	----------------------
 	--HIGH TECH SOLENOID--
@@ -130,9 +130,9 @@ function create(q)--one time script when save is loaded
 	local high_tech_solenoid_index = variable_global_get("high_tech_solenoid_index");
 	v_index = asset_get_index("obj_component");
 
-	variable_global_set("high_tech_solenoid_component_index", #v_comp_solenoid + 1);
+	variable_global_set("high_tech_solenoid_component_index", #comp_solenoid + 1);
 	v_index = instance_create_depth(q.reactor_start_x + icon_pixel_size * column, q.reactor_start_y + icon_pixel_size * row, -500, v_index);
-	v_comp_solenoid[#v_comp_solenoid + 1] = v_index;
+	comp_solenoid[#comp_solenoid + 1] = v_index;
 	v_index.comp_type = comp_types.solenoid;			--solenoid
 	v_index.comp_data_type = high_tech_solenoid_index;	--number in database
 	v_index.logo = -4; 									--auto assign based on obj_database info
@@ -140,37 +140,37 @@ function create(q)--one time script when save is loaded
 	v_index.researched = 0;								--1 for researched or 0 for not	
 
 	--send array back
-	q.comp_solenoid = v_comp_solenoid;
+	q.comp_solenoid = comp_solenoid;
 
 	-----------------
 	--WEAPONS--------
 	-----------------
 	
 	--Copy the array to the working set
-	local v_comp_weapon = {};
-	v_comp_weapon = q.comp_wep;
+	local comp_weapon = {};
+	comp_weapon = q.comp_wep;
 
-	----------------
-	--240MM CANNON--
-	----------------
-	v_array_size = #v_comp_weapon;
+	------------
+	--HOWITZER--
+	------------
+	v_array_size = #comp_weapon;
 	local v_producible_weapons = v_array_size - 87;		-- number of producible weapons, vanilla is 12 but a total of 99 weapons in comp_wep, so must reduce
 	local v_wep_loc_x = v_producible_weapons // 3;
 	local v_wep_loc_y = v_producible_weapons % 3;
 	local howitzer_weapon_index = variable_global_get("howitzer_weapon_index");
 	v_index = asset_get_index("obj_component");
 
-	variable_global_set("howitzer_component_index", #v_comp_weapon + 1);
+	variable_global_set("howitzer_component_index", #comp_weapon + 1);
 	v_index = instance_create_depth(q.weapon_start_x + icon_pixel_size * v_wep_loc_x, q.weapon_start_y + icon_pixel_size * v_wep_loc_y, -500, v_index);
-	v_comp_weapon[v_array_size + 1] = v_index;
+	comp_weapon[v_array_size + 1] = v_index;
 	v_index.comp_type = comp_types.weapon;			--weapon
 	v_index.comp_data_type = howitzer_weapon_index;	--number in database
 	v_index.logo = -4; 								--auto assign based on obj_database info
 	v_index.size = comp_sizes.small;				--number of slots used in construction
-	v_index.researched = 1;							--1 for researched or 0 for not	
+	v_index.researched = 0;							--1 for researched or 0 for not	
 
 	--send array back
-	q.comp_wep = v_comp_weapon;
+	q.comp_wep = comp_weapon;
 end
 
 

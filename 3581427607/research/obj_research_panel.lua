@@ -331,6 +331,43 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 	variable_global_set("research_items_spr", researh_sprites);			--update the sprite variable
 	sprite_delete(tmp_sprite);											--delete only tmp_sprite. researh_sprites still contains id
 	
+	------------
+	--HOWITZER--
+	------------
+	research_count = research_count + 1
+	--index for v_array, +1 because lua arrays start with 1
+	local howitzer_research_index = research_count + 1;
+
+	variable_global_set("howitzer_research_index", research_count);
+	q.number_of_res = research_count;
+	
+	research_array[howitzer_research_index][research.position] = 120; 							--position number on the research tree. You can see positions in the game with f6 (debug mode)
+	research_array[howitzer_research_index][research.link_1] = -4; 								--link 1;	--Link to open the next research. Should contain the number of the research from the array
+	research_array[howitzer_research_index][research.link_2] = -4; 								--link 2;	--
+	research_array[howitzer_research_index][research.link_3] = -4; 								--link 3;	--
+	research_array[howitzer_research_index][research.condition] = research_conditions.closed;	--condition (0-closed, 1-opened, 2-researching, 3-researched)
+	research_array[howitzer_research_index][research.required_days] = 2; 						--require days
+	research_array[howitzer_research_index][research.required_staff] = 40; 						--require science staff
+	research_array[howitzer_research_index][research.icon_type] = research_icons.passability;	--research icon type (0-combat, 1-production, 2-passability)
+	research_array[howitzer_research_index][research.icon_subtype] = 5; 						--research icon subtype (see left column in the game in research menu)
+	research_array[howitzer_research_index][research.description] = 							--research text
+		"HOWITZER#A large 240mm artillery weapon repurposed for use in direct fire.";
+	research_array[data_core_index][research.link_3] = research_count;							--set link from other research, add 1 to the research number shown in debug mode, as lua starts lists with 1. For the second number, use either link 1,2 or 3
+	
+	--add research sprite
+	tmp_sprite = sprite_add(current_file_path.."sprites/howitzer_research.png", 0, false, false, 0, 0);	--research sprite
+	research_sprite_index = variable_global_get("research_items_spr");		--get the current sprite
+	researh_sprites = "";
+    if (research_sprite_index ~= -4) then
+    	researh_sprites = sprite_duplicate(research_sprite_index);
+    else
+        research_sprite_index = asset_get_index("spr_research_items");
+        researh_sprites = sprite_duplicate(research_sprite_index);
+    end
+    sprite_merge(researh_sprites, tmp_sprite);							--adds to the end of the subimg
+	variable_global_set("research_items_spr", researh_sprites);			--update the sprite variable
+	sprite_delete(tmp_sprite);											--delete only tmp_sprite. researh_sprites still contains id
+
 
 	--Use for debugging to set all to researching
 	--Debug flag is set in "obj_database.lua"

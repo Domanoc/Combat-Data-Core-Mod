@@ -7,9 +7,9 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	---------------------------
 	--DEBUG SETTINGS-----------
 	---------------------------
-	variable_global_set("debug_spawn_test_weapons", true);
-	variable_global_set("debug_spawn_test_mechs", true);
-	variable_global_set("debug_unlock_research", true);
+	variable_global_set("debug_spawn_test_weapons", false);
+	variable_global_set("debug_spawn_test_mechs", false);
+	variable_global_set("debug_unlock_research", false);
 	---------------------------
 	---------------------------
 
