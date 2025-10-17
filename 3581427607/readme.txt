@@ -1,7 +1,7 @@
 v1.2
 Added Echo mech
 Added new endgame solenoid
-Added 240mm Cannon
+Added Howitzer weapon
 Fixed the weapon overflow on the Behemoth by removing the last 2 weapon slots
 
 v1.1
