@@ -713,8 +713,7 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	--merge the big and huge sprites
 	sprite_merge(howitzer_big_sprite, howitzer_huge_sprite);
 	ds_map_add(howitzer, "sprite_big", howitzer_big_sprite);
-
-
+	
 	--return new data
 	q.weapon_stat = weapon_stat_array;
 end
@@ -731,9 +730,9 @@ end
 
 function load_game_post_event(q)
 	--Modded sprite data is not saved so we need to fix this after load
-	local v_shop = asset_get_index("obj_component_shop");
-	local v_hangar_list = {};
-	v_hangar_list = v_shop.hanger_mass;
+	local obj_component_shop = asset_get_index("obj_component_shop");
+	local hanger_mass = {};
+	hanger_mass = obj_component_shop.hanger_mass;
 
 	--Hanger identifiers
 	local hanger = {
@@ -759,32 +758,32 @@ function load_game_post_event(q)
 	local howitzer_sprite = variable_global_get("howitzer_sprite_small");
 	
 	--We step through the hanger/production items to find our modded items
-	for i, v_hangar in ipairs(v_hangar_list) do
-		if (v_hangar[2] == 1) then
+	for i, hangar in ipairs(hanger_mass) do
+		if (hangar[2] == 1) then
 			--When the reference matches the modded element we set the relevant mod sprite to the logo and logo indexes.
-			if (v_hangar[hanger.item_index] == nova_mech_index) then
-				v_hangar[hanger.logo] = nova_sprite;
-				v_hangar[hanger.logo_index] = v_hangar[hanger.logo];
-			elseif (v_hangar[hanger.item_index] == sentinel_mech_index) then
-				v_hangar[hanger.logo] = sentinel_sprite;
-				v_hangar[hanger.logo_index] = v_hangar[hanger.logo];
-			elseif (v_hangar[hanger.item_index] == behemoth_mech_index) then
-				v_hangar[hanger.logo] = behemoth_sprite;
-				v_hangar[hanger.logo_index] = v_hangar[hanger.logo];
-			elseif (v_hangar[hanger.item_index] == echo_mech_index) then
-				v_hangar[hanger.logo] = echo_sprite;
-				v_hangar[hanger.logo_index] = v_hangar[hanger.logo];
-			elseif (v_hangar[hanger.item_index] == high_tech_solenoid_index) then
-				v_hangar[hanger.logo] = high_tech_solenoid_sprite;
-				v_hangar[hanger.logo_index] = v_hangar[hanger.logo];
-			elseif (v_hangar[hanger.item_index] == howitzer_weapon_index) then
-				v_hangar[hanger.logo] = howitzer_sprite;
-				v_hangar[hanger.logo_index] = v_hangar[hanger.logo];
+			if (hangar[hanger.item_index] == nova_mech_index) then
+				hangar[hanger.logo] = nova_sprite;
+				hangar[hanger.logo_index] = hangar[hanger.logo];
+			elseif (hangar[hanger.item_index] == sentinel_mech_index) then
+				hangar[hanger.logo] = sentinel_sprite;
+				hangar[hanger.logo_index] = hangar[hanger.logo];
+			elseif (hangar[hanger.item_index] == behemoth_mech_index) then
+				hangar[hanger.logo] = behemoth_sprite;
+				hangar[hanger.logo_index] = hangar[hanger.logo];
+			elseif (hangar[hanger.item_index] == echo_mech_index) then
+				hangar[hanger.logo] = echo_sprite;
+				hangar[hanger.logo_index] = hangar[hanger.logo];
+			elseif (hangar[hanger.item_index] == high_tech_solenoid_index) then
+				hangar[hanger.logo] = high_tech_solenoid_sprite;
+				hangar[hanger.logo_index] = hangar[hanger.logo];
+			elseif (hangar[hanger.item_index] == howitzer_weapon_index) then
+				hangar[hanger.logo] = howitzer_sprite;
+				hangar[hanger.logo_index] = hangar[hanger.logo];
 			end
 		end
 	end
 
-	v_shop.hanger_mass = v_hangar_list;
+	obj_component_shop.hanger_mass = hanger_mass;
 end
 
 local update_weapon_desc = true;
