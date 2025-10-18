@@ -1,3 +1,5 @@
 thumbnail.jpg
 Mechs
 Textures
+Weapons
+Modules
