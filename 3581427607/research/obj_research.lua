@@ -1,6 +1,10 @@
-
+--We keep a list of all the researches the game has active. so we can check and update them later.
+local research_list = {};
 
 function create(q)--one time script when save is loaded
+	--While q currently holds only default values we only need to store the reference for later.
+	table.insert(research_list, q);
+	variable_global_set("loaded_research_list", research_list);
 end
 
 function research_done_before(q,res_number)

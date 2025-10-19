@@ -17,6 +17,9 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 	--path to the current file
 	local current_file_path = (mod_info[v_modid]):gsub("research/obj_research_panel.lua", "");
 
+	--We store a list of all the researches we add so we can check them later.
+	local modded_research_list = {};
+
 	--Research conditions
 	local research_conditions = {
 		closed = 0,
@@ -50,6 +53,7 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 
 	local data_core_research_index = AddResearch(data_core);
 	variable_global_set("data_core_research_index", data_core_research_index);
+	table.insert(modded_research_list, data_core_research_index);
 
 	------------------
 	--DEEP DATA CORE--
@@ -70,6 +74,7 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 
 	local deep_data_core_research_index = AddResearch(deep_data_core);
 	variable_global_set("deep_data_core_research_index", deep_data_core_research_index);
+	table.insert(modded_research_list, deep_data_core_research_index);
 
 	-------------------
 	--FINAL DATA CORE--
@@ -90,6 +95,7 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 
 	local final_data_core_research_index = AddResearch(final_data_core);
 	variable_global_set("final_data_core_research_index", final_data_core_research_index);
+	table.insert(modded_research_list, final_data_core_research_index);
 	
 	-----------------
 	--NOVA MECH------
@@ -110,6 +116,7 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 
 	local nova_research_index = AddResearch(nova_mech);
 	variable_global_set("nova_research_index", nova_research_index);
+	table.insert(modded_research_list, nova_research_index);
 
 	-----------------
 	--SENTINEL MECH--
@@ -130,6 +137,7 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 
 	local sentinel_research_index = AddResearch(sentinel_mech);
 	variable_global_set("sentinel_research_index", sentinel_research_index);
+	table.insert(modded_research_list, sentinel_research_index);
 
 	-----------------
 	--BEHEMOTH MECH--
@@ -150,6 +158,7 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 
 	local behemoth_research_index = AddResearch(echo_mech);
 	variable_global_set("behemoth_research_index", behemoth_research_index);
+	table.insert(modded_research_list, behemoth_research_index);
 
 	-----------------
 	--ECHO MECH------
@@ -170,6 +179,7 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 
 	local echo_research_index = AddResearch(echo_mech);
 	variable_global_set("echo_research_index", echo_research_index);
+	table.insert(modded_research_list, echo_research_index);
 
 	----------------------
 	--HIGH TECH SOLENOID--
@@ -190,6 +200,7 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 
 	local high_tech_solenoid_research_index = AddResearch(high_tech_solenoid);
 	variable_global_set("high_tech_solenoid_research_index", high_tech_solenoid_research_index);
+	table.insert(modded_research_list, high_tech_solenoid_research_index);
 
 	------------
 	--HOWITZER--
@@ -210,7 +221,10 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 
 	local howitzer_research_index = AddResearch(howitzer);
 	variable_global_set("howitzer_research_index", howitzer_research_index);
+	table.insert(modded_research_list, howitzer_research_index);
 
+	--Save the modded list to a global
+	variable_global_set("modded_research_list", modded_research_list);
 
 	--Use for debugging to set all to researching
 	--Debug flag is set in "obj_database.lua"

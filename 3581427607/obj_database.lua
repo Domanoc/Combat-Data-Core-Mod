@@ -832,6 +832,7 @@ function load_game_post_event(q)
 end
 
 local update_weapon_desc = true;
+local fix_research = true;
 function draw_top_menu(q)
 	--We need to update the weapon descriptions in the draw call since the ini isn't loaded in the create function
 	--however we only need to update once so we set the update_weapon_desc to false after the update to prevent repeat function spamming
@@ -857,9 +858,55 @@ function draw_top_menu(q)
 		--Use the next line to print a debug of the recorded weapon descriptions
 		--dump_table_to_message(weapon_strings.weapon_description);
     end
+
+	--We only fix the research after all the loading is done. so we can piggyback on the load flag for obj_weapon_test
+	if(is_ini_loaded == true and fix_research == true) then
+		fix_research = false;
+		--In the event the mod is added to an existing save the newly added mod research is all defaulted to 0 days remaining and condition 0 (closed).
+		--To fix this we need to validate the research states to see if its a valid state through gameplay or if its a state from loading into an existing state
+
+		local loaded_research_list = variable_global_get("loaded_research_list");
+		local modded_research_list = variable_global_get("modded_research_list");
+		local data_core_research_index = variable_global_get("data_core_research_index");
+
+		for _, v in ipairs(modded_research_list) do
+			local research = loaded_research_list[v + 1];
+			
+			if(v == data_core_research_index and research.condition == 0) then
+				--special condition since this mod has a research that is set to condition 2 on mod load we need force it back to condition 2 if it was closed.
+				--all other states should be fine: 
+				--condition 1: it would mean the player stopped the research from continueing.
+				--condition 2: was de desired state to begin with.
+				--condition 3: it is already completed so should be a correct working data set.
+
+				research.condition = 2;
+				research.require_days = research.require_days_max;
+				show_message("Fixing....: ".. tostring(v));
+			elseif(research.condition == 0 and research.require_days ~= research.require_days_max) then
+				--Condition 0 (closed) -> research has never been started/unlocked it should have the default require_days values
+				research.require_days = research.require_days_max;
+				show_message("Fixing....: ".. tostring(v));
+			elseif(research.condition == 1 and research.require_days == 0)  then
+				--Condition 1 (opened) -> it should have days remaining between 1 and require_days_max, 0 should be excluded as it would have moved to the condition 3
+				--We only care about the case where require_days is at 0 since this would indicate a newly added research that was set to opened because the linked research was completed before.
+				research.require_days = research.require_days_max;
+				show_message("Fixing....: ".. tostring(v));
+			end
+
+			--condition 2 (researching) -> should be a valid state, we can't conclude if the number of days remaining is correct other than it should be less or equal to the max value.
+			--condition 3 (researched) -> require_days should be 0
+			--both these conditions shouldn't need our attention as they are most likely part of normal gameplay
+		end		
+	end
 end
 
+local once = true;
+
 function draw_debug(q)
+	if once == false then
+		return
+	end
+	once = false;
 	--local my_table={};
 	--my_table=variable_instance_get_names(database);--saving variable names to the table
 	--for i,v in ipairs(my_table) do

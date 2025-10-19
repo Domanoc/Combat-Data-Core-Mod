@@ -1,0 +1,147 @@
+//exposed functions
+draw_text_transformed(x:real, y:real, string:string, xscale:real, yscale:real, angle:real)
+draw_text_ext(x:real, y:real, string, sep:real, w:real)
+make_colour_rgb(red:real, green:real, blue:real)
+string_height_ext(string:string, sep:real, w:real)
+string_width_ext(string:string, sep:real, w:real)
+string_height(:string)
+string_width(:string)
+draw_set_valign(valign:int)
+draw_set_halign(halign:int)
+draw_set_font(font:index)
+draw_set_color(col:index)
+show_message(value)
+ds_grid_create(w:real,h:real)
+ds_grid_write(index:real)
+ds_grid_read(index:real,str:string)
+ds_grid_set(grid:index, x:real, y:real, value:real);
+ds_grid_get(grid:index, x:real, y:real);
+ds_map_exists(id:real, key:string):bool
+ds_map_create();
+ds_map_destroy(id:real);
+ds_map_add(id:real, key:string, val:any);
+ds_map_copy(id:real, source:real);
+ds_map_find_value(id:real, key:string):
+sqrt(x:real)
+frac(x:real)
+sign(x:real)
+ceil(x:real)
+floor(x:real)
+round(x:real)
+abs(x:real)
+irandom_range(x1:real, x2:real)
+irandom(x:real)
+random_range(x1:real, x2:real)
+random(x:real)
+draw_self(self)
+draw_sprite(sprite:index, subimg:real, x:real, y:real)
+draw_sprite_ext(sprite:index, subimg:real, x:real, y:real, xscale:real, yscale:real, rot:real, :color, alpha:real)
+is_string(value):bool
+clamp(val:real, min:real, max:real):
+:instance_destroy()
+instance_create_depth(x:real, y:real, depth:real, obj:index)
+instance_exists(obj:index)
+instance_real(obj:index)
+instance_nearest(x:real, y:real, obj:index)
+instance_furthest(x:real, y:real, obj:index)
+instance_place(x:real, y:real, obj:index)
+place_free(x:real, y:real)
+place_empty(x:real, y:real)
+place_meeting(x:real, y:real, obj:index)
+distance_to_point(x:real, y:real)
+distance_to_object(obj:index)
+collision_point(x:real, y:real, obj:index, prec:bool, notme:bool)
+collision_line(x1:real, y1:real, x2:real, y2:real, obj:index, prec, notme)
+approach(value:real, target:real, delta:real)
+exp(x:real)
+ln(x:real)
+log2(x:real)
+log10(x:real)
+sin(radian_angle:real)
+cos(radian_angle:real)
+tan(radian_angle:real)
+arcsin(x:real)
+arccos(x:real)
+arctan(x:real)
+arctan2(y:real, x:real)
+dsin(degree_angle:real)
+dcos(degree_angle:real)
+dtan(degree_angle:real)
+darcsin(x:real)
+darccos(x:real)
+darctan(x:real)
+darctan2(y:real, x:real)
+degtorad(x:real)
+radtodeg(x:real)
+power(x:real, n:real)
+logn(n:real, x:real)
+lerp(val1:real, val2:real, amount:real)
+dot_product(x1:real, y1:real, x2:real, y2:real)
+dot_product_3d(x1:real, y1:real, z1:real, x2:real, y2:real, z2:real)
+dot_product_normalised(x1:real, y1:real, x2:real, y2:real)
+dot_product_3d_normalised(x1:real, y1:real, z1:real, x2:real, y2:real, z2:real)
+angle_difference(src:real, dest:real)
+point_distance_3d(x1:real, y1:real, z1:real, x2:real, y2:real, z2:real)
+point_distance(x1:real, y1:real, x2:real, y2:real)
+point_direction(x1:real, y1:real, x2:real, y2:real)
+lengthdir_x(len:real, dir:real)
+lengthdir_y(len:real, dir:real)
+ini_open(pathname:string)
+ini_close()
+ini_read_string(section:string, key:string, default:string)
+ini_write_string(section:string, key:string, value:string)
+ini_read_real(section:string, key:string, default:real)
+ini_write_real(section:string, key:string, value:real)
+sprite_replace(ind:assetind, fname:string, imgnumb:real, removeback:bool, smooth:bool, xorig:real, yorig:real)
+sprite_add(fname:string, imgnumb:real, removeback:bool, smooth:bool, xorig:real, yorig:real)
+sprite_merge(ind1:real, ind2:real);
+sprite_duplicate(index:real):real;
+sprite_delete(index:real);
+asset_get_index(name:string)
+variable_global_get(name:string)
+variable_global_set(name:string, val:any)
+variable_global_exists(name:string):bool
+variable_instance_get_names(instance_id/global:real)
+variable_instance_exists(instance_id:real, name:string):bool;
+variable_instance_get(instance_id:real, name:string):any;
+variable_instance_set(instance_id:real, name:string, val:any)
+surface_exists(surface_id:real)
+surface_create(width:real, height:real)
+surface_set_target(surface_id:real)
+surface_reset_target()
+surface_free(surface_id:real)
+draw_surface(id:real, x:real, y:real);
+draw_surface_tiled(id:real, x:real, y:real);
+surface_save(surface_id:real, fname:string);
+draw_clear_alpha(col_id:real, alpha:real);
+draw_set_alpha(alpha:real);
+sprite_get_name(index:real):string
+keyboard_check(key:utf8):bool
+keyboard_check_pressed(key:utf8):bool
+keyboard_check_released(key:utf8):bool
+ord(character:string):utf8
+mouse_check_button(numb:real):bool
+mouse_check_button_pressed(numb:real):bool
+mouse_check_button_released(numb:real):bool
+mb_left		= 1
+mb_right	= 2
+mb_middle	= 3
+mb_side1	= 4
+md_side2	= 5
+mb_any		= -1
+mb_none		= 0
+window_mouse_get_x():real
+window_mouse_get_y():real
+window_views_mouse_get_x():real
+window_views_mouse_get_y():real
+window_view_mouse_get_x( number ):real	//usually 0 for engineering, 2 for battle
+window_view_mouse_get_y( number ):real
+lua_create_bullet()  //creates a bullet inside obj_ally scripts
+ds_map_keys_to_array(id:real) //returns array with keys as strings
+struct_get_names(id:real) //returns array with keys as strings
+sprite_collision_mask(ind:number, sepmasks:number, bboxmode:number, bbleft:number, bbtop:number, bbright:number, bbbottom:number, kind:number, tolerance:number) returns n/a
+kinds:
+bboxkind_precise=0
+bboxkind_rectangular=1
+bboxkind_ellipse=2
+bboxkind_diamond=3
