@@ -13,35 +13,37 @@ function create(q)--one time script when save is loaded
 		return
 	end
 
+	--add a howitzer weapon on a new save
+	AddWeapon(variable_global_get("howitzer_weapon_index"), false);
+	--add a howitzer weapon (huge) on a new save
+	AddWeapon(variable_global_get("howitzer_weapon_index"), true);
+
+	--add a exp weapon on a new save
+	AddWeapon(variable_global_get("laser_pulse_cannon_weapon_index"), false);
+	--add a exp weapon (huge) on a new save
+	AddWeapon(variable_global_get("laser_pulse_cannon_weapon_index"), true);
+end
+
+function AddWeapon(weapon_number, huge)
+	local obj_content_weapons = asset_get_index("obj_content_weapons");
+
 	--Copy the array to the working set
 	local list_weapon = {};
-	list_weapon = q.list_weapon;
+	list_weapon = obj_content_weapons.list_weapon;
 
-
-	-- add a howitzer weapon on a new save
-	local number_of_items = q.number_of_items + 1;
+	local number_of_items = obj_content_weapons.number_of_items + 1;
 	local obj_weapon_item = asset_get_index("obj_weapon_item");
 	list_weapon[number_of_items] = instance_create_depth(0, 0, 0, obj_weapon_item);
 	local added_weapon = list_weapon[number_of_items];
 	added_weapon.my_num = 			number_of_items - 1;
-	added_weapon.weapon_number = 	variable_global_get("howitzer_weapon_index");
+	added_weapon.weapon_number = 	weapon_number;
 	added_weapon.start_x = 			8;
 	added_weapon.start_y = 			266;
+	added_weapon.size_huge = 		huge;
 
-	-- add a howitzer weapon (huge) on a new save
-	number_of_items = number_of_items + 1;
-	obj_weapon_item = asset_get_index("obj_weapon_item");
-	list_weapon[number_of_items] = instance_create_depth(0, 0, 0, obj_weapon_item);
-	added_weapon = list_weapon[number_of_items];
-	added_weapon.my_num = 			number_of_items - 1;
-	added_weapon.weapon_number = 	variable_global_get("howitzer_weapon_index");
-	added_weapon.start_x = 			8;
-	added_weapon.start_y = 			266;
-	added_weapon.size_huge = 		true;
-	
 	--return new data
-	q.list_weapon = list_weapon;
-	q.number_of_items = number_of_items;
+	obj_content_weapons.list_weapon = list_weapon;
+	obj_content_weapons.number_of_items = number_of_items;
 end
 
 

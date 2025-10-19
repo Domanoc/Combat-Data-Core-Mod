@@ -13,63 +13,37 @@ function create(q,v_modid) -- one time script when save is loaded
 		return
 	end
 
+	--add a nova mech on a new save
+	AddMech(variable_global_get("nova_mech_index"), "NovaTest")
+	--add a echo mech on a new save
+	AddMech(variable_global_get("echo_mech_index"), "EchoTest")
+	--add a sentinel mech on a new save
+	AddMech(variable_global_get("sentinel_mech_index"), "SentinelTest")
+	--add a behemoth mech on a new save
+	AddMech(variable_global_get("behemoth_mech_index"), "BehemothTest")
+end
+
+function AddMech(mech_number, name)
+	local obj_content_mechs = asset_get_index("obj_content_mechs");
+
 	--Copy the array to the working set
 	local list_mech = {};
-	list_mech = q.list_mech;
+	list_mech = obj_content_mechs.list_mech;
 
-	
-	-- add a echo mech on a new save
-	local number_of_items = q.number_of_items + 1;
+	local number_of_items = obj_content_mechs.number_of_items + 1;
 	local obj_mech_item = asset_get_index("obj_mech_item");
 	list_mech[number_of_items] = instance_create_depth(0, 0, 0, obj_mech_item);
 	local added_mech = list_mech[number_of_items];
 	added_mech.my_num = 		number_of_items - 1;
-	added_mech.mech_number = 	variable_global_get("echo_mech_index");
-	added_mech.mech_name = 		"EchoTest"
+	added_mech.mech_number = 	mech_number;
+	added_mech.mech_name = 		name
 	added_mech.start_x = 		8;
 	added_mech.start_y = 		266;
 	added_mech.new_module = 	0;
-
-	-- add a behemoth mech on a new save
-	number_of_items = number_of_items + 1;
-	obj_mech_item = asset_get_index("obj_mech_item");
-	list_mech[number_of_items] = instance_create_depth(0, 0, 0, obj_mech_item);
-	added_mech = list_mech[number_of_items];
-	added_mech.my_num = 		number_of_items - 1;
-	added_mech.mech_number = 	variable_global_get("behemoth_mech_index");
-	added_mech.mech_name = 		"BehemothTest"
-	added_mech.start_x = 		8;
-	added_mech.start_y = 		266;
-	added_mech.new_module = 	0;
-
-	-- add a sentinel mech on a new save
-	number_of_items = number_of_items + 1;
-	obj_mech_item = asset_get_index("obj_mech_item");
-	list_mech[number_of_items] = instance_create_depth(0, 0, 0, obj_mech_item);
-	added_mech = list_mech[number_of_items];
-	added_mech.my_num = 		number_of_items - 1;
-	added_mech.mech_number = 	variable_global_get("sentinel_mech_index");
-	added_mech.mech_name = 		"SentinelTest"
-	added_mech.start_x = 		8;
-	added_mech.start_y = 		266;
-	added_mech.new_module = 	0;
-
-	-- add a nova mech on a new save
-	number_of_items = number_of_items + 1;
-	obj_mech_item = asset_get_index("obj_mech_item");
-	list_mech[number_of_items] = instance_create_depth(0, 0, 0, obj_mech_item);
-	added_mech = list_mech[number_of_items];
-	added_mech.my_num = 		number_of_items - 1;
-	added_mech.mech_number = 	variable_global_get("nova_mech_index");
-	added_mech.mech_name = 		"NovaTest"
-	added_mech.start_x = 		8;
-	added_mech.start_y = 		266;
-	added_mech.new_module = 	0;
-
 
 	--return new data
-	q.list_mech = list_mech;
-	q.number_of_items = number_of_items;
+	obj_content_mechs.list_mech = list_mech;
+	obj_content_mechs.number_of_items = number_of_items;
 end
 
 

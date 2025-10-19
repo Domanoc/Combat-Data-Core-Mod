@@ -7,7 +7,7 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	---------------------------
 	--DEBUG SETTINGS-----------
 	---------------------------
-	variable_global_set("debug_spawn_test_weapons", false);
+	variable_global_set("debug_spawn_test_weapons", true);
 	variable_global_set("debug_spawn_test_mechs", false);
 	variable_global_set("debug_unlock_research", false);
 	---------------------------
@@ -713,7 +713,49 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	--merge the big and huge sprites
 	sprite_merge(howitzer_big_sprite, howitzer_huge_sprite);
 	ds_map_add(howitzer, "sprite_big", howitzer_big_sprite);
-	
+
+	----------------------
+	--LASER PULSE CANNON--
+	----------------------
+	local laser_pulse_cannon_weapon_index = #weapon_stat_array + 1;
+	variable_global_set("laser_pulse_cannon_weapon_index", #weapon_stat_array);
+	weapon_stat_array[laser_pulse_cannon_weapon_index] = ds_map_create();
+	local exp = weapon_stat_array[laser_pulse_cannon_weapon_index];
+
+	--ENGINEERING PRICE
+	ds_map_add(exp, "price_metallite",		200);
+	ds_map_add(exp, "price_bjorn",			50);
+	ds_map_add(exp, "price_munilon",		30);
+	ds_map_add(exp, "price_skalaknit",		60);
+	ds_map_add(exp, "price_staff",			70);
+	ds_map_add(exp, "days",					4);
+
+	--STATS
+	ds_map_add(exp, "hp",					1000);
+	ds_map_add(exp, "type",					weapon_types.blue); --type of weapon ("white", "red", "blue", "yellow")
+	ds_map_add(exp, "number",				3);		--doesn't seem to do anything
+	ds_map_add(exp, "start_fire_speed",		600);	--600 with full firespeed points will fill the firespeed bar completely
+	ds_map_add(exp, "start_weight",			48);	--base weight
+	ds_map_add(exp, "start_accuracy",		25);	--acceracy in degrees, 0 is perfect acceracy
+	ds_map_add(exp, "start_energy",			5);		--energy requirement
+	ds_map_add(exp, "start_damage",			1);		--base damage value
+	ds_map_add(exp, "start_penetration",	50);	--base penetration value
+	ds_map_add(exp, "start_speed",			5);		--the speed of the projectile
+	ds_map_add(exp, "energy_buffed",		1);		--can't	be improved with bonus energy
+
+	--SPRITES
+	--small sprite
+	local exp_small_sprite = sprite_add(current_file_path.."sprites/laser_pulse_cannon_small.png", 0, false, false, 0, 0);
+	variable_global_set("exp_sprite_small", exp_small_sprite);
+	ds_map_add(exp, "sprite", exp_small_sprite);
+	--huge sprite
+	local exp_huge_sprite = sprite_add(current_file_path.."sprites/laser_pulse_cannon_huge.png", 0, false, false, 199, 134);
+	--big sprite
+	local exp_big_sprite = sprite_add(current_file_path.."sprites/laser_pulse_cannon_big.png", 0, false, false, 199, 134);
+	--merge the big and huge sprites
+	sprite_merge(exp_big_sprite, exp_huge_sprite);
+	ds_map_add(exp, "sprite_big", exp_big_sprite);
+
 	--return new data
 	q.weapon_stat = weapon_stat_array;
 end
@@ -731,6 +773,8 @@ end
 function load_game_post_event(q)
 	--Modded sprite data is not saved so we need to fix this after load
 	local obj_component_shop = asset_get_index("obj_component_shop");
+
+	--Copy the array to the working set
 	local hanger_mass = {};
 	hanger_mass = obj_component_shop.hanger_mass;
 
@@ -783,6 +827,7 @@ function load_game_post_event(q)
 		end
 	end
 
+	--send array back
 	obj_component_shop.hanger_mass = hanger_mass;
 end
 
@@ -802,6 +847,9 @@ function draw_top_menu(q)
 
 		local howitzer_weapon_index = variable_global_get("howitzer_weapon_index") + 1; --need to offset by 1 to use the index here
 		weapon_description_array[howitzer_weapon_index] = "240-MM HOWITZER GUN.";
+
+		local laser_pulse_cannon_weapon_index = variable_global_get("laser_pulse_cannon_weapon_index") + 1; --need to offset by 1 to use the index here
+		weapon_description_array[laser_pulse_cannon_weapon_index] = "EXTENDED RANGE LASER PULSE CANNON.";
 
 		--return new data
 		weapon_strings.weapon_description = weapon_description_array;

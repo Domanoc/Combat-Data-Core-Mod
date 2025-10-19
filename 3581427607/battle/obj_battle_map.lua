@@ -67,7 +67,7 @@ end
 function battle_end_scout_mechs_dead(q)	--when battle ends, mechs dead. for regular scout maps
 end
 
-function battle_end_scout_win(q)	--when battle ends, mechs wiin. for regular scout maps
+function battle_end_scout_win(q)	--when battle ends, mechs win. for regular scout maps
 end
 
 function battle_end(q)

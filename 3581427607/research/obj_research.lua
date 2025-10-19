@@ -9,7 +9,6 @@ function research_done_before(q,res_number)
 end;
 
 function research_done(q, res_number)	--if research is done and when loading the game, res_number=number of research in obj_research_panel massive
-	
 	-----------------
 	--NOVA MECH------
 	-----------------
@@ -20,22 +19,7 @@ function research_done(q, res_number)	--if research is done and when loading the
 		nova_mech_component.researched = 1;		--1=true, opens weapon for production
 		if (q.give_item == true) then			--gives free mech
 			q.give_item = 0;					--0=false
-			local obj_content_mechs = asset_get_index("obj_content_mechs");
-			local list_mech = {};
-			list_mech = obj_content_mechs.list_mech;
-			local number_of_items = obj_content_mechs.number_of_items + 1;
-
-			local obj_mech_item = asset_get_index("obj_mech_item");
-			list_mech[number_of_items] = instance_create_depth(0, 0, 0, obj_mech_item);
-			local added_mech = list_mech[number_of_items];
-			added_mech.my_num = 		number_of_items - 1;
-			added_mech.mech_number = 	variable_global_get("nova_mech_index");
-			added_mech.start_x = 		8;
-			added_mech.start_y = 		266;
-			added_mech.new_module = 	1;
-
-			obj_content_mechs.list_mech = list_mech;
-			obj_content_mechs.number_of_items = number_of_items;
+			AddMech(variable_global_get("nova_mech_index"));
 		end
 	end
 
@@ -49,22 +33,7 @@ function research_done(q, res_number)	--if research is done and when loading the
 		sentinel_mech_component.researched = 1;		--1=true, opens weapon for production
 		if (q.give_item == true) then				--gives free mech
 			q.give_item = 0;						--0=false
-			local obj_content_mechs = asset_get_index("obj_content_mechs");
-			local list_mech = {};
-			list_mech = obj_content_mechs.list_mech;
-			local number_of_items = obj_content_mechs.number_of_items + 1;
-
-			local obj_mech_item = asset_get_index("obj_mech_item");
-			list_mech[number_of_items] = instance_create_depth(0, 0, 0, obj_mech_item);
-			local added_mech = list_mech[number_of_items];
-			added_mech.my_num = 		number_of_items - 1;
-			added_mech.mech_number = 	variable_global_get("sentinel_mech_index");
-			added_mech.start_x = 		8;
-			added_mech.start_y = 		266;
-			added_mech.new_module = 	1;
-
-			obj_content_mechs.list_mech = list_mech;
-			obj_content_mechs.number_of_items = number_of_items;
+			AddMech(variable_global_get("sentinel_mech_index"));
 		end
 	end
 	
@@ -78,22 +47,7 @@ function research_done(q, res_number)	--if research is done and when loading the
 		behemoth_mech_component.researched = 1;		--1=true, opens weapon for production
 		if (q.give_item == true) then				--gives free mech
 			q.give_item = 0;						--0=false
-			local obj_content_mechs = asset_get_index("obj_content_mechs");
-			local list_mech = {};
-			list_mech = obj_content_mechs.list_mech;
-			local number_of_items = obj_content_mechs.number_of_items + 1;
-
-			local obj_mech_item = asset_get_index("obj_mech_item");
-			list_mech[number_of_items] = instance_create_depth(0, 0, 0, obj_mech_item);
-			local added_mech = list_mech[number_of_items];
-			added_mech.my_num = 		number_of_items - 1;
-			added_mech.mech_number = 	variable_global_get("behemoth_mech_index");
-			added_mech.start_x = 		8;
-			added_mech.start_y = 		266;
-			added_mech.new_module = 	1;
-
-			obj_content_mechs.list_mech = list_mech;
-			obj_content_mechs.number_of_items = number_of_items;
+			AddMech(variable_global_get("behemoth_mech_index"));
 		end
 	end
 
@@ -107,22 +61,7 @@ function research_done(q, res_number)	--if research is done and when loading the
 		echo_mech_component.researched = 1;		--1=true, opens weapon for production
 		if (q.give_item == true) then			--gives free mech
 			q.give_item = 0;					--0=false
-			local obj_content_mechs = asset_get_index("obj_content_mechs");
-			local list_mech = {};
-			list_mech = obj_content_mechs.list_mech;
-			local number_of_items = obj_content_mechs.number_of_items + 1;
-
-			local obj_mech_item = asset_get_index("obj_mech_item");
-			list_mech[number_of_items] = instance_create_depth(0, 0, 0, obj_mech_item);
-			local added_mech = list_mech[number_of_items];
-			added_mech.my_num = 		number_of_items - 1;
-			added_mech.mech_number = 	variable_global_get("echo_mech_index");
-			added_mech.start_x = 		8;
-			added_mech.start_y = 		266;
-			added_mech.new_module = 	1;
-
-			obj_content_mechs.list_mech = list_mech;
-			obj_content_mechs.number_of_items = number_of_items;
+			AddMech(variable_global_get("echo_mech_index"));
 		end
 	end
 
@@ -136,22 +75,7 @@ function research_done(q, res_number)	--if research is done and when loading the
 		high_tech_solenoid_component.researched = 1;	--1=true, opens weapon for production
 		if (q.give_item == true) then					--gives free mech
 			q.give_item = 0;							--0=false
-			local obj_content_solenoid = asset_get_index("obj_content_solenoid");
-			local list_solenoid = {};
-			list_solenoid = obj_content_solenoid.list_solenoid;
-			local number_of_items = obj_content_solenoid.number_of_items + 1;
-
-			local obj_solenoid_item = asset_get_index("obj_solenoid_item");
-			list_solenoid[number_of_items] = instance_create_depth(0, 0, 0, obj_solenoid_item);
-			local added_solenoid = list_solenoid[number_of_items];
-			added_solenoid.my_num = 			number_of_items - 1;
-			added_solenoid.solenoid_number = 	variable_global_get("high_tech_solenoid_index");
-			added_solenoid.start_x = 			8;
-			added_solenoid.start_y = 			266;
-			added_solenoid.new_module = 		1;
-
-			obj_content_solenoid.list_solenoid = list_solenoid;
-			obj_content_solenoid.number_of_items = number_of_items;
+			AddSolenoid(variable_global_get("high_tech_solenoid_index"));
 		end
 	end
 
@@ -165,24 +89,66 @@ function research_done(q, res_number)	--if research is done and when loading the
 		howitzer_component.researched = 1;	--1=true, opens weapon for production
 		if (q.give_item == true) then		--gives free mech
 			q.give_item = 0;				--0=false
-			local obj_content_weapons = asset_get_index("obj_content_weapons");
-			local list_weapon = {};
-			list_weapon = obj_content_weapons.list_weapon;
-			local number_of_items = obj_content_weapons.number_of_items + 1;
-
-			local obj_weapon_item = asset_get_index("obj_weapon_item");
-			list_weapon[number_of_items] = instance_create_depth(0, 0, 0, obj_weapon_item);
-			local added_weapon = list_weapon[number_of_items];
-			added_weapon.my_num = 			number_of_items - 1;
-			added_weapon.weapon_number = 	variable_global_get("howitzer_weapon_index");
-			added_weapon.start_x = 			8;
-			added_weapon.start_y = 			266;
-			added_weapon.new_module = 		1;
-			
-			obj_content_weapons.list_weapon = list_weapon;
-			obj_content_weapons.number_of_items = number_of_items;
+			AddWeapon(variable_global_get("howitzer_weapon_index"));
 		end
 	end
+end
+
+function AddMech(mech_number)
+	local obj_content_mechs = asset_get_index("obj_content_mechs");
+	local list_mech = {};
+	list_mech = obj_content_mechs.list_mech;
+	local number_of_items = obj_content_mechs.number_of_items + 1;
+
+	local obj_mech_item = asset_get_index("obj_mech_item");
+	list_mech[number_of_items] = instance_create_depth(0, 0, 0, obj_mech_item);
+	local added_mech = list_mech[number_of_items];
+	added_mech.my_num = 		number_of_items - 1;
+	added_mech.mech_number = 	mech_number;
+	added_mech.start_x = 		8;
+	added_mech.start_y = 		266;
+	added_mech.new_module = 	1;
+
+	obj_content_mechs.list_mech = list_mech;
+	obj_content_mechs.number_of_items = number_of_items;
+end
+
+function AddSolenoid(solenoid_number)
+	local obj_content_solenoid = asset_get_index("obj_content_solenoid");
+	local list_solenoid = {};
+	list_solenoid = obj_content_solenoid.list_solenoid;
+	local number_of_items = obj_content_solenoid.number_of_items + 1;
+
+	local obj_solenoid_item = asset_get_index("obj_solenoid_item");
+	list_solenoid[number_of_items] = instance_create_depth(0, 0, 0, obj_solenoid_item);
+	local added_solenoid = list_solenoid[number_of_items];
+	added_solenoid.my_num = 			number_of_items - 1;
+	added_solenoid.solenoid_number = 	solenoid_number;
+	added_solenoid.start_x = 			8;
+	added_solenoid.start_y = 			266;
+	added_solenoid.new_module = 		1;
+
+	obj_content_solenoid.list_solenoid = list_solenoid;
+	obj_content_solenoid.number_of_items = number_of_items;
+end
+
+function AddWeapon(weapon_number)
+	local obj_content_weapons = asset_get_index("obj_content_weapons");
+	local list_weapon = {};
+	list_weapon = obj_content_weapons.list_weapon;
+	local number_of_items = obj_content_weapons.number_of_items + 1;
+
+	local obj_weapon_item = asset_get_index("obj_weapon_item");
+	list_weapon[number_of_items] = instance_create_depth(0, 0, 0, obj_weapon_item);
+	local added_weapon = list_weapon[number_of_items];
+	added_weapon.my_num = 			number_of_items - 1;
+	added_weapon.weapon_number = 	weapon_number;
+	added_weapon.start_x = 			8;
+	added_weapon.start_y = 			266;
+	added_weapon.new_module = 		1;
+	
+	obj_content_weapons.list_weapon = list_weapon;
+	obj_content_weapons.number_of_items = number_of_items;
 end
 
 
