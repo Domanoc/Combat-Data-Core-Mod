@@ -926,13 +926,14 @@ end
 --DEBUG HELPER FUNCTIONS--
 --------------------------
 
---Prints a messagebox with the key and values of the table
---provide the reference id to the table
---The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
-function dump_struct_to_message(id)
+---Prints a messagebox with the key and values of the gamemaker struct
+---provide the reference id to the table
+---The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
+---@param ref any the Gamemaker struct reference
+function dump_struct_to_message(ref)
 	local values = {};
-    for k, v in pairs(struct_get_names(id)) do
-        table.insert(values, tostring(k).."::"..tostring(v).."::"..tostring(id[v]));
+    for k, v in pairs(struct_get_names(ref)) do
+        table.insert(values, tostring(k).."::"..tostring(v).."::"..tostring(ref[v]));
     end
     local message = table.concat(values, ",\n");
 	show_message(message);
@@ -941,22 +942,24 @@ end
 --Prints a messagebox with the key and values of the table
 --provide the reference id to the table
 --The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
-function dump_table_to_message(id)
+---@param ref any the reference to the table
+function dump_table_to_message(ref)
 	local values = {};
-    for k, v in pairs(id) do
+    for k, v in pairs(ref) do
         table.insert(values, tostring(k).."::"..tostring(v));
     end
     local message = table.concat(values, ",\n");
 	show_message(message);
 end
 
---Prints a messagebox with the key and values of the ds_map
+--Prints a messagebox with the key and values of the gamemaker ds_map
 --provide the reference id to the ds_map
 --The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
-function dump_ds_map_to_message(id)
+---@param ref any the reference to the ds_map
+function dump_ds_map_to_message(ref)
 	local values = {};
-    for k, v in pairs(ds_map_keys_to_array(id)) do
-        table.insert(values, tostring(k).."::"..tostring(v).."::"..tostring(ds_map_find_value(id, v)));
+    for k, v in pairs(ds_map_keys_to_array(ref)) do
+        table.insert(values, tostring(k).."::"..tostring(v).."::"..tostring(ds_map_find_value(ref, v)));
     end
     local message = table.concat(values, ",\n");
 	show_message(message);
