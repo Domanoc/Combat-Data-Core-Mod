@@ -1,4 +1,6 @@
 v1.3
+Added Extended Range Laser Pulse Cannon.
+Fixed research bug when adding mod to and existing save.
 Cleaned the code to make it easier to add new items.
 
 v1.2

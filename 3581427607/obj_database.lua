@@ -7,7 +7,7 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	---------------------------
 	--DEBUG SETTINGS-----------
 	---------------------------
-	variable_global_set("debug_spawn_test_weapons", true);
+	variable_global_set("debug_spawn_test_weapons", false);
 	variable_global_set("debug_spawn_test_mechs", false);
 	variable_global_set("debug_unlock_research", false);
 	---------------------------
@@ -685,7 +685,7 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	ds_map_add(howitzer, "price_bjorn",			50);
 	ds_map_add(howitzer, "price_munilon",		30);
 	ds_map_add(howitzer, "price_skalaknit",		60);
-	ds_map_add(howitzer, "price_staff",			70);
+	ds_map_add(howitzer, "price_staff",			45);
 	ds_map_add(howitzer, "days",				4);
 
 	--STATS
@@ -721,40 +721,41 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	variable_global_set("laser_pulse_cannon_weapon_index", #weapon_stat_array);
 	weapon_stat_array[laser_pulse_cannon_weapon_index] = ds_map_create();
 	local exp = weapon_stat_array[laser_pulse_cannon_weapon_index];
+	variable_global_set("laser_pulse_cannon_weapon_range", 2000);
 
 	--ENGINEERING PRICE
-	ds_map_add(exp, "price_metallite",		200);
-	ds_map_add(exp, "price_bjorn",			50);
-	ds_map_add(exp, "price_munilon",		30);
-	ds_map_add(exp, "price_skalaknit",		60);
-	ds_map_add(exp, "price_staff",			70);
-	ds_map_add(exp, "days",					4);
+	ds_map_add(exp, "price_metallite",		250);
+	ds_map_add(exp, "price_bjorn",			245);
+	ds_map_add(exp, "price_munilon",		500);
+	ds_map_add(exp, "price_skalaknit",		130);
+	ds_map_add(exp, "price_staff",			110);
+	ds_map_add(exp, "days",					8);
 
 	--STATS
 	ds_map_add(exp, "hp",					1000);
 	ds_map_add(exp, "type",					weapon_types.blue); --type of weapon ("white", "red", "blue", "yellow")
 	ds_map_add(exp, "number",				3);		--doesn't seem to do anything
 	ds_map_add(exp, "start_fire_speed",		600);	--600 with full firespeed points will fill the firespeed bar completely
-	ds_map_add(exp, "start_weight",			48);	--base weight
-	ds_map_add(exp, "start_accuracy",		25);	--acceracy in degrees, 0 is perfect acceracy
-	ds_map_add(exp, "start_energy",			5);		--energy requirement
-	ds_map_add(exp, "start_damage",			1);		--base damage value
-	ds_map_add(exp, "start_penetration",	50);	--base penetration value
-	ds_map_add(exp, "start_speed",			5);		--the speed of the projectile
-	ds_map_add(exp, "energy_buffed",		1);		--can't	be improved with bonus energy
+	ds_map_add(exp, "start_weight",			80);	--base weight
+	ds_map_add(exp, "start_accuracy",		0);		--acceracy in degrees, 0 is perfect acceracy
+	ds_map_add(exp, "start_energy",			10);	--energy requirement
+	ds_map_add(exp, "start_damage",			40);	--base damage value
+	ds_map_add(exp, "start_penetration",	5);		--base penetration value
+	ds_map_add(exp, "start_speed",			0);		--the speed of the projectile
+	ds_map_add(exp, "energy_buffed",		0);		--can't	be improved with bonus energy
 
 	--SPRITES
 	--small sprite
-	local exp_small_sprite = sprite_add(current_file_path.."sprites/laser_pulse_cannon_small.png", 0, false, false, 0, 0);
-	variable_global_set("exp_sprite_small", exp_small_sprite);
-	ds_map_add(exp, "sprite", exp_small_sprite);
+	local laser_pulse_cannon_small_sprite = sprite_add(current_file_path.."sprites/laser_pulse_cannon_small.png", 0, false, false, 0, 0);
+	variable_global_set("laser_pulse_cannon_small_sprite", laser_pulse_cannon_small_sprite);
+	ds_map_add(exp, "sprite", laser_pulse_cannon_small_sprite);
 	--huge sprite
-	local exp_huge_sprite = sprite_add(current_file_path.."sprites/laser_pulse_cannon_huge.png", 0, false, false, 199, 134);
+	local laser_pulse_cannon_huge_sprite = sprite_add(current_file_path.."sprites/laser_pulse_cannon_huge.png", 0, false, false, 199, 134);
 	--big sprite
-	local exp_big_sprite = sprite_add(current_file_path.."sprites/laser_pulse_cannon_big.png", 0, false, false, 199, 134);
+	local laser_pulse_cannon_big_sprite = sprite_add(current_file_path.."sprites/laser_pulse_cannon_big.png", 0, false, false, 199, 134);
 	--merge the big and huge sprites
-	sprite_merge(exp_big_sprite, exp_huge_sprite);
-	ds_map_add(exp, "sprite_big", exp_big_sprite);
+	sprite_merge(laser_pulse_cannon_big_sprite, laser_pulse_cannon_huge_sprite);
+	ds_map_add(exp, "sprite_big", laser_pulse_cannon_big_sprite);
 
 	--return new data
 	q.weapon_stat = weapon_stat_array;
@@ -792,6 +793,7 @@ function load_game_post_event(q)
 	local echo_mech_index = variable_global_get("echo_mech_index");
 	local high_tech_solenoid_index = variable_global_get("high_tech_solenoid_index");
 	local howitzer_weapon_index = variable_global_get("howitzer_weapon_index");
+	local laser_pulse_cannon_weapon_index = variable_global_get("laser_pulse_cannon_weapon_index");
 
 	--Our Modded sprites
 	local nova_sprite = variable_global_get("nova_sprite_small");
@@ -800,6 +802,7 @@ function load_game_post_event(q)
 	local echo_sprite = variable_global_get("echo_sprite_small");
 	local high_tech_solenoid_sprite = variable_global_get("high_tech_solenoid_sprite_small");
 	local howitzer_sprite = variable_global_get("howitzer_sprite_small");
+	local laser_pulse_cannon_small_sprite = variable_global_get("laser_pulse_cannon_small_sprite");
 	
 	--We step through the hanger/production items to find our modded items
 	for i, hangar in ipairs(hanger_mass) do
@@ -822,6 +825,9 @@ function load_game_post_event(q)
 				hangar[hanger.logo_index] = hangar[hanger.logo];
 			elseif (hangar[hanger.item_index] == howitzer_weapon_index) then
 				hangar[hanger.logo] = howitzer_sprite;
+				hangar[hanger.logo_index] = hangar[hanger.logo];
+			elseif (hangar[hanger.item_index] == laser_pulse_cannon_weapon_index) then
+				hangar[hanger.logo] = laser_pulse_cannon_small_sprite;
 				hangar[hanger.logo_index] = hangar[hanger.logo];
 			end
 		end
@@ -850,7 +856,7 @@ function draw_top_menu(q)
 		weapon_description_array[howitzer_weapon_index] = "240-MM HOWITZER GUN.";
 
 		local laser_pulse_cannon_weapon_index = variable_global_get("laser_pulse_cannon_weapon_index") + 1; --need to offset by 1 to use the index here
-		weapon_description_array[laser_pulse_cannon_weapon_index] = "EXTENDED RANGE LASER PULSE CANNON.";
+		weapon_description_array[laser_pulse_cannon_weapon_index] = "EXTENDED RANGE LASER PULSE CANNON.#Uses an internal power unit to provide most of the energy. Can be boosted by providing additional power.";
 
 		--return new data
 		weapon_strings.weapon_description = weapon_description_array;
@@ -881,16 +887,13 @@ function draw_top_menu(q)
 
 				research.condition = 2;
 				research.require_days = research.require_days_max;
-				show_message("Fixing....: ".. tostring(v));
 			elseif(research.condition == 0 and research.require_days ~= research.require_days_max) then
 				--Condition 0 (closed) -> research has never been started/unlocked it should have the default require_days values
 				research.require_days = research.require_days_max;
-				show_message("Fixing....: ".. tostring(v));
 			elseif(research.condition == 1 and research.require_days == 0)  then
 				--Condition 1 (opened) -> it should have days remaining between 1 and require_days_max, 0 should be excluded as it would have moved to the condition 3
 				--We only care about the case where require_days is at 0 since this would indicate a newly added research that was set to opened because the linked research was completed before.
 				research.require_days = research.require_days_max;
-				show_message("Fixing....: ".. tostring(v));
 			end
 
 			--condition 2 (researching) -> should be a valid state, we can't conclude if the number of days remaining is correct other than it should be less or equal to the max value.

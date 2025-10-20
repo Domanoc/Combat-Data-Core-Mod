@@ -18,24 +18,22 @@ end
 
 
 function draw_mechs(q,cur_item)		--draws buttons and some info, cut_item contains id of the installed module
+	--since we cant modify the range of laser weapons during the creation we need to update it when its used
 	if (cur_item ~= -4) then
-		
+		if(cur_item.weapon_number == variable_global_get("laser_pulse_cannon_weapon_index")) then
+			cur_item.blue_length = variable_global_get("laser_pulse_cannon_weapon_range");
+		end
 	end
 end
 
 function draw_reactors(q,cur_item)		--draws buttons and some info, cut_item contains id of the installed module
 end
 
-local once = true;
-
 function draw_weapons(q,cur_item)		--draws buttons and some info, cut_item contains id of the installed module
+	--since we cant modify the range of laser weapons during the creation we need to update it when its used
 	if (cur_item ~= -4) then
-		--cur_item.homing_power = 1.3;
-
-		if(once == true) then
-			--dump_struct_to_message(cur_item);
-			once = false;
-			return
+		if(cur_item.weapon_number == variable_global_get("laser_pulse_cannon_weapon_index")) then
+			cur_item.blue_length = variable_global_get("laser_pulse_cannon_weapon_range");
 		end
 	end
 end

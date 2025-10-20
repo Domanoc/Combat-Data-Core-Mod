@@ -169,6 +169,25 @@ function create(q)--one time script when save is loaded
 	v_index.size = comp_sizes.small;				--number of slots used in construction
 	v_index.researched = 0;							--1 for researched or 0 for not	
 
+	----------------------
+	--LASER PULSE CANNON--
+	----------------------
+	v_array_size = v_array_size + 1;
+	v_producible_weapons = v_array_size - 87;		-- number of producible weapons, vanilla is 12 but a total of 99 weapons in comp_wep, so must reduce
+	v_wep_loc_x = v_producible_weapons // 3;
+	v_wep_loc_y = v_producible_weapons % 3;
+	local laser_pulse_cannon_weapon_index = variable_global_get("laser_pulse_cannon_weapon_index");
+	v_index = asset_get_index("obj_component");
+
+	variable_global_set("laser_pulse_cannon_component_index", #comp_weapon + 1);
+	v_index = instance_create_depth(q.weapon_start_x + icon_pixel_size * v_wep_loc_x, q.weapon_start_y + icon_pixel_size * v_wep_loc_y, -500, v_index);
+	comp_weapon[v_array_size + 1] = v_index;					--lua starts with 1
+	v_index.comp_type = comp_types.weapon;						--weapon
+	v_index.comp_data_type = laser_pulse_cannon_weapon_index;	--number in database
+	v_index.logo = -4; 											--auto assign based on obj_database info
+	v_index.size = comp_sizes.small;							--number of slots used in construction
+	v_index.researched = 0;										--1 for researched or 0 for not	
+
 	--send array back
 	q.comp_wep = comp_weapon;
 end

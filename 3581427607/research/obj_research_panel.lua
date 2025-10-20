@@ -223,6 +223,28 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 	variable_global_set("howitzer_research_index", howitzer_research_index);
 	table.insert(modded_research_list, howitzer_research_index);
 
+	----------------------
+	--LASER PULSE CANNON--
+	----------------------
+	local laser_pulse_cannon = {
+		position = 144,											--position number on the research tree. You can see positions in the game with f6 (debug mode)
+		prerequisite_research = final_data_core_research_index,	--the prerequisite research that unlocks this research, each research can only be the prerequisite for 3 other researches. leave -4 for no prerequisite.
+		condition = research_conditions.closed,					--condition (0-closed, 1-opened, 2-researching, 3-researched)
+		required_days = 8,										--the required days to complete the research
+		required_staff = 160,									--the required available staff to start the research
+		icon_type = research_icons.combat,						--research icon type (0-combat, 1-production, 2-passability)
+		icon_subtype = 0,										--research icon subtype (see left column in the game in research menu)
+		description = 											--the description text for the research
+			"AUXILIARY POWER UNIT Able to provide portable power for high energy draw weapons without overloading the reactor connections. Enabling the production of the EXTENDED RANGE LASER PULSE CANNON.",
+		spritepath = 											--path to the sprite used for the research
+			current_file_path.."sprites/laser_pulse_cannon_research.png"
+	};
+
+	local laser_pulse_cannon_research_index = AddResearch(laser_pulse_cannon);
+	variable_global_set("laser_pulse_cannon_research_index", laser_pulse_cannon_research_index);
+	table.insert(modded_research_list, laser_pulse_cannon_research_index);
+
+
 	--Save the modded list to a global
 	variable_global_set("modded_research_list", modded_research_list);
 

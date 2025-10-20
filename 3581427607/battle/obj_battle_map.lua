@@ -38,6 +38,13 @@ function battle_logic()
 end
 
 function battle_going_start(q)	--starts before map creation
+	--since we cant modify the range of laser weapons during the creation we need to update it when its used
+	local obj_weapon_item = asset_get_index("obj_weapon_item");
+	if (obj_weapon_item ~= -4) then
+		if(obj_weapon_item.weapon_number == variable_global_get("laser_pulse_cannon_weapon_index")) then
+			obj_weapon_item.blue_length = variable_global_get("laser_pulse_cannon_weapon_range");
+		end
+	end
 end
 
 function map_progression(q)	--an alarm that activates if mechs are inside the extraction zone
