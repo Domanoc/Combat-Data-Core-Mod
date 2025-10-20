@@ -903,18 +903,7 @@ function draw_top_menu(q)
 	end
 end
 
-local once = true;
-
 function draw_debug(q)
-	if once == false then
-		return
-	end
-	once = false;
-	--local my_table={};
-	--my_table=variable_instance_get_names(database);--saving variable names to the table
-	--for i,v in ipairs(my_table) do
-	--	draw_text(350+(math.floor(i/80))*210,40+(math.fmod(i,80))*11, tostring(v));
-	--end
 end
 
 

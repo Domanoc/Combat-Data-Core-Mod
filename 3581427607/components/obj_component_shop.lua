@@ -78,7 +78,7 @@ function create(q)--one time script when save is loaded
 	----------------------
 	local howitzer_weapon_index = variable_global_get("howitzer_weapon_index");
 	local howitzer_component_index = AddWeaponComponent(howitzer_weapon_index, comp_sizes.large, 0);
-	variable_global_set("laser_pulse_cannonhowitzer_component_index_component_index", howitzer_component_index);
+	variable_global_set("howitzer_component_index", howitzer_component_index);
 	----------------------
 	--LASER PULSE CANNON--
 	----------------------
@@ -167,7 +167,7 @@ function AddSolenoidComponent(solonoid_number, component_size, researched)
 end
 
 ---Adds a component of type weapon
----@param weapon_number number the index of the mech in the database
+---@param weapon_number number the index of the weapon in the database
 ---@param component_size ComponentSize the size of the component when constructing it. use 1 or 5.
 ---@param researched 1|0 set to 1 if its pre researched. else leave it 0.
 ---@return number index the index to the newly created component

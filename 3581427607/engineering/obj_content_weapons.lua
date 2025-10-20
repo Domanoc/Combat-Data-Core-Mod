@@ -24,6 +24,9 @@ function create(q)--one time script when save is loaded
 	AddWeapon(variable_global_get("laser_pulse_cannon_weapon_index"), true);
 end
 
+---Adds a component of type weapon
+---@param weapon_number number the index of the weapon in the database.
+---@param huge boolean if the weapon is huge/+sized or not.
 function AddWeapon(weapon_number, huge)
 	local obj_content_weapons = asset_get_index("obj_content_weapons");
 

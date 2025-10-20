@@ -102,16 +102,18 @@ function research_done(q, res_number)	--if research is done and when loading the
 	----------------------
 	if (res_number == variable_global_get("laser_pulse_cannon_research_index")) then
 		local component_shop = asset_get_index("obj_component_shop");
-		local howitzer_component_index = variable_global_get("laser_pulse_cannon_component_index");
-		local howitzer_component = component_shop.comp_wep[howitzer_component_index];
-		howitzer_component.researched = 1;	--1=true, opens weapon for production
-		if (q.give_item == true) then		--gives free mech
-			q.give_item = 0;				--0=false
+		local laser_pulse_cannon_component_index = variable_global_get("laser_pulse_cannon_component_index");
+		local laser_pulse_cannon_component = component_shop.comp_wep[laser_pulse_cannon_component_index];
+		laser_pulse_cannon_component.researched = 1;	--1=true, opens weapon for production
+		if (q.give_item == true) then					--gives free mech
+			q.give_item = 0;							--0=false
 			AddWeapon(variable_global_get("laser_pulse_cannon_weapon_index"));
 		end
 	end
 end
 
+---Adds a component of type mech
+---@param mech_number number the index of the mech in the database.
 function AddMech(mech_number)
 	local obj_content_mechs = asset_get_index("obj_content_mechs");
 	local list_mech = {};
@@ -131,6 +133,8 @@ function AddMech(mech_number)
 	obj_content_mechs.number_of_items = number_of_items;
 end
 
+---Adds a component of type solenoid
+---@param solenoid_number number the index of the solenoid in the database.
 function AddSolenoid(solenoid_number)
 	local obj_content_solenoid = asset_get_index("obj_content_solenoid");
 	local list_solenoid = {};
@@ -150,6 +154,8 @@ function AddSolenoid(solenoid_number)
 	obj_content_solenoid.number_of_items = number_of_items;
 end
 
+---Adds a component of type weapon
+---@param weapon_number number the index of the weapon in the database.
 function AddWeapon(weapon_number)
 	local obj_content_weapons = asset_get_index("obj_content_weapons");
 	local list_weapon = {};

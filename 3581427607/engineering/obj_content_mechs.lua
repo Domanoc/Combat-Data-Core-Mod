@@ -23,6 +23,9 @@ function create(q,v_modid) -- one time script when save is loaded
 	AddMech(variable_global_get("behemoth_mech_index"), "BehemothTest")
 end
 
+---Adds a component of type mech
+---@param mech_number number the index of the mech in the database.
+---@param name string the name of the new mech.
 function AddMech(mech_number, name)
 	local obj_content_mechs = asset_get_index("obj_content_mechs");
 

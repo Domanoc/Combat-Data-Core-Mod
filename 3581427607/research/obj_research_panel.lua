@@ -12,6 +12,18 @@ local research = {
 	description = 10	--the description text for the research
 };
 
+---@class research_item
+---@field position number position number on the research tree. You can see positions in the game with f6 (debug mode)
+---@field prerequisite_research number|-4 the prerequisite research that unlocks this research, each research can only be the prerequisite for 3 other researches. leave -4 for no prerequisite.
+---@field condition 0|1|2|3 condition (0-closed, 1-opened, 2-researching, 3-researched)
+---@field required_days number the required days to complete the research
+---@field required_staff number the required available staff to start the research
+---@field icon_type 0|1|2 research icon type (0-combat, 1-production, 2-passability)
+---@field icon_subtype number research icon subtype (see left column in the game in research menu)
+---@field description string the description text for the research
+---@field spritepath string path to the sprite used for the research
+local research_item = {};
+
 
 function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in any create event as a second argument
 	--path to the current file
@@ -37,7 +49,7 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 	-------------
 	--DATA CORE--
 	-------------
-	local data_core = {
+	local data_core_research_index = AddResearch({
 		position = 130,											--position number on the research tree. You can see positions in the game with f6 (debug mode)
 		prerequisite_research = -4,								--the prerequisite research that unlocks this research, each research can only be the prerequisite for 3 other researches. leave -4 for no prerequisite.
 		condition = research_conditions.researching,			--condition (0-closed, 1-opened, 2-researching, 3-researched)
@@ -49,16 +61,14 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 			"DATA CORE:#The main AI is working on unlocking the combat data core. When completed it grants additional research options.",
 		spritepath = 											--path to the sprite used for the research
 			current_file_path.."sprites/data_core_research.png"
-	};
-
-	local data_core_research_index = AddResearch(data_core);
+	});
 	variable_global_set("data_core_research_index", data_core_research_index);
 	table.insert(modded_research_list, data_core_research_index);
 
 	------------------
 	--DEEP DATA CORE--
 	------------------
-	local deep_data_core = {
+	local deep_data_core_research_index = AddResearch({
 		position = 131,											--position number on the research tree. You can see positions in the game with f6 (debug mode)
 		prerequisite_research = data_core_research_index,		--the prerequisite research that unlocks this research, each research can only be the prerequisite for 3 other researches. leave -4 for no prerequisite.
 		condition = research_conditions.closed,					--condition (0-closed, 1-opened, 2-researching, 3-researched)
@@ -70,16 +80,14 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 			"DATA CORE:#The main AI is working on unlocking the next layer of the combat data core. When completed it grants additional research options.",
 		spritepath = 											--path to the sprite used for the research
 			current_file_path.."sprites/deep_data_core_research.png"
-	};
-
-	local deep_data_core_research_index = AddResearch(deep_data_core);
+	});
 	variable_global_set("deep_data_core_research_index", deep_data_core_research_index);
 	table.insert(modded_research_list, deep_data_core_research_index);
 
 	-------------------
 	--FINAL DATA CORE--
 	-------------------
-	local final_data_core = {
+	local final_data_core_research_index = AddResearch({
 		position = 142,											--position number on the research tree. You can see positions in the game with f6 (debug mode)
 		prerequisite_research = deep_data_core_research_index,	--the prerequisite research that unlocks this research, each research can only be the prerequisite for 3 other researches. leave -4 for no prerequisite.
 		condition = research_conditions.closed,					--condition (0-closed, 1-opened, 2-researching, 3-researched)
@@ -91,16 +99,14 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 			"DATA CORE:#The main AI is working on unlocking the last layer of the combat data core. When completed it grants additional research options.",
 		spritepath = 											--path to the sprite used for the research
 			current_file_path.."sprites/final_data_core_research.png"
-	};
-
-	local final_data_core_research_index = AddResearch(final_data_core);
+	});
 	variable_global_set("final_data_core_research_index", final_data_core_research_index);
 	table.insert(modded_research_list, final_data_core_research_index);
 	
 	-----------------
 	--NOVA MECH------
 	-----------------
-	local nova_mech = {
+	local nova_research_index = AddResearch({
 		position = 140,											--position number on the research tree. You can see positions in the game with f6 (debug mode)
 		prerequisite_research = data_core_research_index,		--the prerequisite research that unlocks this research, each research can only be the prerequisite for 3 other researches. leave -4 for no prerequisite.
 		condition = research_conditions.closed,					--condition (0-closed, 1-opened, 2-researching, 3-researched)
@@ -112,16 +118,14 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 			"NEW MECH: NOVA#2 guns, 2 armor, 15 impact resistance, 40 water resistance. A mass produced combat mech with decent stats.",
 		spritepath = 											--path to the sprite used for the research
 			current_file_path.."sprites/nova_research.png"
-	};
-
-	local nova_research_index = AddResearch(nova_mech);
+	});
 	variable_global_set("nova_research_index", nova_research_index);
 	table.insert(modded_research_list, nova_research_index);
 
 	-----------------
 	--SENTINEL MECH--
 	-----------------
-	local sentinel_mech = {
+	local sentinel_research_index = AddResearch({
 		position = 132,											--position number on the research tree. You can see positions in the game with f6 (debug mode)
 		prerequisite_research = deep_data_core_research_index,	--the prerequisite research that unlocks this research, each research can only be the prerequisite for 3 other researches. leave -4 for no prerequisite.
 		condition = research_conditions.closed,					--condition (0-closed, 1-opened, 2-researching, 3-researched)
@@ -133,16 +137,14 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 			"NEW MECH: SENTINEL#4 guns, 5 armor, 90 impact resistance, 80 water resistance. Armored assault mech with plenty of auxiliary slots.",
 		spritepath = 											--path to the sprite used for the research
 			current_file_path.."sprites/sentinel_research.png"
-	};
-
-	local sentinel_research_index = AddResearch(sentinel_mech);
+	});
 	variable_global_set("sentinel_research_index", sentinel_research_index);
 	table.insert(modded_research_list, sentinel_research_index);
 
 	-----------------
 	--BEHEMOTH MECH--
 	-----------------
-	local echo_mech = {
+	local behemoth_research_index = AddResearch({
 		position = 143,											--position number on the research tree. You can see positions in the game with f6 (debug mode)
 		prerequisite_research = final_data_core_research_index,	--the prerequisite research that unlocks this research, each research can only be the prerequisite for 3 other researches. leave -4 for no prerequisite.
 		condition = research_conditions.closed,					--condition (0-closed, 1-opened, 2-researching, 3-researched)
@@ -154,16 +156,14 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 			"NEW MECH: BEHEMOTH#14 guns, 5 armor, 95 impact resistance, 95 water resistance. A massive armored assault mech with plenty of slots.",
 		spritepath = 											--path to the sprite used for the research
 			current_file_path.."sprites/behemoth_research.png"
-	};
-
-	local behemoth_research_index = AddResearch(echo_mech);
+	});
 	variable_global_set("behemoth_research_index", behemoth_research_index);
 	table.insert(modded_research_list, behemoth_research_index);
 
 	-----------------
 	--ECHO MECH------
 	-----------------
-	local echo_mech = {
+	local echo_research_index = AddResearch({
 		position = 141,											--position number on the research tree. You can see positions in the game with f6 (debug mode)
 		prerequisite_research = nova_research_index,			--the prerequisite research that unlocks this research, each research can only be the prerequisite for 3 other researches. leave -4 for no prerequisite.
 		condition = research_conditions.closed,					--condition (0-closed, 1-opened, 2-researching, 3-researched)
@@ -175,16 +175,14 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 			"NEW MECH: ECHO#3 guns, 3 armor, 30 impact resistance, 20 water resistance. A armored mech with high mobility.",
 		spritepath = 											--path to the sprite used for the research
 			current_file_path.."sprites/echo_research.png"
-	};
-
-	local echo_research_index = AddResearch(echo_mech);
+	});
 	variable_global_set("echo_research_index", echo_research_index);
 	table.insert(modded_research_list, echo_research_index);
 
 	----------------------
 	--HIGH TECH SOLENOID--
 	----------------------
-	local high_tech_solenoid = {
+	local high_tech_solenoid_research_index = AddResearch({
 		position = 133,											--position number on the research tree. You can see positions in the game with f6 (debug mode)
 		prerequisite_research = final_data_core_research_index,	--the prerequisite research that unlocks this research, each research can only be the prerequisite for 3 other researches. leave -4 for no prerequisite.
 		condition = research_conditions.closed,					--condition (0-closed, 1-opened, 2-researching, 3-researched)
@@ -196,16 +194,14 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 			"HIGH TECH SOLENOID#Using advanced metallurgy processes we can create a better solenoid for our thermonuclear reactors. Granting them better cooling characteristics.",
 		spritepath = 											--path to the sprite used for the research
 			current_file_path.."sprites/high_tech_solenoid_research.png"
-	};
-
-	local high_tech_solenoid_research_index = AddResearch(high_tech_solenoid);
+	});
 	variable_global_set("high_tech_solenoid_research_index", high_tech_solenoid_research_index);
 	table.insert(modded_research_list, high_tech_solenoid_research_index);
 
 	------------
 	--HOWITZER--
 	------------
-	local howitzer = {
+	local howitzer_research_index = AddResearch({
 		position = 120,											--position number on the research tree. You can see positions in the game with f6 (debug mode)
 		prerequisite_research = data_core_research_index,		--the prerequisite research that unlocks this research, each research can only be the prerequisite for 3 other researches. leave -4 for no prerequisite.
 		condition = research_conditions.closed,					--condition (0-closed, 1-opened, 2-researching, 3-researched)
@@ -217,16 +213,14 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 			"HOWITZER#A large 240mm artillery weapon repurposed for use in direct fire.",
 		spritepath = 											--path to the sprite used for the research
 			current_file_path.."sprites/howitzer_research.png"
-	};
-
-	local howitzer_research_index = AddResearch(howitzer);
+	});
 	variable_global_set("howitzer_research_index", howitzer_research_index);
 	table.insert(modded_research_list, howitzer_research_index);
 
 	----------------------
 	--LASER PULSE CANNON--
 	----------------------
-	local laser_pulse_cannon = {
+	local laser_pulse_cannon_research_index = AddResearch({
 		position = 144,											--position number on the research tree. You can see positions in the game with f6 (debug mode)
 		prerequisite_research = final_data_core_research_index,	--the prerequisite research that unlocks this research, each research can only be the prerequisite for 3 other researches. leave -4 for no prerequisite.
 		condition = research_conditions.closed,					--condition (0-closed, 1-opened, 2-researching, 3-researched)
@@ -238,12 +232,9 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 			"AUXILIARY POWER UNIT Able to provide portable power for high energy draw weapons without overloading the reactor connections. Enabling the production of the EXTENDED RANGE LASER PULSE CANNON.",
 		spritepath = 											--path to the sprite used for the research
 			current_file_path.."sprites/laser_pulse_cannon_research.png"
-	};
-
-	local laser_pulse_cannon_research_index = AddResearch(laser_pulse_cannon);
+	});
 	variable_global_set("laser_pulse_cannon_research_index", laser_pulse_cannon_research_index);
 	table.insert(modded_research_list, laser_pulse_cannon_research_index);
-
 
 	--Save the modded list to a global
 	variable_global_set("modded_research_list", modded_research_list);
@@ -272,6 +263,9 @@ end
 function draw(q)	--if activated = true
 end
 
+---comment
+---@param item research_item
+---@return unknown
 function AddResearch(item)
 	local obj_research_panel = asset_get_index("obj_research_panel");
 
