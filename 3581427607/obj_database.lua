@@ -9,7 +9,7 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	---------------------------
 	variable_global_set("debug_spawn_test_weapons", false);
 	variable_global_set("debug_spawn_test_mechs", false);
-	variable_global_set("debug_unlock_research", false);
+	variable_global_set("debug_unlock_research", true);
 	---------------------------
 	---------------------------
 
@@ -781,9 +781,30 @@ function load_game_post_event(q)
 
 	--Hanger identifiers
 	local hanger = {
+		component_type = 2,
 		item_index = 3,
 		logo = 5,
 		logo_index = 11
+	};
+
+	--Component types
+	local component_types = {
+		mech = 1,
+		cabin = 2,
+		motor = 3,
+		weapon = 4,
+		reactor = 5,
+		injector = 6,
+		piston = 7,
+		kernel = 8,
+		safety = 9,
+		magnet = 10,
+		solenoid = 11,
+		armor_layer_middle = 95,
+		armor_layer_end = 96,
+		rocket = 97,
+		beacon = 98,
+		city_parts = 99
 	};
 
 	--Our modded item indexes
@@ -805,8 +826,9 @@ function load_game_post_event(q)
 	local laser_pulse_cannon_small_sprite = variable_global_get("laser_pulse_cannon_small_sprite");
 	
 	--We step through the hanger/production items to find our modded items
-	for i, hangar in ipairs(hanger_mass) do
-		if (hangar[2] == 1) then
+	for _, hangar in ipairs(hanger_mass) do
+		--Mechs
+		if (hangar[hanger.component_type] == component_types.mech) then
 			--When the reference matches the modded element we set the relevant mod sprite to the logo and logo indexes.
 			if (hangar[hanger.item_index] == nova_mech_index) then
 				hangar[hanger.logo] = nova_sprite;
@@ -820,10 +842,16 @@ function load_game_post_event(q)
 			elseif (hangar[hanger.item_index] == echo_mech_index) then
 				hangar[hanger.logo] = echo_sprite;
 				hangar[hanger.logo_index] = hangar[hanger.logo];
-			elseif (hangar[hanger.item_index] == high_tech_solenoid_index) then
+			end
+		--Solenoids
+		elseif (hangar[hanger.component_type] == component_types.solenoid) then
+			if (hangar[hanger.item_index] == high_tech_solenoid_index) then
 				hangar[hanger.logo] = high_tech_solenoid_sprite;
 				hangar[hanger.logo_index] = hangar[hanger.logo];
-			elseif (hangar[hanger.item_index] == howitzer_weapon_index) then
+			end
+		--Weapons
+		elseif (hangar[hanger.component_type] == component_types.weapon) then
+			if (hangar[hanger.item_index] == howitzer_weapon_index) then
 				hangar[hanger.logo] = howitzer_sprite;
 				hangar[hanger.logo_index] = hangar[hanger.logo];
 			elseif (hangar[hanger.item_index] == laser_pulse_cannon_weapon_index) then
