@@ -1,3 +1,6 @@
+v1.4
+Fixed the range not updating correctly in battle for modded weapons.
+
 v1.3
 Added Extended Range Laser Pulse Cannon.
 Fixed research bug when adding mod to an existing save.

@@ -37,12 +37,20 @@ end
 function battle_logic()
 end
 
+local once = true;
+
 function battle_going_start(q)	--starts before map creation
 	--since we cant modify the range of laser weapons during the creation we need to update it when its used
-	local obj_weapon_item = asset_get_index("obj_weapon_item");
-	if (obj_weapon_item ~= -4) then
-		if(obj_weapon_item.weapon_number == variable_global_get("laser_pulse_cannon_weapon_index")) then
-			obj_weapon_item.blue_length = variable_global_get("laser_pulse_cannon_weapon_range");
+	for _, mech in ipairs(q.mech_id) do 					--Loop all the mechs
+		if(mech ~= -4 and mech ~= 0) then 					--Filter nil values
+			for _, weapon in ipairs(mech.mass_gun_id) do 	--loop all the weapons of the mech
+				if(weapon ~= -4) then 						--Filter nil values
+					--Update our modded weapon
+					if(weapon.weapon_number == variable_global_get("laser_pulse_cannon_weapon_index")) then
+						weapon.blue_length = variable_global_get("laser_pulse_cannon_weapon_range");
+					end
+				end
+			end
 		end
 	end
 end
