@@ -17,7 +17,7 @@ function activate_menu(q)	--inside mouse_check_button_pressed(mb_left)
 end
 
 
-function draw_mechs(q,cur_item)		--draws buttons and some info, cut_item contains id of the installed module
+function draw_mechs(q,cur_item)		--draws buttons and some info, cur_item contains id of the installed module
 	--since we cant modify the range of laser weapons during the creation we need to update it when its used
 	if (cur_item ~= -4) then
 		if(cur_item.weapon_number == variable_global_get("laser_pulse_cannon_weapon_index")) then
@@ -26,10 +26,10 @@ function draw_mechs(q,cur_item)		--draws buttons and some info, cut_item contain
 	end
 end
 
-function draw_reactors(q,cur_item)		--draws buttons and some info, cut_item contains id of the installed module
+function draw_reactors(q,cur_item)		--draws buttons and some info, cur_item contains id of the installed module
 end
 
-function draw_weapons(q,cur_item)		--draws buttons and some info, cut_item contains id of the installed module
+function draw_weapons(q,cur_item)		--draws buttons and some info, cur_item contains id of the installed module
 	--since we cant modify the range of laser weapons during the creation we need to update it when its used
 	if (cur_item ~= -4) then
 		if(cur_item.weapon_number == variable_global_get("laser_pulse_cannon_weapon_index")) then
