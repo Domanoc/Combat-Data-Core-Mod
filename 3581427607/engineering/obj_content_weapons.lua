@@ -18,9 +18,9 @@ function create(q)--one time script when save is loaded
 	--add a howitzer weapon (huge) on a new save
 	AddWeapon(variable_global_get("howitzer_weapon_index"), true);
 
-	--add a exp weapon on a new save
+	--add a laser pulse cannon weapon on a new save
 	AddWeapon(variable_global_get("laser_pulse_cannon_weapon_index"), false);
-	--add a exp weapon (huge) on a new save
+	--add a laser pulse cannon weapon (huge) on a new save
 	AddWeapon(variable_global_get("laser_pulse_cannon_weapon_index"), true);
 end
 
