@@ -1,4 +1,7 @@
-
+--To prevent collisions of global variables between mods.
+--I have prefixed global variables of this mod.
+--If copying code please change the prefix to something unique for your mod.
+local unique_mod_prefix = "CDC_";
 
 -- construction table in the engineering menu
 -- module's id is in "cur_item"
@@ -20,8 +23,8 @@ end
 function draw_mechs(q,cur_item)		--draws buttons and some info, cur_item contains id of the installed module
 	--since we cant modify the range of laser weapons during the creation we need to update it when its used
 	if (cur_item ~= -4) then
-		if(cur_item.weapon_number == variable_global_get("laser_pulse_cannon_weapon_index")) then
-			cur_item.blue_length = variable_global_get("laser_pulse_cannon_weapon_range");
+		if(cur_item.weapon_number == variable_global_get(unique_mod_prefix.."laser_pulse_cannon_weapon_index")) then
+			cur_item.blue_length = variable_global_get(unique_mod_prefix.."laser_pulse_cannon_weapon_range");
 		end
 	end
 end
@@ -32,8 +35,8 @@ end
 function draw_weapons(q,cur_item)		--draws buttons and some info, cur_item contains id of the installed module
 	--since we cant modify the range of laser weapons during the creation we need to update it when its used
 	if (cur_item ~= -4) then
-		if(cur_item.weapon_number == variable_global_get("laser_pulse_cannon_weapon_index")) then
-			cur_item.blue_length = variable_global_get("laser_pulse_cannon_weapon_range");
+		if(cur_item.weapon_number == variable_global_get(unique_mod_prefix.."laser_pulse_cannon_weapon_index")) then
+			cur_item.blue_length = variable_global_get(unique_mod_prefix.."laser_pulse_cannon_weapon_range");
 		end
 	end
 end

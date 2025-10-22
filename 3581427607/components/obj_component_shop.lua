@@ -1,3 +1,8 @@
+--To prevent collisions of global variables between mods.
+--I have prefixed global variables of this mod.
+--If copying code please change the prefix to something unique for your mod.
+local unique_mod_prefix = "CDC_";
+
 --The size of the enginering shop items is always 96 pixels (width & height)
 local icon_pixel_size = 96;
 
@@ -38,27 +43,27 @@ function create(q)--one time script when save is loaded
 	----------------------
 	--NOVA MECH-----------
 	----------------------
-	local nova_mech_index = variable_global_get("nova_mech_index");
+	local nova_mech_index = variable_global_get(unique_mod_prefix.."nova_mech_index");
 	local nova_component_index = AddMechComponent(nova_mech_index, comp_sizes.large, 0);
-	variable_global_set("nova_component_index", nova_component_index);
+	variable_global_set(unique_mod_prefix.."nova_component_index", nova_component_index);
 	----------------------
 	--ECHO MECH-----------
 	----------------------
-	local echo_mech_index = variable_global_get("echo_mech_index");
+	local echo_mech_index = variable_global_get(unique_mod_prefix.."echo_mech_index");
 	local echo_component_index = AddMechComponent(echo_mech_index, comp_sizes.large, 0);
-	variable_global_set("echo_component_index", echo_component_index);
+	variable_global_set(unique_mod_prefix.."echo_component_index", echo_component_index);
 	----------------------
 	--SENTINEL MECH-------
 	----------------------
-	local sentinel_mech_index = variable_global_get("sentinel_mech_index");
+	local sentinel_mech_index = variable_global_get(unique_mod_prefix.."sentinel_mech_index");
 	local sentinel_component_index = AddMechComponent(sentinel_mech_index, comp_sizes.large, 0);
-	variable_global_set("sentinel_component_index", sentinel_component_index);
+	variable_global_set(unique_mod_prefix.."sentinel_component_index", sentinel_component_index);
 	----------------------
 	--BEHEMOTH MECH-------
 	----------------------
-	local behemoth_mech_index = variable_global_get("behemoth_mech_index");
+	local behemoth_mech_index = variable_global_get(unique_mod_prefix.."behemoth_mech_index");
 	local behemoth_component_index = AddMechComponent(behemoth_mech_index, comp_sizes.large, 0);
-	variable_global_set("behemoth_component_index", behemoth_component_index);
+	variable_global_set(unique_mod_prefix.."behemoth_component_index", behemoth_component_index);
 
 
 	----------------------
@@ -68,7 +73,7 @@ function create(q)--one time script when save is loaded
 	----------------------
 	local high_tech_solenoid_index = variable_global_get("high_tech_solenoid_index");
 	local high_tech_solenoid_component_index = AddSolenoidComponent(high_tech_solenoid_index, comp_sizes.small, 0);
-	variable_global_set("high_tech_solenoid_component_index", high_tech_solenoid_component_index);
+	variable_global_set(unique_mod_prefix.."high_tech_solenoid_component_index", high_tech_solenoid_component_index);
 
 
 	----------------------
@@ -76,15 +81,15 @@ function create(q)--one time script when save is loaded
 	----------------------
 	--HOWITZER------------
 	----------------------
-	local howitzer_weapon_index = variable_global_get("howitzer_weapon_index");
+	local howitzer_weapon_index = variable_global_get(unique_mod_prefix.."howitzer_weapon_index");
 	local howitzer_component_index = AddWeaponComponent(howitzer_weapon_index, comp_sizes.small, 0);
-	variable_global_set("howitzer_component_index", howitzer_component_index);
+	variable_global_set(unique_mod_prefix.."howitzer_component_index", howitzer_component_index);
 	----------------------
 	--LASER PULSE CANNON--
 	----------------------
-	local laser_pulse_cannon_weapon_index = variable_global_get("laser_pulse_cannon_weapon_index");
+	local laser_pulse_cannon_weapon_index = variable_global_get(unique_mod_prefix.."laser_pulse_cannon_weapon_index");
 	local laser_pulse_cannon_component_index = AddWeaponComponent(laser_pulse_cannon_weapon_index, comp_sizes.small, 0);
-	variable_global_set("laser_pulse_cannon_component_index", laser_pulse_cannon_component_index);
+	variable_global_set(unique_mod_prefix.."laser_pulse_cannon_component_index", laser_pulse_cannon_component_index);
 
 	
 end

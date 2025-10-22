@@ -1,26 +1,30 @@
+--To prevent collisions of global variables between mods.
+--I have prefixed global variables of this mod.
+--If copying code please change the prefix to something unique for your mod.
+local unique_mod_prefix = "CDC_";
 
 
 function create(q,v_modid) -- one time script when save is loaded
 	--Debug flag is set in "obj_database.lua"
-	local debug_spawn_test_mechs = variable_global_get("debug_spawn_test_mechs");	
+	local debug_spawn_test_mechs = variable_global_get(unique_mod_prefix.."debug_spawn_test_mechs");	
 	if(debug_spawn_test_mechs == false) then
 		return
 	end
 
 	--if the mech_engineer_load is set its not a new game
-	local is_loaded_game = variable_global_get("mech_engineer_load");
+	local is_loaded_game = variable_global_get("mech_engineer_load"); --this is a game variable so no prefix
 	if(is_loaded_game == true) then
 		return
 	end
 
 	--add a nova mech on a new save
-	AddMech(variable_global_get("nova_mech_index"), "NovaTest")
+	AddMech(variable_global_get(unique_mod_prefix.."nova_mech_index"), "NovaTest")
 	--add a echo mech on a new save
-	AddMech(variable_global_get("echo_mech_index"), "EchoTest")
+	AddMech(variable_global_get(unique_mod_prefix.."echo_mech_index"), "EchoTest")
 	--add a sentinel mech on a new save
-	AddMech(variable_global_get("sentinel_mech_index"), "SentinelTest")
+	AddMech(variable_global_get(unique_mod_prefix.."sentinel_mech_index"), "SentinelTest")
 	--add a behemoth mech on a new save
-	AddMech(variable_global_get("behemoth_mech_index"), "BehemothTest")
+	AddMech(variable_global_get(unique_mod_prefix.."behemoth_mech_index"), "BehemothTest")
 end
 
 ---Adds a component of type mech

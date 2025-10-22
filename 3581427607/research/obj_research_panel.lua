@@ -1,3 +1,8 @@
+--To prevent collisions of global variables between mods.
+--I have prefixed global variables of this mod.
+--If copying code please change the prefix to something unique for your mod.
+local unique_mod_prefix = "CDC_";
+
 --Reseach index identifiers
 local research = {
 	position = 1, 		--position number on the research tree. You can see positions in the game with f6 (debug mode)
@@ -62,7 +67,7 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 		spritepath = 											--path to the sprite used for the research
 			current_file_path.."sprites/data_core_research.png"
 	});
-	variable_global_set("data_core_research_index", data_core_research_index);
+	variable_global_set(unique_mod_prefix.."data_core_research_index", data_core_research_index);
 	table.insert(modded_research_list, data_core_research_index);
 
 	------------------
@@ -81,7 +86,7 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 		spritepath = 											--path to the sprite used for the research
 			current_file_path.."sprites/deep_data_core_research.png"
 	});
-	variable_global_set("deep_data_core_research_index", deep_data_core_research_index);
+	variable_global_set(unique_mod_prefix.."deep_data_core_research_index", deep_data_core_research_index);
 	table.insert(modded_research_list, deep_data_core_research_index);
 
 	-------------------
@@ -100,7 +105,7 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 		spritepath = 											--path to the sprite used for the research
 			current_file_path.."sprites/final_data_core_research.png"
 	});
-	variable_global_set("final_data_core_research_index", final_data_core_research_index);
+	variable_global_set(unique_mod_prefix.."final_data_core_research_index", final_data_core_research_index);
 	table.insert(modded_research_list, final_data_core_research_index);
 	
 	-----------------
@@ -119,7 +124,7 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 		spritepath = 											--path to the sprite used for the research
 			current_file_path.."sprites/nova_research.png"
 	});
-	variable_global_set("nova_research_index", nova_research_index);
+	variable_global_set(unique_mod_prefix.."nova_research_index", nova_research_index);
 	table.insert(modded_research_list, nova_research_index);
 
 	-----------------
@@ -138,7 +143,7 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 		spritepath = 											--path to the sprite used for the research
 			current_file_path.."sprites/sentinel_research.png"
 	});
-	variable_global_set("sentinel_research_index", sentinel_research_index);
+	variable_global_set(unique_mod_prefix.."sentinel_research_index", sentinel_research_index);
 	table.insert(modded_research_list, sentinel_research_index);
 
 	-----------------
@@ -157,7 +162,7 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 		spritepath = 											--path to the sprite used for the research
 			current_file_path.."sprites/behemoth_research.png"
 	});
-	variable_global_set("behemoth_research_index", behemoth_research_index);
+	variable_global_set(unique_mod_prefix.."behemoth_research_index", behemoth_research_index);
 	table.insert(modded_research_list, behemoth_research_index);
 
 	-----------------
@@ -176,7 +181,7 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 		spritepath = 											--path to the sprite used for the research
 			current_file_path.."sprites/echo_research.png"
 	});
-	variable_global_set("echo_research_index", echo_research_index);
+	variable_global_set(unique_mod_prefix.."echo_research_index", echo_research_index);
 	table.insert(modded_research_list, echo_research_index);
 
 	----------------------
@@ -195,7 +200,7 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 		spritepath = 											--path to the sprite used for the research
 			current_file_path.."sprites/high_tech_solenoid_research.png"
 	});
-	variable_global_set("high_tech_solenoid_research_index", high_tech_solenoid_research_index);
+	variable_global_set(unique_mod_prefix.."high_tech_solenoid_research_index", high_tech_solenoid_research_index);
 	table.insert(modded_research_list, high_tech_solenoid_research_index);
 
 	------------
@@ -214,7 +219,7 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 		spritepath = 											--path to the sprite used for the research
 			current_file_path.."sprites/howitzer_research.png"
 	});
-	variable_global_set("howitzer_research_index", howitzer_research_index);
+	variable_global_set(unique_mod_prefix.."howitzer_research_index", howitzer_research_index);
 	table.insert(modded_research_list, howitzer_research_index);
 
 	----------------------
@@ -233,15 +238,15 @@ function create(q, v_modid)  --mod_info[] is global, v_modid can be accessed in 
 		spritepath = 											--path to the sprite used for the research
 			current_file_path.."sprites/laser_pulse_cannon_research.png"
 	});
-	variable_global_set("laser_pulse_cannon_research_index", laser_pulse_cannon_research_index);
+	variable_global_set(unique_mod_prefix.."laser_pulse_cannon_research_index", laser_pulse_cannon_research_index);
 	table.insert(modded_research_list, laser_pulse_cannon_research_index);
 
 	--Save the modded list to a global
-	variable_global_set("modded_research_list", modded_research_list);
+	variable_global_set(unique_mod_prefix.."modded_research_list", modded_research_list);
 
 	--Use for debugging to set all to researching
 	--Debug flag is set in "obj_database.lua"
-	local debug_unlock_research = variable_global_get("debug_unlock_research");
+	local debug_unlock_research = variable_global_get(unique_mod_prefix.."debug_unlock_research");
 	if(debug_unlock_research == true) then
 		--Copy the array to the working set
 		local research_array = {};
@@ -303,7 +308,7 @@ function AddResearch(item)
 	
 	--add research sprite
 	local tmp_sprite = sprite_add(item.spritepath, 0, false, false, 0, 0);		--research sprite
-	local research_sprite_index = variable_global_get("research_items_spr");	--get the current sprite
+	local research_sprite_index = variable_global_get("research_items_spr");	--get the current sprite, we dont add the mod prefix here since it's a game variable
 	local researh_sprites = "";
     if (research_sprite_index ~= -4) then
     	researh_sprites = sprite_duplicate(research_sprite_index);
@@ -312,7 +317,7 @@ function AddResearch(item)
         researh_sprites = sprite_duplicate(research_sprite_index);
     end
     sprite_merge(researh_sprites, tmp_sprite);							--adds to the end of the subimg
-	variable_global_set("research_items_spr", researh_sprites);			--update the sprite variable
+	variable_global_set("research_items_spr", researh_sprites);			--update the sprite variable, we dont add the mod prefix here since it's a game variable
 	sprite_delete(tmp_sprite);											--delete only tmp_sprite. researh_sprites still contains id
 
 	--send array back

@@ -1,3 +1,7 @@
+--To prevent collisions of global variables between mods.
+--I have prefixed global variables of this mod.
+--If copying code please change the prefix to something unique for your mod.
+local unique_mod_prefix = "CDC_";
 
 
 function create(q,v_modid)
@@ -46,8 +50,8 @@ function battle_going_start(q)	--starts before map creation
 			for _, weapon in ipairs(mech.mass_gun_id) do 	--loop all the weapons of the mech
 				if(weapon ~= -4) then 						--Filter nil values
 					--Update our modded weapon
-					if(weapon.weapon_number == variable_global_get("laser_pulse_cannon_weapon_index")) then
-						weapon.blue_length = variable_global_get("laser_pulse_cannon_weapon_range");
+					if(weapon.weapon_number == variable_global_get(unique_mod_prefix.."laser_pulse_cannon_weapon_index")) then
+						weapon.blue_length = variable_global_get(unique_mod_prefix.."laser_pulse_cannon_weapon_range");
 					end
 				end
 			end

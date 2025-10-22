@@ -1,3 +1,8 @@
+--To prevent collisions of global variables between mods.
+--I have prefixed global variables of this mod.
+--If copying code please change the prefix to something unique for your mod.
+local unique_mod_prefix = "CDC_";
+
 --Game is made in GameMaker
 --See the gamemaker documentation for the implimentation of the global functions
 --example: variable_global_set, ds_map_add, sprite_add
@@ -7,9 +12,9 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	---------------------------
 	--DEBUG SETTINGS-----------
 	---------------------------
-	variable_global_set("debug_spawn_test_weapons", false);
-	variable_global_set("debug_spawn_test_mechs", false);
-	variable_global_set("debug_unlock_research", false);
+	variable_global_set(unique_mod_prefix.."debug_spawn_test_weapons", false);
+	variable_global_set(unique_mod_prefix.."debug_spawn_test_mechs", false);
+	variable_global_set(unique_mod_prefix.."debug_unlock_research", false);
 	---------------------------
 	---------------------------
 
@@ -37,7 +42,7 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	--NOVA MECH------
 	-----------------
 	local nova_mech_index = #mech_stat_array + 1;
-	variable_global_set("nova_mech_index", #mech_stat_array);
+	variable_global_set(unique_mod_prefix.."nova_mech_index", #mech_stat_array);
 	mech_stat_array[nova_mech_index] = ds_map_create();
 	local nova_mech = mech_stat_array[nova_mech_index];
 
@@ -140,7 +145,7 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	--SPRITES
 	--small sprite
 	local nova_mech_sprite = sprite_add(current_file_path.."sprites/nova_small.png", 0, false, false, 23, 49);
-	variable_global_set("nova_sprite_small", nova_mech_sprite);
+	variable_global_set(unique_mod_prefix.."nova_sprite_small", nova_mech_sprite);
 	ds_map_add(nova_mech, "sprite_small", nova_mech_sprite);
 	--big sprite
 	nova_mech_sprite = sprite_add(current_file_path.."sprites/nova_big.png", 0, false, false, 199, 343);				
@@ -162,7 +167,7 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	--SENTINEL MECH--
 	-----------------
 	local sentinel_mech_index = #mech_stat_array + 1;
-	variable_global_set("sentinel_mech_index", #mech_stat_array);
+	variable_global_set(unique_mod_prefix.."sentinel_mech_index", #mech_stat_array);
 	mech_stat_array[sentinel_mech_index] = ds_map_create();
 	local sentinel_mech = mech_stat_array[sentinel_mech_index];
 	
@@ -277,7 +282,7 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	--SPRITES
 	--small sprite
 	local sentinel_mech_sprite = sprite_add(current_file_path.."sprites/sentinel_small.png", 0, false, false, 23, 49);
-	variable_global_set("sentinel_sprite_small", sentinel_mech_sprite);
+	variable_global_set(unique_mod_prefix.."sentinel_sprite_small", sentinel_mech_sprite);
 	ds_map_add(sentinel_mech, "sprite_small", sentinel_mech_sprite);
 	--big sprite
 	sentinel_mech_sprite = sprite_add(current_file_path.."sprites/sentinel_big.png", 0, false, false, 199, 343);				
@@ -299,7 +304,7 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	--BEHEMOTH MECH--
 	-----------------
 	local behemoth_mech_index = #mech_stat_array + 1;
-	variable_global_set("behemoth_mech_index", #mech_stat_array);
+	variable_global_set(unique_mod_prefix.."behemoth_mech_index", #mech_stat_array);
 	mech_stat_array[behemoth_mech_index] = ds_map_create();
 	local behemoth_mech = mech_stat_array[behemoth_mech_index];
 	
@@ -465,7 +470,7 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	--SPRITES
 	--small sprite
 	local behemoth_mech_sprite = sprite_add(current_file_path.."sprites/behemoth_small.png", 0, false, false, 23, 49);
-	variable_global_set("behemoth_sprite_small", behemoth_mech_sprite);
+	variable_global_set(unique_mod_prefix.."behemoth_sprite_small", behemoth_mech_sprite);
 	ds_map_add(behemoth_mech, "sprite_small", behemoth_mech_sprite);
 	--big sprite
 	behemoth_mech_sprite = sprite_add(current_file_path.."sprites/behemoth_big.png", 0, false, false, 199, 343);				
@@ -487,7 +492,7 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	--ECHO MECH------
 	-----------------
 	local echo_mech_index = #mech_stat_array + 1;
-	variable_global_set("echo_mech_index", #mech_stat_array);
+	variable_global_set(unique_mod_prefix.."echo_mech_index", #mech_stat_array);
 	mech_stat_array[echo_mech_index] = ds_map_create();
 	local echo_mech = mech_stat_array[echo_mech_index];
 
@@ -594,7 +599,7 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	--SPRITES
 	--small sprite
 	local echo_mech_sprite = sprite_add(current_file_path.."sprites/echo_small.png", 0, false, false, 23, 49);
-	variable_global_set("echo_sprite_small", echo_mech_sprite);
+	variable_global_set(unique_mod_prefix.."echo_sprite_small", echo_mech_sprite);
 	ds_map_add(echo_mech, "sprite_small", echo_mech_sprite);
 	--big sprite
 	echo_mech_sprite = sprite_add(current_file_path.."sprites/echo_big.png", 0, false, false, 199, 343);				
@@ -628,7 +633,7 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	--HIGH TECH SOLONOID--
 	----------------------
 	local high_tech_solenoid_index = #solenoid_stat_array + 1;
-	variable_global_set("high_tech_solenoid_index", #solenoid_stat_array);
+	variable_global_set(unique_mod_prefix.."high_tech_solenoid_index", #solenoid_stat_array);
 	solenoid_stat_array[high_tech_solenoid_index] = ds_map_create();
 	local high_tech_solenoid = solenoid_stat_array[high_tech_solenoid_index];
 
@@ -649,7 +654,7 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 
 	--SPRITE
 	local high_tech_solenoid_sprite = sprite_add(current_file_path.."sprites/high_tech_solenoid.png", 0, false, false, 0, 0);
-	variable_global_set("high_tech_solenoid_sprite_small", high_tech_solenoid_sprite);
+	variable_global_set(unique_mod_prefix.."high_tech_solenoid_sprite_small", high_tech_solenoid_sprite);
 	ds_map_add(high_tech_solenoid, "sprite", high_tech_solenoid_sprite);
 
 
@@ -676,7 +681,7 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	--HOWITZER--
 	------------
 	local howitzer_weapon_index = #weapon_stat_array + 1;
-	variable_global_set("howitzer_weapon_index", #weapon_stat_array);
+	variable_global_set(unique_mod_prefix.."howitzer_weapon_index", #weapon_stat_array);
 	weapon_stat_array[howitzer_weapon_index] = ds_map_create();
 	local howitzer = weapon_stat_array[howitzer_weapon_index];
 
@@ -704,7 +709,7 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	--SPRITES
 	--small sprite
 	local howitzer_small_sprite = sprite_add(current_file_path.."sprites/howitzer_small.png", 0, false, false, 0, 0);
-	variable_global_set("howitzer_sprite_small", howitzer_small_sprite);
+	variable_global_set(unique_mod_prefix.."howitzer_sprite_small", howitzer_small_sprite);
 	ds_map_add(howitzer, "sprite", howitzer_small_sprite);
 	--huge sprite
 	local howitzer_huge_sprite = sprite_add(current_file_path.."sprites/howitzer_huge.png", 0, false, false, 199, 134);
@@ -718,10 +723,10 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	--LASER PULSE CANNON--
 	----------------------
 	local laser_pulse_cannon_weapon_index = #weapon_stat_array + 1;
-	variable_global_set("laser_pulse_cannon_weapon_index", #weapon_stat_array);
+	variable_global_set(unique_mod_prefix.."laser_pulse_cannon_weapon_index", #weapon_stat_array);
 	weapon_stat_array[laser_pulse_cannon_weapon_index] = ds_map_create();
 	local exp = weapon_stat_array[laser_pulse_cannon_weapon_index];
-	variable_global_set("laser_pulse_cannon_weapon_range", 2000);
+	variable_global_set(unique_mod_prefix.."laser_pulse_cannon_weapon_range", 2000);
 
 	--ENGINEERING PRICE
 	ds_map_add(exp, "price_metallite",		250);
@@ -747,7 +752,7 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	--SPRITES
 	--small sprite
 	local laser_pulse_cannon_small_sprite = sprite_add(current_file_path.."sprites/laser_pulse_cannon_small.png", 0, false, false, 0, 0);
-	variable_global_set("laser_pulse_cannon_small_sprite", laser_pulse_cannon_small_sprite);
+	variable_global_set(unique_mod_prefix.."laser_pulse_cannon_small_sprite", laser_pulse_cannon_small_sprite);
 	ds_map_add(exp, "sprite", laser_pulse_cannon_small_sprite);
 	--huge sprite
 	local laser_pulse_cannon_huge_sprite = sprite_add(current_file_path.."sprites/laser_pulse_cannon_huge.png", 0, false, false, 199, 134);
@@ -808,22 +813,22 @@ function load_game_post_event(q)
 	};
 
 	--Our modded item indexes
-	local nova_mech_index = variable_global_get("nova_mech_index");
-	local sentinel_mech_index = variable_global_get("sentinel_mech_index");
-	local behemoth_mech_index = variable_global_get("behemoth_mech_index");
-	local echo_mech_index = variable_global_get("echo_mech_index");
-	local high_tech_solenoid_index = variable_global_get("high_tech_solenoid_index");
-	local howitzer_weapon_index = variable_global_get("howitzer_weapon_index");
-	local laser_pulse_cannon_weapon_index = variable_global_get("laser_pulse_cannon_weapon_index");
+	local nova_mech_index = variable_global_get(unique_mod_prefix.."nova_mech_index");
+	local sentinel_mech_index = variable_global_get(unique_mod_prefix.."sentinel_mech_index");
+	local behemoth_mech_index = variable_global_get(unique_mod_prefix.."behemoth_mech_index");
+	local echo_mech_index = variable_global_get(unique_mod_prefix.."echo_mech_index");
+	local high_tech_solenoid_index = variable_global_get(unique_mod_prefix.."high_tech_solenoid_index");
+	local howitzer_weapon_index = variable_global_get(unique_mod_prefix.."howitzer_weapon_index");
+	local laser_pulse_cannon_weapon_index = variable_global_get(unique_mod_prefix.."laser_pulse_cannon_weapon_index");
 
 	--Our Modded sprites
-	local nova_sprite = variable_global_get("nova_sprite_small");
-	local sentinel_sprite = variable_global_get("sentinel_sprite_small");
-	local behemoth_sprite = variable_global_get("behemoth_sprite_small");
-	local echo_sprite = variable_global_get("echo_sprite_small");
-	local high_tech_solenoid_sprite = variable_global_get("high_tech_solenoid_sprite_small");
-	local howitzer_sprite = variable_global_get("howitzer_sprite_small");
-	local laser_pulse_cannon_small_sprite = variable_global_get("laser_pulse_cannon_small_sprite");
+	local nova_sprite = variable_global_get(unique_mod_prefix.."nova_sprite_small");
+	local sentinel_sprite = variable_global_get(unique_mod_prefix.."sentinel_sprite_small");
+	local behemoth_sprite = variable_global_get(unique_mod_prefix.."behemoth_sprite_small");
+	local echo_sprite = variable_global_get(unique_mod_prefix.."echo_sprite_small");
+	local high_tech_solenoid_sprite = variable_global_get(unique_mod_prefix.."high_tech_solenoid_sprite_small");
+	local howitzer_sprite = variable_global_get(unique_mod_prefix.."howitzer_sprite_small");
+	local laser_pulse_cannon_small_sprite = variable_global_get(unique_mod_prefix.."laser_pulse_cannon_small_sprite");
 	
 	--We step through the hanger/production items to find our modded items
 	for _, hangar in ipairs(hanger_mass) do
@@ -880,10 +885,10 @@ function draw_top_menu(q)
 		local weapon_description_array = {};
 		weapon_description_array = weapon_strings.weapon_description;
 
-		local howitzer_weapon_index = variable_global_get("howitzer_weapon_index") + 1; --need to offset by 1 to use the index here
+		local howitzer_weapon_index = variable_global_get(unique_mod_prefix.."howitzer_weapon_index") + 1; --need to offset by 1 to use the index here
 		weapon_description_array[howitzer_weapon_index] = "240-MM HOWITZER GUN.";
 
-		local laser_pulse_cannon_weapon_index = variable_global_get("laser_pulse_cannon_weapon_index") + 1; --need to offset by 1 to use the index here
+		local laser_pulse_cannon_weapon_index = variable_global_get(unique_mod_prefix.."laser_pulse_cannon_weapon_index") + 1; --need to offset by 1 to use the index here
 		weapon_description_array[laser_pulse_cannon_weapon_index] = "EXTENDED RANGE LASER PULSE CANNON.#Uses an internal power unit to provide most of the energy. Can be boosted by providing additional power.";
 
 		--return new data
@@ -899,9 +904,9 @@ function draw_top_menu(q)
 		--In the event the mod is added to an existing save the newly added mod research is all defaulted to 0 days remaining and condition 0 (closed).
 		--To fix this we need to validate the research states to see if its a valid state through gameplay or if its a state from loading into an existing state
 
-		local loaded_research_list = variable_global_get("loaded_research_list");
-		local modded_research_list = variable_global_get("modded_research_list");
-		local data_core_research_index = variable_global_get("data_core_research_index");
+		local loaded_research_list = variable_global_get(unique_mod_prefix.."loaded_research_list");
+		local modded_research_list = variable_global_get(unique_mod_prefix.."modded_research_list");
+		local data_core_research_index = variable_global_get(unique_mod_prefix.."data_core_research_index");
 
 		for _, v in ipairs(modded_research_list) do
 			local research = loaded_research_list[v + 1];

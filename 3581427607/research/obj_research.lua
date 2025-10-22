@@ -1,10 +1,15 @@
+--To prevent collisions of global variables between mods.
+--I have prefixed global variables of this mod.
+--If copying code please change the prefix to something unique for your mod.
+local unique_mod_prefix = "CDC_";
+
 --We keep a list of all the researches the game has active. so we can check and update them later.
 local research_list = {};
 
 function create(q)--one time script when save is loaded
 	--While q currently holds only default values we only need to store the reference for later.
 	table.insert(research_list, q);
-	variable_global_set("loaded_research_list", research_list);
+	variable_global_set(unique_mod_prefix.."loaded_research_list", research_list);
 end
 
 function research_done_before(q,res_number)
@@ -16,98 +21,98 @@ function research_done(q, res_number)	--if research is done and when loading the
 	-----------------
 	--NOVA MECH------
 	-----------------
-	if (res_number == variable_global_get("nova_research_index")) then
+	if (res_number == variable_global_get(unique_mod_prefix.."nova_research_index")) then
 		local component_shop = asset_get_index("obj_component_shop");
-		local nova_mech_component_index = variable_global_get("nova_component_index");
+		local nova_mech_component_index = variable_global_get(unique_mod_prefix.."nova_component_index");
 		local nova_mech_component = component_shop.comp_mech[nova_mech_component_index];
 		nova_mech_component.researched = 1;		--1=true, opens weapon for production
 		if (q.give_item == true) then			--gives free mech
 			q.give_item = 0;					--0=false
-			AddMech(variable_global_get("nova_mech_index"));
+			AddMech(variable_global_get(unique_mod_prefix.."nova_mech_index"));
 		end
 	end
 
 	-----------------
 	--SENTINEL MECH--
 	-----------------
-	if (res_number == variable_global_get("sentinel_research_index")) then
+	if (res_number == variable_global_get(unique_mod_prefix.."sentinel_research_index")) then
 		local component_shop = asset_get_index("obj_component_shop");
-		local sentinel_mech_component_index = variable_global_get("sentinel_component_index");
+		local sentinel_mech_component_index = variable_global_get(unique_mod_prefix.."sentinel_component_index");
 		local sentinel_mech_component = component_shop.comp_mech[sentinel_mech_component_index];
 		sentinel_mech_component.researched = 1;		--1=true, opens weapon for production
 		if (q.give_item == true) then				--gives free mech
 			q.give_item = 0;						--0=false
-			AddMech(variable_global_get("sentinel_mech_index"));
+			AddMech(variable_global_get(unique_mod_prefix.."sentinel_mech_index"));
 		end
 	end
 	
 	-----------------
 	--BEHEMOTH MECH--
 	-----------------
-	if (res_number == variable_global_get("behemoth_research_index")) then
+	if (res_number == variable_global_get(unique_mod_prefix.."behemoth_research_index")) then
 		local component_shop = asset_get_index("obj_component_shop");
-		local behemoth_mech_component_index = variable_global_get("behemoth_component_index");
+		local behemoth_mech_component_index = variable_global_get(unique_mod_prefix.."behemoth_component_index");
 		local behemoth_mech_component = component_shop.comp_mech[behemoth_mech_component_index];
 		behemoth_mech_component.researched = 1;		--1=true, opens weapon for production
 		if (q.give_item == true) then				--gives free mech
 			q.give_item = 0;						--0=false
-			AddMech(variable_global_get("behemoth_mech_index"));
+			AddMech(variable_global_get(unique_mod_prefix.."behemoth_mech_index"));
 		end
 	end
 
 	-----------------
 	--ECHO MECH------
 	-----------------
-	if (res_number == variable_global_get("echo_research_index")) then
+	if (res_number == variable_global_get(unique_mod_prefix.."echo_research_index")) then
 		local component_shop = asset_get_index("obj_component_shop");
-		local echo_mech_component_index = variable_global_get("echo_component_index");
+		local echo_mech_component_index = variable_global_get(unique_mod_prefix.."echo_component_index");
 		local echo_mech_component = component_shop.comp_mech[echo_mech_component_index];
 		echo_mech_component.researched = 1;		--1=true, opens weapon for production
 		if (q.give_item == true) then			--gives free mech
 			q.give_item = 0;					--0=false
-			AddMech(variable_global_get("echo_mech_index"));
+			AddMech(variable_global_get(unique_mod_prefix.."echo_mech_index"));
 		end
 	end
 
 	----------------------
 	--HIGH TECH SOLENOID--
 	----------------------
-	if (res_number == variable_global_get("high_tech_solenoid_research_index")) then
+	if (res_number == variable_global_get(unique_mod_prefix.."high_tech_solenoid_research_index")) then
 		local component_shop = asset_get_index("obj_component_shop");
-		local high_tech_solenoid_component_index = variable_global_get("high_tech_solenoid_component_index");
+		local high_tech_solenoid_component_index = variable_global_get(unique_mod_prefix.."high_tech_solenoid_component_index");
 		local high_tech_solenoid_component = component_shop.comp_solenoid[high_tech_solenoid_component_index];
 		high_tech_solenoid_component.researched = 1;	--1=true, opens weapon for production
 		if (q.give_item == true) then					--gives free solenoid
 			q.give_item = 0;							--0=false
-			AddSolenoid(variable_global_get("high_tech_solenoid_index"));
+			AddSolenoid(variable_global_get(unique_mod_prefix.."high_tech_solenoid_index"));
 		end
 	end
 
 	------------
 	--HOWITZER--
 	------------
-	if (res_number == variable_global_get("howitzer_research_index")) then
+	if (res_number == variable_global_get(unique_mod_prefix.."howitzer_research_index")) then
 		local component_shop = asset_get_index("obj_component_shop");
-		local howitzer_component_index = variable_global_get("howitzer_component_index");
+		local howitzer_component_index = variable_global_get(unique_mod_prefix.."howitzer_component_index");
 		local howitzer_component = component_shop.comp_wep[howitzer_component_index];
 		howitzer_component.researched = 1;	--1=true, opens weapon for production
 		if (q.give_item == true) then		--gives free weapon
 			q.give_item = 0;				--0=false
-			AddWeapon(variable_global_get("howitzer_weapon_index"));
+			AddWeapon(variable_global_get(unique_mod_prefix.."howitzer_weapon_index"));
 		end
 	end
 
 	----------------------
 	--LASER PULSE CANNON--
 	----------------------
-	if (res_number == variable_global_get("laser_pulse_cannon_research_index")) then
+	if (res_number == variable_global_get(unique_mod_prefix.."laser_pulse_cannon_research_index")) then
 		local component_shop = asset_get_index("obj_component_shop");
-		local laser_pulse_cannon_component_index = variable_global_get("laser_pulse_cannon_component_index");
+		local laser_pulse_cannon_component_index = variable_global_get(unique_mod_prefix.."laser_pulse_cannon_component_index");
 		local laser_pulse_cannon_component = component_shop.comp_wep[laser_pulse_cannon_component_index];
 		laser_pulse_cannon_component.researched = 1;	--1=true, opens weapon for production
 		if (q.give_item == true) then					--gives free weapon
 			q.give_item = 0;							--0=false
-			AddWeapon(variable_global_get("laser_pulse_cannon_weapon_index"));
+			AddWeapon(variable_global_get(unique_mod_prefix.."laser_pulse_cannon_weapon_index"));
 		end
 	end
 end

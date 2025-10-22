@@ -1,27 +1,31 @@
+--To prevent collisions of global variables between mods.
+--I have prefixed global variables of this mod.
+--If copying code please change the prefix to something unique for your mod.
+local unique_mod_prefix = "CDC_";
 
 
 function create(q)--one time script when save is loaded
 	--Debug flag is set in "obj_database.lua"
-	local debug_spawn_test_weapons = variable_global_get("debug_spawn_test_weapons");	
+	local debug_spawn_test_weapons = variable_global_get(unique_mod_prefix.."debug_spawn_test_weapons");	
 	if(debug_spawn_test_weapons == false) then
 		return
 	end
 	
 	--if the mech_engineer_load is set its not a new game
-	local is_loaded_game = variable_global_get("mech_engineer_load");
+	local is_loaded_game = variable_global_get("mech_engineer_load"); --this is a game variable so no prefix
 	if(is_loaded_game == true) then
 		return
 	end
 
 	--add a howitzer weapon on a new save
-	AddWeapon(variable_global_get("howitzer_weapon_index"), false);
+	AddWeapon(variable_global_get(unique_mod_prefix.."howitzer_weapon_index"), false);
 	--add a howitzer weapon (huge) on a new save
-	AddWeapon(variable_global_get("howitzer_weapon_index"), true);
+	AddWeapon(variable_global_get(unique_mod_prefix.."howitzer_weapon_index"), true);
 
 	--add a laser pulse cannon weapon on a new save
-	AddWeapon(variable_global_get("laser_pulse_cannon_weapon_index"), false);
+	AddWeapon(variable_global_get(unique_mod_prefix.."laser_pulse_cannon_weapon_index"), false);
 	--add a laser pulse cannon weapon (huge) on a new save
-	AddWeapon(variable_global_get("laser_pulse_cannon_weapon_index"), true);
+	AddWeapon(variable_global_get(unique_mod_prefix.."laser_pulse_cannon_weapon_index"), true);
 end
 
 ---Adds a component of type weapon
