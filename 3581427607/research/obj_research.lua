@@ -77,7 +77,7 @@ function research_done(q, res_number)	--if research is done and when loading the
 		local high_tech_solenoid_component_index = variable_global_get("high_tech_solenoid_component_index");
 		local high_tech_solenoid_component = component_shop.comp_solenoid[high_tech_solenoid_component_index];
 		high_tech_solenoid_component.researched = 1;	--1=true, opens weapon for production
-		if (q.give_item == true) then					--gives free mech
+		if (q.give_item == true) then					--gives free solenoid
 			q.give_item = 0;							--0=false
 			AddSolenoid(variable_global_get("high_tech_solenoid_index"));
 		end
@@ -91,7 +91,7 @@ function research_done(q, res_number)	--if research is done and when loading the
 		local howitzer_component_index = variable_global_get("howitzer_component_index");
 		local howitzer_component = component_shop.comp_wep[howitzer_component_index];
 		howitzer_component.researched = 1;	--1=true, opens weapon for production
-		if (q.give_item == true) then		--gives free mech
+		if (q.give_item == true) then		--gives free weapon
 			q.give_item = 0;				--0=false
 			AddWeapon(variable_global_get("howitzer_weapon_index"));
 		end
@@ -105,7 +105,7 @@ function research_done(q, res_number)	--if research is done and when loading the
 		local laser_pulse_cannon_component_index = variable_global_get("laser_pulse_cannon_component_index");
 		local laser_pulse_cannon_component = component_shop.comp_wep[laser_pulse_cannon_component_index];
 		laser_pulse_cannon_component.researched = 1;	--1=true, opens weapon for production
-		if (q.give_item == true) then					--gives free mech
+		if (q.give_item == true) then					--gives free weapon
 			q.give_item = 0;							--0=false
 			AddWeapon(variable_global_get("laser_pulse_cannon_weapon_index"));
 		end
