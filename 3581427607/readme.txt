@@ -1,3 +1,7 @@
+v1.5
+Fixed an issue on the Behemoth sprite.
+Added a modprefix to the mods global variables to prevent gobal variables collisions.
+
 v1.4
 Fixed the range not updating correctly in battle for modded weapons.
 
