@@ -895,7 +895,7 @@ function draw_top_menu(q)
 		weapon_strings.weapon_description = weapon_description_array;
 
 		--Use the next line to print a debug of the recorded weapon descriptions
-		--dump_table_to_message(weapon_strings.weapon_description);
+		--dump_obj_to_message(weapon_strings.weapon_description);
     end
 
 	--We only fix the research after all the loading is done. so we can piggyback on the load flag for obj_weapon_test
@@ -948,30 +948,26 @@ end
 --DEBUG HELPER FUNCTIONS--
 --------------------------
 
----Prints a messagebox with the key and values of the gamemaker struct
+---Prints a messagebox with the key and values of the gamemaker struct or table
 ---provide the reference id to the table
 ---The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
----@param ref any the Gamemaker struct reference
-function dump_struct_to_message(ref)
-	local values = {};
-    for k, v in pairs(struct_get_names(ref)) do
-        table.insert(values, tostring(k).."::"..tostring(v).."::"..tostring(ref[v]));
-    end
-    local message = table.concat(values, ",\n");
-	show_message(message);
-end
-
---Prints a messagebox with the key and values of the table
---provide the reference id to the table
---The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
----@param ref any the reference to the table
-function dump_table_to_message(ref)
-	local values = {};
-    for k, v in pairs(ref) do
-        table.insert(values, tostring(k).."::"..tostring(v));
-    end
-    local message = table.concat(values, ",\n");
-	show_message(message);
+---@param ref any the Gamemaker struct reference or table reference
+function dump_obj_to_message(ref)
+	if(type(ref) == "table") then
+		local values = {};
+		for k, v in pairs(ref) do
+			table.insert(values, tostring(k).."::"..tostring(v));
+		end
+		local message = table.concat(values, ",\n");
+		show_message(message);
+	else
+		local values = {};
+		for k, v in pairs(struct_get_names(ref)) do
+			table.insert(values, tostring(k).."::"..tostring(v).."::"..tostring(ref[v]));
+		end
+		local message = table.concat(values, ",\n");
+		show_message(message);
+	end
 end
 
 --Prints a messagebox with the key and values of the gamemaker ds_map
