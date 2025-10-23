@@ -71,7 +71,7 @@ function create(q)--one time script when save is loaded
 	----------------------
 	--HIGH TECH SOLENOID--
 	----------------------
-	local high_tech_solenoid_index = variable_global_get("high_tech_solenoid_index");
+	local high_tech_solenoid_index = variable_global_get(unique_mod_prefix.."high_tech_solenoid_index");
 	local high_tech_solenoid_component_index = AddSolenoidComponent(high_tech_solenoid_index, comp_sizes.small, 0);
 	variable_global_set(unique_mod_prefix.."high_tech_solenoid_component_index", high_tech_solenoid_component_index);
 

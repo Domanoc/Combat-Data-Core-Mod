@@ -1,3 +1,6 @@
+v1.6
+Fixed a missing prefix
+
 v1.5
 Fixed an issue on the Behemoth sprite.
 Added a modprefix to the mods global variables to prevent gobal variables collisions.
