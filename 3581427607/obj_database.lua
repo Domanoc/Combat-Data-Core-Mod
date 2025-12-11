@@ -13,7 +13,7 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	--DEBUG SETTINGS-----------
 	---------------------------
 	variable_global_set(unique_mod_prefix.."debug_spawn_test_weapons", false);
-	variable_global_set(unique_mod_prefix.."debug_spawn_test_mechs", false);
+	variable_global_set(unique_mod_prefix.."debug_spawn_test_mechs", true);
 	variable_global_set(unique_mod_prefix.."debug_unlock_research", false);
 	---------------------------
 	---------------------------
@@ -72,73 +72,39 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 
 	--MODULE CELLS
 	local cell_num = 1;
-	ds_map_add(nova_mech, "cell_"..   cell_num, 	modules.motor);	--motor 1
-	ds_map_add(nova_mech, "cell_x_".. cell_num, 	7);
-	ds_map_add(nova_mech, "cell_y_".. cell_num, 	6);
+	AddCell(nova_mech, cell_num, modules.motor,  7,  6); 	--motor 1
 	cell_num = cell_num + 1;
-	ds_map_add(nova_mech, "cell_"..   cell_num, 	modules.motor);	--motor 2
-	ds_map_add(nova_mech, "cell_x_".. cell_num, 	-7);
-	ds_map_add(nova_mech, "cell_y_".. cell_num, 	6);
+	AddCell(nova_mech, cell_num, modules.motor, -7,  6); 	--motor 2
 	cell_num = cell_num + 1;
-	ds_map_add(nova_mech, "cell_"..   cell_num, 	modules.motor);	--motor 3
-	ds_map_add(nova_mech, "cell_x_".. cell_num, 	7);
-	ds_map_add(nova_mech, "cell_y_".. cell_num, 	11);
+	AddCell(nova_mech, cell_num, modules.motor,  7, 11); 	--motor 3
 	cell_num = cell_num + 1;
-	ds_map_add(nova_mech, "cell_"..   cell_num, 	modules.motor);	--motor 4
-	ds_map_add(nova_mech, "cell_x_".. cell_num, 	-7);
-	ds_map_add(nova_mech, "cell_y_".. cell_num, 	11);
+	AddCell(nova_mech, cell_num, modules.motor, -7, 11);	--motor 4
 	cell_num = cell_num + 1;
-	ds_map_add(nova_mech, "cell_"..   cell_num, 	modules.motor);	--motor 5
-	ds_map_add(nova_mech, "cell_x_".. cell_num, 	7);
-	ds_map_add(nova_mech, "cell_y_".. cell_num, 	16);
+	AddCell(nova_mech, cell_num, modules.motor,  7, 16);	--motor 5
 	cell_num = cell_num + 1;
-	ds_map_add(nova_mech, "cell_"..   cell_num, 	modules.motor);	--motor 6
-	ds_map_add(nova_mech, "cell_x_".. cell_num, 	-7);
-	ds_map_add(nova_mech, "cell_y_".. cell_num, 	16);
+	AddCell(nova_mech, cell_num, modules.motor, -7, 16);	--motor 6
 	cell_num = cell_num + 1;
-	ds_map_add(nova_mech, "cell_"..   cell_num, 	modules.reactor);--reactor
-	ds_map_add(nova_mech, "cell_x_".. cell_num, 	0);
-	ds_map_add(nova_mech, "cell_y_".. cell_num, 	18);
+	AddCell(nova_mech, cell_num, modules.reactor, 0, 18);	--reactor
 	cell_num = cell_num + 1;
-	ds_map_add(nova_mech, "cell_"..   cell_num, 	modules.gun);	--gun 1
-	ds_map_add(nova_mech, "cell_x_".. cell_num, 	14);
-	ds_map_add(nova_mech, "cell_y_".. cell_num, 	20);
+	AddCell(nova_mech, cell_num, modules.gun,  14, 20);		--gun 1
 	cell_num = cell_num + 1;
-	ds_map_add(nova_mech, "cell_"..   cell_num, 	modules.gun);	--gun 2
-	ds_map_add(nova_mech, "cell_x_".. cell_num, 	-14);
-	ds_map_add(nova_mech, "cell_y_".. cell_num, 	20);
+	AddCell(nova_mech, cell_num, modules.gun, -14, 20);		--gun 2
 	cell_num = cell_num + 1;
-	ds_map_add(nova_mech, "cell_"..   cell_num, 	modules.cabin);	--cabin
-	ds_map_add(nova_mech, "cell_x_".. cell_num, 	0);
-	ds_map_add(nova_mech, "cell_y_".. cell_num, 	25);
+	AddCell(nova_mech, cell_num, modules.cabin, 0, 25);		--cabin
 	cell_num = cell_num + 1;
-	ds_map_add(nova_mech, "cell_"..   cell_num, 	modules.aux);	--aux 1
-	ds_map_add(nova_mech, "cell_x_".. cell_num, 	6);
-	ds_map_add(nova_mech, "cell_y_".. cell_num, 	21);
+	AddCell(nova_mech, cell_num, modules.aux,   6, 21);		--aux 1
 	cell_num = cell_num + 1;
-	ds_map_add(nova_mech, "cell_"..   cell_num, 	modules.aux);	--aux 2
-	ds_map_add(nova_mech, "cell_x_".. cell_num, 	-6);
-	ds_map_add(nova_mech, "cell_y_".. cell_num, 	21);
+	AddCell(nova_mech, cell_num, modules.aux,  -6, 21);		--aux 2
 	cell_num = cell_num + 1;
-	ds_map_add(nova_mech, "cell_"..   cell_num, 	modules.aux);	--aux 3
-	ds_map_add(nova_mech, "cell_x_".. cell_num, 	6);
-	ds_map_add(nova_mech, "cell_y_".. cell_num, 	27);
+	AddCell(nova_mech, cell_num, modules.aux,   6, 27);		--aux 3
 	cell_num = cell_num + 1;
-	ds_map_add(nova_mech, "cell_"..   cell_num, 	modules.aux);	--aux 4
-	ds_map_add(nova_mech, "cell_x_".. cell_num, 	-6);
-	ds_map_add(nova_mech, "cell_y_".. cell_num, 	27);
+	AddCell(nova_mech, cell_num, modules.aux,  -6, 27);		--aux 4
 	cell_num = cell_num + 1;
-	ds_map_add(nova_mech, "cell_"..   cell_num, 	modules.aux);	--aux 5
-	ds_map_add(nova_mech, "cell_x_".. cell_num, 	11);
-	ds_map_add(nova_mech, "cell_y_".. cell_num, 	27);
+	AddCell(nova_mech, cell_num, modules.aux,  11, 27);		--aux 5
 	cell_num = cell_num + 1;
-	ds_map_add(nova_mech, "cell_"..   cell_num, 	modules.aux);	--aux 6
-	ds_map_add(nova_mech, "cell_x_".. cell_num, 	-11);
-	ds_map_add(nova_mech, "cell_y_".. cell_num, 	27);
+	AddCell(nova_mech, cell_num, modules.aux, -11, 27);		--aux 6
 	cell_num = cell_num + 1;
-	ds_map_add(nova_mech, "cell_"..   cell_num, 	modules.aux);	--aux 7
-	ds_map_add(nova_mech, "cell_x_".. cell_num, 	0);
-	ds_map_add(nova_mech, "cell_y_".. cell_num, 	33);
+	AddCell(nova_mech, cell_num, modules.aux,   0, 33);		--aux 7
 
 	ds_map_add(nova_mech, "number_of_cells", cell_num);
 
@@ -197,85 +163,45 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 
 	--MODULE CELLS
 	local cell_num = 1;
-	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	modules.motor);	--motor 1
-	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	8);
-	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	6);
+	AddCell(sentinel_mech, cell_num, modules.motor,  8,  6); 	--motor 1
 	cell_num = cell_num + 1;
-	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	modules.motor);	--motor 2
-	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	-8);
-	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	6);
+	AddCell(sentinel_mech, cell_num, modules.motor, -8,  6); 	--motor 2
 	cell_num = cell_num + 1;
-	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	modules.motor);	--motor 3
-	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	8);
-	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	11);
+	AddCell(sentinel_mech, cell_num, modules.motor,  8, 11); 	--motor 3
 	cell_num = cell_num + 1;
-	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	modules.motor);	--motor 4
-	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	-8);
-	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	11);
+	AddCell(sentinel_mech, cell_num, modules.motor, -8, 11); 	--motor 4
 	cell_num = cell_num + 1;
-	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	modules.motor);	--motor 5
-	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	7);
-	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	16);
+	AddCell(sentinel_mech, cell_num, modules.motor,  7, 16); 	--motor 5
 	cell_num = cell_num + 1;
-	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	modules.motor);	--motor 6
-	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	-7);
-	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	16);
+	AddCell(sentinel_mech, cell_num, modules.motor, -7, 16); 	--motor 6
 	cell_num = cell_num + 1;
-	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	modules.reactor);--reactor
-	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	0);
-	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	24);
+	AddCell(sentinel_mech, cell_num, modules.reactor, 0, 24); 	--reactor
 	cell_num = cell_num + 1;
-	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	modules.gun);	--gun 1
-	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	14);
-	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	22);
+	AddCell(sentinel_mech, cell_num, modules.gun,  14, 22); 	--gun 1
 	cell_num = cell_num + 1;
-	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	modules.gun);	--gun 2
-	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	-14);
-	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	22);
+	AddCell(sentinel_mech, cell_num, modules.gun, -14, 22); 	--gun 2
 	cell_num = cell_num + 1;
-	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	modules.gun);	--gun 3
-	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	7);
-	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	41);
+	AddCell(sentinel_mech, cell_num, modules.gun,   7, 41); 	--gun 3
 	cell_num = cell_num + 1;
-	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	modules.gun);	--gun 4
-	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	-7);
-	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	41);
+	AddCell(sentinel_mech, cell_num, modules.gun,  -7, 41); 	--gun 4
 	cell_num = cell_num + 1;
-	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	modules.cabin);	--cabin
-	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	0);
-	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	32);
+	AddCell(sentinel_mech, cell_num, modules.cabin, 0, 32); 	--cabin
 	cell_num = cell_num + 1;
-	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	modules.aux);	--aux 1
-	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	6);
-	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	22);
+	AddCell(sentinel_mech, cell_num, modules.aux,   6, 22); 	--aux 1
 	cell_num = cell_num + 1;
-	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	modules.aux);	--aux 2
-	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	-6);
-	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	22);
+	AddCell(sentinel_mech, cell_num, modules.aux,  -6, 22); 	--aux 2
 	cell_num = cell_num + 1;
-	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	modules.aux);	--aux 3
-	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	6);
-	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	35);
+	AddCell(sentinel_mech, cell_num, modules.aux,   6, 35); 	--aux 3
 	cell_num = cell_num + 1;
-	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	modules.aux);	--aux 4
-	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	-6);
-	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	35);
+	AddCell(sentinel_mech, cell_num, modules.aux,  -6, 35); 	--aux 4
 	cell_num = cell_num + 1;
-	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	modules.aux);	--aux 5
-	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	6);
-	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	29);
+	AddCell(sentinel_mech, cell_num, modules.aux,   6, 29); 	--aux 5
 	cell_num = cell_num + 1;
-	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	modules.aux);	--aux 6
-	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	-6);
-	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	29);
+	AddCell(sentinel_mech, cell_num, modules.aux,  -6, 29); 	--aux 6
 	cell_num = cell_num + 1;
-	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	modules.aux);	--aux 7
-	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	11);
-	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	33);
+	AddCell(sentinel_mech, cell_num, modules.aux,  11, 33); 	--aux 7
 	cell_num = cell_num + 1;
-	ds_map_add(sentinel_mech, "cell_"..   cell_num, 	modules.aux);	--aux 8
-	ds_map_add(sentinel_mech, "cell_x_".. cell_num, 	-11);
-	ds_map_add(sentinel_mech, "cell_y_".. cell_num, 	33);
+	AddCell(sentinel_mech, cell_num, modules.aux, -11, 33); 	--aux 8
 
 	ds_map_add(sentinel_mech, "number_of_cells", cell_num);
 
@@ -334,136 +260,65 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 
 	--MODULE CELLS
 	local cell_num = 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	modules.motor);	--motor 1
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	7);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	5);
+	AddCell(behemoth_mech, cell_num, modules.motor,   7,  5); 	--motor 1
 	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	modules.motor);	--motor 2
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-7);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	5);
+	AddCell(behemoth_mech, cell_num, modules.motor,  -7,  5); 	--motor 2
 	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	modules.motor);	--motor 3
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	7);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	9);
+	AddCell(behemoth_mech, cell_num, modules.motor,   7,  9); 	--motor 3
 	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	modules.motor);	--motor 4
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-7);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	9);
+	AddCell(behemoth_mech, cell_num, modules.motor,  -7,  9); 	--motor 4
 	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	modules.motor);	--motor 5
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	7);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	13);
+	AddCell(behemoth_mech, cell_num, modules.motor,   7, 13); 	--motor 5
 	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	modules.motor);	--motor 6
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-7);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	13);
+	AddCell(behemoth_mech, cell_num, modules.motor,  -7, 13); 	--motor 6
 	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	modules.motor);	--motor 7
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	7);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	17);
+	AddCell(behemoth_mech, cell_num, modules.motor,   7, 17); 	--motor 7
 	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	modules.motor);	--motor 8
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-7);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	17);
+	AddCell(behemoth_mech, cell_num, modules.motor,  -7, 17); 	--motor 8
 	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	modules.reactor);--reactor
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	0);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	22);
+	AddCell(behemoth_mech, cell_num, modules.reactor,  0, 22); 	--reactor
 	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	modules.gun);	--gun 1
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	15);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	27);
+	AddCell(behemoth_mech, cell_num, modules.gun,   15,  27); 	--gun 1
 	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	modules.gun);	--gun 2
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-15);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	27);
+	AddCell(behemoth_mech, cell_num, modules.gun,  -15,  27); 	--gun 2
 	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	modules.gun);	--gun 3
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	24);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	27);
+	AddCell(behemoth_mech, cell_num, modules.gun,   24,  27); 	--gun 3
 	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	modules.gun);	--gun 4
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-24);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	27);
+	AddCell(behemoth_mech, cell_num, modules.gun,  -24,  27); 	--gun 4
 	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	modules.gun);	--gun 5
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	15);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	21);
+	AddCell(behemoth_mech, cell_num, modules.gun,   15,  21); 	--gun 5
 	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	modules.gun);	--gun 6
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-15);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	21);
+	AddCell(behemoth_mech, cell_num, modules.gun,  -15,  21); 	--gun 6
 	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	modules.gun);	--gun 7
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	24);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	21);
+	AddCell(behemoth_mech, cell_num, modules.gun,   24,  21); 	--gun 7
 	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	modules.gun);	--gun 8
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-24);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	21);
+	AddCell(behemoth_mech, cell_num, modules.gun,  -24,  21); 	--gun 8
 	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	modules.gun);	--gun 9
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	15);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	15);
+	AddCell(behemoth_mech, cell_num, modules.gun,   15,  15); 	--gun 9
 	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	modules.gun);	--gun 10
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-15);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	15);
+	AddCell(behemoth_mech, cell_num, modules.gun,  -15,  15); 	--gun 10
 	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	modules.gun);	--gun 11
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	24);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	15);
+	AddCell(behemoth_mech, cell_num, modules.gun,   24,  15); 	--gun 11
 	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	modules.gun);	--gun 12
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-24);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	15);
-	--Had to remove the last 2 weapon slots since the game has a hard limit of 12
-	--If you have a save with more than 12 weapons installed you can uncomment the 2 slots,
-	--Load the save and remove the weapons, save and then comment out the weapons slots again.
-	--cell_num = cell_num + 1;
-	--ds_map_add(behemoth_mech, "cell_"..   cell_num, 	module.gun);	--gun 13
-	--ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	8);
-	--ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	42);
-	--cell_num = cell_num + 1;
-	--ds_map_add(behemoth_mech, "cell_"..   cell_num, 	module.gun);	--gun 14
-	--ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-8);
-	--ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	42);
+	AddCell(behemoth_mech, cell_num, modules.gun,  -24,  15); 	--gun 12
 	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	modules.cabin);	--cabin
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	0);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	30);
+	AddCell(behemoth_mech, cell_num, modules.cabin,  0,  30); 	--cabin
 	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	modules.aux);	--aux 1
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	6);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	36);
+	AddCell(behemoth_mech, cell_num, modules.aux,    6,  36); 	--aux 1
 	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	modules.aux);	--aux 2
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-6);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	36);
+	AddCell(behemoth_mech, cell_num, modules.aux,   -6,  36); 	--aux 2
 	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	modules.aux);	--aux 3
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	11);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	36);
+	AddCell(behemoth_mech, cell_num, modules.aux,   11,  36); 	--aux 3
 	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	modules.aux);	--aux 4
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-11);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	36);
+	AddCell(behemoth_mech, cell_num, modules.aux,  -11,  36); 	--aux 4
 	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	modules.aux);	--aux 5
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	6);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	31);
+	AddCell(behemoth_mech, cell_num, modules.aux,    6,  31); 	--aux 5
 	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	modules.aux);	--aux 6
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-6);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	31);
+	AddCell(behemoth_mech, cell_num, modules.aux,   -6,  31); 	--aux 6
 	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	modules.aux);	--aux 7
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	6);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	26);
+	AddCell(behemoth_mech, cell_num, modules.aux,    6,  26); 	--aux 7
 	cell_num = cell_num + 1;
-	ds_map_add(behemoth_mech, "cell_"..   cell_num, 	modules.aux);	--aux 8
-	ds_map_add(behemoth_mech, "cell_x_".. cell_num, 	-6);
-	ds_map_add(behemoth_mech, "cell_y_".. cell_num, 	26);
+	AddCell(behemoth_mech, cell_num, modules.aux,   -6,  26); 	--aux 8
 	
 	ds_map_add(behemoth_mech, "number_of_cells", cell_num);
 
@@ -939,9 +794,17 @@ end
 function draw_debug(q)
 end
 
-
-
-
+---Adds a new cell to the ds_map for the mech
+---@param mech unknown the ds_map of the mech
+---@param cell_num number the number of the newly added cell
+---@param moduleType 1|2|3|4|5 module type (1-aux, 2-motor, 3-reactor, 4-gun, 5-cabin)
+---@param x number the x coordinate for the cell, use the mod_mech_grid_help.png for help determining the location
+---@param y number the y coordinate for the cell, use the mod_mech_grid_help.png for help determining the location
+function AddCell(mech, cell_num, moduleType, x, y)
+	ds_map_add(mech, "cell_"..		cell_num, 	moduleType);
+	ds_map_add(mech, "cell_x_"..	cell_num, 	x);
+	ds_map_add(mech, "cell_y_"..	cell_num, 	y);
+end
 
 
 --------------------------
