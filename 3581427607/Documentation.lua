@@ -3,6 +3,7 @@
 --------------------------------------------
 --Added this file to give the IDE info on what the mod functions return and use for params
 
+---A reference handle to the gamemaker ds_map data structure, stores key and value pairs.
 ---@alias ds_map userdata
 
 ---@type any
