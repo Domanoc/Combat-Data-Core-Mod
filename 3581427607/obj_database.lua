@@ -82,7 +82,7 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	---------------------------
 	--DEBUG SETTINGS-----------
 	---------------------------
-	variable_global_set(unique_mod_prefix.."debug_spawn_test_weapons", false);
+	variable_global_set(unique_mod_prefix.."debug_spawn_test_weapons", true);
 	variable_global_set(unique_mod_prefix.."debug_spawn_test_mechs", true);
 	variable_global_set(unique_mod_prefix.."debug_unlock_research", true);
 	---------------------------
@@ -331,8 +331,14 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 
 	--SPRITE
 	local high_tech_solenoid_sprite = sprite_add(current_file_path.."sprites/high_tech_solenoid.png", 0, false, false, 0, 0);
-	variable_global_set(unique_mod_prefix.."high_tech_solenoid_sprite_small", high_tech_solenoid_sprite);
 	ds_map_add(high_tech_solenoid, "sprite", high_tech_solenoid_sprite);
+
+	--Add the newly modded item to the component list to make sure the sprite gets reset on load
+	table.insert(modded_component_list, {
+		component_type = component_types.solenoid,
+		index = #solenoid_stat_array,
+		sprite = high_tech_solenoid_sprite
+	});
 
 
 	--return new data
@@ -386,7 +392,6 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	--SPRITES
 	--small sprite
 	local howitzer_small_sprite = sprite_add(current_file_path.."sprites/howitzer_small.png", 0, false, false, 0, 0);
-	variable_global_set(unique_mod_prefix.."howitzer_sprite_small", howitzer_small_sprite);
 	ds_map_add(howitzer, "sprite", howitzer_small_sprite);
 	--huge sprite
 	local howitzer_huge_sprite = sprite_add(current_file_path.."sprites/howitzer_huge.png", 0, false, false, 199, 134);
@@ -395,6 +400,13 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	--merge the big and huge sprites
 	sprite_merge(howitzer_big_sprite, howitzer_huge_sprite);
 	ds_map_add(howitzer, "sprite_big", howitzer_big_sprite);
+
+	--Add the newly modded item to the component list to make sure the sprite gets reset on load
+	table.insert(modded_component_list, {
+		component_type = component_types.weapon,
+		index = #weapon_stat_array,
+		sprite = howitzer_small_sprite
+	});
 
 	----------------------
 	--LASER PULSE CANNON--
@@ -429,7 +441,6 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	--SPRITES
 	--small sprite
 	local laser_pulse_cannon_small_sprite = sprite_add(current_file_path.."sprites/laser_pulse_cannon_small.png", 0, false, false, 0, 0);
-	variable_global_set(unique_mod_prefix.."laser_pulse_cannon_small_sprite", laser_pulse_cannon_small_sprite);
 	ds_map_add(exp, "sprite", laser_pulse_cannon_small_sprite);
 	--huge sprite
 	local laser_pulse_cannon_huge_sprite = sprite_add(current_file_path.."sprites/laser_pulse_cannon_huge.png", 0, false, false, 199, 134);
@@ -438,6 +449,13 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	--merge the big and huge sprites
 	sprite_merge(laser_pulse_cannon_big_sprite, laser_pulse_cannon_huge_sprite);
 	ds_map_add(exp, "sprite_big", laser_pulse_cannon_big_sprite);
+
+	--Add the newly modded item to the component list to make sure the sprite gets reset on load
+	table.insert(modded_component_list, {
+		component_type = component_types.weapon,
+		index = #weapon_stat_array,
+		sprite = laser_pulse_cannon_small_sprite
+	});
 
 	--return new data
 	q.weapon_stat = weapon_stat_array;
@@ -468,16 +486,6 @@ function load_game_post_event(q)
 		logo = 5,
 		logo_index = 11
 	};
-
-	--Our modded item indexes
-	local high_tech_solenoid_index = variable_global_get(unique_mod_prefix.."high_tech_solenoid_index");
-	local howitzer_weapon_index = variable_global_get(unique_mod_prefix.."howitzer_weapon_index");
-	local laser_pulse_cannon_weapon_index = variable_global_get(unique_mod_prefix.."laser_pulse_cannon_weapon_index");
-
-	--Our Modded sprites
-	local high_tech_solenoid_sprite = variable_global_get(unique_mod_prefix.."high_tech_solenoid_sprite_small");
-	local howitzer_sprite = variable_global_get(unique_mod_prefix.."howitzer_sprite_small");
-	local laser_pulse_cannon_small_sprite = variable_global_get(unique_mod_prefix.."laser_pulse_cannon_small_sprite");
 	
 	--We step through the hanger/production items to find our modded items
 	for _, hangar in ipairs(hanger_mass) do
@@ -486,22 +494,6 @@ function load_game_post_event(q)
 				--When the reference matches the modded element we set the relevant mod sprite to the logo and logo indexes.
 				hangar[hanger.logo] = modded_item.sprite;
 				hangar[hanger.logo_index] = modded_item.sprite;
-			end
-		end
-		--Solenoids
-		if (hangar[hanger.component_type] == component_types.solenoid) then
-			if (hangar[hanger.item_index] == high_tech_solenoid_index) then
-				hangar[hanger.logo] = high_tech_solenoid_sprite;
-				hangar[hanger.logo_index] = hangar[hanger.logo];
-			end
-		--Weapons
-		elseif (hangar[hanger.component_type] == component_types.weapon) then
-			if (hangar[hanger.item_index] == howitzer_weapon_index) then
-				hangar[hanger.logo] = howitzer_sprite;
-				hangar[hanger.logo_index] = hangar[hanger.logo];
-			elseif (hangar[hanger.item_index] == laser_pulse_cannon_weapon_index) then
-				hangar[hanger.logo] = laser_pulse_cannon_small_sprite;
-				hangar[hanger.logo_index] = hangar[hanger.logo];
 			end
 		end
 	end
@@ -637,11 +629,12 @@ function AddMech(mech_data)
 		ds_map_add(mech, "sprite_battle_melee_hor", sprite_add(mech_data.sprite_battle_melee_hor, 7, true, false, 25, 25));
 	end
 
+	--Add the newly modded item to the component list to make sure the sprite gets reset on load
 	table.insert(modded_component_list, {
-			component_type = component_types.mech,
-			index = mech_index - 1,
-			sprite = mech_sprite
-		});
+		component_type = component_types.mech,
+		index = mech_index - 1,
+		sprite = mech_sprite
+	});
 
 	--return new data
 	obj_database.mech_stat = mech_stat_array;

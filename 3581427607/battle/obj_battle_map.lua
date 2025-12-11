@@ -13,7 +13,7 @@ function create(q,v_modid)
 	local amount_of_weapons = #obj_database.weapon_stat;
 
 	--recreate: main_data_sound
-	local main_data_sound = {}; 
+	local main_data_sound = {};
 	for i = 1, amount_of_weapons, 1 do
 		main_data_sound[i] = {};
 		for j = 1, 2, 1 do
@@ -22,7 +22,7 @@ function create(q,v_modid)
 	end
 
 	--recreate: weapon_data_sound
-	local weapon_data_sound = {}; 
+	local weapon_data_sound = {};
 	for i = 1, amount_of_weapons, 1 do
 		weapon_data_sound[i] = {};
 		for j = 1, 4, 1 do
