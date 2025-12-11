@@ -37,6 +37,14 @@ local component_types = {
 	city_parts = 99
 };
 
+--Weapon type identifiers
+local weapon_types = {
+	white = "white",	--ballistic
+	red = "red",		--rockets
+	blue = "blue",		--laser/tesla
+	yellow = "yellow",  --thermal
+};
+
 ---@class modded_hanger_item
 ---@field component_type 1|2|3|4|5|6|7|8|9|10|11|95|96|97|98|99 the type of component
 ---@field index number the index of the component
@@ -73,6 +81,27 @@ local mech_data = {};
 ---@field x number the x coordinate for the cell, use the mod_mech_grid_help.png for help determining the location
 ---@field y number the y coordinate for the cell, use the mod_mech_grid_help.png for help determining the location
 local mech_cell = {};
+
+---@class weapon_data dataset for adding a new mech
+---@field price_metallite number the amount of metallite needed to produce this mech
+---@field price_bjorn number the amount of bjorn needed to produce this mech
+---@field price_munilon number the amount of munilon needed to produce this mech
+---@field price_skalaknit number the amount of skalaknit needed to produce this mech
+---@field price_staff number the amount of staff needed to produce this mech
+---@field production_days number the amount of days it takes to produce this mech
+---@field weapon_type "white"|"red"|"blue"|"yellow" the type of weapon (white = ballistic, red = rockets, blue = laser/tesla, yellow = thermal)
+---@field fire_rate number the base fire rate. higher values offer a faster rate, 600 with full firespeed points will fill the firespeed bar completely
+---@field weight number the base weight of the weapon
+---@field accuracy number the base accuracy for the weapon. accuracy in degrees, 0 is perfect accuracy
+---@field energy number the base energy cost of the weapon
+---@field damage number the base damage value of the weapon
+---@field penetration number the base penetration value of the weapon
+---@field projectile_speed number the base projectile speed of the weapon
+---@field energy_buffed 0|1 whether the energy cost boost damage output, 1 = yes, for laser/tesla weapons this is an additional increase on their native bonus.
+---@field sprite_small string the small sprite for the weapon
+---@field sprite_big string the big sprite for the weapon
+---@field sprite_huge string the huge sprite for the weapon
+local weapon_data = {};
 
 --A list of the modded components used to fix the sprite references on load
 ---@type modded_hanger_item[]
@@ -347,118 +376,58 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	-----------------
 	--WEAPONS--------
 	-----------------
-	
-	--Copy the array to the working set
-	local weapon_stat_array = {};
-	weapon_stat_array = q.weapon_stat;
-
-	--Weapon type identifiers
-	local weapon_types = {
-		white = "white",	--ballistic
-		red = "red",		--rockets
-		blue = "blue",		--laser/tesla
-		yellow = "yellow",  --thermal
-	};
 
 	------------
 	--HOWITZER--
 	------------
-	local howitzer_weapon_index = #weapon_stat_array + 1;
-	variable_global_set(unique_mod_prefix.."howitzer_weapon_index", #weapon_stat_array);
-	weapon_stat_array[howitzer_weapon_index] = ds_map_create();
-	local howitzer = weapon_stat_array[howitzer_weapon_index];
-
-	--ENGINEERING PRICE
-	ds_map_add(howitzer, "price_metallite",		200);
-	ds_map_add(howitzer, "price_bjorn",			50);
-	ds_map_add(howitzer, "price_munilon",		30);
-	ds_map_add(howitzer, "price_skalaknit",		60);
-	ds_map_add(howitzer, "price_staff",			45);
-	ds_map_add(howitzer, "days",				4);
-
-	--STATS
-	ds_map_add(howitzer, "hp",					1000);
-	ds_map_add(howitzer, "type",				weapon_types.white); --type of weapon ("white", "red", "blue", "yellow")
-	ds_map_add(howitzer, "number",				3);		--doesn't seem to do anything
-	ds_map_add(howitzer, "start_fire_speed",	25);	--600 with full firespeed points will fill the firespeed bar completely
-	ds_map_add(howitzer, "start_weight",		48);	--base weight
-	ds_map_add(howitzer, "start_accuracy",		1.5);	--acceracy in degrees, 0 is perfect acceracy
-	ds_map_add(howitzer, "start_energy",		5);		--energy requirement
-	ds_map_add(howitzer, "start_damage",		80);	--base damage value
-	ds_map_add(howitzer, "start_penetration",	15);	--base penetration value
-	ds_map_add(howitzer, "start_speed",			18);	--the speed of the projectile
-	ds_map_add(howitzer, "energy_buffed",		0);		--can't	be improved with bonus energy
-
-	--SPRITES
-	--small sprite
-	local howitzer_small_sprite = sprite_add(current_file_path.."sprites/howitzer_small.png", 0, false, false, 0, 0);
-	ds_map_add(howitzer, "sprite", howitzer_small_sprite);
-	--huge sprite
-	local howitzer_huge_sprite = sprite_add(current_file_path.."sprites/howitzer_huge.png", 0, false, false, 199, 134);
-	--big sprite
-	local howitzer_big_sprite = sprite_add(current_file_path.."sprites/howitzer_big.png", 0, false, false, 199, 134);
-	--merge the big and huge sprites
-	sprite_merge(howitzer_big_sprite, howitzer_huge_sprite);
-	ds_map_add(howitzer, "sprite_big", howitzer_big_sprite);
-
-	--Add the newly modded item to the component list to make sure the sprite gets reset on load
-	table.insert(modded_component_list, {
-		component_type = component_types.weapon,
-		index = #weapon_stat_array,
-		sprite = howitzer_small_sprite
+	local howitzer_weapon_index = AddWeapon({
+		price_metallite =  200,
+		price_bjorn = 	   50,
+		price_munilon =    30,
+		price_skalaknit =  60,
+		price_staff = 	   45,
+		production_days =  4,
+		weapon_type = 	   weapon_types.white,
+		fire_rate = 	   25,
+		weight = 		   48,
+		accuracy = 		   1.5,
+		energy = 		   5,
+		damage = 		   80,
+		penetration = 	   15,
+		projectile_speed = 18,
+		energy_buffed =    0,
+		sprite_small =     current_file_path.."sprites/howitzer_small.png",
+		sprite_big = 	   current_file_path.."sprites/howitzer_big.png",
+		sprite_huge = 	   current_file_path.."sprites/howitzer_huge.png"
 	});
-
+	variable_global_set(unique_mod_prefix.."howitzer_weapon_index", howitzer_weapon_index);
+	
 	----------------------
 	--LASER PULSE CANNON--
 	----------------------
-	local laser_pulse_cannon_weapon_index = #weapon_stat_array + 1;
-	variable_global_set(unique_mod_prefix.."laser_pulse_cannon_weapon_index", #weapon_stat_array);
-	weapon_stat_array[laser_pulse_cannon_weapon_index] = ds_map_create();
-	local exp = weapon_stat_array[laser_pulse_cannon_weapon_index];
-	variable_global_set(unique_mod_prefix.."laser_pulse_cannon_weapon_range", 2000);
-
-	--ENGINEERING PRICE
-	ds_map_add(exp, "price_metallite",		250);
-	ds_map_add(exp, "price_bjorn",			245);
-	ds_map_add(exp, "price_munilon",		500);
-	ds_map_add(exp, "price_skalaknit",		130);
-	ds_map_add(exp, "price_staff",			110);
-	ds_map_add(exp, "days",					8);
-
-	--STATS
-	ds_map_add(exp, "hp",					1000);
-	ds_map_add(exp, "type",					weapon_types.blue); --type of weapon ("white", "red", "blue", "yellow")
-	ds_map_add(exp, "number",				3);		--doesn't seem to do anything
-	ds_map_add(exp, "start_fire_speed",		600);	--600 with full firespeed points will fill the firespeed bar completely
-	ds_map_add(exp, "start_weight",			80);	--base weight
-	ds_map_add(exp, "start_accuracy",		0);		--acceracy in degrees, 0 is perfect acceracy
-	ds_map_add(exp, "start_energy",			10);	--energy requirement
-	ds_map_add(exp, "start_damage",			40);	--base damage value
-	ds_map_add(exp, "start_penetration",	5);		--base penetration value
-	ds_map_add(exp, "start_speed",			0);		--the speed of the projectile
-	ds_map_add(exp, "energy_buffed",		0);		--can't	be improved with bonus energy
-
-	--SPRITES
-	--small sprite
-	local laser_pulse_cannon_small_sprite = sprite_add(current_file_path.."sprites/laser_pulse_cannon_small.png", 0, false, false, 0, 0);
-	ds_map_add(exp, "sprite", laser_pulse_cannon_small_sprite);
-	--huge sprite
-	local laser_pulse_cannon_huge_sprite = sprite_add(current_file_path.."sprites/laser_pulse_cannon_huge.png", 0, false, false, 199, 134);
-	--big sprite
-	local laser_pulse_cannon_big_sprite = sprite_add(current_file_path.."sprites/laser_pulse_cannon_big.png", 0, false, false, 199, 134);
-	--merge the big and huge sprites
-	sprite_merge(laser_pulse_cannon_big_sprite, laser_pulse_cannon_huge_sprite);
-	ds_map_add(exp, "sprite_big", laser_pulse_cannon_big_sprite);
-
-	--Add the newly modded item to the component list to make sure the sprite gets reset on load
-	table.insert(modded_component_list, {
-		component_type = component_types.weapon,
-		index = #weapon_stat_array,
-		sprite = laser_pulse_cannon_small_sprite
+	local laser_pulse_cannon_weapon_index = AddWeapon({
+		price_metallite =  250,
+		price_bjorn = 	   245,
+		price_munilon =    500,
+		price_skalaknit =  130,
+		price_staff = 	   110,
+		production_days =  8,
+		weapon_type = 	   weapon_types.blue,
+		fire_rate = 	   600,
+		weight = 		   80,
+		accuracy = 		   0,
+		energy = 		   10,
+		damage = 		   40,
+		penetration = 	   5,
+		projectile_speed = 0,
+		energy_buffed =    0,
+		sprite_small =     current_file_path.."sprites/laser_pulse_cannon_small.png",
+		sprite_big = 	   current_file_path.."sprites/laser_pulse_cannon_big.png",
+		sprite_huge = 	   current_file_path.."sprites/laser_pulse_cannon_huge.png"
 	});
-
-	--return new data
-	q.weapon_stat = weapon_stat_array;
+	variable_global_set(unique_mod_prefix.."laser_pulse_cannon_weapon_index", laser_pulse_cannon_weapon_index);
+	--we want to mod the range later since this can only be done at runtime in battle or the object holder
+	variable_global_set(unique_mod_prefix.."laser_pulse_cannon_weapon_range", 2000);
 end
 
 function save_game_pre_event(q)
@@ -486,12 +455,12 @@ function load_game_post_event(q)
 		logo = 5,
 		logo_index = 11
 	};
-	
+
 	--We step through the hanger/production items to find our modded items
 	for _, hangar in ipairs(hanger_mass) do
 		for _, modded_item in ipairs(modded_component_list) do
 			if(hangar[hanger.component_type] == modded_item.component_type and hangar[hanger.item_index] == modded_item.index) then
-				--When the reference matches the modded element we set the relevant mod sprite to the logo and logo indexes.
+				--When the reference matches the modded element we set the relevant mod sprite to the logo and logo index.
 				hangar[hanger.logo] = modded_item.sprite;
 				hangar[hanger.logo_index] = modded_item.sprite;
 			end
@@ -674,6 +643,69 @@ function AddCell(mech, cell_num, cell)
 	ds_map_add(mech, "cell_"..		cell_num, 	cell.moduleType);
 	ds_map_add(mech, "cell_x_"..	cell_num, 	cell.x);
 	ds_map_add(mech, "cell_y_"..	cell_num, 	cell.y);
+end
+
+---Add a new weapon
+---@param weapon_data weapon_data
+---@return number index the index of the newly added weapon
+function AddWeapon(weapon_data)
+	local obj_database = asset_get_index("obj_database");
+
+	--Copy the array to the working set
+	local weapon_stat_array = {};
+	weapon_stat_array = obj_database.weapon_stat;
+
+	------------
+	--HOWITZER--
+	------------
+	local weapon_index = #weapon_stat_array + 1;
+	weapon_stat_array[weapon_index] = ds_map_create();
+	local weapon = weapon_stat_array[weapon_index];
+
+	--ENGINEERING PRICE
+	ds_map_add(weapon, "price_metallite",	weapon_data.price_metallite);
+	ds_map_add(weapon, "price_bjorn",		weapon_data.price_bjorn);
+	ds_map_add(weapon, "price_munilon",		weapon_data.price_munilon);
+	ds_map_add(weapon, "price_skalaknit",	weapon_data.price_skalaknit);
+	ds_map_add(weapon, "price_staff",		weapon_data.price_staff);
+	ds_map_add(weapon, "days",				weapon_data.production_days);
+
+	--STATS
+	ds_map_add(weapon, "hp",				1000);	--a default value the game doesn't seem to use.
+	ds_map_add(weapon, "number",			3);		--doesn't seem to do anything
+	ds_map_add(weapon, "type",				weapon_data.weapon_type);
+	ds_map_add(weapon, "start_fire_speed",	weapon_data.fire_rate);
+	ds_map_add(weapon, "start_weight",		weapon_data.weight);
+	ds_map_add(weapon, "start_accuracy",	weapon_data.accuracy);
+	ds_map_add(weapon, "start_energy",		weapon_data.energy);
+	ds_map_add(weapon, "start_damage",		weapon_data.damage);
+	ds_map_add(weapon, "start_penetration",	weapon_data.penetration);
+	ds_map_add(weapon, "start_speed",		weapon_data.projectile_speed);
+	ds_map_add(weapon, "energy_buffed",		weapon_data.energy_buffed);
+
+	--SPRITES
+	--small sprite
+	local small_sprite = sprite_add(weapon_data.sprite_small, 0, false, false, 0, 0);
+	ds_map_add(weapon, "sprite", small_sprite);
+	--huge sprite
+	local huge_sprite = sprite_add(weapon_data.sprite_huge, 0, false, false, 199, 134);
+	--big sprite
+	local big_sprite = sprite_add(weapon_data.sprite_big, 0, false, false, 199, 134);
+	--merge the big and huge sprites
+	sprite_merge(big_sprite, huge_sprite);
+	ds_map_add(weapon, "sprite_big", big_sprite);
+
+	--Add the newly modded item to the component list to make sure the sprite gets reset on load
+	table.insert(modded_component_list, {
+		component_type = component_types.weapon,
+		index = weapon_index - 1,
+		sprite = small_sprite
+	});
+
+	--return new data
+	obj_database.weapon_stat = weapon_stat_array;
+
+	return weapon_index - 1;
 end
 
 
