@@ -1,6 +1,8 @@
 --------------------------------------------
 --Documentation for used mod functions -----
 --------------------------------------------
+--Added this file to give the IDE info on what the mod functions return and use for params
+
 ---@alias ds_map userdata
 
 ---@type any

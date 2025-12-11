@@ -672,7 +672,7 @@ function draw_top_menu(q)
 			--condition 2 (researching) -> should be a valid state, we can't conclude if the number of days remaining is correct other than it should be less or equal to the max value.
 			--condition 3 (researched) -> require_days should be 0
 			--both these conditions shouldn't need our attention as they are most likely part of normal gameplay
-		end		
+		end
 	end
 end
 

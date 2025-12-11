@@ -184,7 +184,8 @@ function AddWeaponComponent(weapon_number, component_size, researched)
 	comp_wep = obj_component_shop.comp_wep;
 
 	local array_size = #comp_wep;
-	local producible_weapons = array_size - 87;		--number of producible weapons, vanilla is 12 but there are a total of 99 vanilla weapons in comp_wep, so must reduce it.
+	local empty_vanilla_weapons = 99 - 12;							--The vanilla weapon array is 99 items but only 12 weapons are used.
+	local producible_weapons = array_size - empty_vanilla_weapons;	--number of producible weapons, vanilla is 12 but there are a total of 99 vanilla weapons in comp_wep, so must reduce it.
 	local weapon_location_x = obj_component_shop.weapon_start_x + icon_pixel_size * (producible_weapons // 3);
 	local weapon_location_y = obj_component_shop.weapon_start_y + icon_pixel_size * (producible_weapons % 3);
 	local obj_component = asset_get_index("obj_component");

@@ -17,7 +17,7 @@ local research = {
 	description = 10	--the description text for the research
 };
 
----@class research_item
+---@class research_item dataset for a new research item
 ---@field position number position number on the research tree. You can see positions in the game with f6 (debug mode)
 ---@field prerequisite_research number|-4 the prerequisite research that unlocks this research, each research can only be the prerequisite for 3 other researches. leave -4 for no prerequisite.
 ---@field condition 0|1|2|3 condition (0-closed, 1-opened, 2-researching, 3-researched)
@@ -268,9 +268,9 @@ end
 function draw(q)	--if activated = true
 end
 
----comment
----@param item research_item
----@return unknown
+---Adds a research item
+---@param item research_item The dataset for the new research item
+---@return number research_item_index Returns the index for the new research item
 function AddResearch(item)
 	local obj_research_panel = asset_get_index("obj_research_panel");
 
