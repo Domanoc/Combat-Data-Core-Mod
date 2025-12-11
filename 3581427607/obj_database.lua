@@ -1,3 +1,44 @@
+--------------------------------------------
+--Documentation for used mod functions -----
+--------------------------------------------
+---@alias ds_map userdata
+
+---This function is used to create a new, empty DS map and will return a Handle to it which is then used to access the data structure in all other DS map functions.
+---@type fun(): ds_map
+ds_map_create = ds_map_create;
+---This function should be used to add sets of key/value pairs into the specified DS map.
+---@type fun(map: ds_map, key: string, value: any)
+ds_map_add = ds_map_add;
+---With this function you can retrieve all of the keys that a DS map contains.
+---@type fun(id: ds_map) : table
+ds_map_keys_to_array = ds_map_keys_to_array;
+---With this function you can get the value from a specified key.
+---@type fun(id: ds_map, key: string) : any|nil
+ds_map_find_value = ds_map_find_value;
+---This function returns an array with the variable names from a struct.
+---@type fun(id: table) : table
+struct_get_names = struct_get_names;
+---With this function you can set the value of a given global variable.
+---@type fun(key: string, value: any)
+variable_global_set = variable_global_set;
+---With this function you can get the value from a given named global variable
+---@type fun(key: string): value: any
+variable_global_get = variable_global_get;
+---This function will add an image as a sprite
+---@type fun(filepath: string, number_of_images: number, removeback: boolean, smooth: boolean, xorig: number, yorig: number): value: number
+sprite_add = sprite_add;
+---This function will merge the sprite indexed in argument 1 ("ind2") with that which is indexed in argument 0 ("ind1").
+---@type fun(ind1: number, ind2: number)
+sprite_merge = sprite_merge;
+---This function gets the unique identifying index for a game asset from its name.
+---@type fun(name: string): any
+asset_get_index = asset_get_index;
+---This function creates a pop-up message box which displays the given string and a button marked "Ok" to close it.
+---@type fun(message: string)
+show_message = show_message;
+--------------------------------------------
+--------------------------------------------
+
 --To prevent collisions of global variables between mods.
 --I have prefixed global variables of this mod.
 --If copying code please change the prefix to something unique for your mod.
@@ -49,8 +90,8 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	-----------------
 	local nova_mech_index = #mech_stat_array + 1;
 	variable_global_set(unique_mod_prefix.."nova_mech_index", #mech_stat_array);
-	mech_stat_array[nova_mech_index] = ds_map_create();
-	local nova_mech = mech_stat_array[nova_mech_index];
+	local nova_mech = ds_map_create();
+	mech_stat_array[nova_mech_index] = nova_mech;
 
 	--ENGINEERING PRICE
 	ds_map_add(nova_mech, "price_metallite",	400);
@@ -123,8 +164,8 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	-----------------
 	local sentinel_mech_index = #mech_stat_array + 1;
 	variable_global_set(unique_mod_prefix.."sentinel_mech_index", #mech_stat_array);
-	mech_stat_array[sentinel_mech_index] = ds_map_create();
-	local sentinel_mech = mech_stat_array[sentinel_mech_index];
+	local sentinel_mech = ds_map_create();
+	mech_stat_array[sentinel_mech_index] = sentinel_mech();
 	
 	--ENGINEERING PRICE
 	ds_map_add(sentinel_mech, "price_metallite",	1050);
@@ -200,8 +241,8 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	-----------------
 	local behemoth_mech_index = #mech_stat_array + 1;
 	variable_global_set(unique_mod_prefix.."behemoth_mech_index", #mech_stat_array);
-	mech_stat_array[behemoth_mech_index] = ds_map_create();
-	local behemoth_mech = mech_stat_array[behemoth_mech_index];
+	local behemoth_mech = ds_map_create();
+	mech_stat_array[behemoth_mech_index] = behemoth_mech;
 	
 	--ENGINEERING PRICE
 	ds_map_add(behemoth_mech, "price_metallite",	4130);
@@ -287,8 +328,8 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	-----------------
 	local echo_mech_index = #mech_stat_array + 1;
 	variable_global_set(unique_mod_prefix.."echo_mech_index", #mech_stat_array);
-	mech_stat_array[echo_mech_index] = ds_map_create();
-	local echo_mech = mech_stat_array[echo_mech_index];
+	local echo_mech = ds_map_create();
+	mech_stat_array[echo_mech_index] = echo_mech();
 
 	--ENGINEERING PRICE
 	ds_map_add(echo_mech, "price_metallite",	620);
@@ -680,7 +721,7 @@ function draw_debug(q)
 end
 
 ---Adds the Cell data to the ds_map of the mech
----@param mech unknown the reference to the ds_map of the mech
+---@param mech ds_map the reference to the ds_map of the mech
 ---@param cells mech_cell[] the cell data array for the mech
 function AddCells(mech, cells)
 	for i = 1, #cells, 1 do
@@ -691,7 +732,7 @@ function AddCells(mech, cells)
 end
 
 ---Adds a new cell to the ds_map for the mech
----@param mech unknown the reference to the ds_map of the mech
+---@param mech ds_map the reference to the ds_map of the mech
 ---@param cell_num number the number of the newly added cell
 ---@param cell mech_cell the data for the cell
 function AddCell(mech, cell_num, cell)
