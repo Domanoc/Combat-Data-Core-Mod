@@ -8,11 +8,75 @@ local unique_mod_prefix = "CDC_";
 --example: variable_global_set, ds_map_add, sprite_add
 --the exposed functions can be found in the list_of_functions.txt file found in the example mod
 
----@class mech_cell
+--Module identifiers
+local modules = {
+	aux = 1,
+	motor = 2,
+	reactor = 3,
+	gun = 4,
+	cabin = 5
+};
+
+--Component types
+local component_types = {
+	mech = 1,
+	cabin = 2,
+	motor = 3,
+	weapon = 4,
+	reactor = 5,
+	injector = 6,
+	piston = 7,
+	kernel = 8,
+	safety = 9,
+	magnet = 10,
+	solenoid = 11,
+	armor_layer_middle = 95,
+	armor_layer_end = 96,
+	rocket = 97,
+	beacon = 98,
+	city_parts = 99
+};
+
+---@class modded_hanger_item
+---@field component_type 1|2|3|4|5|6|7|8|9|10|11|95|96|97|98|99 the type of component
+---@field index number the index of the component
+---@field sprite number the index of the component sprite 
+local modded_hanger_item = {};
+
+---@class mech_data dataset for adding a new mech
+---@field price_metallite number the amount of metallite needed to produce this mech
+---@field price_bjorn number the amount of bjorn needed to produce this mech
+---@field price_munilon number the amount of munilon needed to produce this mech
+---@field price_skalaknit number the amount of skalaknit needed to produce this mech
+---@field price_staff number the amount of staff needed to produce this mech
+---@field production_days number the amount of days it takes to produce this mech
+---@field heat_resist number the heat resist value of the mech
+---@field impact_resist number the impact resist value of the mech
+---@field current_resist number the current resist value of the mech
+---@field has_melee 0|1 Indicates if the mech can use a melee weapon
+---@field passive_armor number the amount of passive armor the mech has
+---@field weight number the base weight of the mech
+---@field speed number the base speed of the mech
+---@field reload_time number the base reload time of the mech
+---@field battle_time number the base battle time of the mech (the lenght of time it has ammo reserves for to shoot)
+---@field mech_cells mech_cell[] the dataset on what cells the mech has
+---@field sprite_small string the small sprite for the mech
+---@field sprite_big string the big sprite for the mech
+---@field sprite_battle string the spritesheet for the mech used on the battle screen
+---@field sprite_battle_dead string the sprite for a destroyed mech on the battle screen
+---@field sprite_battle_melee_ver string|nil the vertical melee attack spritesheet used on the battle screen. optional if the mech has no melee
+---@field sprite_battle_melee_hor string|nil the horizontal melee attack spritesheet used on the battle screen. optional if the mech has no melee
+local mech_data = {};
+
+---@class mech_cell dataset on what cells a mech has
 ---@field moduleType 1|2|3|4|5 module type (1-aux, 2-motor, 3-reactor, 4-gun, 5-cabin)
 ---@field x number the x coordinate for the cell, use the mod_mech_grid_help.png for help determining the location
 ---@field y number the y coordinate for the cell, use the mod_mech_grid_help.png for help determining the location
 local mech_cell = {};
+
+--A list of the modded components used to fix the sprite references on load
+---@type modded_hanger_item[]
+local modded_component_list = {};
 
 function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in any create event as a second argument
 	---------------------------
@@ -20,7 +84,7 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	---------------------------
 	variable_global_set(unique_mod_prefix.."debug_spawn_test_weapons", false);
 	variable_global_set(unique_mod_prefix.."debug_spawn_test_mechs", true);
-	variable_global_set(unique_mod_prefix.."debug_unlock_research", false);
+	variable_global_set(unique_mod_prefix.."debug_unlock_research", true);
 	---------------------------
 	---------------------------
 
@@ -30,336 +94,209 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	-----------------
 	--MECHS----------
 	-----------------	
-	
-	--Copy the array to the working set
-	local mech_stat_array = {};
-	mech_stat_array = q.mech_stat;
-
-	--Module identifiers
-	local modules = {
-		aux = 1,
-		motor = 2,
-		reactor = 3,
-		gun = 4,
-		cabin = 5
-	};
 
 	-----------------
 	--NOVA MECH------
 	-----------------
-	local nova_mech_index = #mech_stat_array + 1;
-	variable_global_set(unique_mod_prefix.."nova_mech_index", #mech_stat_array);
-	local nova_mech = ds_map_create();
-	mech_stat_array[nova_mech_index] = nova_mech;
-
-	--ENGINEERING PRICE
-	ds_map_add(nova_mech, "price_metallite",	400);
-	ds_map_add(nova_mech, "price_bjorn",		200);
-	ds_map_add(nova_mech, "price_munilon",		320);
-	ds_map_add(nova_mech, "price_skalaknit",	220);
-	ds_map_add(nova_mech, "price_staff",		245);
-	ds_map_add(nova_mech, "days",				4);
-
-	--RESISTANCES
-	ds_map_add(nova_mech, "heat_resist",		20);
-	ds_map_add(nova_mech, "impact_resist",		15);
-	ds_map_add(nova_mech, "current_resist",		40);
-
-	--STATS
-	ds_map_add(nova_mech, "hp", 				1000);
-	ds_map_add(nova_mech, "melee_option",		1);		--0 = false, 1 = true
-	ds_map_add(nova_mech, "armor",				2);
-	ds_map_add(nova_mech, "weight",				65);
-	ds_map_add(nova_mech, "speed",				0.4);
-	ds_map_add(nova_mech, "reload_time",		3);
-	ds_map_add(nova_mech, "battle_time",		3);
-	ds_map_add(nova_mech, "number_of_weapons",	2);
-	ds_map_add(nova_mech, "number_of_aux",		7);
-
-	--MODULE CELLS
-	AddCells(nova_mech, {
-		 {moduleType = modules.motor, 	x =   7, y =  6} --motor 1
-		,{moduleType = modules.motor, 	x =  -7, y =  6} --motor 2
-		,{moduleType = modules.motor, 	x =   7, y = 11} --motor 3
-		,{moduleType = modules.motor, 	x =  -7, y = 11} --motor 4
-		,{moduleType = modules.motor, 	x =   7, y = 16} --motor 5
-		,{moduleType = modules.motor, 	x =  -7, y = 16} --motor 6
-		,{moduleType = modules.reactor, x =   0, y = 18} --reactor
-		,{moduleType = modules.gun, 	x =  14, y = 20} --gun 1
-		,{moduleType = modules.gun, 	x = -14, y = 20} --gun 2
-		,{moduleType = modules.cabin, 	x =   0, y = 25} --cabin
-		,{moduleType = modules.aux, 	x =   6, y = 21} --aux 1
-		,{moduleType = modules.aux, 	x =  -6, y = 21} --aux 2
-		,{moduleType = modules.aux, 	x =   6, y = 27} --aux 3
-		,{moduleType = modules.aux, 	x =  -6, y = 27} --aux 4
-		,{moduleType = modules.aux, 	x =  11, y = 27} --aux 5
-		,{moduleType = modules.aux, 	x = -11, y = 27} --aux 6
-		,{moduleType = modules.aux, 	x =   0, y = 33} --aux 7
+	local nova_mech_index = AddMech({
+		price_metallite = 400,
+		price_bjorn = 	  200,
+		price_munilon =   320,
+		price_skalaknit = 220,
+		price_staff = 	  245,
+		production_days = 4,
+		heat_resist = 	  20,
+		impact_resist =   15,
+		current_resist =  40,
+		has_melee = 	  1,
+		passive_armor =   2,
+		weight = 		  65,
+		speed = 		  0.4,
+		reload_time = 	  3,
+		battle_time = 	  3,
+		mech_cells = {
+			{moduleType = modules.motor, 	x =   7, y =  6} --motor 1
+			,{moduleType = modules.motor, 	x =  -7, y =  6} --motor 2
+			,{moduleType = modules.motor, 	x =   7, y = 11} --motor 3
+			,{moduleType = modules.motor, 	x =  -7, y = 11} --motor 4
+			,{moduleType = modules.motor, 	x =   7, y = 16} --motor 5
+			,{moduleType = modules.motor, 	x =  -7, y = 16} --motor 6
+			,{moduleType = modules.reactor, x =   0, y = 18} --reactor
+			,{moduleType = modules.gun, 	x =  14, y = 20} --gun 1
+			,{moduleType = modules.gun, 	x = -14, y = 20} --gun 2
+			,{moduleType = modules.cabin, 	x =   0, y = 25} --cabin
+			,{moduleType = modules.aux, 	x =   6, y = 21} --aux 1
+			,{moduleType = modules.aux, 	x =  -6, y = 21} --aux 2
+			,{moduleType = modules.aux, 	x =   6, y = 27} --aux 3
+			,{moduleType = modules.aux, 	x =  -6, y = 27} --aux 4
+			,{moduleType = modules.aux, 	x =  11, y = 27} --aux 5
+			,{moduleType = modules.aux, 	x = -11, y = 27} --aux 6
+			,{moduleType = modules.aux, 	x =   0, y = 33} --aux 7
+		},
+		sprite_small = 			  current_file_path.."sprites/nova_small.png",
+		sprite_big = 			  current_file_path.."sprites/nova_big.png",
+		sprite_battle = 		  current_file_path.."sprites/nova_battle.png",
+		sprite_battle_dead = 	  current_file_path.."sprites/nova_dead.png",
+		sprite_battle_melee_ver = current_file_path.."sprites/nova_melee_vertical.png",
+		sprite_battle_melee_hor = current_file_path.."sprites/nova_melee_horizontal.png"
 	});
-
-	--SPRITES
-	--small sprite
-	local nova_mech_sprite = sprite_add(current_file_path.."sprites/nova_small.png", 0, false, false, 23, 49);
-	variable_global_set(unique_mod_prefix.."nova_sprite_small", nova_mech_sprite);
-	ds_map_add(nova_mech, "sprite_small", nova_mech_sprite);
-	--big sprite
-	nova_mech_sprite = sprite_add(current_file_path.."sprites/nova_big.png", 0, false, false, 199, 343);				
-	ds_map_add(nova_mech, "sprite_big", nova_mech_sprite);
-	--battle sprite
-	nova_mech_sprite = sprite_add(current_file_path.."sprites/nova_battle.png", 2, true, false, 25, 25);				
-	ds_map_add(nova_mech, "sprite_battle", nova_mech_sprite);
-	--dead sprite
-	nova_mech_sprite = sprite_add(current_file_path.."sprites/nova_dead.png", 1, true, false, 23, 23);				
-	ds_map_add(nova_mech, "sprite_battle_dead", nova_mech_sprite);
-	--melee vertical
-	nova_mech_sprite = sprite_add(current_file_path.."sprites/nova_melee_vertical.png", 7, true, false, 17, 25);		
-	ds_map_add(nova_mech, "sprite_battle_melee_ver", nova_mech_sprite);
-	--melee horizontal
-	nova_mech_sprite = sprite_add(current_file_path.."sprites/nova_melee_horizontal.png", 7, true, false, 25, 25);	
-	ds_map_add(nova_mech, "sprite_battle_melee_hor", nova_mech_sprite);
+	variable_global_set(unique_mod_prefix.."nova_mech_index", nova_mech_index);
 
 	-----------------
 	--SENTINEL MECH--
 	-----------------
-	local sentinel_mech_index = #mech_stat_array + 1;
-	variable_global_set(unique_mod_prefix.."sentinel_mech_index", #mech_stat_array);
-	local sentinel_mech = ds_map_create();
-	mech_stat_array[sentinel_mech_index] = sentinel_mech;
-	
-	--ENGINEERING PRICE
-	ds_map_add(sentinel_mech, "price_metallite",	1050);
-	ds_map_add(sentinel_mech, "price_bjorn",		730);
-	ds_map_add(sentinel_mech, "price_munilon",		1030);
-	ds_map_add(sentinel_mech, "price_skalaknit",	880);
-	ds_map_add(sentinel_mech, "price_staff",		325);
-	ds_map_add(sentinel_mech, "days",				6);
-
-	--RESISTANCES
-	ds_map_add(sentinel_mech, "heat_resist",		25);
-	ds_map_add(sentinel_mech, "impact_resist",		90);
-	ds_map_add(sentinel_mech, "current_resist",		80);
-
-	--STATS
-	ds_map_add(sentinel_mech, "hp", 				1000);		--1000 is the default for all mechs
-	ds_map_add(sentinel_mech, "melee_option",		1);			--0 = false, 1 = true
-	ds_map_add(sentinel_mech, "armor",				5);
-	ds_map_add(sentinel_mech, "weight",				70);
-	ds_map_add(sentinel_mech, "speed",				0.2);
-	ds_map_add(sentinel_mech, "reload_time",		4);
-	ds_map_add(sentinel_mech, "battle_time",		5);
-	ds_map_add(sentinel_mech, "number_of_weapons",	4);
-	ds_map_add(sentinel_mech, "number_of_aux",		8);
-
-	--MODULE CELLS
-	AddCells(sentinel_mech, {
-		 {moduleType = modules.motor, 	x =   8, y =  6} --motor 1
-		,{moduleType = modules.motor, 	x =  -8, y =  6} --motor 2
-		,{moduleType = modules.motor, 	x =   8, y = 11} --motor 3
-		,{moduleType = modules.motor, 	x =  -8, y = 11} --motor 4
-		,{moduleType = modules.motor, 	x =   7, y = 16} --motor 5
-		,{moduleType = modules.motor, 	x =  -7, y = 16} --motor 6
-		,{moduleType = modules.reactor, x =   0, y = 24} --reactor
-		,{moduleType = modules.gun, 	x =  14, y = 22} --gun 1
-		,{moduleType = modules.gun, 	x = -14, y = 22} --gun 2
-		,{moduleType = modules.gun, 	x =   7, y = 41} --gun 3
-		,{moduleType = modules.gun, 	x =  -7, y = 41} --gun 4
-		,{moduleType = modules.cabin, 	x =   0, y = 32} --cabin
-		,{moduleType = modules.aux, 	x =   6, y = 22} --aux 1
-		,{moduleType = modules.aux, 	x =  -6, y = 22} --aux 2
-		,{moduleType = modules.aux, 	x =   6, y = 35} --aux 3
-		,{moduleType = modules.aux, 	x =  -6, y = 35} --aux 4
-		,{moduleType = modules.aux, 	x =   6, y = 29} --aux 5
-		,{moduleType = modules.aux, 	x =  -6, y = 29} --aux 6
-		,{moduleType = modules.aux, 	x =  11, y = 33} --aux 7
-		,{moduleType = modules.aux, 	x = -11, y = 33} --aux 8
+	local sentinel_mech_index = AddMech({
+		price_metallite = 1050,
+		price_bjorn = 	  730,
+		price_munilon =   1030,
+		price_skalaknit = 880,
+		price_staff = 	  325,
+		production_days = 6,
+		heat_resist = 	  25,
+		impact_resist =   90,
+		current_resist =  80,
+		has_melee = 	  1,
+		passive_armor =   5,
+		weight = 		  70,
+		speed = 		  0.2,
+		reload_time = 	  4,
+		battle_time = 	  5,
+		mech_cells = {
+			{moduleType = modules.motor, 	x =   8, y =  6} --motor 1
+			,{moduleType = modules.motor, 	x =  -8, y =  6} --motor 2
+			,{moduleType = modules.motor, 	x =   8, y = 11} --motor 3
+			,{moduleType = modules.motor, 	x =  -8, y = 11} --motor 4
+			,{moduleType = modules.motor, 	x =   7, y = 16} --motor 5
+			,{moduleType = modules.motor, 	x =  -7, y = 16} --motor 6
+			,{moduleType = modules.reactor, x =   0, y = 24} --reactor
+			,{moduleType = modules.gun, 	x =  14, y = 22} --gun 1
+			,{moduleType = modules.gun, 	x = -14, y = 22} --gun 2
+			,{moduleType = modules.gun, 	x =   7, y = 41} --gun 3
+			,{moduleType = modules.gun, 	x =  -7, y = 41} --gun 4
+			,{moduleType = modules.cabin, 	x =   0, y = 32} --cabin
+			,{moduleType = modules.aux, 	x =   6, y = 22} --aux 1
+			,{moduleType = modules.aux, 	x =  -6, y = 22} --aux 2
+			,{moduleType = modules.aux, 	x =   6, y = 35} --aux 3
+			,{moduleType = modules.aux, 	x =  -6, y = 35} --aux 4
+			,{moduleType = modules.aux, 	x =   6, y = 29} --aux 5
+			,{moduleType = modules.aux, 	x =  -6, y = 29} --aux 6
+			,{moduleType = modules.aux, 	x =  11, y = 33} --aux 7
+			,{moduleType = modules.aux, 	x = -11, y = 33} --aux 8
+		},
+		sprite_small = 			  current_file_path.."sprites/sentinel_small.png",
+		sprite_big = 			  current_file_path.."sprites/sentinel_big.png",
+		sprite_battle = 		  current_file_path.."sprites/sentinel_battle.png",
+		sprite_battle_dead = 	  current_file_path.."sprites/sentinel_dead.png",
+		sprite_battle_melee_ver = current_file_path.."sprites/sentinel_melee_vertical.png",
+		sprite_battle_melee_hor = current_file_path.."sprites/sentinel_melee_horizontal.png"
 	});
-
-	--SPRITES
-	--small sprite
-	local sentinel_mech_sprite = sprite_add(current_file_path.."sprites/sentinel_small.png", 0, false, false, 23, 49);
-	variable_global_set(unique_mod_prefix.."sentinel_sprite_small", sentinel_mech_sprite);
-	ds_map_add(sentinel_mech, "sprite_small", sentinel_mech_sprite);
-	--big sprite
-	sentinel_mech_sprite = sprite_add(current_file_path.."sprites/sentinel_big.png", 0, false, false, 199, 343);				
-	ds_map_add(sentinel_mech, "sprite_big", sentinel_mech_sprite);
-	--battle sprite
-	sentinel_mech_sprite = sprite_add(current_file_path.."sprites/sentinel_battle.png", 2, true, false, 25, 25);				
-	ds_map_add(sentinel_mech, "sprite_battle", sentinel_mech_sprite);
-	--dead sprite
-	sentinel_mech_sprite = sprite_add(current_file_path.."sprites/sentinel_dead.png", 1, true, false, 23, 23);				
-	ds_map_add(sentinel_mech, "sprite_battle_dead", sentinel_mech_sprite);
-	--melee vertical
-	sentinel_mech_sprite = sprite_add(current_file_path.."sprites/sentinel_melee_vertical.png", 7, true, false, 17, 25);		
-	ds_map_add(sentinel_mech, "sprite_battle_melee_ver", sentinel_mech_sprite);
-	--melee horizontal
-	sentinel_mech_sprite = sprite_add(current_file_path.."sprites/sentinel_melee_horizontal.png", 7, true, false, 25, 25);	
-	ds_map_add(sentinel_mech, "sprite_battle_melee_hor", sentinel_mech_sprite);
+	variable_global_set(unique_mod_prefix.."sentinel_mech_index", sentinel_mech_index);
 
 	-----------------
 	--BEHEMOTH MECH--
 	-----------------
-	local behemoth_mech_index = #mech_stat_array + 1;
-	variable_global_set(unique_mod_prefix.."behemoth_mech_index", #mech_stat_array);
-	local behemoth_mech = ds_map_create();
-	mech_stat_array[behemoth_mech_index] = behemoth_mech;
-	
-	--ENGINEERING PRICE
-	ds_map_add(behemoth_mech, "price_metallite",	4130);
-	ds_map_add(behemoth_mech, "price_bjorn",		1460);
-	ds_map_add(behemoth_mech, "price_munilon",		2300);
-	ds_map_add(behemoth_mech, "price_skalaknit",	2020);
-	ds_map_add(behemoth_mech, "price_staff",		600);
-	ds_map_add(behemoth_mech, "days",				8);
-
-	--RESISTANCES
-	ds_map_add(behemoth_mech, "heat_resist",		45);
-	ds_map_add(behemoth_mech, "impact_resist",		95);
-	ds_map_add(behemoth_mech, "current_resist",		95);
-
-	--STATS
-	ds_map_add(behemoth_mech, "hp", 				1000);		--1000 is the default for all mechs
-	ds_map_add(behemoth_mech, "melee_option",		1);			--0 = false, 1 = true
-	ds_map_add(behemoth_mech, "armor",				10);
-	ds_map_add(behemoth_mech, "weight",				108);
-	ds_map_add(behemoth_mech, "speed",				0.1);
-	ds_map_add(behemoth_mech, "reload_time",		3);
-	ds_map_add(behemoth_mech, "battle_time",		12);
-	ds_map_add(behemoth_mech, "number_of_weapons",	12);
-	ds_map_add(behemoth_mech, "number_of_aux",		8);
-
-	--MODULE CELLS
-	AddCells(behemoth_mech, {
-		 {moduleType = modules.motor, 	x =   7, y =  5} --motor 1
-		,{moduleType = modules.motor, 	x =  -7, y =  5} --motor 2
-		,{moduleType = modules.motor, 	x =   7, y =  9} --motor 3
-		,{moduleType = modules.motor, 	x =  -7, y =  9} --motor 4
-		,{moduleType = modules.motor, 	x =   7, y = 13} --motor 5
-		,{moduleType = modules.motor, 	x =  -7, y = 13} --motor 6
-		,{moduleType = modules.motor, 	x =   7, y = 17} --motor 7
-		,{moduleType = modules.motor, 	x =  -7, y = 17} --motor 8
-		,{moduleType = modules.reactor, x =   0, y = 22} --reactor
-		,{moduleType = modules.gun, 	x =  15, y = 27} --gun 1
-		,{moduleType = modules.gun, 	x = -15, y = 27} --gun 2
-		,{moduleType = modules.gun, 	x =  24, y = 27} --gun 3
-		,{moduleType = modules.gun, 	x = -24, y = 27} --gun 4
-		,{moduleType = modules.gun, 	x =  15, y = 21} --gun 5
-		,{moduleType = modules.gun, 	x = -15, y = 21} --gun 6
-		,{moduleType = modules.gun, 	x =  24, y = 21} --gun 7
-		,{moduleType = modules.gun, 	x = -24, y = 21} --gun 8
-		,{moduleType = modules.gun, 	x =  15, y = 15} --gun 9
-		,{moduleType = modules.gun, 	x = -15, y = 15} --gun 10
-		,{moduleType = modules.gun, 	x =  24, y = 15} --gun 11
-		,{moduleType = modules.gun, 	x = -24, y = 15} --gun 12
-		,{moduleType = modules.cabin, 	x =   0, y = 30} --cabin
-		,{moduleType = modules.aux, 	x =   6, y = 36} --aux 1
-		,{moduleType = modules.aux, 	x =  -6, y = 36} --aux 2
-		,{moduleType = modules.aux, 	x =  11, y = 36} --aux 3
-		,{moduleType = modules.aux, 	x = -11, y = 36} --aux 4
-		,{moduleType = modules.aux, 	x =   6, y = 31} --aux 5
-		,{moduleType = modules.aux, 	x =  -6, y = 31} --aux 6
-		,{moduleType = modules.aux, 	x =  11, y = 26} --aux 7
-		,{moduleType = modules.aux, 	x = -11, y = 26} --aux 8
+	local behemoth_mech_index = AddMech({
+		price_metallite = 4130,
+		price_bjorn = 	  1460,
+		price_munilon =   2300,
+		price_skalaknit = 2020,
+		price_staff = 	  600,
+		production_days = 8,
+		heat_resist = 	  45,
+		impact_resist =   95,
+		current_resist =  95,
+		has_melee = 	  1,
+		passive_armor =   10,
+		weight = 		  108,
+		speed = 		  0.1,
+		reload_time = 	  3,
+		battle_time = 	  12,
+		mech_cells = {
+			{moduleType = modules.motor, 	x =   7, y =  5} --motor 1
+			,{moduleType = modules.motor, 	x =  -7, y =  5} --motor 2
+			,{moduleType = modules.motor, 	x =   7, y =  9} --motor 3
+			,{moduleType = modules.motor, 	x =  -7, y =  9} --motor 4
+			,{moduleType = modules.motor, 	x =   7, y = 13} --motor 5
+			,{moduleType = modules.motor, 	x =  -7, y = 13} --motor 6
+			,{moduleType = modules.motor, 	x =   7, y = 17} --motor 7
+			,{moduleType = modules.motor, 	x =  -7, y = 17} --motor 8
+			,{moduleType = modules.reactor, x =   0, y = 22} --reactor
+			,{moduleType = modules.gun, 	x =  15, y = 27} --gun 1
+			,{moduleType = modules.gun, 	x = -15, y = 27} --gun 2
+			,{moduleType = modules.gun, 	x =  24, y = 27} --gun 3
+			,{moduleType = modules.gun, 	x = -24, y = 27} --gun 4
+			,{moduleType = modules.gun, 	x =  15, y = 21} --gun 5
+			,{moduleType = modules.gun, 	x = -15, y = 21} --gun 6
+			,{moduleType = modules.gun, 	x =  24, y = 21} --gun 7
+			,{moduleType = modules.gun, 	x = -24, y = 21} --gun 8
+			,{moduleType = modules.gun, 	x =  15, y = 15} --gun 9
+			,{moduleType = modules.gun, 	x = -15, y = 15} --gun 10
+			,{moduleType = modules.gun, 	x =  24, y = 15} --gun 11
+			,{moduleType = modules.gun, 	x = -24, y = 15} --gun 12
+			,{moduleType = modules.cabin, 	x =   0, y = 30} --cabin
+			,{moduleType = modules.aux, 	x =   6, y = 36} --aux 1
+			,{moduleType = modules.aux, 	x =  -6, y = 36} --aux 2
+			,{moduleType = modules.aux, 	x =  11, y = 36} --aux 3
+			,{moduleType = modules.aux, 	x = -11, y = 36} --aux 4
+			,{moduleType = modules.aux, 	x =   6, y = 31} --aux 5
+			,{moduleType = modules.aux, 	x =  -6, y = 31} --aux 6
+			,{moduleType = modules.aux, 	x =  11, y = 26} --aux 7
+			,{moduleType = modules.aux, 	x = -11, y = 26} --aux 8
+		},
+		sprite_small = 			  current_file_path.."sprites/behemoth_small.png",
+		sprite_big = 			  current_file_path.."sprites/behemoth_big.png",
+		sprite_battle = 		  current_file_path.."sprites/behemoth_battle.png",
+		sprite_battle_dead = 	  current_file_path.."sprites/behemoth_dead.png",
+		sprite_battle_melee_ver = current_file_path.."sprites/behemoth_melee_vertical.png",
+		sprite_battle_melee_hor = current_file_path.."sprites/behemoth_melee_horizontal.png"
 	});
-
-	--SPRITES
-	--small sprite
-	local behemoth_mech_sprite = sprite_add(current_file_path.."sprites/behemoth_small.png", 0, false, false, 23, 49);
-	variable_global_set(unique_mod_prefix.."behemoth_sprite_small", behemoth_mech_sprite);
-	ds_map_add(behemoth_mech, "sprite_small", behemoth_mech_sprite);
-	--big sprite
-	behemoth_mech_sprite = sprite_add(current_file_path.."sprites/behemoth_big.png", 0, false, false, 199, 343);				
-	ds_map_add(behemoth_mech, "sprite_big", behemoth_mech_sprite);
-	--battle sprite
-	behemoth_mech_sprite = sprite_add(current_file_path.."sprites/behemoth_battle.png", 2, true, false, 25, 25);				
-	ds_map_add(behemoth_mech, "sprite_battle", behemoth_mech_sprite);
-	--dead sprite
-	behemoth_mech_sprite = sprite_add(current_file_path.."sprites/behemoth_dead.png", 1, true, false, 23, 23);				
-	ds_map_add(behemoth_mech, "sprite_battle_dead", behemoth_mech_sprite);
-	--melee vertical
-	behemoth_mech_sprite = sprite_add(current_file_path.."sprites/behemoth_melee_vertical.png", 7, true, false, 17, 25);		
-	ds_map_add(behemoth_mech, "sprite_battle_melee_ver", behemoth_mech_sprite);
-	--melee horizontal
-	behemoth_mech_sprite = sprite_add(current_file_path.."sprites/behemoth_melee_horizontal.png", 7, true, false, 25, 25);	
-	ds_map_add(behemoth_mech, "sprite_battle_melee_hor", behemoth_mech_sprite);
+	variable_global_set(unique_mod_prefix.."behemoth_mech_index", behemoth_mech_index);
 
 	-----------------
 	--ECHO MECH------
 	-----------------
-	local echo_mech_index = #mech_stat_array + 1;
-	variable_global_set(unique_mod_prefix.."echo_mech_index", #mech_stat_array);
-	local echo_mech = ds_map_create();
-	mech_stat_array[echo_mech_index] = echo_mech;
-
-	--ENGINEERING PRICE
-	ds_map_add(echo_mech, "price_metallite",	620);
-	ds_map_add(echo_mech, "price_bjorn",		275);
-	ds_map_add(echo_mech, "price_munilon",		520);
-	ds_map_add(echo_mech, "price_skalaknit",	400);
-	ds_map_add(echo_mech, "price_staff",		265);
-	ds_map_add(echo_mech, "days",				5);
-
-	--RESISTANCES
-	ds_map_add(echo_mech, "heat_resist",		20);
-	ds_map_add(echo_mech, "impact_resist",		30);
-	ds_map_add(echo_mech, "current_resist",		20);
-
-	--STATS
-	ds_map_add(echo_mech, "hp", 				1000);
-	ds_map_add(echo_mech, "melee_option",		0);		--0 = false, 1 = true
-	ds_map_add(echo_mech, "armor",				3);
-	ds_map_add(echo_mech, "weight",				80);
-	ds_map_add(echo_mech, "speed",				0.4);
-	ds_map_add(echo_mech, "reload_time",		2);
-	ds_map_add(echo_mech, "battle_time",		4);
-	ds_map_add(echo_mech, "number_of_weapons",	3);
-	ds_map_add(echo_mech, "number_of_aux",		6);
-
-	--MODULE CELLS
-	AddCells(echo_mech, {
-		 {moduleType = modules.motor, 	x =   9, y =  7} --motor 1
-		,{moduleType = modules.motor, 	x =  -9, y =  7} --motor 2
-		,{moduleType = modules.motor, 	x =   6, y = 12} --motor 3
-		,{moduleType = modules.motor, 	x =  -6, y = 12} --motor 4
-		,{moduleType = modules.motor, 	x =  13, y = 15} --motor 5
-		,{moduleType = modules.motor, 	x = -13, y = 15} --motor 6
-		,{moduleType = modules.motor, 	x =   0, y = 16} --motor 7
-		,{moduleType = modules.reactor, x =   0, y = 22} --reactor
-		,{moduleType = modules.gun, 	x =  13, y = 28} --gun 1
-		,{moduleType = modules.gun, 	x = -13, y = 28} --gun 2
-		,{moduleType = modules.gun, 	x =   7, y = 35} --gun 3
-		,{moduleType = modules.cabin, 	x =   0, y = 29} --cabin
-		,{moduleType = modules.aux, 	x =   7, y = 19} --aux 1
-		,{moduleType = modules.aux, 	x =  -7, y = 19} --aux 2
-		,{moduleType = modules.aux, 	x =   6, y = 24} --aux 3
-		,{moduleType = modules.aux, 	x =  -6, y = 24} --aux 4
-		,{moduleType = modules.aux, 	x =   5, y = 29} --aux 5
-		,{moduleType = modules.aux, 	x =  -5, y = 29} --aux 6
+	local echo_mech_index = AddMech({
+		price_metallite = 620,
+		price_bjorn = 	  275,
+		price_munilon =   520,
+		price_skalaknit = 400,
+		price_staff = 	  265,
+		production_days = 5,
+		heat_resist = 	  20,
+		impact_resist =   30,
+		current_resist =  20,
+		has_melee = 	  0,
+		passive_armor =   3,
+		weight = 		  80,
+		speed = 		  0.4,
+		reload_time = 	  2,
+		battle_time = 	  4,
+		mech_cells = {
+			{moduleType = modules.motor, 	x =   9, y =  7} --motor 1
+			,{moduleType = modules.motor, 	x =  -9, y =  7} --motor 2
+			,{moduleType = modules.motor, 	x =   6, y = 12} --motor 3
+			,{moduleType = modules.motor, 	x =  -6, y = 12} --motor 4
+			,{moduleType = modules.motor, 	x =  13, y = 15} --motor 5
+			,{moduleType = modules.motor, 	x = -13, y = 15} --motor 6
+			,{moduleType = modules.motor, 	x =   0, y = 16} --motor 7
+			,{moduleType = modules.reactor, x =   0, y = 22} --reactor
+			,{moduleType = modules.gun, 	x =  13, y = 28} --gun 1
+			,{moduleType = modules.gun, 	x = -13, y = 28} --gun 2
+			,{moduleType = modules.gun, 	x =   7, y = 35} --gun 3
+			,{moduleType = modules.cabin, 	x =   0, y = 29} --cabin
+			,{moduleType = modules.aux, 	x =   7, y = 19} --aux 1
+			,{moduleType = modules.aux, 	x =  -7, y = 19} --aux 2
+			,{moduleType = modules.aux, 	x =   6, y = 24} --aux 3
+			,{moduleType = modules.aux, 	x =  -6, y = 24} --aux 4
+			,{moduleType = modules.aux, 	x =   5, y = 29} --aux 5
+			,{moduleType = modules.aux, 	x =  -5, y = 29} --aux 6
+		},
+		sprite_small = 			  current_file_path.."sprites/echo_small.png",
+		sprite_big = 			  current_file_path.."sprites/echo_big.png",
+		sprite_battle = 		  current_file_path.."sprites/echo_battle.png",
+		sprite_battle_dead = 	  current_file_path.."sprites/echo_dead.png",
 	});
-
-	--SPRITES
-	--small sprite
-	local echo_mech_sprite = sprite_add(current_file_path.."sprites/echo_small.png", 0, false, false, 23, 49);
-	variable_global_set(unique_mod_prefix.."echo_sprite_small", echo_mech_sprite);
-	ds_map_add(echo_mech, "sprite_small", echo_mech_sprite);
-	--big sprite
-	echo_mech_sprite = sprite_add(current_file_path.."sprites/echo_big.png", 0, false, false, 199, 343);				
-	ds_map_add(echo_mech, "sprite_big", echo_mech_sprite);
-	--battle sprite
-	echo_mech_sprite = sprite_add(current_file_path.."sprites/echo_battle.png", 2, true, false, 25, 25);				
-	ds_map_add(echo_mech, "sprite_battle", echo_mech_sprite);
-	--dead sprite
-	echo_mech_sprite = sprite_add(current_file_path.."sprites/echo_dead.png", 1, true, false, 23, 23);				
-	ds_map_add(echo_mech, "sprite_battle_dead", echo_mech_sprite);
-	--melee vertical
-	echo_mech_sprite = sprite_add(current_file_path.."sprites/echo_melee_vertical.png", 7, true, false, 17, 25);		
-	ds_map_add(echo_mech, "sprite_battle_melee_ver", echo_mech_sprite);
-	--melee horizontal
-	echo_mech_sprite = sprite_add(current_file_path.."sprites/echo_melee_horizontal.png", 7, true, false, 25, 25);	
-	ds_map_add(echo_mech, "sprite_battle_melee_hor", echo_mech_sprite);
-
-
-	--return new data
-	q.mech_stat = mech_stat_array;
+	variable_global_set(unique_mod_prefix.."echo_mech_index", echo_mech_index);
 
 	-----------------
 	--SOLENOIDS------
@@ -532,64 +469,27 @@ function load_game_post_event(q)
 		logo_index = 11
 	};
 
-	--Component types
-	local component_types = {
-		mech = 1,
-		cabin = 2,
-		motor = 3,
-		weapon = 4,
-		reactor = 5,
-		injector = 6,
-		piston = 7,
-		kernel = 8,
-		safety = 9,
-		magnet = 10,
-		solenoid = 11,
-		armor_layer_middle = 95,
-		armor_layer_end = 96,
-		rocket = 97,
-		beacon = 98,
-		city_parts = 99
-	};
-
 	--Our modded item indexes
-	local nova_mech_index = variable_global_get(unique_mod_prefix.."nova_mech_index");
-	local sentinel_mech_index = variable_global_get(unique_mod_prefix.."sentinel_mech_index");
-	local behemoth_mech_index = variable_global_get(unique_mod_prefix.."behemoth_mech_index");
-	local echo_mech_index = variable_global_get(unique_mod_prefix.."echo_mech_index");
 	local high_tech_solenoid_index = variable_global_get(unique_mod_prefix.."high_tech_solenoid_index");
 	local howitzer_weapon_index = variable_global_get(unique_mod_prefix.."howitzer_weapon_index");
 	local laser_pulse_cannon_weapon_index = variable_global_get(unique_mod_prefix.."laser_pulse_cannon_weapon_index");
 
 	--Our Modded sprites
-	local nova_sprite = variable_global_get(unique_mod_prefix.."nova_sprite_small");
-	local sentinel_sprite = variable_global_get(unique_mod_prefix.."sentinel_sprite_small");
-	local behemoth_sprite = variable_global_get(unique_mod_prefix.."behemoth_sprite_small");
-	local echo_sprite = variable_global_get(unique_mod_prefix.."echo_sprite_small");
 	local high_tech_solenoid_sprite = variable_global_get(unique_mod_prefix.."high_tech_solenoid_sprite_small");
 	local howitzer_sprite = variable_global_get(unique_mod_prefix.."howitzer_sprite_small");
 	local laser_pulse_cannon_small_sprite = variable_global_get(unique_mod_prefix.."laser_pulse_cannon_small_sprite");
 	
 	--We step through the hanger/production items to find our modded items
 	for _, hangar in ipairs(hanger_mass) do
-		--Mechs
-		if (hangar[hanger.component_type] == component_types.mech) then
-			--When the reference matches the modded element we set the relevant mod sprite to the logo and logo indexes.
-			if (hangar[hanger.item_index] == nova_mech_index) then
-				hangar[hanger.logo] = nova_sprite;
-				hangar[hanger.logo_index] = hangar[hanger.logo];
-			elseif (hangar[hanger.item_index] == sentinel_mech_index) then
-				hangar[hanger.logo] = sentinel_sprite;
-				hangar[hanger.logo_index] = hangar[hanger.logo];
-			elseif (hangar[hanger.item_index] == behemoth_mech_index) then
-				hangar[hanger.logo] = behemoth_sprite;
-				hangar[hanger.logo_index] = hangar[hanger.logo];
-			elseif (hangar[hanger.item_index] == echo_mech_index) then
-				hangar[hanger.logo] = echo_sprite;
-				hangar[hanger.logo_index] = hangar[hanger.logo];
+		for _, modded_item in ipairs(modded_component_list) do
+			if(hangar[hanger.component_type] == modded_item.component_type and hangar[hanger.item_index] == modded_item.index) then
+				--When the reference matches the modded element we set the relevant mod sprite to the logo and logo indexes.
+				hangar[hanger.logo] = modded_item.sprite;
+				hangar[hanger.logo_index] = modded_item.sprite;
 			end
+		end
 		--Solenoids
-		elseif (hangar[hanger.component_type] == component_types.solenoid) then
+		if (hangar[hanger.component_type] == component_types.solenoid) then
 			if (hangar[hanger.item_index] == high_tech_solenoid_index) then
 				hangar[hanger.logo] = high_tech_solenoid_sprite;
 				hangar[hanger.logo_index] = hangar[hanger.logo];
@@ -679,15 +579,98 @@ end
 function draw_debug(q)
 end
 
+---Adds a new mech
+---@param mech_data mech_data dataset for adding a new mech
+---@return number index the index of the newly added mech
+function AddMech(mech_data)
+	local obj_database = asset_get_index("obj_database");
+
+	--Copy the array to the working set
+	local mech_stat_array = {};
+	mech_stat_array = obj_database.mech_stat;
+
+	local mech_index = #mech_stat_array + 1;
+	local mech = ds_map_create();
+	mech_stat_array[mech_index] = mech;
+
+	--ENGINEERING PRICE
+	ds_map_add(mech, "price_metallite",	mech_data.price_metallite);
+	ds_map_add(mech, "price_bjorn",		mech_data.price_bjorn);
+	ds_map_add(mech, "price_munilon",	mech_data.price_munilon);
+	ds_map_add(mech, "price_skalaknit",	mech_data.price_skalaknit);
+	ds_map_add(mech, "price_staff",		mech_data.price_staff);
+	ds_map_add(mech, "days",			mech_data.production_days);
+
+	--RESISTANCES
+	ds_map_add(mech, "heat_resist",		mech_data.heat_resist);
+	ds_map_add(mech, "impact_resist",	mech_data.impact_resist);
+	ds_map_add(mech, "current_resist",	mech_data.current_resist);
+
+	--STATS
+	ds_map_add(mech, "hp", 				1000);  --1000 is the default for all mechs, not sure if the game does something with this value
+	ds_map_add(mech, "melee_option",	mech_data.has_melee);
+	ds_map_add(mech, "armor",			mech_data.passive_armor);
+	ds_map_add(mech, "weight",			mech_data.weight);
+	ds_map_add(mech, "speed",			mech_data.speed);
+	ds_map_add(mech, "reload_time",		mech_data.reload_time);
+	ds_map_add(mech, "battle_time",		mech_data.battle_time);
+
+	--MODULE CELLS
+	AddCells(mech, mech_data.mech_cells);
+
+	--SPRITES
+	--small sprite
+	local mech_sprite = sprite_add(mech_data.sprite_small, 0, false, false, 23, 49);
+	ds_map_add(mech, "sprite_small", mech_sprite);
+	--big sprite
+	ds_map_add(mech, "sprite_big", sprite_add(mech_data.sprite_big, 0, false, false, 199, 343));
+	--battle sprite
+	ds_map_add(mech, "sprite_battle", sprite_add(mech_data.sprite_battle, 2, true, false, 25, 25));
+	--dead sprite
+	ds_map_add(mech, "sprite_battle_dead", sprite_add(mech_data.sprite_battle_dead, 1, true, false, 23, 23));
+	--melee vertical
+	if(mech_data.sprite_battle_melee_ver ~= nil) then
+		ds_map_add(mech, "sprite_battle_melee_ver", sprite_add(mech_data.sprite_battle_melee_ver, 7, true, false, 17, 25));
+	end
+	--melee horizontal
+	if(mech_data.sprite_battle_melee_hor ~= nil) then
+		ds_map_add(mech, "sprite_battle_melee_hor", sprite_add(mech_data.sprite_battle_melee_hor, 7, true, false, 25, 25));
+	end
+
+	table.insert(modded_component_list, {
+			component_type = component_types.mech,
+			index = mech_index - 1,
+			sprite = mech_sprite
+		});
+
+	--return new data
+	obj_database.mech_stat = mech_stat_array;
+
+	return mech_index - 1;
+end
+
 ---Adds the Cell data to the ds_map of the mech
 ---@param mech ds_map the reference to the ds_map of the mech
 ---@param cells mech_cell[] the cell data array for the mech
 function AddCells(mech, cells)
+	local aux_number = 0;
+	local weapon_number = 0;
+
 	for i = 1, #cells, 1 do
 		local cell = cells[i];
 		AddCell(mech, i, cell);
+
+		if(cell.moduleType == modules.aux) then
+			aux_number = aux_number + 1;
+		end
+		if(cell.moduleType == modules.gun) then
+			weapon_number = weapon_number + 1;
+		end
 	end
-	ds_map_add(mech, "number_of_cells", #cells);
+
+	ds_map_add(mech, "number_of_aux",	  aux_number);
+	ds_map_add(mech, "number_of_weapons", weapon_number);
+	ds_map_add(mech, "number_of_cells",   #cells);
 end
 
 ---Adds a new cell to the ds_map for the mech
