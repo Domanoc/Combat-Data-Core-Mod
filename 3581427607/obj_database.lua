@@ -82,13 +82,13 @@ local mech_data = {};
 ---@field y number the y coordinate for the cell, use the mod_mech_grid_help.png for help determining the location
 local mech_cell = {};
 
----@class weapon_data dataset for adding a new mech
----@field price_metallite number the amount of metallite needed to produce this mech
----@field price_bjorn number the amount of bjorn needed to produce this mech
----@field price_munilon number the amount of munilon needed to produce this mech
----@field price_skalaknit number the amount of skalaknit needed to produce this mech
----@field price_staff number the amount of staff needed to produce this mech
----@field production_days number the amount of days it takes to produce this mech
+---@class weapon_data dataset for adding a new weapon
+---@field price_metallite number the amount of metallite needed to produce this weapon
+---@field price_bjorn number the amount of bjorn needed to produce this weapon
+---@field price_munilon number the amount of munilon needed to produce this weapon
+---@field price_skalaknit number the amount of skalaknit needed to produce this weapon
+---@field price_staff number the amount of staff needed to produce this weapon
+---@field production_days number the amount of days it takes to produce this weapon
 ---@field weapon_type "white"|"red"|"blue"|"yellow" the type of weapon (white = ballistic, red = rockets, blue = laser/tesla, yellow = thermal)
 ---@field fire_rate number the base fire rate. higher values offer a faster rate, 600 with full firespeed points will fill the firespeed bar completely
 ---@field weight number the base weight of the weapon
@@ -102,6 +102,18 @@ local mech_cell = {};
 ---@field sprite_big string the big sprite for the weapon
 ---@field sprite_huge string the huge sprite for the weapon
 local weapon_data = {};
+
+---@class solenoid_data dataset for adding a new solenoid
+---@field price_metallite number the amount of metallite needed to produce this solenoid
+---@field price_bjorn number the amount of bjorn needed to produce this solenoid
+---@field price_munilon number the amount of munilon needed to produce this solenoid
+---@field price_skalaknit number the amount of skalaknit needed to produce this solenoid
+---@field price_staff number the amount of staff needed to produce this solenoid
+---@field production_days number the amount of days it takes to produce this solenoid
+---@field power number the power value of the solenoid, lower numbers give more heat resist on reactor
+---@field induction number the induction value of the solenoid, any deviation from 1 gives worse energy stats
+---@field sprite string the sprite for the solenoid
+local solenoid_data = {};
 
 --A list of the modded components used to fix the sprite references on load
 ---@type modded_hanger_item[]
@@ -331,48 +343,22 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 	--SOLENOIDS------
 	-----------------
 
-	--Copy the array to the working set
-	local solenoid_stat_array = {};
-	solenoid_stat_array = q.solenoid_stat;
-
 	----------------------
 	--HIGH TECH SOLONOID--
 	----------------------
-	local high_tech_solenoid_index = #solenoid_stat_array + 1;
-	variable_global_set(unique_mod_prefix.."high_tech_solenoid_index", #solenoid_stat_array);
-	solenoid_stat_array[high_tech_solenoid_index] = ds_map_create();
-	local high_tech_solenoid = solenoid_stat_array[high_tech_solenoid_index];
-
-	--ENGINEERING PRICE
-	ds_map_add(high_tech_solenoid, "price_metallite",	150);
-	ds_map_add(high_tech_solenoid, "price_bjorn",		150);
-	ds_map_add(high_tech_solenoid, "price_munilon",		200);
-	ds_map_add(high_tech_solenoid, "price_skalaknit",	25);
-	ds_map_add(high_tech_solenoid, "price_staff",		70);
-	ds_map_add(high_tech_solenoid, "days",				4);
-
-	--STATS
-	ds_map_add(high_tech_solenoid, "hp",				1000);
-	ds_map_add(high_tech_solenoid, "power",				3);		--Lower numbers give more heat resist on reactor
-	ds_map_add(high_tech_solenoid, "induction",			1);		--any deviation from 1 gives worse energy stats
-	ds_map_add(high_tech_solenoid, "weight",			2);		--cant find an effect on the reactor so i left it at the same value as a regular solenoid
-	ds_map_add(high_tech_solenoid, "type",				1);		--As far as i can see there is only type 1 for solenoids
-
-	--SPRITE
-	local high_tech_solenoid_sprite = sprite_add(current_file_path.."sprites/high_tech_solenoid.png", 0, false, false, 0, 0);
-	ds_map_add(high_tech_solenoid, "sprite", high_tech_solenoid_sprite);
-
-	--Add the newly modded item to the component list to make sure the sprite gets reset on load
-	table.insert(modded_component_list, {
-		component_type = component_types.solenoid,
-		index = #solenoid_stat_array,
-		sprite = high_tech_solenoid_sprite
+	local high_tech_solenoid_index = AddSolenoid({
+		price_metallite = 150,
+		price_bjorn = 	  150,
+		price_munilon =   200,
+		price_skalaknit = 25,
+		price_staff = 	  70,
+		production_days = 4,
+		power = 		  3,
+		induction = 	  1,
+		sprite = 		  current_file_path.."sprites/high_tech_solenoid.png"
 	});
-
-
-	--return new data
-	q.solenoid_stat = solenoid_stat_array;
-
+	variable_global_set(unique_mod_prefix.."high_tech_solenoid_index", high_tech_solenoid_index);
+	
 	-----------------
 	--WEAPONS--------
 	-----------------
@@ -640,9 +626,9 @@ end
 ---@param cell_num number the number of the newly added cell
 ---@param cell mech_cell the data for the cell
 function AddCell(mech, cell_num, cell)
-	ds_map_add(mech, "cell_"..		cell_num, 	cell.moduleType);
-	ds_map_add(mech, "cell_x_"..	cell_num, 	cell.x);
-	ds_map_add(mech, "cell_y_"..	cell_num, 	cell.y);
+	ds_map_add(mech, "cell_"..cell_num, 	cell.moduleType);
+	ds_map_add(mech, "cell_x_"..cell_num, 	cell.x);
+	ds_map_add(mech, "cell_y_"..cell_num, 	cell.y);
 end
 
 ---Add a new weapon
@@ -706,6 +692,55 @@ function AddWeapon(weapon_data)
 	obj_database.weapon_stat = weapon_stat_array;
 
 	return weapon_index - 1;
+end
+
+---Add a new solenoid
+---@param solenoid_data solenoid_data
+---@return number index the index of the newly added solenoid
+function AddSolenoid(solenoid_data)
+	local obj_database = asset_get_index("obj_database");
+
+	--Copy the array to the working set
+	local solenoid_stat_array = {};
+	solenoid_stat_array = obj_database.solenoid_stat;
+
+	----------------------
+	--HIGH TECH SOLONOID--
+	----------------------
+	local high_tech_solenoid_index = #solenoid_stat_array + 1;
+	solenoid_stat_array[high_tech_solenoid_index] = ds_map_create();
+	local high_tech_solenoid = solenoid_stat_array[high_tech_solenoid_index];
+
+	--ENGINEERING PRICE
+	ds_map_add(high_tech_solenoid, "price_metallite",	solenoid_data.price_metallite);
+	ds_map_add(high_tech_solenoid, "price_bjorn",		solenoid_data.price_bjorn);
+	ds_map_add(high_tech_solenoid, "price_munilon",		solenoid_data.price_munilon);
+	ds_map_add(high_tech_solenoid, "price_skalaknit",	solenoid_data.price_skalaknit);
+	ds_map_add(high_tech_solenoid, "price_staff",		solenoid_data.price_staff);
+	ds_map_add(high_tech_solenoid, "days",				solenoid_data.production_days);
+
+	--STATS
+	ds_map_add(high_tech_solenoid, "hp",				1000);	--doesn't seem to do anything
+	ds_map_add(high_tech_solenoid, "power",				solenoid_data.power);
+	ds_map_add(high_tech_solenoid, "induction",			solenoid_data.induction);
+	ds_map_add(high_tech_solenoid, "weight",			2);		--cant find an effect on the reactor so i left it at the same value as a regular solenoid
+	ds_map_add(high_tech_solenoid, "type",				1);		--As far as i can see there is only type 1 for solenoids
+
+	--SPRITE
+	local high_tech_solenoid_sprite = sprite_add(solenoid_data.sprite, 0, false, false, 0, 0);
+	ds_map_add(high_tech_solenoid, "sprite", high_tech_solenoid_sprite);
+
+	--Add the newly modded item to the component list to make sure the sprite gets reset on load
+	table.insert(modded_component_list, {
+		component_type = component_types.solenoid,
+		index = high_tech_solenoid_index - 1,
+		sprite = high_tech_solenoid_sprite
+	});
+
+	--return new data
+	obj_database.solenoid_stat = solenoid_stat_array;
+
+	return high_tech_solenoid_index - 1;
 end
 
 
