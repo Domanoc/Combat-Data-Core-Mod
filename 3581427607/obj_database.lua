@@ -700,17 +700,9 @@ function AddCell(mech, cell_num, cell)
 	ds_map_add(mech, "cell_y_"..	cell_num, 	cell.y);
 end
 
----Adds a new cell to the ds_map for the mech
----@param mech unknown the ds_map of the mech
----@param cell_num number the number of the newly added cell
----@param moduleType 1|2|3|4|5 module type (1-aux, 2-motor, 3-reactor, 4-gun, 5-cabin)
----@param x number the x coordinate for the cell, use the mod_mech_grid_help.png for help determining the location
----@param y number the y coordinate for the cell, use the mod_mech_grid_help.png for help determining the location
-function AddCellOld(mech, cell_num, moduleType, x, y)
-	ds_map_add(mech, "cell_"..		cell_num, 	moduleType);
-	ds_map_add(mech, "cell_x_"..	cell_num, 	x);
-	ds_map_add(mech, "cell_y_"..	cell_num, 	y);
-end
+
+
+
 
 
 --------------------------
