@@ -1,3 +1,6 @@
+v1.7
+Cleaned the code to make it easier to read.
+
 v1.6
 Fixed a missing prefix
 
