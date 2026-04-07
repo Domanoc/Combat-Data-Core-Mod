@@ -1,3 +1,6 @@
+v1.8
+Fixed the audio bug compatibility with the Simple Autocannon mod.
+
 v1.7
 Cleaned the code to make it easier to read.
 
