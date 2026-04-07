@@ -33,6 +33,10 @@ function create(q,v_modid)
 	--return the new sound tables
 	q.main_data_sound = main_data_sound;
     q.weapon_data_sound = weapon_data_sound;
+	--We update main_sounds_amount as some mods,
+	--use this a a starting point to update the sound table.
+	--Amount seems to based on a 0 based index so 1 less that the amount_of_weapons
+	q.main_sounds_amount = #main_data_sound - 1;
 end
 
 function battle_end()
