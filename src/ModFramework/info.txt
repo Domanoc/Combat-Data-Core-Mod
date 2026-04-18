@@ -1,0 +1,6 @@
+thumbnail.jpg
+Mechs
+Weapons
+Reactors
+Modules
+Textures

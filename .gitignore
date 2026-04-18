@@ -1,9 +1,7 @@
-# Ignore everything
-*
+# Exclude the vscode files
+.vscode/*
+!.vscode/
+!.vscode/settings.json
 
-# Except this specific folder and its contents
-!3581427607/
-!3581427607/**
-
-# Unignore readme.txt file
-!/readme.txt
+# Exclude the export logs
+*.log
