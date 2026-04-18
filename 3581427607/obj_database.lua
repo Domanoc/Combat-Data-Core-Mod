@@ -489,7 +489,7 @@ function draw_top_menu(q)
 	if(is_ini_loaded == true and fix_research == true) then
 		fix_research = false;
 		--In the event the mod is added to an existing save the newly added mod research is all defaulted to 0 days remaining and condition 0 (closed).
-		--To fix this we need to validate the research states to see if its a valid state through gameplay or if its a state from loading into an existing state
+		--To fix this we need to validate the research states to see if its a valid state through gameplay or if its a state from loading into an existing save
 
 		local loaded_research_list = variable_global_get(unique_mod_prefix.."loaded_research_list");
 		local modded_research_list = variable_global_get(unique_mod_prefix.."modded_research_list");
