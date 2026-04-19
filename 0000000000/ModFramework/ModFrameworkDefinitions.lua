@@ -1,0 +1,110 @@
+---@class modded_component dataset containing relevant passtrough info for components
+---@field component_type 1|2|3|4|5|6|7|8|9|10|11|95|96|97|98|99 the type of component
+---@field index number the index of the component
+---@field sprite number the index of the component sprite
+---@field name string the name of the component
+---@field component_size ComponentSize the size of the component when constructing it.
+---@field researched boolean set to true if its pre researched, else false.
+---@field CanBeConstructed boolean set to true if it can be constructed in the component shop, false otherwise
+---@field ShopComponent modded_shop_component|nil the shop component to construct new items, or nil for an unconstructable item
+---@field BlueLength number the range of a blue weapon
+
+---@class mech_data dataset for adding a new mech to the obj database
+---@field name string the name of the mech, used to find its references
+---@field component_size ComponentSize the size of the component when constructing it.
+---@field researched boolean set to true if its pre researched, else false.
+---@field CanBeConstructed boolean set to true if it can be constructed in the component shop, false otherwise
+---@field price_metallite number the amount of metallite needed to produce this mech
+---@field price_bjorn number the amount of bjorn needed to produce this mech
+---@field price_munilon number the amount of munilon needed to produce this mech
+---@field price_skalaknit number the amount of skalaknit needed to produce this mech
+---@field price_staff number the amount of staff needed to produce this mech
+---@field production_days number the amount of days it takes to produce this mech
+---@field heat_resist number the heat resist value of the mech
+---@field impact_resist number the impact resist value of the mech
+---@field current_resist number the current resist value of the mech
+---@field has_melee 0|1 Indicates if the mech can use a melee weapon
+---@field passive_armor number the amount of passive armor the mech has
+---@field weight number the base weight of the mech
+---@field speed number the base speed of the mech
+---@field reload_time number the base reload time of the mech
+---@field battle_time number the base battle time of the mech (the lenght of time it has ammo reserves for to shoot)
+---@field mech_cells mech_cell[] the dataset on what cells the mech has
+---@field sprite_small string the small sprite for the mech
+---@field sprite_big string the big sprite for the mech
+---@field sprite_battle string the spritesheet for the mech used on the battle screen
+---@field sprite_battle_dead string the sprite for a destroyed mech on the battle screen
+---@field sprite_battle_melee_ver string|nil the vertical melee attack spritesheet used on the battle screen. optional if the mech has no melee
+---@field sprite_battle_melee_hor string|nil the horizontal melee attack spritesheet used on the battle screen. optional if the mech has no melee
+
+---@class mech_cell dataset on what cells a mech has
+---@field moduleType 1|2|3|4|5 module type (1-aux, 2-motor, 3-reactor, 4-gun, 5-cabin)
+---@field x number the x coordinate for the cell, use the mod_mech_grid_help.png for help determining the location
+---@field y number the y coordinate for the cell, use the mod_mech_grid_help.png for help determining the location
+
+---@class weapon_data dataset for adding a new weapon
+---@field name string the name of the mech, used to find its references
+---@field component_size ComponentSize the size of the component when constructing it.
+---@field researched boolean set to true if its pre researched, else false.
+---@field CanBeConstructed boolean set to true if it can be constructed in the component shop, false otherwise
+---@field price_metallite number the amount of metallite needed to produce this weapon
+---@field price_bjorn number the amount of bjorn needed to produce this weapon
+---@field price_munilon number the amount of munilon needed to produce this weapon
+---@field price_skalaknit number the amount of skalaknit needed to produce this weapon
+---@field price_staff number the amount of staff needed to produce this weapon
+---@field production_days number the amount of days it takes to produce this weapon
+---@field weapon_type "white"|"red"|"blue"|"yellow" the type of weapon (white = ballistic, red = rockets, blue = laser/tesla, yellow = thermal)
+---@field fire_rate number the base fire rate. higher values offer a faster rate, 600 with full firespeed points will fill the firespeed bar completely
+---@field weight number the base weight of the weapon
+---@field accuracy number the base accuracy for the weapon. accuracy in degrees, 0 is perfect accuracy
+---@field energy number the base energy cost of the weapon
+---@field damage number the base damage value of the weapon
+---@field penetration number the base penetration value of the weapon
+---@field projectile_speed number the base projectile speed of the weapon
+---@field energy_buffed 0|1 whether the energy cost boost damage output, 1 = yes, for laser/tesla weapons this is an additional increase on their native bonus.
+---@field sprite_small string the small sprite for the weapon
+---@field sprite_big string the big sprite for the weapon
+---@field sprite_huge string the huge sprite for the weapon
+---@field BlueLength number the range of a blue weapon, default is 750
+
+---@class solenoid_data dataset for adding a new solenoid
+---@field name string the name of the mech, used to find its references
+---@field component_size ComponentSize the size of the component when constructing it.
+---@field researched boolean set to true if its pre researched, else false.
+---@field CanBeConstructed boolean set to true if it can be constructed in the component shop, false otherwise
+---@field price_metallite number the amount of metallite needed to produce this solenoid
+---@field price_bjorn number the amount of bjorn needed to produce this solenoid
+---@field price_munilon number the amount of munilon needed to produce this solenoid
+---@field price_skalaknit number the amount of skalaknit needed to produce this solenoid
+---@field price_staff number the amount of staff needed to produce this solenoid
+---@field production_days number the amount of days it takes to produce this solenoid
+---@field power number the power value of the solenoid, lower numbers give more heat resist on reactor
+---@field induction number the induction value of the solenoid, any deviation from 1 gives worse energy stats
+---@field sprite string the sprite for the solenoid
+
+---@class research_item_data dataset for a new research item
+---@field name string the name of the research item, used to find its references
+---@field position number position number on the research tree. You can see positions in the game with f6 (debug mode)
+---@field prerequisite_research number|-4 the prerequisite research that unlocks this research, each research can only be the prerequisite for 3 other researches. leave -4 for no prerequisite.
+---@field condition 0|1|2|3 condition (0-closed, 1-opened, 2-researching, 3-researched)
+---@field required_days number the required days to complete the research
+---@field required_staff number the required available staff to start the research
+---@field icon_type 0|1|2 research icon type (0-combat, 1-production, 2-passability)
+---@field icon_subtype number research icon subtype (see left column in the game in research menu)
+---@field description string the description text for the research
+---@field spritepath string path to the sprite used for the research
+---@field UnlockedComponents modded_component[] the components that are unlocked by this research
+
+---@class modded_research_item dataset for a stored modded research item
+---@field index number the assigned index for the modded research item
+---@field res_number number the number for the research as found in the debug (F6) of the research screen (upper left white number)
+---@field initial_condition 0|1|2|3 the condition the modded research item was created with (0-closed, 1-opened, 2-researching, 3-researched)
+---@field name string the name of the research item
+---@field UnlockedComponents modded_component[] the components that are unlocked by this research
+
+---@class modded_shop_component
+---@field index number the assigned index for the modded shop component
+
+---@class component_search_criteria
+---@field Name string the name of the component
+---@field ComponentType 1|2|3|4|5|6|7|8|9|10|11|95|96|97|98|99 the type of component
