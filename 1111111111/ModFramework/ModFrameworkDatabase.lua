@@ -243,4 +243,74 @@ function Database.AddSolenoid(solenoidData)
 	obj_database.solenoid_stat = solenoid_stat_array;
 end
 
+---Use in the load_game_post_event function of obj_database.lua
+---
+---This Fixes the missing production sprites after loading a modded game
+---Modded sprite data is not saved so we need to fix this after load
+function Database.LoadModdedSpritesOnProductionItems()
+	local obj_component_shop = Common.GetObjComponentShop();
+
+	--Copy the array to the working set
+	local hanger_mass = {};
+	hanger_mass = obj_component_shop.hanger_mass;
+
+	--Hanger identifiers
+	local hangerTableIndexes = {
+		component_type = 2,
+		item_index = 3,
+		logo = 5,
+		logo_index = 11
+	};
+
+	--We step through the hanger/production items to find our modded items
+	for _, hangar in ipairs(hanger_mass) do
+		local componentType = hangar[hangerTableIndexes.component_type];
+		local itemIndex = hangar[hangerTableIndexes.item_index];
+
+		for _, modded_item in ipairs(Storage.ModdedComponentList) do
+			if(componentType == modded_item.component_type and itemIndex == modded_item.index) then
+				--When the reference matches the modded element we set the relevant mod sprite to the logo and logo index.
+				hangar[hangerTableIndexes.logo] = modded_item.sprite;
+				hangar[hangerTableIndexes.logo_index] = modded_item.sprite;
+			end
+		end
+	end
+
+	--send array back
+	obj_component_shop.hanger_mass = hanger_mass;
+end
+
+local update_weapon_desc = true;
+---Use in the draw_top_menu function of obj_database.lua
+---
+---We need to update the weapon descriptions in the draw call since the ini isn't loaded in the create function
+---however we only need to update once so we set the update_weapon_desc to false after the update to prevent repeat function spamming
+function Database.FixWeaponDescriptions()
+	local obj_weapon_test = Common.GetObjWeaponTest();
+	if(obj_weapon_test.load_ini == false) then
+		return;
+	end
+
+	---
+	if(update_weapon_desc == false) then
+		return;
+	end
+
+	--Copy the array to the working set
+	local weaponDescriptions = {};
+	weaponDescriptions = obj_weapon_test.weapon_description;
+
+	for _, component in ipairs(Storage.ModdedComponentList) do
+		if(component.component_type == Types.ComponentTypes.weapon) then
+			local descriptionIndex = component.index + 1;
+			weaponDescriptions[descriptionIndex] = component.WeaponDescription;
+		end
+	end
+
+	--return new data
+	obj_weapon_test.weapon_description = weaponDescriptions;
+
+	update_weapon_desc = false;
+end
+
 return Database;

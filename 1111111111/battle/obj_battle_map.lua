@@ -3,9 +3,6 @@
 ---@param q game_obj_battle_map
 ---@param v_modid string
 function create(q,v_modid)
-	--Only needed in the framework setup, is not needed for mods
-	Internal = require("ModFrameworkInternal");
-	Internal.FixAudioTable(q);
 end
 
 function battle_end()
@@ -18,15 +15,6 @@ end
 ---starts before map creation
 ---@param q any
 function battle_going_start(q)
-	for _, mech in ipairs(q.mech_id) do 					--Loop all the mechs
-		if(mech ~= -4 and mech ~= 0) then 					--Filter nil values
-			for _, weapon in ipairs(mech.mass_gun_id) do 	--loop all the weapons of the mech
-				if(weapon ~= -4) then 						--Filter nil values
-					Internal.SetWeaponRange(weapon);
-				end
-			end
-		end
-	end
 end
 
 ---an alarm that activates if mechs are inside the extraction zone

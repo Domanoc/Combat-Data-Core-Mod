@@ -149,4 +149,20 @@ function Production.AddSolenoid(component)
 	obj_component_shop.comp_solenoid = comp_solenoid;
 end
 
+---Use in the draw_weapons function of obj_big_holder.lua
+---
+---Use in the draw_mechs function of obj_big_holder.lua
+---
+---Use in the battle_going_start function of obj_battle_map.lua
+---
+---Updates the given weapon with the modded range if applicable
+---@param weapon game_obj_big_holder_weapon the weapon to update
+function Production.SetWeaponRange(weapon)
+	for _, component in ipairs(Storage.ModdedComponentList) do
+		if (component.component_type == Types.ComponentTypes.weapon and component.index == weapon.weapon_number) then
+			weapon.blue_length = component.BlueLength;
+		end
+	end
+end
+
 return Production;
