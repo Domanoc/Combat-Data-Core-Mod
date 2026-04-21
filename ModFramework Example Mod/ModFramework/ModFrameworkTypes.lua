@@ -95,16 +95,13 @@ local ResearchIcons = {
 Types.ResearchIcons = ResearchIcons;
 
 ---component sizes
----@class ComponentSizes
----@field Small 1
----@field Large 5
 local ComponentSizes = {
-	Small = 1, --1 construction slot
-	Large = 5  --5 construction slots, a full hanger row.
+	--a single hanger slot
+	Small = 1,
+	--a full hanger row, 5 slots
+	Large = 5
 }
----@alias ComponentSize 1|5
 Types.ComponentSizes = ComponentSizes;
-
 
 ---A non complete list of Virtual Keys
 local VirtualKeys = {
