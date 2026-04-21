@@ -74,7 +74,7 @@ function Database.AddMech(mechData)
 	--Add the newly modded item to the component list. So we can find the reference later.
 	---@type ModdedComponent
 	local moddedComponent = {
-		ComponentType = Types.ComponentTypes.mech,
+		ComponentType = Types.ComponentTypes.Mech,
 		Index = mech_index - 1,
 		Sprite = mech_sprite,
 		Name = mechData.Name,
@@ -101,10 +101,10 @@ function Private.AddCells(mech, cells)
 		local cell = cells[i];
 		Private.AddCell(mech, i, cell);
 
-		if(cell.ModuleType == Types.MechModules.aux) then
+		if(cell.ModuleType == Types.MechModules.Aux) then
 			aux_number = aux_number + 1;
 		end
-		if(cell.ModuleType == Types.MechModules.gun) then
+		if(cell.ModuleType == Types.MechModules.Weapon) then
 			weapon_number = weapon_number + 1;
 		end
 	end
@@ -173,7 +173,7 @@ function Database.AddWeapon(weaponData)
 	--Add the newly modded item to the component list. So we can find the reference later.
 	---@type ModdedComponent
 	local moddedComponent = {
-		ComponentType = Types.ComponentTypes.weapon,
+		ComponentType = Types.ComponentTypes.Weapon,
 		Index = weapon_index - 1,
 		Sprite = small_sprite,
 		Name = weaponData.Name,
@@ -227,7 +227,7 @@ function Database.AddSolenoid(solenoidData)
 	--Add the newly modded item to the component list. So we can find the reference later.
 	---@type ModdedComponent
 	local moddedComponent = {
-		ComponentType = Types.ComponentTypes.solenoid,
+		ComponentType = Types.ComponentTypes.Solenoid,
 		Index = high_tech_solenoid_index - 1,
 		Sprite = high_tech_solenoid_sprite,
 		Name = solenoidData.Name,

@@ -21,7 +21,7 @@ function create(q, v_modid)
 	--Adding unlocks to existing research
 
 	local unlocks = Mod.Common.GetModdedComponents({
-		{ Name = "example_mech", ComponentType = componentTypes.mech },
+		{ Name = "example_mech", ComponentType = componentTypes.Mech },
 	});
 	Mod.Research.AddResearch({
 		Name = "example_research_1",							--The name of the research, used to find its reference

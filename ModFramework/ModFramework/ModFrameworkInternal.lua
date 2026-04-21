@@ -141,7 +141,7 @@ function Module.FixWeaponDescriptions()
 	weaponDescriptions = obj_weapon_test.weapon_description;
 
 	for _, component in ipairs(Storage.ModdedComponentList) do
-		if(component.ComponentType == Types.ComponentTypes.weapon) then
+		if(component.ComponentType == Types.ComponentTypes.Weapon) then
 			local descriptionIndex = component.Index + 1;
 			weaponDescriptions[descriptionIndex] = component.WeaponDescription;
 		end
@@ -200,7 +200,7 @@ end
 ---@param weapon game_obj_big_holder_weapon the weapon to update
 function Module.SetWeaponRange(weapon)
 	for _, component in ipairs(Storage.ModdedComponentList) do
-		if (component.ComponentType == Types.ComponentTypes.weapon and component.Index == weapon.weapon_number) then
+		if (component.ComponentType == Types.ComponentTypes.Weapon and component.Index == weapon.weapon_number) then
 			weapon.blue_length = component.BlueLength;
 		end
 	end
@@ -232,11 +232,11 @@ end
 ---@param unlockedComponents ModdedComponent[] the components that are unlocked
 function Private.ProcessResearchUnlocks(completedResearch, unlockedComponents)
 	for _, component in ipairs(unlockedComponents) do
-		if(component.ComponentType == Types.ComponentTypes.mech) then
+		if(component.ComponentType == Types.ComponentTypes.Mech) then
 			Private.ProcessMechUnlock(component, completedResearch.give_item);
-		elseif (component.ComponentType == Types.ComponentTypes.weapon) then
+		elseif (component.ComponentType == Types.ComponentTypes.Weapon) then
 			Private.ProcessWeaponUnlock(component, completedResearch.give_item);
-		elseif (component.ComponentType == Types.ComponentTypes.solenoid) then
+		elseif (component.ComponentType == Types.ComponentTypes.Solenoid) then
 			Private.ProcessSolenoidUnlock(component, completedResearch.give_item);
 		end
 	end

@@ -12,7 +12,7 @@ function create(q,v_modid) -- one time script when save is loaded
 	end
 
 	local componentTypes = Mod.Types.ComponentTypes;
-	local nova_mech = Mod.Common.GetModdedComponent("example_mech", componentTypes.mech);
+	local nova_mech = Mod.Common.GetModdedComponent("example_mech", componentTypes.Mech);
 
 	if(nova_mech ~= nil) then
 		--add a nova mech on a new save

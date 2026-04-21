@@ -36,16 +36,16 @@ function create(q,v_modid)
 		ReloadTime = 	   3,
 		BattleTime = 	   3,
 		MechCells = {
-			 {ModuleType = mechModules.reactor, X =   0, Y = 15} --reactor
-			,{ModuleType = mechModules.cabin, 	X =   0, Y = 22} --cabin
-			,{ModuleType = mechModules.motor, 	X =   5, Y =  4} --motor 1
-			,{ModuleType = mechModules.motor, 	X =  -5, Y =  4} --motor 2
-			,{ModuleType = mechModules.motor, 	X =   5, Y =  9} --motor 3
-			,{ModuleType = mechModules.motor, 	X =  -5, Y =  9} --motor 4
-			,{ModuleType = mechModules.gun, 	X =  10, Y = 16} --gun 1
-			,{ModuleType = mechModules.gun, 	X = -10, Y = 16} --gun 2
-			,{ModuleType = mechModules.aux, 	X =   6, Y = 23} --aux 1
-			,{ModuleType = mechModules.aux, 	X =  -6, Y = 23} --aux 2
+			 {ModuleType = mechModules.Reactor, X =   0, Y = 15} --reactor
+			,{ModuleType = mechModules.Cabin, 	X =   0, Y = 22} --cabin
+			,{ModuleType = mechModules.Motor, 	X =   5, Y =  4} --motor 1
+			,{ModuleType = mechModules.Motor, 	X =  -5, Y =  4} --motor 2
+			,{ModuleType = mechModules.Motor, 	X =   5, Y =  9} --motor 3
+			,{ModuleType = mechModules.Motor, 	X =  -5, Y =  9} --motor 4
+			,{ModuleType = mechModules.Weapon, 	X =  10, Y = 16} --gun 1
+			,{ModuleType = mechModules.Weapon, 	X = -10, Y = 16} --gun 2
+			,{ModuleType = mechModules.Aux, 	X =   6, Y = 23} --aux 1
+			,{ModuleType = mechModules.Aux, 	X =  -6, Y = 23} --aux 2
 		},
 		SpriteSmall = 			currentFilepath.."sprites\\example_mech_small.png",
 		SpriteBig = 			currentFilepath.."sprites\\example_mech_big.png",
