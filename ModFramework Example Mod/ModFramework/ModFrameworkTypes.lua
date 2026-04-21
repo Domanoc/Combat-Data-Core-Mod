@@ -95,12 +95,12 @@ local ResearchIcons = {
 Types.ResearchIcons = ResearchIcons;
 
 ---component sizes
----@class comp_sizes
----@field small 1
----@field large 5
+---@class ComponentSizes
+---@field Small 1
+---@field Large 5
 local ComponentSizes = {
-	small = 1, --1 construction slot
-	large = 5  --5 construction slots, a full hanger row.
+	Small = 1, --1 construction slot
+	Large = 5  --5 construction slots, a full hanger row.
 }
 ---@alias ComponentSize 1|5
 Types.ComponentSizes = ComponentSizes;

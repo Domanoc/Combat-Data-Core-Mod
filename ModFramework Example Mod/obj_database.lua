@@ -17,7 +17,7 @@ function create(q,v_modid)
 	--create an example_mech
 	Mod.Database.AddMech({
 		Name = 			   "example_mech",
-		ComponentSize =    componentSizes.large,
+		ComponentSize =    componentSizes.Large,
 		IsResearched = 	   false,
 		CanBeConstructed = true,
 		PriceMetallite =   1000,
