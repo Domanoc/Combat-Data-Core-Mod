@@ -1,0 +1,15 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Mirror Folder with Exclusion",
+      "type": "shell",
+      "command": "robocopy \"D:\\Steam\\steamapps\\workshop\\content\\1428520\\0000000000\\ModFramework\" \"D:\\Steam\\steamapps\\workshop\\content\\1428520\\1111111111\\ModFramework\" /MIR /XF ModFrameworkInternal.lua",
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}
