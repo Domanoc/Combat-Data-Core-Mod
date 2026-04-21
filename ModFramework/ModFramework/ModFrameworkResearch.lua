@@ -17,6 +17,8 @@ local Research = {};
 ---Adds a research item to the tech tree
 ---@param item ResearchData The dataset for the new research item
 function Research.AddResearch(item)
+
+
 	local obj_research_panel = Common.GetObjResearchPanel();
 	local ResearchIndexes = Types.ResearchIndexes;
 
