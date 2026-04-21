@@ -30,27 +30,27 @@ function Research.AddResearch(item)
 
 	--index for the new item, +1 because lua arrays start with 1
 	local researchItemIndex = research_count + 1;
-	mres[researchItemIndex][ResearchIndexes.position] = item.Position; 					  --position number on the research tree. You can see positions in the game with f6 (debug mode)
-	mres[researchItemIndex][ResearchIndexes.link_1] = -4; 								  --link 1
-	mres[researchItemIndex][ResearchIndexes.link_2] = -4; 								  --link 2
-	mres[researchItemIndex][ResearchIndexes.link_3] = -4; 								  --link 3
-	mres[researchItemIndex][ResearchIndexes.condition] = item.Condition;			      --condition (0-closed, 1-opened, 2-researching, 3-researched)
-	mres[researchItemIndex][ResearchIndexes.required_days] = item.RequiredDays; 	      --required days
-	mres[researchItemIndex][ResearchIndexes.required_staff] = item.RequiredStaff;         --require science staff
-	mres[researchItemIndex][ResearchIndexes.icon_type] = item.ReseachIcon.IconType;		  --research icon type (0-combat, 1-production, 2-passability)
-	mres[researchItemIndex][ResearchIndexes.icon_subtype] = item.ReseachIcon.IconSubType; --research icon subtype (see left column in the game in research menu)
-	mres[researchItemIndex][ResearchIndexes.description] = item.Description;			  --research text
+	mres[researchItemIndex][ResearchIndexes.Position] = item.Position; 					  --position number on the research tree. You can see positions in the game with f6 (debug mode)
+	mres[researchItemIndex][ResearchIndexes.Link_1] = -4; 								  --link 1
+	mres[researchItemIndex][ResearchIndexes.Link_2] = -4; 								  --link 2
+	mres[researchItemIndex][ResearchIndexes.Link_3] = -4; 								  --link 3
+	mres[researchItemIndex][ResearchIndexes.Condition] = item.Condition;			      --condition (0-closed, 1-opened, 2-researching, 3-researched)
+	mres[researchItemIndex][ResearchIndexes.RequiredDays] = item.RequiredDays; 	      --required days
+	mres[researchItemIndex][ResearchIndexes.RequiredStaff] = item.RequiredStaff;         --require science staff
+	mres[researchItemIndex][ResearchIndexes.IconType] = item.ReseachIcon.IconType;		  --research icon type (0-combat, 1-production, 2-passability)
+	mres[researchItemIndex][ResearchIndexes.IconSubtype] = item.ReseachIcon.IconSubType; --research icon subtype (see left column in the game in research menu)
+	mres[researchItemIndex][ResearchIndexes.Description] = item.Description;			  --research text
 	
 	if(item.PrerequisiteResearchPosition ~= -4) then
 		local prerequisiteIndex = Private.GetResearchByPosition(item.PrerequisiteResearchPosition);
 		if (prerequisiteIndex ~= nil) then
 			local prerequisiteResearch = mres[prerequisiteIndex];
-			if(prerequisiteResearch[Types.ResearchIndexes.link_1] == -4) then
-				prerequisiteResearch[Types.ResearchIndexes.link_1] = research_count;
-			elseif(prerequisiteResearch[Types.ResearchIndexes.link_2] == -4)  then
-				prerequisiteResearch[Types.ResearchIndexes.link_2] = research_count;
-			elseif(prerequisiteResearch[Types.ResearchIndexes.link_3] == -4)  then
-				prerequisiteResearch[Types.ResearchIndexes.link_3] = research_count;
+			if(prerequisiteResearch[Types.ResearchIndexes.Link_1] == -4) then
+				prerequisiteResearch[Types.ResearchIndexes.Link_1] = research_count;
+			elseif(prerequisiteResearch[Types.ResearchIndexes.Link_2] == -4)  then
+				prerequisiteResearch[Types.ResearchIndexes.Link_2] = research_count;
+			elseif(prerequisiteResearch[Types.ResearchIndexes.Link_3] == -4)  then
+				prerequisiteResearch[Types.ResearchIndexes.Link_3] = research_count;
 			else
 				local message = "Trying to set the prerequisite research for research '"..item.Name.."'. but the prerequisite already has 3 linked researches.\n\n";
 				message = message.."Rearange the research tree so there are no more that 3 unlocks per research."
@@ -107,7 +107,7 @@ function Private.GetResearchByPosition(position)
 	local obj_research_panel = Common.GetObjResearchPanel();
 	local ResearchIndexes = Types.ResearchIndexes;
 	for index, researchItem in ipairs(obj_research_panel.mres) do
-		if (researchItem[ResearchIndexes.position] == position) then
+		if (researchItem[ResearchIndexes.Position] == position) then
 			return index;
 		end
 	end

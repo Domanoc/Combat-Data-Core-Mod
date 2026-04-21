@@ -22,11 +22,11 @@ local icon_pixel_size = 96;
 function Production.AddModdedComponents()
 	for _, component in ipairs(Storage.ModdedComponentList) do
 		if (component.CanBeConstructed) then
-			if (component.ComponentType == Types.ComponentTypes.mech) then
+			if (component.ComponentType == Types.ComponentTypes.Mech) then
 				Production.AddMech(component);
-			elseif (component.ComponentType == Types.ComponentTypes.weapon) then
+			elseif (component.ComponentType == Types.ComponentTypes.Weapon) then
 				Production.AddWeapon(component);
-			elseif (component.ComponentType == Types.ComponentTypes.solenoid) then
+			elseif (component.ComponentType == Types.ComponentTypes.Solenoid) then
 				Production.AddSolenoid(component);
 			end
 		end
@@ -54,7 +54,7 @@ function Production.AddMech(component)
 	local obj_component = asset_get_index("obj_component");
 	local component_item_index = array_size + 1;
 	local added_mech_component = instance_create_depth(mech_location_x, mech_location_y, -500, obj_component);
-	added_mech_component.comp_type = Types.ComponentTypes.mech;	--mech
+	added_mech_component.comp_type = Types.ComponentTypes.Mech;	--mech
 	added_mech_component.comp_data_type = mech_number;		--number in database
 	added_mech_component.logo = -4; 						--auto assign based on obj_database info
 	added_mech_component.size = component_size;				--number of slots used in construction
@@ -93,7 +93,7 @@ function Production.AddWeapon(component)
 	local obj_component = asset_get_index("obj_component");
 	local component_item_index = array_size + 1;
 	local added_weapon_component = instance_create_depth(weapon_location_x, weapon_location_y, -500, obj_component);
-	added_weapon_component.comp_type = Types.ComponentTypes.weapon;	--weapon
+	added_weapon_component.comp_type = Types.ComponentTypes.Weapon;	--weapon
 	added_weapon_component.comp_data_type = weapon_number;		--number in database
 	added_weapon_component.logo = -4; 							--auto assign based on obj_database info
 	added_weapon_component.size = component_size;				--number of slots used in construction
@@ -133,7 +133,7 @@ function Production.AddSolenoid(component)
 	local obj_component = asset_get_index("obj_component");
 	local component_item_index = array_size + 1;
 	local added_solenoid_component = instance_create_depth(solenoid_location_x, solenoid_location_y, -500, obj_component);
-	added_solenoid_component.comp_type = Types.ComponentTypes.solenoid;	--solenoid
+	added_solenoid_component.comp_type = Types.ComponentTypes.Solenoid;	--solenoid
 	added_solenoid_component.comp_data_type = solonoid_number;		--number in database
 	added_solenoid_component.logo = -4; 							--auto assign based on obj_database info
 	added_solenoid_component.size = component_size;					--number of slots used in construction

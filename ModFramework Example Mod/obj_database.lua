@@ -29,7 +29,7 @@ function create(q,v_modid)
 		HeatResist = 	   10,
 		ImpactResist =     10,
 		CurrentResist =    10,
-		HasMelee = 	   	   1,
+		HasMelee = 	   	   true,
 		PassiveArmor =     0,
 		Weight = 		   60,
 		Speed = 		   0.4,

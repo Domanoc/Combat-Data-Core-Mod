@@ -29,7 +29,7 @@
 ---@field HeatResist number the heat resist value of the mech
 ---@field ImpactResist number the impact resist value of the mech
 ---@field CurrentResist number the current resist value of the mech
----@field HasMelee 0|1 Indicates if the mech can use a melee weapon
+---@field HasMelee boolean Indicates if the mech can use a melee weapon
 ---@field PassiveArmor number the amount of passive armor the mech has
 ---@field Weight number the base weight of the mech
 ---@field Speed number the base speed of the mech
