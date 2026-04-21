@@ -118,7 +118,7 @@
 ---@field text_context_construction_mech_unused_weight string
 ---@field t_pilot_mass table
 ---@field content_safetys number
----@field weapon_stat table
+---@field weapon_stat ds_map[] the stat values for weapons as ds_map objects
 ---@field text_context_construction_mech_battle_cost string
 ---@field text_intro string
 ---@field text_context_battle_map string
@@ -171,7 +171,7 @@
 ---@field text_context_construction_mech_stability_regen string
 ---@field content_pistons number
 ---@field text_context_construction_mech_ammo string
----@field mech_stat table
+---@field mech_stat ds_map[] the stat values for mechs as ds_map objects
 ---@field show_sort number
 ---@field ingame_year number
 ---@field eng_program_text_overclocking string
@@ -325,7 +325,7 @@
 ---@field endgame_stat_ammo_red number
 ---@field text_context_construction_mech_test_chamber string
 ---@field content_reactors number
----@field solenoid_stat table
+---@field solenoid_stat ds_map[] the stat values for solenoids as ds_map objects
 ---@field text_tutorial_atom string
 ---@field text_context_construction_mech_basic_heat string
 ---@field text_context_battle_fullscreen string

@@ -22,11 +22,11 @@ local icon_pixel_size = 96;
 function Production.AddModdedComponents()
 	for _, component in ipairs(Storage.ModdedComponentList) do
 		if (component.CanBeConstructed) then
-			if (component.component_type == Types.ComponentTypes.mech) then
+			if (component.ComponentType == Types.ComponentTypes.mech) then
 				Production.AddMech(component);
-			elseif (component.component_type == Types.ComponentTypes.weapon) then
+			elseif (component.ComponentType == Types.ComponentTypes.weapon) then
 				Production.AddWeapon(component);
-			elseif (component.component_type == Types.ComponentTypes.solenoid) then
+			elseif (component.ComponentType == Types.ComponentTypes.solenoid) then
 				Production.AddSolenoid(component);
 			end
 		end
@@ -34,12 +34,12 @@ function Production.AddModdedComponents()
 end
 
 ---Adds a component of type mech to the production tab
----@param component modded_component the modded mech component that gets added to the production tab
+---@param component ModdedComponent the modded mech component that gets added to the production tab
 function Production.AddMech(component)
 
-	local mech_number = component.index;
-	local component_size = component.component_size;
-	local researched = component.researched;
+	local mech_number = component.Index;
+	local component_size = component.ComponentSize;
+	local researched = component.IsResearched;
 
 	local obj_component_shop = Common.GetObjComponentShop();
 
@@ -63,7 +63,7 @@ function Production.AddMech(component)
 
 	--Add the newly modded shop component to the parent component. So we can find the reference later.
 	component.ShopComponent = {
-		index = component_item_index,
+		Index = component_item_index,
 	};
 
 	--send array back
@@ -71,12 +71,12 @@ function Production.AddMech(component)
 end
 
 ---Adds a component of type weapon to the production tab
----@param component modded_component the modded mech component that gets added to the production tab
+---@param component ModdedComponent the modded mech component that gets added to the production tab
 function Production.AddWeapon(component)
 
-	local weapon_number = component.index;
-	local component_size = component.component_size;
-	local researched = component.researched;
+	local weapon_number = component.Index;
+	local component_size = component.ComponentSize;
+	local researched = component.IsResearched;
 
 	local obj_component_shop = asset_get_index("obj_component_shop");
 
@@ -102,7 +102,7 @@ function Production.AddWeapon(component)
 
 	--Add the newly modded shop component to the parent component. So we can find the reference later.
 	component.ShopComponent = {
-		index = component_item_index,
+		Index = component_item_index,
 	};
 
 	--send array back
@@ -110,12 +110,12 @@ function Production.AddWeapon(component)
 end
 
 ---Adds a component of type solenoid to the production tab
----@param component modded_component the modded mech component that gets added to the production tab
+---@param component ModdedComponent the modded mech component that gets added to the production tab
 function Production.AddSolenoid(component)
 
-	local solonoid_number = component.index;
-	local component_size = component.component_size;
-	local researched = component.researched;
+	local solonoid_number = component.Index;
+	local component_size = component.ComponentSize;
+	local researched = component.IsResearched;
 
 	local obj_component_shop = Common.GetObjComponentShop();
 
@@ -142,7 +142,7 @@ function Production.AddSolenoid(component)
 
 	--Add the newly modded shop component to the parent component. So we can find the reference later.
 	component.ShopComponent = {
-		index = component_item_index,
+		Index = component_item_index,
 	};
 
 	--send array back

@@ -2,12 +2,12 @@
 ---One time script when the game is started
 ---@param q game_obj_database
 ---@param v_modid string
-function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in any create event as a second argument
-	--path to the current file
-	local current_file_path = (mod_info[v_modid]):gsub("obj_database.lua",""):gsub("/","\\");
-
+function create(q,v_modid)
 	--load the mod framework as a global for use within this file
 	Mod = require("ModFrameworkModule");
+
+	--path to the current file
+	local currentFilepath = Mod.Common.GetModPath("ModFramework Example Mod");
 
 	--load needed types
 	local mechModules = Mod.Types.MechModules;
@@ -16,43 +16,43 @@ function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in a
 
 	--create an example_mech
 	Mod.Database.AddMech({
-		name = 			   "example_mech",
-		component_size =   componentSizes.large,
-		researched = 	   false,
+		Name = 			   "example_mech",
+		ComponentSize =    componentSizes.large,
+		IsResearched = 	   false,
 		CanBeConstructed = true,
-		price_metallite =  1000,
-		price_bjorn = 	   1000,
-		price_munilon =    1000,
-		price_skalaknit =  1000,
-		price_staff = 	   1000,
-		production_days =  2,
-		heat_resist = 	   10,
-		impact_resist =    10,
-		current_resist =   10,
-		has_melee = 	   1,
-		passive_armor =    0,
-		weight = 		   60,
-		speed = 		   0.4,
-		reload_time = 	   3,
-		battle_time = 	   3,
-		mech_cells = {
-			{moduleType = mechModules.motor, 	x =   5, y =  4} --motor 1
-			,{moduleType = mechModules.motor, 	x =  -5, y =  4} --motor 2
-			,{moduleType = mechModules.motor, 	x =   5, y =  9} --motor 3
-			,{moduleType = mechModules.motor, 	x =  -5, y =  9} --motor 4
-			,{moduleType = mechModules.reactor, x =   0, y = 15} --reactor
-			,{moduleType = mechModules.gun, 	x =  10, y = 16} --gun 1
-			,{moduleType = mechModules.gun, 	x = -10, y = 16} --gun 2
-			,{moduleType = mechModules.cabin, 	x =   0, y = 22} --cabin
-			,{moduleType = mechModules.aux, 	x =   6, y = 23} --aux 1
-			,{moduleType = mechModules.aux, 	x =  -6, y = 23} --aux 2
+		PriceMetallite =   1000,
+		PriceBjorn = 	   1000,
+		PriceMunilon =     1000,
+		PriceSkalaknit =   1000,
+		PriceStaff = 	   1000,
+		ProductionDays =   2,
+		HeatResist = 	   10,
+		ImpactResist =     10,
+		CurrentResist =    10,
+		HasMelee = 	   	   1,
+		PassiveArmor =     0,
+		Weight = 		   60,
+		Speed = 		   0.4,
+		ReloadTime = 	   3,
+		BattleTime = 	   3,
+		MechCells = {
+			 {ModuleType = mechModules.reactor, X =   0, Y = 15} --reactor
+			,{ModuleType = mechModules.cabin, 	X =   0, Y = 22} --cabin
+			,{ModuleType = mechModules.motor, 	X =   5, Y =  4} --motor 1
+			,{ModuleType = mechModules.motor, 	X =  -5, Y =  4} --motor 2
+			,{ModuleType = mechModules.motor, 	X =   5, Y =  9} --motor 3
+			,{ModuleType = mechModules.motor, 	X =  -5, Y =  9} --motor 4
+			,{ModuleType = mechModules.gun, 	X =  10, Y = 16} --gun 1
+			,{ModuleType = mechModules.gun, 	X = -10, Y = 16} --gun 2
+			,{ModuleType = mechModules.aux, 	X =   6, Y = 23} --aux 1
+			,{ModuleType = mechModules.aux, 	X =  -6, Y = 23} --aux 2
 		},
-		sprite_small = 			  current_file_path.."sprites/example_mech_small.png",
-		sprite_big = 			  current_file_path.."sprites/example_mech_big.png",
-		sprite_battle = 		  current_file_path.."sprites/example_mech_battle.png",
-		sprite_battle_dead = 	  current_file_path.."sprites/example_mech_dead.png",
-		sprite_battle_melee_ver = current_file_path.."sprites/example_mech_melee_vertical.png",
-		sprite_battle_melee_hor = current_file_path.."sprites/example_mech_melee_horizontal.png"
+		SpriteSmall = 			currentFilepath.."sprites\\example_mech_small.png",
+		SpriteBig = 			currentFilepath.."sprites\\example_mech_big.png",
+		SpriteBattle = 		  	currentFilepath.."sprites\\example_mech_battle.png",
+		SpriteBattleDead = 	  	currentFilepath.."sprites\\example_mech_dead.png",
+		SpriteMeleeVertical = 	currentFilepath.."sprites\\example_mech_melee_vertical.png",
+		SpriteMeleeHorizontal = currentFilepath.."sprites\\example_mech_melee_horizontal.png"
 	});
 
 --	----------------------

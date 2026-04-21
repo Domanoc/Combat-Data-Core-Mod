@@ -7,6 +7,24 @@ local Storage = require("ModFrameworkStorage");
 
 ---Access to the Common functions.
 local Common = {};
+---Access to the private functions in this file.
+local Private = {};
+
+----------------------------
+----------------------------
+----------------------------
+
+---Gets the filepath to the mod folder
+---@param name string the name of the mod folder
+---@return string? filepath the filepath to the mod folder or nil if the mod was not found
+function Common.GetModPath(name)
+	for _, mod in pairs(Storage.ModRegistrations) do
+		if (mod.Name == name) then
+			return mod.Path;
+		end
+	end
+	return nil;
+end
 
 ---Checks if this is a game loaded from a save. 
 ---@return boolean isLoadedGame true if this is a game loaded from a save, false otherwise.
@@ -14,24 +32,28 @@ function Common.IsLoadedGame()
 	return variable_global_get("mech_engineer_load");
 end
 
+----------------------------
+--FRAMEWORK OBJECT GETTERS--
+----------------------------
+
 ---Gets the modded component
 ---@param name string the name of the component
 ---@param type 1|2|3|4|5|6|7|8|9|10|11|95|96|97|98|99 the type of component
----@return modded_component|nil item the modded component if found, nil otherwise
+---@return ModdedComponent? item the modded component if found, nil otherwise
 function Common.GetModdedComponent(name, type)
 	for _, moddedComponent in ipairs(Storage.ModdedComponentList) do
-		if (moddedComponent.name == name and moddedComponent.component_type == type) then
+		if (moddedComponent.Name == name and moddedComponent.ComponentType == type) then
 			return moddedComponent;
 		end
 	end
 	return nil;
 end
 
----Gets the modded components bases on the search criteria
----@param searchCriteria component_search_criteria[] the components to search for
----@return modded_component[] components the components found, or and empty list
+---Gets the modded components based on the search criteria
+---@param searchCriteria ModdedComponentSearchCriteria[] the components to search for
+---@return ModdedComponent[] components the components found, or and empty list
 function Common.GetModdedComponents(searchCriteria)
-	---@type modded_component[]
+	---@type ModdedComponent[]
 	local foundComponents = {};
 
 	for _, search in ipairs(searchCriteria) do
@@ -46,15 +68,19 @@ end
 
 ---Gets the modded research item
 ---@param name string the name of the research item
----@return modded_research_item|nil item the modded research item if found, nil otherwise
+---@return ModdedResearch? item the modded research item if found, nil otherwise
 function Common.GetModdedResearch(name)
 	for _, moddedComponent in ipairs(Storage.ModdedResearchList) do
-		if (moddedComponent.name == name) then
+		if (moddedComponent.Name == name) then
 			return moddedComponent;
 		end
 	end
 	return nil;
 end
+
+----------------------------
+--GAME OBJECT GETTERS-------
+----------------------------
 
 ---Gets the reference for "obj_database"
 ---@return game_obj_database obj_database the reference for "obj_database"
@@ -110,8 +136,13 @@ function Common.GetObjContentReactor()
 	return asset_get_index("obj_content_reactor");
 end
 
+----------------------------
+--SPRITE FUNCTION WRAPPERS--
+----------------------------
+
 ---With this function you can add an image as a sprite, loading it from an external source where the image file to be loaded should always be in either *.png, *.gif, *.jpg/jpeg
 ---
+---Use this instead of calling sprite_add directly to prevent crashes when incorrect sprite data is passed.
 ---@param filepath string The filepath of the file to add.
 ---@param numberOfImages number Use to indicate the number of sub-images
 ---@param removeback boolean Indicates whether to make all pixels with the background colour (left-bottom pixel) transparent.
@@ -133,6 +164,8 @@ end
 ---The images themselves are NOT merged together, but rather the image indices are merged, 
 ---with the sub images from sprite "secondSpriteIndex" appended onto those of sprite "firstSpriteIndex", ie: they are added on at the end. Note that if the sprites are different sizes, 
 ---then the appended sprites are stretched to fit the image size for "firstSpriteIndex".
+---
+---Use this instead of calling sprite_merge directly to prevent crashes when incorrect sprite data is passed.
 ---@param firstSpriteIndex number the index for the sprite to merge
 ---@param secondSpriteIndex number the index for the sprite to merge
 function Common.MergeSprite(firstSpriteIndex, secondSpriteIndex)
@@ -153,6 +186,8 @@ function Common.MergeSprite(firstSpriteIndex, secondSpriteIndex)
 end
 
 ---This function will delete a sprite from the game, freeing any memory that was reserved for it.
+---
+---Use this instead of calling sprite_delete directly to prevent crashes when incorrect sprite data is passed.
 ---@param spriteIndex number the index for the sprite to delete
 function Common.DeleteSprite(spriteIndex)
 	if(spriteIndex < 0) then
@@ -190,8 +225,8 @@ function Common.ShowError(message)
 	local info = debug.getinfo(2, "Sl")
 	local caller = info.short_src:gsub("/","\\");
 	local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline;
-	local prefix = callerPrint.."\n##############\n";
-	local suffix = "\n##############\n"..debug.traceback("Error", 2).."\n\n";
+	local prefix = "MOD FRAMEWORK ERROR\n##############\n";
+	local suffix = "\n##############\n"..callerPrint.."\n##############\n"..debug.traceback("Error", 2).."\n\n";
 	show_message(prefix..message..suffix);
 end
 
@@ -204,21 +239,55 @@ function Common.DumpObjToMessage(ref)
 	local info = debug.getinfo(2, "Sl")
 	local caller = info.short_src:gsub("/","\\");
 	local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline;
-	local prefix = callerPrint.."\n".."##############".."\n";
+	local prefix = callerPrint.."\n##############\n";
 	local values = {};
 	if(type(ref) == "table") then
-		for k, v in pairs(ref) do
-			table.insert(values, tostring(k).."::"..tostring(v));
+		prefix = prefix.."TABLE\n##############\n";
+		for key, refValue in pairs(ref) do
+			local refValueString = tostring(refValue);
+			if (type(refValue) == "table") then
+				refValueString = Private.TableToString(refValue);
+			end
+			table.insert(values, tostring(key).."::"..refValueString);
 		end
 		local message = table.concat(values, ",\n");
 		show_message(prefix..message);
 	else
-		for k, v in pairs(struct_get_names(ref)) do
-			table.insert(values, tostring(k).."::"..tostring(v).."::"..tostring(ref[v]));
+		prefix = prefix.."GAMEMAKER STRUCT\n##############\n";
+		for key, refValue in pairs(struct_get_names(ref)) do
+			local refValueString = tostring(ref[refValue]);
+			if (type(ref[refValue]) == "table") then
+				refValueString = Private.TableToString(ref[refValue]);
+			end
+			table.insert(values, tostring(key).."::"..tostring(refValue).."::"..refValueString);
 		end
 		local message = table.concat(values, ",\n");
 		show_message(prefix..message);
 	end
+end
+
+---Convert a table into a single line of key value pairs
+---@param ref table the table to convert
+---@return string value the string value with key value pairs, truncated to 120 chars
+function Private.TableToString(ref)
+	local values = {};
+	for key, refValue in pairs(ref) do
+		table.insert(values, tostring(key).."="..tostring(refValue));
+	end
+	local value = table.concat(values, ", ");
+	value = Private.Truncate(value, 120);
+	return "TABLE:: { ".. value.." }";
+end
+
+---Truncate a string to a max lenght
+---@param value string the string to truncate
+---@param lenght number the max lenght
+---@return string value returns the string truncated to the max lenght and adds ... if truncated
+function Private.Truncate(value, lenght)
+    if #value > lenght then
+        return value:sub(1, lenght - 3).."..."
+    end
+    return value
 end
 
 ---A debug helper function:

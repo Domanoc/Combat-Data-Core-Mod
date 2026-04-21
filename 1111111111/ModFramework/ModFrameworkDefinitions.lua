@@ -1,115 +1,120 @@
----@class modded_component dataset containing relevant passtrough info for components
----@field component_type 1|2|3|4|5|6|7|8|9|10|11|95|96|97|98|99 the type of component
----@field index number the index of the component
----@field sprite number the index of the component sprite
----@field name string the name of the component
----@field component_size ComponentSize the size of the component when constructing it.
----@field researched boolean set to true if its pre researched, else false.
+---@class ModRegistration dataset containing the mod registration info
+---@field LoadOrderId number the load order id of the mod
+---@field Name string the name of the mod, equal to the folder name of the mod
+---@field Path string the filepath to the mod folder
+
+---@class ModdedComponent dataset containing relevant passtrough info for components
+---@field ComponentType 1|2|3|4|5|6|7|8|9|10|11|95|96|97|98|99 the type of component
+---@field Index number the index of the component
+---@field Sprite number the index of the component sprite, used to fix production sprites on game load
+---@field Name string the name of the component
+---@field ComponentSize ComponentSize the size of the component when constructing it.
+---@field IsResearched boolean set to true if its pre researched, else false.
 ---@field CanBeConstructed boolean set to true if it can be constructed in the component shop, false otherwise
----@field ShopComponent modded_shop_component|nil the shop component to construct new items, or nil for an unconstructable item
+---@field ShopComponent ModdedShopComponent? the shop component to construct new items, or nil for an unconstructable item
 ---@field BlueLength number the range of a blue weapon
 ---@field WeaponDescription string the description text for a weapon component, empty string otherwise.
 
----@class mech_data dataset for adding a new mech to the obj database
----@field name string the name of the mech, used to find its references
----@field component_size ComponentSize the size of the component when constructing it.
----@field researched boolean set to true if its pre researched, else false.
+---@class MechData dataset for adding a new mech to the obj database
+---@field Name string the name of the mech, used to find its references
+---@field ComponentSize ComponentSize the size of the component when constructing it.
+---@field IsResearched boolean set to true if its pre researched, else false.
 ---@field CanBeConstructed boolean set to true if it can be constructed in the component shop, false otherwise
----@field price_metallite number the amount of metallite needed to produce this mech
----@field price_bjorn number the amount of bjorn needed to produce this mech
----@field price_munilon number the amount of munilon needed to produce this mech
----@field price_skalaknit number the amount of skalaknit needed to produce this mech
----@field price_staff number the amount of staff needed to produce this mech
----@field production_days number the amount of days it takes to produce this mech
----@field heat_resist number the heat resist value of the mech
----@field impact_resist number the impact resist value of the mech
----@field current_resist number the current resist value of the mech
----@field has_melee 0|1 Indicates if the mech can use a melee weapon
----@field passive_armor number the amount of passive armor the mech has
----@field weight number the base weight of the mech
----@field speed number the base speed of the mech
----@field reload_time number the base reload time of the mech
----@field battle_time number the base battle time of the mech (the lenght of time it has ammo reserves for to shoot)
----@field mech_cells mech_cell[] the dataset on what cells the mech has
----@field sprite_small string the small sprite for the mech
----@field sprite_big string the big sprite for the mech
----@field sprite_battle string the spritesheet for the mech used on the battle screen
----@field sprite_battle_dead string the sprite for a destroyed mech on the battle screen
----@field sprite_battle_melee_ver string|nil the vertical melee attack spritesheet used on the battle screen. optional if the mech has no melee
----@field sprite_battle_melee_hor string|nil the horizontal melee attack spritesheet used on the battle screen. optional if the mech has no melee
+---@field PriceMetallite number the amount of metallite needed to produce this mech
+---@field PriceBjorn number the amount of bjorn needed to produce this mech
+---@field PriceMunilon number the amount of munilon needed to produce this mech
+---@field PriceSkalaknit number the amount of skalaknit needed to produce this mech
+---@field PriceStaff number the amount of staff needed to produce this mech
+---@field ProductionDays number the amount of days it takes to produce this mech
+---@field HeatResist number the heat resist value of the mech
+---@field ImpactResist number the impact resist value of the mech
+---@field CurrentResist number the current resist value of the mech
+---@field HasMelee 0|1 Indicates if the mech can use a melee weapon
+---@field PassiveArmor number the amount of passive armor the mech has
+---@field Weight number the base weight of the mech
+---@field Speed number the base speed of the mech
+---@field ReloadTime number the base reload time of the mech
+---@field BattleTime number the base battle time of the mech (the lenght of time it has ammo reserves for to shoot)
+---@field MechCells MechCell[] the dataset on what cells the mech has
+---@field SpriteSmall string the small sprite for the mech
+---@field SpriteBig string the big sprite for the mech
+---@field SpriteBattle string the spritesheet for the mech used on the battle screen
+---@field SpriteBattleDead string the sprite for a destroyed mech on the battle screen
+---@field SpriteMeleeVertical string? the vertical melee attack spritesheet used on the battle screen. optional if the mech has no melee
+---@field SpriteMeleeHorizontal string? the horizontal melee attack spritesheet used on the battle screen. optional if the mech has no melee
 
----@class mech_cell dataset on what cells a mech has
----@field moduleType 1|2|3|4|5 module type (1-aux, 2-motor, 3-reactor, 4-gun, 5-cabin)
----@field x number the x coordinate for the cell, use the mod_mech_grid_help.png for help determining the location
----@field y number the y coordinate for the cell, use the mod_mech_grid_help.png for help determining the location
+---@class MechCell dataset on what cells a mech has
+---@field ModuleType 1|2|3|4|5 module type (1-aux, 2-motor, 3-reactor, 4-gun, 5-cabin)
+---@field X number the x coordinate for the cell, use the mod_mech_grid_help.png for help determining the location
+---@field Y number the y coordinate for the cell, use the mod_mech_grid_help.png for help determining the location
 
----@class weapon_data dataset for adding a new weapon
----@field name string the name of the mech, used to find its references
----@field component_size ComponentSize the size of the component when constructing it.
----@field researched boolean set to true if its pre researched, else false.
+---@class WeaponData dataset for adding a new weapon
+---@field Name string the name of the mech, used to find its references
+---@field ComponentSize ComponentSize the size of the component when constructing it.
+---@field IsResearched boolean set to true if its pre researched, else false.
 ---@field CanBeConstructed boolean set to true if it can be constructed in the component shop, false otherwise
----@field price_metallite number the amount of metallite needed to produce this weapon
----@field price_bjorn number the amount of bjorn needed to produce this weapon
----@field price_munilon number the amount of munilon needed to produce this weapon
----@field price_skalaknit number the amount of skalaknit needed to produce this weapon
----@field price_staff number the amount of staff needed to produce this weapon
----@field production_days number the amount of days it takes to produce this weapon
----@field weapon_type "white"|"red"|"blue"|"yellow" the type of weapon (white = ballistic, red = rockets, blue = laser/tesla, yellow = thermal)
----@field fire_rate number the base fire rate. higher values offer a faster rate, 600 with full firespeed points will fill the firespeed bar completely
----@field weight number the base weight of the weapon
----@field accuracy number the base accuracy for the weapon. accuracy in degrees, 0 is perfect accuracy
----@field energy number the base energy cost of the weapon
----@field damage number the base damage value of the weapon
----@field penetration number the base penetration value of the weapon
----@field projectile_speed number the base projectile speed of the weapon
----@field energy_buffed 0|1 whether the energy cost boost damage output, 1 = yes, for laser/tesla weapons this is an additional increase on their native bonus.
----@field sprite_small string the small sprite for the weapon
----@field sprite_big string the big sprite for the weapon
----@field sprite_huge string the huge sprite for the weapon
+---@field PriceMetallite number the amount of metallite needed to produce this weapon
+---@field PriceBjorn number the amount of bjorn needed to produce this weapon
+---@field PriceMunilon number the amount of munilon needed to produce this weapon
+---@field PriceSkalaknit number the amount of skalaknit needed to produce this weapon
+---@field PriceStaff number the amount of staff needed to produce this weapon
+---@field ProductionDays number the amount of days it takes to produce this weapon
+---@field WeaponType "white"|"red"|"blue"|"yellow" the type of weapon (white = ballistic, red = rockets, blue = laser/tesla, yellow = thermal)
+---@field FireRate number the base fire rate. higher values offer a faster rate, 600 with full firespeed points will fill the firespeed bar completely
+---@field Weight number the base weight of the weapon
+---@field Accuracy number the base accuracy for the weapon. accuracy in degrees, 0 is perfect accuracy
+---@field EnergyCost number the base energy cost of the weapon
+---@field Damage number the base damage value of the weapon
+---@field Penetration number the base penetration value of the weapon
+---@field ProjectileSpeed number the base projectile speed of the weapon
+---@field IsEnergyBuffed 0|1 whether the energy cost boost damage output, 1 = yes, for laser/tesla weapons this is an additional increase on their native bonus.
+---@field SpriteSmall string the small sprite for the weapon
+---@field SpriteBig string the big sprite for the weapon
+---@field SpriteHuge string the huge sprite for the weapon
 ---@field BlueLength number the range of a blue weapon, default is 750
 ---@field WeaponDescription string the description text for a weapon. used when the weapon is added to the main slot in engineering.
 
----@class solenoid_data dataset for adding a new solenoid
----@field name string the name of the mech, used to find its references
----@field component_size ComponentSize the size of the component when constructing it.
----@field researched boolean set to true if its pre researched, else false.
+---@class SolenoidData dataset for adding a new solenoid
+---@field Name string the name of the mech, used to find its references
+---@field ComponentSize ComponentSize the size of the component when constructing it.
+---@field IsResearched boolean set to true if its pre researched, else false.
 ---@field CanBeConstructed boolean set to true if it can be constructed in the component shop, false otherwise
----@field price_metallite number the amount of metallite needed to produce this solenoid
----@field price_bjorn number the amount of bjorn needed to produce this solenoid
----@field price_munilon number the amount of munilon needed to produce this solenoid
----@field price_skalaknit number the amount of skalaknit needed to produce this solenoid
----@field price_staff number the amount of staff needed to produce this solenoid
----@field production_days number the amount of days it takes to produce this solenoid
----@field power number the power value of the solenoid, lower numbers give more heat resist on reactor
----@field induction number the induction value of the solenoid, any deviation from 1 gives worse energy stats
----@field sprite string the sprite for the solenoid
+---@field PriceMetallite number the amount of metallite needed to produce this solenoid
+---@field PriceBjorn number the amount of bjorn needed to produce this solenoid
+---@field PriceMunilon number the amount of munilon needed to produce this solenoid
+---@field PriceSkalaknit number the amount of skalaknit needed to produce this solenoid
+---@field PriceStaff number the amount of staff needed to produce this solenoid
+---@field ProductionDays number the amount of days it takes to produce this solenoid
+---@field Power number the power value of the solenoid, lower numbers give more heat resist on reactor
+---@field Induction number the induction value of the solenoid, any deviation from 1 gives worse energy stats
+---@field Sprite string the sprite for the solenoid
 
----@class research_item_data dataset for a new research item
+---@class ResearchData dataset for a new research item
 ---@field Name string the name of the research item, used to find its references
 ---@field Position number position number on the research tree. You can see positions in the game with f6 (debug mode)
----@field PrerequisiteResearchPosition number|nil the position of the prerequisite research that unlocks this research, each research can only be the prerequisite for 3 other researches. leave nil for no prerequisite.
+---@field PrerequisiteResearchPosition number? the position of the prerequisite research that unlocks this research, each research can only be the prerequisite for 3 other researches. leave nil for no prerequisite.
 ---@field Condition 0|1|2|3 condition (0-closed, 1-opened, 2-researching, 3-researched)
 ---@field RequiredDays number the required days to complete the research
 ---@field RequiredStaff number the required available staff to start the research
 ---@field ReseachIcon ReseachIcon the info on what icon to use
 ---@field Description string the description text for the research
 ---@field SpritePath string path to the sprite used for the research
----@field UnlockedComponents modded_component[] the components that are unlocked by this research
+---@field UnlockedComponents ModdedComponent[] the components that are unlocked by this research
 
 ---@class ReseachIcon the information on the icon and sub icon for the research item
 ---@field IconType number 0|1|2 research icon type (0-combat, 1-production, 2-passability)
 ---@field IconSubType number research icon subtype (see left column in the game in research menu)
 
----@class modded_research_item dataset for a stored modded research item
----@field index number the assigned index for the modded research item
----@field res_number number the number for the research as found in the debug (F6) of the research screen (upper left white number)
----@field initial_condition 0|1|2|3 the condition the modded research item was created with (0-closed, 1-opened, 2-researching, 3-researched)
----@field name string the name of the research item
----@field UnlockedComponents modded_component[] the components that are unlocked by this research
+---@class ModdedResearch dataset for a stored modded research item
+---@field Index number the assigned index for the modded research item
+---@field ResNumber number the number for the research as found in the debug (F6) of the research screen (upper left white number)
+---@field InitialCondition 0|1|2|3 the condition the modded research item was created with (0-closed, 1-opened, 2-researching, 3-researched)
+---@field Name string the name of the research item
+---@field UnlockedComponents ModdedComponent[] the components that are unlocked by this research
 
----@class modded_shop_component
----@field index number the assigned index for the modded shop component
+---@class ModdedShopComponent
+---@field Index number the assigned index for the modded shop component
 
----@class component_search_criteria
+---@class ModdedComponentSearchCriteria
 ---@field Name string the name of the component
 ---@field ComponentType 1|2|3|4|5|6|7|8|9|10|11|95|96|97|98|99 the type of component

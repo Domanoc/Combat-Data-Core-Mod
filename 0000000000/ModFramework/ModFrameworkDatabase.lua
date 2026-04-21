@@ -15,7 +15,7 @@ local Private = {};
 local Database = {};
 
 ---Adds a new mech to the games obj_database
----@param mechData mech_data dataset for adding a new mech
+---@param mechData MechData dataset for adding a new mech
 function Database.AddMech(mechData)
 	local obj_database = Common.GetObjDatabase();
 
@@ -28,58 +28,58 @@ function Database.AddMech(mechData)
 	mech_stat_array[mech_index] = mech;
 
 	--ENGINEERING PRICE
-	ds_map_add(mech, "price_metallite",	mechData.price_metallite);
-	ds_map_add(mech, "price_bjorn",		mechData.price_bjorn);
-	ds_map_add(mech, "price_munilon",	mechData.price_munilon);
-	ds_map_add(mech, "price_skalaknit",	mechData.price_skalaknit);
-	ds_map_add(mech, "price_staff",		mechData.price_staff);
-	ds_map_add(mech, "days",			mechData.production_days);
+	ds_map_add(mech, "price_metallite",	mechData.PriceMetallite);
+	ds_map_add(mech, "price_bjorn",		mechData.PriceBjorn);
+	ds_map_add(mech, "price_munilon",	mechData.PriceMunilon);
+	ds_map_add(mech, "price_skalaknit",	mechData.PriceSkalaknit);
+	ds_map_add(mech, "price_staff",		mechData.PriceStaff);
+	ds_map_add(mech, "days",			mechData.ProductionDays);
 
 	--RESISTANCES
-	ds_map_add(mech, "heat_resist",		mechData.heat_resist);
-	ds_map_add(mech, "impact_resist",	mechData.impact_resist);
-	ds_map_add(mech, "current_resist",	mechData.current_resist);
+	ds_map_add(mech, "heat_resist",		mechData.HeatResist);
+	ds_map_add(mech, "impact_resist",	mechData.ImpactResist);
+	ds_map_add(mech, "current_resist",	mechData.CurrentResist);
 
 	--STATS
 	ds_map_add(mech, "hp", 				1000);  --1000 is the default for all mechs, not sure if the game does something with this value
-	ds_map_add(mech, "melee_option",	mechData.has_melee);
-	ds_map_add(mech, "armor",			mechData.passive_armor);
-	ds_map_add(mech, "weight",			mechData.weight);
-	ds_map_add(mech, "speed",			mechData.speed);
-	ds_map_add(mech, "reload_time",		mechData.reload_time);
-	ds_map_add(mech, "battle_time",		mechData.battle_time);
+	ds_map_add(mech, "melee_option",	mechData.HasMelee);
+	ds_map_add(mech, "armor",			mechData.PassiveArmor);
+	ds_map_add(mech, "weight",			mechData.Weight);
+	ds_map_add(mech, "speed",			mechData.Speed);
+	ds_map_add(mech, "reload_time",		mechData.ReloadTime);
+	ds_map_add(mech, "battle_time",		mechData.BattleTime);
 
 	--MODULE CELLS
-	Private.AddCells(mech, mechData.mech_cells);
+	Private.AddCells(mech, mechData.MechCells);
 
 	--SPRITES
 	--small sprite
-	local mech_sprite = Common.AddSprite(mechData.sprite_small, 0, false, false, 23, 49);
+	local mech_sprite = Common.AddSprite(mechData.SpriteSmall, 0, false, false, 23, 49);
 	ds_map_add(mech, "sprite_small", mech_sprite);
 	--big sprite
-	ds_map_add(mech, "sprite_big", Common.AddSprite(mechData.sprite_big, 0, false, false, 200, 343));
+	ds_map_add(mech, "sprite_big", Common.AddSprite(mechData.SpriteBig, 0, false, false, 200, 343));
 	--battle sprite
-	ds_map_add(mech, "sprite_battle", Common.AddSprite(mechData.sprite_battle, 2, true, false, 25, 25));
+	ds_map_add(mech, "sprite_battle", Common.AddSprite(mechData.SpriteBattle, 2, true, false, 25, 25));
 	--dead sprite
-	ds_map_add(mech, "sprite_battle_dead", Common.AddSprite(mechData.sprite_battle_dead, 1, true, false, 25, 25));
+	ds_map_add(mech, "sprite_battle_dead", Common.AddSprite(mechData.SpriteBattleDead, 1, true, false, 25, 25));
 	--melee vertical
-	if(mechData.sprite_battle_melee_ver ~= nil) then
-		ds_map_add(mech, "sprite_battle_melee_ver", Common.AddSprite(mechData.sprite_battle_melee_ver, 7, true, false, 25, 25));
+	if(mechData.SpriteMeleeVertical ~= nil) then
+		ds_map_add(mech, "sprite_battle_melee_ver", Common.AddSprite(mechData.SpriteMeleeVertical, 7, true, false, 25, 25));
 	end
 	--melee horizontal
-	if(mechData.sprite_battle_melee_hor ~= nil) then
-		ds_map_add(mech, "sprite_battle_melee_hor", Common.AddSprite(mechData.sprite_battle_melee_hor, 7, true, false, 25, 25));
+	if(mechData.SpriteMeleeHorizontal ~= nil) then
+		ds_map_add(mech, "sprite_battle_melee_hor", Common.AddSprite(mechData.SpriteMeleeHorizontal, 7, true, false, 25, 25));
 	end
 
 	--Add the newly modded item to the component list. So we can find the reference later.
-	---@type modded_component
+	---@type ModdedComponent
 	local moddedComponent = {
-		component_type = Types.ComponentTypes.mech,
-		index = mech_index - 1,
-		sprite = mech_sprite,
-		name = mechData.name,
-		component_size = mechData.component_size,
-		researched = mechData.researched,
+		ComponentType = Types.ComponentTypes.mech,
+		Index = mech_index - 1,
+		Sprite = mech_sprite,
+		Name = mechData.Name,
+		ComponentSize = mechData.ComponentSize,
+		IsResearched = mechData.IsResearched,
 		CanBeConstructed = mechData.CanBeConstructed,
 		BlueLength = 0,
 		WeaponDescription = ""
@@ -92,7 +92,7 @@ end
 
 ---Adds the Cell data to the ds_map of the mech
 ---@param mech ds_map the reference to the ds_map of the mech
----@param cells mech_cell[] the cell data array for the mech
+---@param cells MechCell[] the cell data array for the mech
 function Private.AddCells(mech, cells)
 	local aux_number = 0;
 	local weapon_number = 0;
@@ -101,10 +101,10 @@ function Private.AddCells(mech, cells)
 		local cell = cells[i];
 		Private.AddCell(mech, i, cell);
 
-		if(cell.moduleType == Types.MechModules.aux) then
+		if(cell.ModuleType == Types.MechModules.aux) then
 			aux_number = aux_number + 1;
 		end
-		if(cell.moduleType == Types.MechModules.gun) then
+		if(cell.ModuleType == Types.MechModules.gun) then
 			weapon_number = weapon_number + 1;
 		end
 	end
@@ -117,15 +117,15 @@ end
 ---Adds a new cell to the ds_map for the mech
 ---@param mech ds_map the reference to the ds_map of the mech
 ---@param cell_num number the number of the newly added cell
----@param cell mech_cell the data for the cell
+---@param cell MechCell the data for the cell
 function Private.AddCell(mech, cell_num, cell)
-	ds_map_add(mech, "cell_"..cell_num, 	cell.moduleType);
-	ds_map_add(mech, "cell_x_"..cell_num, 	cell.x);
-	ds_map_add(mech, "cell_y_"..cell_num, 	cell.y);
+	ds_map_add(mech, "cell_"..cell_num, 	cell.ModuleType);
+	ds_map_add(mech, "cell_x_"..cell_num, 	cell.X);
+	ds_map_add(mech, "cell_y_"..cell_num, 	cell.Y);
 end
 
 ---Add a new weapon to the games obj_database
----@param weaponData weapon_data
+---@param weaponData WeaponData
 function Database.AddWeapon(weaponData)
 	local obj_database = Common.GetObjDatabase();
 
@@ -138,47 +138,47 @@ function Database.AddWeapon(weaponData)
 	local weapon = weapon_stat_array[weapon_index];
 
 	--ENGINEERING PRICE
-	ds_map_add(weapon, "price_metallite",	weaponData.price_metallite);
-	ds_map_add(weapon, "price_bjorn",		weaponData.price_bjorn);
-	ds_map_add(weapon, "price_munilon",		weaponData.price_munilon);
-	ds_map_add(weapon, "price_skalaknit",	weaponData.price_skalaknit);
-	ds_map_add(weapon, "price_staff",		weaponData.price_staff);
-	ds_map_add(weapon, "days",				weaponData.production_days);
+	ds_map_add(weapon, "price_metallite",	weaponData.PriceMetallite);
+	ds_map_add(weapon, "price_bjorn",		weaponData.PriceBjorn);
+	ds_map_add(weapon, "price_munilon",		weaponData.PriceMunilon);
+	ds_map_add(weapon, "price_skalaknit",	weaponData.PriceSkalaknit);
+	ds_map_add(weapon, "price_staff",		weaponData.PriceStaff);
+	ds_map_add(weapon, "days",				weaponData.ProductionDays);
 
 	--STATS
 	ds_map_add(weapon, "hp",				1000);	--a default value the game doesn't seem to use.
 	ds_map_add(weapon, "number",			3);		--doesn't seem to do anything
-	ds_map_add(weapon, "type",				weaponData.weapon_type);
-	ds_map_add(weapon, "start_fire_speed",	weaponData.fire_rate);
-	ds_map_add(weapon, "start_weight",		weaponData.weight);
-	ds_map_add(weapon, "start_accuracy",	weaponData.accuracy);
-	ds_map_add(weapon, "start_energy",		weaponData.energy);
-	ds_map_add(weapon, "start_damage",		weaponData.damage);
-	ds_map_add(weapon, "start_penetration",	weaponData.penetration);
-	ds_map_add(weapon, "start_speed",		weaponData.projectile_speed);
-	ds_map_add(weapon, "energy_buffed",		weaponData.energy_buffed);
+	ds_map_add(weapon, "type",				weaponData.WeaponType);
+	ds_map_add(weapon, "start_fire_speed",	weaponData.FireRate);
+	ds_map_add(weapon, "start_weight",		weaponData.Weight);
+	ds_map_add(weapon, "start_accuracy",	weaponData.Accuracy);
+	ds_map_add(weapon, "start_energy",		weaponData.EnergyCost);
+	ds_map_add(weapon, "start_damage",		weaponData.Damage);
+	ds_map_add(weapon, "start_penetration",	weaponData.Penetration);
+	ds_map_add(weapon, "start_speed",		weaponData.ProjectileSpeed);
+	ds_map_add(weapon, "energy_buffed",		weaponData.IsEnergyBuffed);
 
 	--SPRITES
 	--small sprite
-	local small_sprite = Common.AddSprite(weaponData.sprite_small, 0, false, false, 0, 0);
+	local small_sprite = Common.AddSprite(weaponData.SpriteSmall, 0, false, false, 0, 0);
 	ds_map_add(weapon, "sprite", small_sprite);
 	--huge sprite
-	local huge_sprite = Common.AddSprite(weaponData.sprite_huge, 0, false, false, 199, 134);
+	local huge_sprite = Common.AddSprite(weaponData.SpriteHuge, 0, false, false, 199, 134);
 	--big sprite
-	local big_sprite = Common.AddSprite(weaponData.sprite_big, 0, false, false, 199, 134);
+	local big_sprite = Common.AddSprite(weaponData.SpriteBig, 0, false, false, 199, 134);
 	--merge the big and huge sprites
 	Common.MergeSprite(big_sprite, huge_sprite);
 	ds_map_add(weapon, "sprite_big", big_sprite);
 
 	--Add the newly modded item to the component list. So we can find the reference later.
-	---@type modded_component
+	---@type ModdedComponent
 	local moddedComponent = {
-		component_type = Types.ComponentTypes.weapon,
-		index = weapon_index - 1,
-		sprite = small_sprite,
-		name = weaponData.name,
-		component_size = weaponData.component_size,
-		researched = weaponData.researched,
+		ComponentType = Types.ComponentTypes.weapon,
+		Index = weapon_index - 1,
+		Sprite = small_sprite,
+		Name = weaponData.Name,
+		ComponentSize = weaponData.ComponentSize,
+		IsResearched = weaponData.IsResearched,
 		CanBeConstructed = weaponData.CanBeConstructed,
 		BlueLength = weaponData.BlueLength,
 		WeaponDescription = weaponData.WeaponDescription
@@ -190,7 +190,7 @@ function Database.AddWeapon(weaponData)
 end
 
 ---Add a new solenoid to the games obj_database
----@param solenoidData solenoid_data
+---@param solenoidData SolenoidData
 function Database.AddSolenoid(solenoidData)
 	local obj_database = Common.GetObjDatabase();
 
@@ -206,33 +206,33 @@ function Database.AddSolenoid(solenoidData)
 	local high_tech_solenoid = solenoid_stat_array[high_tech_solenoid_index];
 
 	--ENGINEERING PRICE
-	ds_map_add(high_tech_solenoid, "price_metallite",	solenoidData.price_metallite);
-	ds_map_add(high_tech_solenoid, "price_bjorn",		solenoidData.price_bjorn);
-	ds_map_add(high_tech_solenoid, "price_munilon",		solenoidData.price_munilon);
-	ds_map_add(high_tech_solenoid, "price_skalaknit",	solenoidData.price_skalaknit);
-	ds_map_add(high_tech_solenoid, "price_staff",		solenoidData.price_staff);
-	ds_map_add(high_tech_solenoid, "days",				solenoidData.production_days);
+	ds_map_add(high_tech_solenoid, "price_metallite",	solenoidData.PriceMetallite);
+	ds_map_add(high_tech_solenoid, "price_bjorn",		solenoidData.PriceBjorn);
+	ds_map_add(high_tech_solenoid, "price_munilon",		solenoidData.PriceMunilon);
+	ds_map_add(high_tech_solenoid, "price_skalaknit",	solenoidData.PriceSkalaknit);
+	ds_map_add(high_tech_solenoid, "price_staff",		solenoidData.PriceStaff);
+	ds_map_add(high_tech_solenoid, "days",				solenoidData.ProductionDays);
 
 	--STATS
 	ds_map_add(high_tech_solenoid, "hp",				1000);	--doesn't seem to do anything
-	ds_map_add(high_tech_solenoid, "power",				solenoidData.power);
-	ds_map_add(high_tech_solenoid, "induction",			solenoidData.induction);
+	ds_map_add(high_tech_solenoid, "power",				solenoidData.Power);
+	ds_map_add(high_tech_solenoid, "induction",			solenoidData.Induction);
 	ds_map_add(high_tech_solenoid, "weight",			2);		--cant find an effect on the reactor so i left it at the same value as a regular solenoid
 	ds_map_add(high_tech_solenoid, "type",				1);		--As far as i can see there is only type 1 for solenoids
 
 	--SPRITE
-	local high_tech_solenoid_sprite = Common.AddSprite(solenoidData.sprite, 0, false, false, 0, 0);
+	local high_tech_solenoid_sprite = Common.AddSprite(solenoidData.Sprite, 0, false, false, 0, 0);
 	ds_map_add(high_tech_solenoid, "sprite", high_tech_solenoid_sprite);
 
 	--Add the newly modded item to the component list. So we can find the reference later.
-	---@type modded_component
+	---@type ModdedComponent
 	local moddedComponent = {
-		component_type = Types.ComponentTypes.solenoid,
-		index = high_tech_solenoid_index - 1,
-		sprite = high_tech_solenoid_sprite,
-		name = solenoidData.name,
-		component_size = solenoidData.component_size,
-		researched = solenoidData.researched,
+		ComponentType = Types.ComponentTypes.solenoid,
+		Index = high_tech_solenoid_index - 1,
+		Sprite = high_tech_solenoid_sprite,
+		Name = solenoidData.Name,
+		ComponentSize = solenoidData.ComponentSize,
+		IsResearched = solenoidData.IsResearched,
 		CanBeConstructed = solenoidData.CanBeConstructed,
 		BlueLength = 0,
 		WeaponDescription = ""

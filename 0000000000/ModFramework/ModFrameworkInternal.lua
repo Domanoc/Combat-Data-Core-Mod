@@ -14,6 +14,30 @@ local Engineering = require("ModFrameworkEngineering");
 ---Access to the private functions in this file.
 local Private = {};
 
+---Registers the framework and loaded mods.
+function Module.RegisterFramework()
+	for index, path in pairs(mod_info) do
+		local loadOrderId = tonumber(index:match("^(%d+)"));
+		local modFileId = tonumber(index:match("(%d+)$"));
+
+		if (loadOrderId ~= nil and modFileId == 2) then
+			local name = path:match("mods\\([^\\]+)")
+			local modPath = path:gsub("obj_database.lua","");
+			---@type ModRegistration
+			local mod = {
+				LoadOrderId = loadOrderId,
+				Name = name,
+				Path = modPath,
+			}
+			table.insert(Storage.ModRegistrations, mod);
+
+			if (name == "ModFramework" and loadOrderId ~= 1) then
+				Common.ShowError("The ModFramework was not first in the mod load order. This can lead to issues.");
+			end
+		end
+	end
+end
+
 ---Use in the create function of obj_battle_map.lua
 ---if we add new mod weapons we need to recreate the sound tables
 ---else we will be hit with an out of range error when the weapon is used
@@ -68,16 +92,16 @@ function Module.FixModdedResearch()
 
 	fix_research = false;
 	for _, moddedResearch in ipairs(Storage.ModdedResearchList) do
-		local research = Storage.LoadedResearchList[moddedResearch.index];
+		local research = Storage.LoadedResearchList[moddedResearch.Index];
 
-		if(moddedResearch.initial_condition ~= Types.ResearchConditions.Closed and research.condition == Types.ResearchConditions.Closed) then
+		if(moddedResearch.InitialCondition ~= Types.ResearchConditions.Closed and research.condition == Types.ResearchConditions.Closed) then
 			--special condition since this modded research item is set to condition other than closed on mod load we need force it back to initial condition if it was closed.
 			--all other states should be fine: 
 			--condition 1: it would mean the player stopped the research from continuing.
 			--condition 2: it would mean the player started the research.
 			--condition 3: it is already been completed.
 
-			research.condition = moddedResearch.initial_condition;
+			research.condition = moddedResearch.InitialCondition;
 			research.require_days = research.require_days_max;
 		elseif(research.condition == Types.ResearchConditions.Closed and research.require_days ~= research.require_days_max) then
 			--Condition 0 (closed) -> research has never been started/unlocked it should have the default require_days values
@@ -117,8 +141,8 @@ function Module.FixWeaponDescriptions()
 	weaponDescriptions = obj_weapon_test.weapon_description;
 
 	for _, component in ipairs(Storage.ModdedComponentList) do
-		if(component.component_type == Types.ComponentTypes.weapon) then
-			local descriptionIndex = component.index + 1;
+		if(component.ComponentType == Types.ComponentTypes.weapon) then
+			local descriptionIndex = component.Index + 1;
 			weaponDescriptions[descriptionIndex] = component.WeaponDescription;
 		end
 	end
@@ -154,10 +178,10 @@ function Module.LoadModdedSpritesOnProductionItems()
 		local itemIndex = hangar[hangerTableIndexes.item_index];
 
 		for _, modded_item in ipairs(Storage.ModdedComponentList) do
-			if(componentType == modded_item.component_type and itemIndex == modded_item.index) then
+			if(componentType == modded_item.ComponentType and itemIndex == modded_item.Index) then
 				--When the reference matches the modded element we set the relevant mod sprite to the logo and logo index.
-				hangar[hangerTableIndexes.logo] = modded_item.sprite;
-				hangar[hangerTableIndexes.logo_index] = modded_item.sprite;
+				hangar[hangerTableIndexes.logo] = modded_item.Sprite;
+				hangar[hangerTableIndexes.logo_index] = modded_item.Sprite;
 			end
 		end
 	end
@@ -176,7 +200,7 @@ end
 ---@param weapon game_obj_big_holder_weapon the weapon to update
 function Module.SetWeaponRange(weapon)
 	for _, component in ipairs(Storage.ModdedComponentList) do
-		if (component.component_type == Types.ComponentTypes.weapon and component.index == weapon.weapon_number) then
+		if (component.ComponentType == Types.ComponentTypes.weapon and component.Index == weapon.weapon_number) then
 			weapon.blue_length = component.BlueLength;
 		end
 	end
@@ -197,7 +221,7 @@ end
 ---@param res_number number the number for the research as found in the debug (F6) of the research screen (upper left white number)
 function Module.ProcessResearchCompletion(completedResearch, res_number)
 	for _, research in ipairs(Storage.ModdedResearchList) do
-		if(research.res_number == res_number) then
+		if(research.ResNumber == res_number) then
 			Private.ProcessResearchUnlocks(completedResearch, research.UnlockedComponents);
 		end
 	end
@@ -205,14 +229,14 @@ end
 
 ---Processes the unlocks and gives the free items if applicable
 ---@param completedResearch game_obj_research the full reference to the game_research_item that is completed
----@param unlockedComponents modded_component[] the components that are unlocked
+---@param unlockedComponents ModdedComponent[] the components that are unlocked
 function Private.ProcessResearchUnlocks(completedResearch, unlockedComponents)
 	for _, component in ipairs(unlockedComponents) do
-		if(component.component_type == Types.ComponentTypes.mech) then
+		if(component.ComponentType == Types.ComponentTypes.mech) then
 			Private.ProcessMechUnlock(component, completedResearch.give_item);
-		elseif (component.component_type == Types.ComponentTypes.weapon) then
+		elseif (component.ComponentType == Types.ComponentTypes.weapon) then
 			Private.ProcessWeaponUnlock(component, completedResearch.give_item);
-		elseif (component.component_type == Types.ComponentTypes.solenoid) then
+		elseif (component.ComponentType == Types.ComponentTypes.solenoid) then
 			Private.ProcessSolenoidUnlock(component, completedResearch.give_item);
 		end
 	end
@@ -222,47 +246,47 @@ function Private.ProcessResearchUnlocks(completedResearch, unlockedComponents)
 end
 
 ---Processes the unlock for a mech type
----@param component modded_component the mech component to process
+---@param component ModdedComponent the mech component to process
 ---@param giveItem boolean true if a free item is given, false otherwise
 function Private.ProcessMechUnlock(component, giveItem)
 	local component_shop = Common.GetObjComponentShop();
 	if (component.ShopComponent ~= nil) then
-		local shopComponent = component_shop.comp_mech[component.ShopComponent.index];
+		local shopComponent = component_shop.comp_mech[component.ShopComponent.Index];
 		shopComponent.researched = true; --activates the shop component
 	end
 
 	if (giveItem == true) then
-		Engineering.AddMech(component.index);
+		Engineering.AddMech(component.Index);
 	end
 end
 
 ---Processes the unlock for a weapon type
----@param component modded_component the weapon component to process
+---@param component ModdedComponent the weapon component to process
 ---@param giveItem boolean true if a free item is given, false otherwise
 function Private.ProcessWeaponUnlock(component, giveItem)
 	local component_shop = Common.GetObjComponentShop();
 	if (component.ShopComponent ~= nil) then
-		local shopComponent = component_shop.comp_wep[component.ShopComponent.index];
+		local shopComponent = component_shop.comp_wep[component.ShopComponent.Index];
 		shopComponent.researched = true; --activates the shop component
 	end
 
 	if (giveItem == true) then
-		Engineering.AddWeapon(component.index, false);
+		Engineering.AddWeapon(component.Index, false);
 	end
 end
 
 ---Processes the unlock for a solenoid type
----@param component modded_component the solenoid component to process
+---@param component ModdedComponent the solenoid component to process
 ---@param giveItem boolean true if a free item is given, false otherwise
 function Private.ProcessSolenoidUnlock(component, giveItem)
 	local component_shop = Common.GetObjComponentShop();
 	if (component.ShopComponent ~= nil) then
-		local shopComponent = component_shop.comp_solenoid[component.ShopComponent.index];
+		local shopComponent = component_shop.comp_solenoid[component.ShopComponent.Index];
 		shopComponent.researched = true; --activates the shop component
 	end
 
 	if (giveItem == true) then
-		Engineering.AddSolenoid(component.index);
+		Engineering.AddSolenoid(component.Index);
 	end
 end
 

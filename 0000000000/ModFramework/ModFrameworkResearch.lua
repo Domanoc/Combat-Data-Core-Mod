@@ -15,8 +15,10 @@ local Private = {};
 local Research = {};
 
 ---Adds a research item to the tech tree
----@param item research_item_data The dataset for the new research item
+---@param item ResearchData The dataset for the new research item
 function Research.AddResearch(item)
+
+
 	local obj_research_panel = Common.GetObjResearchPanel();
 	local ResearchIndexes = Types.ResearchIndexes;
 
@@ -75,7 +77,7 @@ function Research.AddResearch(item)
 	obj_research_panel.mres = mres;
 	obj_research_panel.number_of_res = research_count;
 
-	---@type modded_component[]
+	---@type ModdedComponent[]
 	local unlockedComponents = {};
 	for _, value in ipairs(item.UnlockedComponents) do
 		if(value ~= nil) then
@@ -83,20 +85,20 @@ function Research.AddResearch(item)
 		end
 	end
 
-	---@type modded_research_item
+	---@type ModdedResearch
 	local moddedResearch = {
-		index = researchItemIndex,
-		initial_condition = item.Condition,
-		name = item.Name,
-		res_number = researchItemIndex - 1,
+		Index = researchItemIndex,
+		InitialCondition = item.Condition,
+		Name = item.Name,
+		ResNumber = researchItemIndex - 1,
 		UnlockedComponents = unlockedComponents
 	}
 	table.insert(Storage.ModdedResearchList, moddedResearch);
 end
 
 ---Gets the mres research item by its position value
----@param position number|nil the position value to look for
----@return number|nil researchItem returns the found research item index or nil otherwise
+---@param position number? the position value to look for
+---@return number? researchItem returns the found research item index or nil otherwise
 function Private.GetResearchByPosition(position)
 	if (position == nil) then
 		return nil;

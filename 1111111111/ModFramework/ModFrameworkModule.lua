@@ -3,10 +3,6 @@
 --------------------------
 local Module = {};
 
-local Storage = require("ModFrameworkStorage");
----Access to the Storage of mod framework variables.
-Module.Storage = Storage;
-
 local Types = require("ModFrameworkTypes");
 ---Access to Types used by the framework.
 Module.Types = Types;

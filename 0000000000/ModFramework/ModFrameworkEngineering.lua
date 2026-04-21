@@ -10,7 +10,7 @@ local Engineering = {};
 
 ---Adds a component of type mech to engineering
 ---@param mech_number number the index of the mech in the database.
----@param name string|nil the name of the new mech. Or nil for a random default name.
+---@param name string? the name of the new mech. Or nil for a random default name.
 function Engineering.AddMech(mech_number, name)
 	local obj_content_mechs = Common.GetObjContentMechs();
 
