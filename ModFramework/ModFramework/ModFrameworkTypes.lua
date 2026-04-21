@@ -95,7 +95,7 @@ local ResearchIcons = {
 Types.ResearchIcons = ResearchIcons;
 
 ---component sizes
----@class comp_sizes
+---@class ComponentSizes
 ---@field small 1
 ---@field large 5
 local ComponentSizes = {

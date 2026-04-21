@@ -3,9 +3,6 @@
 --------------------------------------------
 --Added this file to give the IDE info on what the mod functions return and use for params
 
----A reference handle to the gamemaker ds_map data structure, stores key and value pairs.
----@alias ds_map userdata
-
 ---@type any
 mod_info = mod_info;
 ---This function is used to create a new, empty DS map and will return a Handle to it which is then used to access the data structure in all other DS map functions.

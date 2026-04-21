@@ -4,7 +4,7 @@
     {
       "label": "Mirror Folder with Exclusion",
       "type": "shell",
-      "command": "robocopy \"D:\\Steam\\steamapps\\workshop\\content\\1428520\\0000000000\\ModFramework\" \"D:\\Steam\\steamapps\\workshop\\content\\1428520\\1111111111\\ModFramework\" /MIR /XF ModFrameworkInternal.lua",
+      "command": "robocopy \"D:\\Mod Projects\\Mech Engineer Mods\\ModFramework\\ModFramework\" \"D:\\Mod Projects\\Mech Engineer Mods\\ModFramework Example Mod\\ModFramework\" /MIR /XF ModFrameworkInternal.lua",
       "problemMatcher": [],
       "group": {
         "kind": "build",

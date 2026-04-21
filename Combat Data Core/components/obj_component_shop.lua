@@ -34,7 +34,6 @@ local comp_sizes = {
 	small = 1, --1 construction slot
 	large = 5  --5 construction slots, a full hanger
 }
----@alias ComponentSize 1|5
 
 function create(q)--one time script when save is loaded
 
@@ -105,7 +104,7 @@ end
 
 ---Adds a component of type mech
 ---@param mech_number number the index of the mech in the database
----@param component_size ComponentSize the size of the component when constructing it. use 1 or 5.
+---@param component_size 1|5 the size of the component when constructing it. use 1 or 5.
 ---@param researched 1|0 set to 1 if its pre researched. else leave it 0.
 ---@return number index the index to the newly created component
 function AddMechComponent(mech_number, component_size, researched)
