@@ -62,7 +62,15 @@ function create(q, v_modid)
 		RequiredStaff = 10,										--the required available staff to start the research
 		ReseachIcon = researchIcons.Survival,					--the info on what icon to use
 		Description = {											--the description text for the research
-			 { LanguageFile = "loc_english.ini", Value = "Example Research 1:#Text that will explain what this unlocks." }
+			 { LanguageFile = "loc_english.ini", Value = "Example Research 2:#Text that will explain what this unlocks." }
+			,{ LanguageFile = "loc_french.ini", Value = "Exemple de recherche 2:#Texte qui expliquera ce que cela débloque." }
+			,{ LanguageFile = "loc_german.ini", Value = "Beispielrecherche 2:#Text, der erklärt, was dadurch freigeschaltet wird." }
+			,{ LanguageFile = "loc_polish.ini", Value = "Przykładowe badanie 2:#Tekst wyjaśniający, co to odblokowuje." }
+			,{ LanguageFile = "loc_portuguese_brazil.ini", Value = "Exemplo de pesquisa 2: #Texto que explicará o que isso desbloqueia." }
+			,{ LanguageFile = "loc_russian.ini", Value = "Пример исследования 2:#Текст, который объяснит, что это открывает." }
+			,{ LanguageFile = "loc_spanish.ini", Value = "Ejemplo de investigación 2:#Texto que explicará qué desbloquea esto." }
+			,{ LanguageFile = "loc_chinese.ini", Value = "研究示例 2:#解释这将解锁什么内容的文本" }
+			,{ LanguageFile = "loc_italian.ini", Value = "Esempio di ricerca 2:#Testo che spiegherà cosa sblocca." }
 		},
 		SpritePath = 											--path to the sprite used for the research
 			modFilepath.."sprites\\example_research.png",
