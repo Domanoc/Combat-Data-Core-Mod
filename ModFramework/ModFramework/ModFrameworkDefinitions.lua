@@ -101,7 +101,7 @@
 ---@field RequiredDays number the required days to complete the research
 ---@field RequiredStaff number the required available staff to start the research
 ---@field ReseachIcon ReseachIcon the info on what icon to use
----@field Description string the description text for the research
+---@field Description LocalizedString[] the description text for the research
 ---@field SpritePath string path to the sprite used for the research
 ---@field UnlockedComponents ModdedComponent[] the components that are unlocked by this research
 

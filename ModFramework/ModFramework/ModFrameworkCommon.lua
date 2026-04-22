@@ -32,6 +32,41 @@ function Common.IsLoadedGame()
 	return variable_global_get("mech_engineer_load");
 end
 
+---Selects the string based on the games current language setting,
+---When not found will default to english,
+---When english is not found will default to the first value
+---When no values where provided will return a error value
+---@param localizedStrings LocalizedString[] the localized strings dataset
+---@return string
+function Common.SelectCorrectLocalizedString(localizedStrings)
+	local englishValue = nil;
+
+	--Find the correct language
+	for _, localizedString in pairs(localizedStrings) do
+		if (localizedString.LanguageFile == Storage.SelectedLanguage) then
+			return localizedString.Value;
+		end
+
+		if (localizedString.LanguageFile == "loc_english.ini") then
+			englishValue = localizedString.Value;
+		end
+	end
+
+	--if not found fall back to english
+	if (englishValue ~= nil) then
+		return englishValue;
+	end
+
+	--if not found fall back to the first value
+	local firstValue = localizedStrings[1];
+	if (firstValue ~= nil) then
+		return firstValue.Value;
+	end
+
+	--return an error message
+	return "failed to find localized string";
+end
+
 ----------------------------
 --FRAMEWORK OBJECT GETTERS--
 ----------------------------

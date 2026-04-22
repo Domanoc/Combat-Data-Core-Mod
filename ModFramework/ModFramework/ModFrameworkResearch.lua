@@ -49,7 +49,9 @@ function Research.AddResearch(item)
 	newResearch[ResearchIndexes.RequiredStaff] = item.RequiredStaff;         --require science staff
 	newResearch[ResearchIndexes.IconType] = item.ReseachIcon.IconType;		 --research icon type (0-combat, 1-production, 2-passability)
 	newResearch[ResearchIndexes.IconSubtype] = item.ReseachIcon.IconSubType; --research icon subtype (see left column in the game in research menu)
-	newResearch[ResearchIndexes.Description] = item.Description;			 --research text
+
+	local description = Common.SelectCorrectLocalizedString(item.Description);
+	newResearch[ResearchIndexes.Description] = description;			 		--research text
 
 	if(item.PrerequisiteResearchResNumber ~= -4) then
 		local prerequisiteIndex = item.PrerequisiteResearchResNumber + 1;

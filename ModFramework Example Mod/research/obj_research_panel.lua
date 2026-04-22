@@ -28,12 +28,24 @@ function create(q, v_modid)
 		Position = 40,											--position number on the research tree. You can see positions in the game with f6 (debug mode)
 		PrerequisiteResearchResNumber = 						--the res number of the prerequisite research that unlocks this research, each research can only be the prerequisite for 3 other researches. leave nil for no prerequisite.
 			baseResearchResNumbers.FIRST_GENERATION_ENGINE,
-		Condition = researchConditions.Closed,					--condition (0-closed, 1-opened, 2-researching, 3-researched)
+		Condition = researchConditions.Opened,					--condition (0-closed, 1-opened, 2-researching, 3-researched)
 		RequiredDays = 4,										--the required days to complete the research
 		RequiredStaff = 10,										--the required available staff to start the research
 		ReseachIcon = researchIcons.Research,					--the info on what icon to use
-		Description = 											--the description text for the research
-			"Example Research 1:#Text that will explain what this unlocks.",
+		Description = {											--the description text for the research
+			--We can provide full language support like this, atleast 1 language is needed
+			--LanguageFile variable should match the language file ini that the string targets
+			--Value should contain the string in the correct language for that language file
+			 { LanguageFile = "loc_english.ini", Value = "Example Research 1:#Text that will explain what this unlocks." }
+			,{ LanguageFile = "loc_french.ini", Value = "Exemple de recherche 1:#Texte qui expliquera ce que cela débloque." }
+			,{ LanguageFile = "loc_german.ini", Value = "Beispielrecherche 1:#Text, der erklärt, was dadurch freigeschaltet wird." }
+			,{ LanguageFile = "loc_polish.ini", Value = "Przykładowe badanie 1:#Tekst wyjaśniający, co to odblokowuje." }
+			,{ LanguageFile = "loc_portuguese_brazil.ini", Value = "Exemplo de pesquisa 1: #Texto que explicará o que isso desbloqueia." }
+			,{ LanguageFile = "loc_russian.ini", Value = "Пример исследования 1:#Текст, который объяснит, что это открывает." }
+			,{ LanguageFile = "loc_spanish.ini", Value = "Ejemplo de investigación 1:#Texto que explicará qué desbloquea esto." }
+			,{ LanguageFile = "loc_chinese.ini", Value = "研究示例 1:#解释这将解锁什么内容的文本" }
+			,{ LanguageFile = "loc_italian.ini", Value = "Esempio di ricerca 1:#Testo che spiegherà cosa sblocca." }
+		},
 		SpritePath = 											--path to the sprite used for the research
 			modFilepath.."sprites\\example_research.png",
 		UnlockedComponents = unlocks							--the components that are unlocked by this research
@@ -49,8 +61,9 @@ function create(q, v_modid)
 		RequiredDays = 4,										--the required days to complete the research
 		RequiredStaff = 10,										--the required available staff to start the research
 		ReseachIcon = researchIcons.Survival,					--the info on what icon to use
-		Description = 											--the description text for the research
-			"Example Research 2:#Text that will explain what this unlocks.",
+		Description = {											--the description text for the research
+			 { LanguageFile = "loc_english.ini", Value = "Example Research 1:#Text that will explain what this unlocks." }
+		},
 		SpritePath = 											--path to the sprite used for the research
 			modFilepath.."sprites\\example_research.png",
 		UnlockedComponents = {}									--the components that are unlocked by this research
