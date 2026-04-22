@@ -39,17 +39,18 @@ function Research.AddResearch(item)
 	--index for the new item, +1 because lua arrays start with 1
 	local resNumber = researchCount;
 	local researchIndex = researchCount + 1;
-	mres[researchIndex][ResearchIndexes.Position] = item.Position; 					 --position number on the research tree. You can see positions in the game with f6 (debug mode)
-	mres[researchIndex][ResearchIndexes.Link_1] = -4; 								 --link 1
-	mres[researchIndex][ResearchIndexes.Link_2] = -4; 								 --link 2
-	mres[researchIndex][ResearchIndexes.Link_3] = -4; 								 --link 3
-	mres[researchIndex][ResearchIndexes.Condition] = item.Condition;			     --condition (0-closed, 1-opened, 2-researching, 3-researched)
-	mres[researchIndex][ResearchIndexes.RequiredDays] = item.RequiredDays; 	      	 --required days
-	mres[researchIndex][ResearchIndexes.RequiredStaff] = item.RequiredStaff;         --require science staff
-	mres[researchIndex][ResearchIndexes.IconType] = item.ReseachIcon.IconType;		 --research icon type (0-combat, 1-production, 2-passability)
-	mres[researchIndex][ResearchIndexes.IconSubtype] = item.ReseachIcon.IconSubType; --research icon subtype (see left column in the game in research menu)
-	mres[researchIndex][ResearchIndexes.Description] = item.Description;			 --research text
-	
+	local newResearch = mres[researchIndex];
+	newResearch[ResearchIndexes.Position] = item.Position; 					 --position number on the research tree. You can see positions in the game with f6 (debug mode)
+	newResearch[ResearchIndexes.Link_1] = -4; 								 --link 1
+	newResearch[ResearchIndexes.Link_2] = -4; 								 --link 2
+	newResearch[ResearchIndexes.Link_3] = -4; 								 --link 3
+	newResearch[ResearchIndexes.Condition] = item.Condition;			     --condition (0-closed, 1-opened, 2-researching, 3-researched)
+	newResearch[ResearchIndexes.RequiredDays] = item.RequiredDays; 	      	 --required days
+	newResearch[ResearchIndexes.RequiredStaff] = item.RequiredStaff;         --require science staff
+	newResearch[ResearchIndexes.IconType] = item.ReseachIcon.IconType;		 --research icon type (0-combat, 1-production, 2-passability)
+	newResearch[ResearchIndexes.IconSubtype] = item.ReseachIcon.IconSubType; --research icon subtype (see left column in the game in research menu)
+	newResearch[ResearchIndexes.Description] = item.Description;			 --research text
+
 	if(item.PrerequisiteResearchResNumber ~= -4) then
 		local prerequisiteIndex = item.PrerequisiteResearchResNumber + 1;
 		if (prerequisiteIndex ~= nil) then
@@ -60,11 +61,11 @@ function Research.AddResearch(item)
 				message = message.."Debug info:\nResearch name: "..item.Name.."\nPrerequisite res number: "..item.PrerequisiteResearchResNumber;
 				Common.ShowError(message);
 			elseif(prerequisiteResearch[Types.ResearchIndexes.Link_1] == -4)  then
-				prerequisiteResearch[Types.ResearchIndexes.Link_1] = researchCount;
+				prerequisiteResearch[Types.ResearchIndexes.Link_1] = resNumber;
 			elseif(prerequisiteResearch[Types.ResearchIndexes.Link_2] == -4)  then
-				prerequisiteResearch[Types.ResearchIndexes.Link_2] = researchCount;
+				prerequisiteResearch[Types.ResearchIndexes.Link_2] = resNumber;
 			elseif(prerequisiteResearch[Types.ResearchIndexes.Link_3] == -4)  then
-				prerequisiteResearch[Types.ResearchIndexes.Link_3] = researchCount;
+				prerequisiteResearch[Types.ResearchIndexes.Link_3] = resNumber;
 			else
 				local message = "Trying to set the prerequisite research but the prerequisite already has 3 linked researches.\n";
 				message = message.."Check if the correct res number was given, or rearange the research tree so there are no more that 3 unlocks per research.\n";
@@ -74,7 +75,7 @@ function Research.AddResearch(item)
 			end
 		end
 	end
-	
+
 	--add research sprite
 	local tmpSprite = Common.AddSprite(item.SpritePath, 0, false, false, 0, 0); --research sprite
 	local researchSpriteIndex = variable_global_get("research_items_spr");		--get the current sprite
@@ -116,7 +117,7 @@ end
 
 ---Move a research to a new position in the tree, this keeps any present links
 ---@param resNumber number the number for the research as found in the debug view (F6) of the research screen (upper left white number)
----@param position number position number on the research tree where to move the research to
+---@param position ResearchPosition position number on the research tree where to move the research to
 function Research.MoveResearch(resNumber, position)
 	local checkPosition = Private.GetResearchByPosition(position);
 	if(checkPosition ~= nil) then
@@ -149,9 +150,70 @@ function Research.MoveResearch(resNumber, position)
 	obj_research_panel.mres = mres;
 end
 
+---Change the prerequisite of a research to a new target
+---@param resNumber number the number for the research that gets its prerequisite changed
+---@param newPrerequisiteResNumber number the res number of the research that gets set as prerequisite
+function Research.ChangePrerequisite(resNumber, newPrerequisiteResNumber)
+
+	local obj_research_panel = Common.GetObjResearchPanel();
+	local ResearchIndexes = Types.ResearchIndexes;
+
+	--Copy the array to the working set
+	local mres = {};
+	mres = obj_research_panel.mres;
+
+	local research = mres[resNumber + 1];
+	if(research == nil) then
+		local message = "Trying to change the prerequisite of a research but the reference was nil.\n";
+			message = message.."Check if the correct res number was given. Found in the debug view (F6) of the research screen (upper left white number)\n\n";
+			message = message.."Debug info:\nResearch res number: "..resNumber;
+			Common.ShowError(message);
+		return;
+	end
+
+	local prerequisite = mres[newPrerequisiteResNumber + 1];
+	if(prerequisite == nil) then
+		local message = "Trying to change the prerequisite of a research but the prerequisite reference was nil.\n";
+			message = message.."Check if the correct res number was given. Found in the debug view (F6) of the research screen (upper left white number)\n\n";
+			message = message.."Debug info:\nPrerequisite research res number: "..newPrerequisiteResNumber;
+			Common.ShowError(message);
+		return;
+	end
+
+	--unlink
+	local previousPrerequisiteIndex = Private.GetResearchByLink(resNumber);
+	if(previousPrerequisiteIndex ~= nil) then
+		local previousPrerequisite = mres[previousPrerequisiteIndex];
+		if (previousPrerequisite[ResearchIndexes.Link_1] == resNumber) then
+			previousPrerequisite[ResearchIndexes.Link_1] = -4; --unset
+		elseif (previousPrerequisite[ResearchIndexes.Link_2] == resNumber) then
+			previousPrerequisite[ResearchIndexes.Link_2] = -4; --unset
+		elseif (previousPrerequisite[ResearchIndexes.Link_3] == resNumber) then
+			previousPrerequisite[ResearchIndexes.Link_3] = -4; --unset
+		end
+	end
+
+	if(prerequisite[Types.ResearchIndexes.Link_1] == -4)  then
+		prerequisite[Types.ResearchIndexes.Link_1] = resNumber;
+	elseif(prerequisite[Types.ResearchIndexes.Link_2] == -4)  then
+		prerequisite[Types.ResearchIndexes.Link_2] = resNumber;
+	elseif(prerequisite[Types.ResearchIndexes.Link_3] == -4)  then
+		prerequisite[Types.ResearchIndexes.Link_3] = resNumber;
+	else
+		local message = "Trying to set the prerequisite research but the prerequisite already has 3 linked researches.\n";
+		message = message.."Check if the correct res number was given, or rearange the research tree so there are no more that 3 unlocks per research.\n";
+		message = message.."Each research res number can be found in the debug view (F6) of the research screen (upper left white number).\n\n";
+		message = message.."Debug info:\nResearch res number: "..resNumber.."\nPrerequisite res number: "..newPrerequisiteResNumber;
+		Common.ShowError(message);
+	end
+
+	--send array back
+	obj_research_panel.mres = mres;
+end
+
 ---Gets the mres research item by its position value
----@param position number? the position value to look for
----@return number? researchItem returns the found research item index or nil otherwise
+---@param position ResearchPosition? the position value to look for
+---@return number? index returns the found research item index or nil otherwise
 function Private.GetResearchByPosition(position)
 	if (position == nil) then
 		return nil;
@@ -161,6 +223,23 @@ function Private.GetResearchByPosition(position)
 	local ResearchIndexes = Types.ResearchIndexes;
 	for index, researchItem in ipairs(obj_research_panel.mres) do
 		if (researchItem[ResearchIndexes.Position] == position and researchItem[ResearchIndexes.Condition] ~= nil) then
+			return index;
+		end
+	end
+	return nil;
+end
+
+---Gets the mres research item that is the parent rerequisite for the given res number
+---@param resNumber number the res number to look for
+---@return number? index returns the found research item index or nil otherwise
+function Private.GetResearchByLink(resNumber)
+	local obj_research_panel = Common.GetObjResearchPanel();
+	local ResearchIndexes = Types.ResearchIndexes;
+	for index, researchItem in ipairs(obj_research_panel.mres) do
+		local Link_1 = researchItem[ResearchIndexes.Link_1];
+		local Link_2 = researchItem[ResearchIndexes.Link_2];
+		local Link_3 = researchItem[ResearchIndexes.Link_3];
+		if (Link_1 == resNumber or Link_2 == resNumber or Link_3 == resNumber) then
 			return index;
 		end
 	end

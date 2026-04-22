@@ -45,6 +45,9 @@ function create(q, v_modid)
 
 	--We can move any research to a new position will keeping its links
 	Mod.Research.MoveResearch(baseResearchResNumbers.ROCKET_LAUNCH, 0);
+
+	--We can relink a research to a new prerequisite research
+	Mod.Research.ChangePrerequisite(baseResearchResNumbers.PROCESSOR_PROGRAMS, baseResearchResNumbers.REPAIR_SHOP);
 end
 
 ---if activated = true

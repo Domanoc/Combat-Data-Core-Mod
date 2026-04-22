@@ -203,6 +203,7 @@ end
 --DEBUG HELPER FUNCTIONS--
 --------------------------
 
+---A spacerLine for the print functions
 local spacerLine = "\n###################################################\n";
 
 ---A debug helper function:

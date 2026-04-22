@@ -25,7 +25,13 @@ function create(q,v_modid)
 	--Register the framework
 	Internal.RegisterFramework();
 
+	local values = {};
 
+	for i = 0, 149, 1 do
+		table.insert(values, i);
+	end
+	local message = table.concat(values, "|");
+	show_message(message);
 
 	--TODO LIST
 	--For existing mods::
