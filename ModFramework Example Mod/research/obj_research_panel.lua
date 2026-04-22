@@ -6,13 +6,14 @@ function create(q, v_modid)
 	--load the mod framework as a global for use within this file
 	Mod = require("ModFrameworkModule");
 
-	--path to the current file
-	local currentFilepath = Mod.Common.GetModPath("ModFramework Example Mod");
+	--path to the mod folder
+	local modFilepath = Mod.Common.GetModPath("ModFramework Example Mod");
 
 	--load needed types
 	local researchIcons = Mod.Types.ResearchIcons;
 	local researchConditions = Mod.Types.ResearchConditions;
 	local componentTypes = Mod.Types.ComponentTypes;
+	local baseResearchResNumbers = Mod.Types.BaseResearchResNumbers;
 
 	--Show example of research modding and adding
 	--Adding a modded research with unlocks
@@ -20,13 +21,17 @@ function create(q, v_modid)
 	--Relinking existing research
 	--Adding unlocks to existing research
 
+	--when we want a research to include an unlock we need to include the references
+	--with this function we can get our modded components that we made in obj_database.lua
 	local unlocks = Mod.Common.GetModdedComponents({
 		{ Name = "example_mech", ComponentType = componentTypes.Mech },
 	});
+	
 	Mod.Research.AddResearch({
-		Name = "example_research_1",							--The name of the research, used to find its reference
+		Name = "example_research_1",							--the name of the research, used to find its reference
 		Position = 40,											--position number on the research tree. You can see positions in the game with f6 (debug mode)
-		PrerequisiteResearchResNumber = 3,						--the position of the prerequisite research that unlocks this research, each research can only be the prerequisite for 3 other researches. leave nil for no prerequisite.
+		PrerequisiteResearchResNumber = 						--the res number of the prerequisite research that unlocks this research, each research can only be the prerequisite for 3 other researches. leave nil for no prerequisite.
+			baseResearchResNumbers.FIRST_GENERATION_ENGINE,
 		Condition = researchConditions.Closed,					--condition (0-closed, 1-opened, 2-researching, 3-researched)
 		RequiredDays = 4,										--the required days to complete the research
 		RequiredStaff = 10,										--the required available staff to start the research
@@ -34,9 +39,12 @@ function create(q, v_modid)
 		Description = 											--the description text for the research
 			"Example Research 1:#Text that will explain what this unlocks.",
 		SpritePath = 											--path to the sprite used for the research
-			currentFilepath.."sprites\\example_research.png",
+			modFilepath.."sprites\\example_research.png",
 		UnlockedComponents = unlocks							--the components that are unlocked by this research
 	});
+
+	--We can move any research to a new position will keeping its links
+	Mod.Research.MoveResearch(baseResearchResNumbers.ROCKET_LAUNCH, 10);
 end
 
 ---if activated = true

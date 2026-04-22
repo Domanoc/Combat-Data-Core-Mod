@@ -6,8 +6,8 @@ function create(q,v_modid)
 	--load the mod framework as a global for use within this file
 	Mod = require("ModFrameworkModule");
 
-	--path to the current file
-	local currentFilepath = Mod.Common.GetModPath("ModFramework Example Mod");
+	--path to the mod folder
+	local modFilepath = Mod.Common.GetModPath("ModFramework Example Mod");
 
 	--load needed types
 	local mechModules = Mod.Types.MechModules;
@@ -47,12 +47,12 @@ function create(q,v_modid)
 			,{ModuleType = mechModules.Aux, 	X =   6, Y = 23} --aux 1
 			,{ModuleType = mechModules.Aux, 	X =  -6, Y = 23} --aux 2
 		},
-		SpriteSmall = 			currentFilepath.."sprites\\example_mech_small.png",
-		SpriteBig = 			currentFilepath.."sprites\\example_mech_big.png",
-		SpriteBattle = 		  	currentFilepath.."sprites\\example_mech_battle.png",
-		SpriteBattleDead = 	  	currentFilepath.."sprites\\example_mech_dead.png",
-		SpriteMeleeVertical = 	currentFilepath.."sprites\\example_mech_melee_vertical.png",
-		SpriteMeleeHorizontal = currentFilepath.."sprites\\example_mech_melee_horizontal.png"
+		SpriteSmall = 			modFilepath.."sprites\\example_mech_small.png",
+		SpriteBig = 			modFilepath.."sprites\\example_mech_big.png",
+		SpriteBattle = 		  	modFilepath.."sprites\\example_mech_battle.png",
+		SpriteBattleDead = 	  	modFilepath.."sprites\\example_mech_dead.png",
+		SpriteMeleeVertical = 	modFilepath.."sprites\\example_mech_melee_vertical.png",
+		SpriteMeleeHorizontal = modFilepath.."sprites\\example_mech_melee_horizontal.png"
 	});
 
 --	----------------------

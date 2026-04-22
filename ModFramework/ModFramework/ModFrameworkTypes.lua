@@ -91,8 +91,56 @@ local ResearchIcons = {
 	City = 			{ IconType = 2 , IconSubType = 7 },
 	Mountain = 		{ IconType = 2 , IconSubType = 8 },
 	Cave = 			{ IconType = 2 , IconSubType = 9 },
-}
+};
 Types.ResearchIcons = ResearchIcons;
+
+local BaseResearchResNumbers = {
+	PREPARATIONS = 0,
+	TANK_GUN = 1,
+	IMPROVING_THE_ICE_REACTOR = 2,
+	FIRST_GENERATION_ENGINE = 3,
+	UNDERWATER_BATTLE = 4,
+	CABIN_1_REINFORCED_FRAME = 5,
+	TORPEDOES = 6,
+	THIRD_GENERATION_ENGINE = 7,
+	NUCLEAR_REACTOR = 8,
+	ROCKET_LAUNCH = 9,
+	FOURTH_GENERATION_ENGINE = 10,
+	NEW_MECH_PLATE = 11,
+	NEW_MECH_HOLO = 12,
+	NEW_MECH_CASTLE = 13,
+	MUNILON = 14,
+	FIFTH_GENERATION_ENGINE = 15,
+	SIXTH_GENERATION_ENGINE = 16,
+	CABINS_2_AND_3 = 17,
+	LASER = 18,
+	FLAMETHROW = 19,
+	HEAT_DRAIN = 20,
+	ARMOR = 21,
+	DRONE = 22,
+	NEW_MECH_TRIANGLE = 23,
+	NEW_MECH_TENTACLE = 24,
+	NEW_MECH_QUADRO = 25,
+	CABINS_4_AND_5 = 26,
+	REPAIR_SHOP = 27,
+	RAILGUN_AMPS = 28,
+	TESLA = 29,
+	ATOMIC_BOMB = 30,
+	THERMONUCLEAR_REACTOR = 31,
+	RAILGUN_PLASMA = 32,
+	TOXIN_SPRAYER = 33,
+	THIN_ARMOR_PLATES = 34,
+	ENERGY_SHIELD_BOOSTER = 35,
+	PROCESSOR_PROGRAMS = 36,
+	REACTOR_OVERCHARGE = 37,
+	ANTI_MISSILE_SYSTEMS = 38,
+	NEEDLE_BULLETS = 39,
+	ROBOTIZATION = 40,
+	CYBORGIZATION = 41,
+	CYBORG_SQUADS = 42,
+	DEPTH_CHARGE = 43,
+};
+Types.BaseResearchResNumbers = BaseResearchResNumbers;
 
 ---component sizes
 local ComponentSizes = {
@@ -100,7 +148,7 @@ local ComponentSizes = {
 	Small = 1,
 	--a full hanger row, 5 slots
 	Large = 5
-}
+};
 Types.ComponentSizes = ComponentSizes;
 
 ---A non complete list of Virtual Keys
@@ -201,7 +249,7 @@ local VirtualKeys = {
 	F10 = 121,
 	F11 = 122,
 	F12 = 123,
-}
+};
 Types.VirtualKeys = VirtualKeys;
 
 return Types;

@@ -203,6 +203,8 @@ end
 --DEBUG HELPER FUNCTIONS--
 --------------------------
 
+local spacerLine = "\n###################################################\n";
+
 ---A debug helper function:
 ---Prints a message box with the value
 ---The message box freezes the game for de duration it is opened allowing it to be used as a breakpoint for debugging
@@ -212,7 +214,7 @@ function Common.ShowMessage(value)
 	local info = debug.getinfo(2, "Sl")
 	local caller = info.short_src:gsub("/","\\");
 	local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline;
-	local prefix = callerPrint.."\n".."##############".."\n";
+	local prefix = callerPrint..spacerLine;
 	show_message(prefix..tostring(value));
 end
 
@@ -225,8 +227,8 @@ function Common.ShowError(message)
 	local info = debug.getinfo(2, "Sl")
 	local caller = info.short_src:gsub("/","\\");
 	local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline;
-	local prefix = "MOD FRAMEWORK ERROR\n##############\n";
-	local suffix = "\n##############\n"..callerPrint.."\n##############\n"..debug.traceback("Error", 2).."\n\n";
+	local prefix = "MOD FRAMEWORK ERROR"..spacerLine;
+	local suffix = spacerLine..callerPrint..spacerLine..debug.traceback("Error", 2).."\n\n";
 	show_message(prefix..message..suffix);
 end
 
@@ -239,7 +241,7 @@ function Common.DumpObjToMessage(ref)
 	local info = debug.getinfo(2, "Sl")
 	local caller = info.short_src:gsub("/","\\");
 	local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline;
-	local prefix = callerPrint.."\n##############\n";
+	local prefix = callerPrint..spacerLine;
 	local values = {};
 
 	if(ref == nil) then
@@ -249,7 +251,7 @@ function Common.DumpObjToMessage(ref)
 	end
 
 	if(type(ref) == "table") then
-		prefix = prefix.."TABLE\n##############\n";
+		prefix = prefix.."TABLE"..spacerLine;
 		for key, refValue in pairs(ref) do
 			local refValueString = tostring(refValue);
 			if (type(refValue) == "table") then
@@ -262,7 +264,7 @@ function Common.DumpObjToMessage(ref)
 		return;
 	end
 
-	prefix = prefix.."GAMEMAKER STRUCT\n##############\n";
+	prefix = prefix.."GAMEMAKER STRUCT"..spacerLine;
 	for key, refValue in pairs(struct_get_names(ref)) do
 		local refValueString = tostring(ref[refValue]);
 		if (type(ref[refValue]) == "table") then
@@ -307,7 +309,7 @@ function Common.DsmapToMessage(ds_map)
 	local info = debug.getinfo(2, "Sl")
 	local caller = info.short_src:gsub("/","\\");
 	local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline;
-	local prefix = callerPrint.."\n".."##############".."\n";
+	local prefix = callerPrint..spacerLine;
 
 	local values = {};
     for k, v in pairs(ds_map_keys_to_array(ds_map)) do
@@ -327,7 +329,7 @@ function Common.ToClassTypeMessage(ref)
 	local info = debug.getinfo(2, "Sl")
 	local caller = info.short_src:gsub("/","\\");
 	local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline;
-	local prefix = callerPrint.."\n".."##############".."\n";
+	local prefix = callerPrint..spacerLine;
 
 	local values = {};
 	if(type(ref) == "table") then

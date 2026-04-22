@@ -1384,7 +1384,7 @@ ds_map_keys_to_array = ds_map_keys_to_array;
 ---@type fun(id: ds_map, key: string) : any|nil
 ds_map_find_value = ds_map_find_value;
 ---This function returns an array with the variable names from a struct.
----@type fun(id: table) : table
+---@type fun(id: number) : table
 struct_get_names = struct_get_names;
 ---With this function you can set the value of a given global variable.
 ---@type fun(key: string, value: any)

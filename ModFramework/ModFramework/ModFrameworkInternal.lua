@@ -46,51 +46,50 @@ end
 ---@param obj_battle_map game_obj_battle_map the reference to the "obj_battle_map"
 function Module.FixAudioTable(obj_battle_map)
 	local obj_database = Common.GetObjDatabase();
-	local amount_of_weapons = #obj_database.weapon_stat;
+	local weaponCount = #obj_database.weapon_stat;
 
 	--recreate: main_data_sound
-	local main_data_sound = {};
-	for i = 1, amount_of_weapons, 1 do
-		main_data_sound[i] = {};
+	local mainDataSound = {};
+	for i = 1, weaponCount, 1 do
+		mainDataSound[i] = {};
 		for j = 1, 2, 1 do
-			main_data_sound[i][j] = 0.0;
+			mainDataSound[i][j] = 0.0;
 		end
 	end
 
 	--recreate: weapon_data_sound
-	local weapon_data_sound = {};
-	for i = 1, amount_of_weapons, 1 do
-		weapon_data_sound[i] = {};
+	local weaponDataSound = {};
+	for i = 1, weaponCount, 1 do
+		weaponDataSound[i] = {};
 		for j = 1, 4, 1 do
-			weapon_data_sound[i][j] = 0.0;
+			weaponDataSound[i][j] = 0.0;
 		end
 	end
 
 	--return the new sound tables
-	obj_battle_map.main_data_sound = main_data_sound;
-    obj_battle_map.weapon_data_sound = weapon_data_sound;
+	obj_battle_map.main_data_sound = mainDataSound;
+    obj_battle_map.weapon_data_sound = weaponDataSound;
 	--We update main_sounds_amount as some mods,
 	--use this a a starting point to update the sound table.
 	--Amount seems to based on a 0 based index so 1 less that the amount_of_weapons
-	obj_battle_map.main_sounds_amount = #main_data_sound - 1;
+	obj_battle_map.main_sounds_amount = #mainDataSound - 1;
 end
 
-local fix_research = true;
+local fixResearch = true;
 ---Use in the draw_top_menu function of obj_database.lua
 ---
 ---In the event the mod is added to an existing save the newly added mod research is all defaulted to 0 days remaining and condition 0 (closed).
 ---To fix this we need to validate the research states to see if its a valid state through gameplay or if its a state from loading into an existing save
 function Module.FixModdedResearch()
 	local obj_weapon_test = Common.GetObjWeaponTest();
-	local is_ini_loaded = obj_weapon_test.load_ini;
+	local isIniLoaded = obj_weapon_test.load_ini;
 
 	--We can only fix the research after all the loading is done. so we can piggyback on the load flag for obj_weapon_test
-	if(is_ini_loaded == true and fix_research == false) then
+	if(isIniLoaded == true and fixResearch == false) then
 		--We only need to run this once per game load.
 		return;
 	end
 
-	fix_research = false;
 	for _, moddedResearch in ipairs(Storage.ModdedResearchList) do
 		local research = Storage.LoadedResearchList[moddedResearch.Index];
 
@@ -118,21 +117,21 @@ function Module.FixModdedResearch()
 		--condition 3 (researched) -> require_days should be 0
 		--both these conditions shouldn't need our attention as they are most likely part of normal gameplay
 	end
+
+	--we only need to run this once so we set the flag to false
+	fixResearch = false;
 end
 
-local update_weapon_desc = true;
+local updateWeaponDesc = true;
 ---Use in the draw_top_menu function of obj_database.lua
 ---
 ---We need to update the weapon descriptions in the draw call since the ini isn't loaded in the create function
 ---however we only need to update once so we set the update_weapon_desc to false after the update to prevent repeat function spamming
 function Module.FixWeaponDescriptions()
 	local obj_weapon_test = Common.GetObjWeaponTest();
-	if(obj_weapon_test.load_ini == false) then
-		return;
-	end
 
-	---
-	if(update_weapon_desc == false) then
+	--We check if the ini has been loaded
+	if(obj_weapon_test.load_ini == false and updateWeaponDesc == true) then
 		return;
 	end
 
@@ -150,7 +149,8 @@ function Module.FixWeaponDescriptions()
 	--return new data
 	obj_weapon_test.weapon_description = weaponDescriptions;
 
-	update_weapon_desc = false;
+	--we only need to run this once so we set the flag to false
+	updateWeaponDesc = false;
 end
 
 ---Use in the load_game_post_event function of obj_database.lua

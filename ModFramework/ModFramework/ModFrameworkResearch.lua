@@ -15,7 +15,8 @@ local Private = {};
 local Research = {};
 
 ---Adds a research item to the tech tree
----@param item ResearchData The dataset for the new research item
+---@param item ResearchData the dataset for the new research item
+---@return number? resNumber the number for the research as found in the debug view (F6) of the research screen (upper left white number)
 function Research.AddResearch(item)
 	local checkPosition = Private.GetResearchByPosition(item.Position);
 	if(checkPosition ~= nil) then
@@ -111,6 +112,41 @@ function Research.AddResearch(item)
 	table.insert(Storage.ModdedResearchList, moddedResearch);
 
 	return resNumber;
+end
+
+---Move a research to a new position in the tree, this keeps any present links
+---@param resNumber number the number for the research as found in the debug view (F6) of the research screen (upper left white number)
+---@param position number position number on the research tree where to move the research to
+function Research.MoveResearch(resNumber, position)
+	local checkPosition = Private.GetResearchByPosition(position);
+	if(checkPosition ~= nil) then
+		local message = "Trying to move a research to a position that is already ocupied.\n";
+		message = message.."Check if the correct position was given, or if a another mod in the load order assigned the position.\n\n";
+		message = message.."Debug info:\nResearch res number: "..resNumber.."\nDesired position: "..position;
+		Common.ShowError(message);
+		return;
+	end
+
+	local obj_research_panel = Common.GetObjResearchPanel();
+	local ResearchIndexes = Types.ResearchIndexes;
+
+	--Copy the array to the working set
+	local mres = {};
+	mres = obj_research_panel.mres;
+
+	local research = mres[resNumber + 1];
+	if(research == nil) then
+		local message = "Trying to move a research but the reference was nil.\n";
+			message = message.."Check if the correct res number was given. Found in the debug view (F6) of the research screen (upper left white number)\n\n";
+			message = message.."Debug info:\nResearch res number: "..resNumber.."\nDesired position: "..position;
+			Common.ShowError(message);
+		return;
+	end
+
+	mres[resNumber + 1][ResearchIndexes.Position] = position;
+
+	--send array back
+	obj_research_panel.mres = mres;
 end
 
 ---Gets the mres research item by its position value

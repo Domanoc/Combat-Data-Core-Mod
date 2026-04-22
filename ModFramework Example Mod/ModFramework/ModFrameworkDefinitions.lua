@@ -128,3 +128,5 @@
 ---@alias ResearchCondition 0|1|2|3 condition (0-closed, 1-opened, 2-researching, 3-researched)
 
 ---@alias ModuleType 1|2|3|4|5 module type (1-aux, 2-motor, 3-reactor, 4-gun, 5-cabin)
+
+---@alias ResearchPosition 0|1|2
