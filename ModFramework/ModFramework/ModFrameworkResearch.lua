@@ -165,18 +165,18 @@ function Research.ChangePrerequisite(resNumber, newPrerequisiteResNumber)
 	local research = mres[resNumber + 1];
 	if(research == nil) then
 		local message = "Trying to change the prerequisite of a research but the reference was nil.\n";
-			message = message.."Check if the correct res number was given. Found in the debug view (F6) of the research screen (upper left white number)\n\n";
-			message = message.."Debug info:\nResearch res number: "..resNumber;
-			Common.ShowError(message);
+		message = message.."Check if the correct res number was given. Found in the debug view (F6) of the research screen (upper left white number)\n\n";
+		message = message.."Debug info:\nResearch res number: "..resNumber;
+		Common.ShowError(message);
 		return;
 	end
 
 	local prerequisite = mres[newPrerequisiteResNumber + 1];
 	if(prerequisite == nil) then
 		local message = "Trying to change the prerequisite of a research but the prerequisite reference was nil.\n";
-			message = message.."Check if the correct res number was given. Found in the debug view (F6) of the research screen (upper left white number)\n\n";
-			message = message.."Debug info:\nPrerequisite research res number: "..newPrerequisiteResNumber;
-			Common.ShowError(message);
+		message = message.."Check if the correct res number was given. Found in the debug view (F6) of the research screen (upper left white number)\n\n";
+		message = message.."Debug info:\nPrerequisite research res number: "..newPrerequisiteResNumber;
+		Common.ShowError(message);
 		return;
 	end
 
@@ -225,9 +225,9 @@ function Research.ClearUnlockLinks(resNumber)
 	local research = mres[resNumber + 1];
 	if(research == nil) then
 		local message = "Trying to remove all links from a research but the reference was nil.\n";
-			message = message.."Check if the correct res number was given. Found in the debug view (F6) of the research screen (upper left white number)\n\n";
-			message = message.."Debug info:\nResearch res number: "..resNumber;
-			Common.ShowError(message);
+		message = message.."Check if the correct res number was given. Found in the debug view (F6) of the research screen (upper left white number)\n\n";
+		message = message.."Debug info:\nResearch res number: "..resNumber;
+		Common.ShowError(message);
 		return;
 	end
 
@@ -266,9 +266,9 @@ function Research.AddUnlock(resNumber, unlock)
 	local research = mres[index];
 	if (research == nil) then
 		local message = "Trying add an unlock to a research but the reference was nil.\n";
-			message = message.."Check if the correct res number was given. Found in the debug view (F6) of the research screen (upper left white number)\n\n";
-			message = message.."Debug info:\nResearch res number: "..resNumber;
-			Common.ShowError(message);
+		message = message.."Check if the correct res number was given. Found in the debug view (F6) of the research screen (upper left white number)\n\n";
+		message = message.."Debug info:\nResearch res number: "..resNumber;
+		Common.ShowError(message);
 		return;
 	end
 

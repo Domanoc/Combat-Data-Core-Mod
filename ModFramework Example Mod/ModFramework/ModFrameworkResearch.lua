@@ -165,18 +165,18 @@ function Research.ChangePrerequisite(resNumber, newPrerequisiteResNumber)
 	local research = mres[resNumber + 1];
 	if(research == nil) then
 		local message = "Trying to change the prerequisite of a research but the reference was nil.\n";
-			message = message.."Check if the correct res number was given. Found in the debug view (F6) of the research screen (upper left white number)\n\n";
-			message = message.."Debug info:\nResearch res number: "..resNumber;
-			Common.ShowError(message);
+		message = message.."Check if the correct res number was given. Found in the debug view (F6) of the research screen (upper left white number)\n\n";
+		message = message.."Debug info:\nResearch res number: "..resNumber;
+		Common.ShowError(message);
 		return;
 	end
 
 	local prerequisite = mres[newPrerequisiteResNumber + 1];
 	if(prerequisite == nil) then
 		local message = "Trying to change the prerequisite of a research but the prerequisite reference was nil.\n";
-			message = message.."Check if the correct res number was given. Found in the debug view (F6) of the research screen (upper left white number)\n\n";
-			message = message.."Debug info:\nPrerequisite research res number: "..newPrerequisiteResNumber;
-			Common.ShowError(message);
+		message = message.."Check if the correct res number was given. Found in the debug view (F6) of the research screen (upper left white number)\n\n";
+		message = message.."Debug info:\nPrerequisite research res number: "..newPrerequisiteResNumber;
+		Common.ShowError(message);
 		return;
 	end
 
@@ -225,9 +225,9 @@ function Research.ClearUnlockLinks(resNumber)
 	local research = mres[resNumber + 1];
 	if(research == nil) then
 		local message = "Trying to remove all links from a research but the reference was nil.\n";
-			message = message.."Check if the correct res number was given. Found in the debug view (F6) of the research screen (upper left white number)\n\n";
-			message = message.."Debug info:\nResearch res number: "..resNumber;
-			Common.ShowError(message);
+		message = message.."Check if the correct res number was given. Found in the debug view (F6) of the research screen (upper left white number)\n\n";
+		message = message.."Debug info:\nResearch res number: "..resNumber;
+		Common.ShowError(message);
 		return;
 	end
 
@@ -237,6 +237,63 @@ function Research.ClearUnlockLinks(resNumber)
 
 	--send array back
 	obj_research_panel.mres = mres;
+end
+
+---Add unlocks to an existing research
+---@param resNumber number the res number to add unlocks to
+---@param unlock ModdedComponent? the component that are unlocked by this research, if a nil value is provided no action is taken
+function Research.AddUnlock(resNumber, unlock)
+	if (unlock == nil) then
+		return;
+	end
+
+	--if we have the reference stored get it and add the unlock
+ 	local moddedResearch = Private.GetModdedResearchByResNumber(resNumber);
+	if (moddedResearch ~= nil) then
+		table.insert(moddedResearch.UnlockedComponents, unlock);
+		return;
+	end
+	
+	--if not we will check if the res number is valid
+	local obj_research_panel = Common.GetObjResearchPanel();
+	local ResearchIndexes = Types.ResearchIndexes;
+
+	--Copy the array to the working set
+	local mres = {};
+	mres = obj_research_panel.mres;
+
+	local index = resNumber + 1;
+	local research = mres[index];
+	if (research == nil) then
+		local message = "Trying add an unlock to a research but the reference was nil.\n";
+		message = message.."Check if the correct res number was given. Found in the debug view (F6) of the research screen (upper left white number)\n\n";
+		message = message.."Debug info:\nResearch res number: "..resNumber;
+		Common.ShowError(message);
+		return;
+	end
+
+	--and with a valid res number we will create a new entry.
+	---@type ModdedResearch
+	local newModdedResearch = {
+		Index = index,
+		InitialCondition = research[ResearchIndexes.Condition],
+		Name = "NotAFrameWorkResearch_"..resNumber,
+		ResNumber = resNumber,
+		UnlockedComponents = { unlock }
+	}
+	table.insert(Storage.ModdedResearchList, newModdedResearch);
+end
+
+---Get the modded research by its res number
+---@param resNumber number the res number to look for
+---@return ModdedResearch? moddedResearch returns the modded research if found or nil otherwise
+function Private.GetModdedResearchByResNumber(resNumber)
+	for _, moddedResearch in ipairs(Storage.ModdedResearchList) do
+		if (moddedResearch.ResNumber == resNumber) then
+			return moddedResearch;
+		end
+	end
+	return nil;
 end
 
 ---Gets the mres research item by its position value

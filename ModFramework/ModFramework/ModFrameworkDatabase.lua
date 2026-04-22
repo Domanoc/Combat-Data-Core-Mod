@@ -42,7 +42,6 @@ function Database.AddMech(mechData)
 
 	--STATS
 	ds_map_add(mech, "hp", 				1000);  --1000 is the default for all mechs, not sure if the game does something with this value
-	ds_map_add(mech, "melee_option",	mechData.HasMelee);
 	ds_map_add(mech, "armor",			mechData.PassiveArmor);
 	ds_map_add(mech, "weight",			mechData.Weight);
 	ds_map_add(mech, "speed",			mechData.Speed);
@@ -62,12 +61,26 @@ function Database.AddMech(mechData)
 	ds_map_add(mech, "sprite_battle", Common.AddSprite(mechData.SpriteBattle, 2, true, false, 25, 25));
 	--dead sprite
 	ds_map_add(mech, "sprite_battle_dead", Common.AddSprite(mechData.SpriteBattleDead, 1, true, false, 25, 25));
-	--melee vertical
-	if(mechData.SpriteMeleeVertical ~= nil) then
+
+	--Melee
+	if (mechData.HasMelee) then
+		if(mechData.SpriteMeleeVertical == nil) then
+			local message = "Trying add a melee function to the mech. But the vertical melee sprite is missing.\n";
+			message = message.."Please check the spritepath for 'SpriteMeleeVertical'.\n";
+			message = message.."Debug info:\nMech name: "..mechData.Name;
+			Common.ShowError(message);
+		end
+		if(mechData.SpriteMeleeHorizontal == nil) then
+			local message = "Trying add a melee function to the mech. But the horizontal melee sprite is missing.\n";
+			message = message.."Please check the spritepath for 'SpriteMeleeHorizontal'.\n";
+			message = message.."Debug info:\nMech name: "..mechData.Name;
+			Common.ShowError(message);
+		end
+
+		ds_map_add(mech, "melee_option", mechData.HasMelee);
+		--melee vertical sprite
 		ds_map_add(mech, "sprite_battle_melee_ver", Common.AddSprite(mechData.SpriteMeleeVertical, 7, true, false, 25, 25));
-	end
-	--melee horizontal
-	if(mechData.SpriteMeleeHorizontal ~= nil) then
+		--melee horizontal sprite
 		ds_map_add(mech, "sprite_battle_melee_hor", Common.AddSprite(mechData.SpriteMeleeHorizontal, 7, true, false, 25, 25));
 	end
 
@@ -95,23 +108,30 @@ end
 ---@param mech ds_map the reference to the ds_map of the mech
 ---@param cells MechCell[] the cell data array for the mech
 function Private.AddCells(mech, cells)
-	local aux_number = 0;
-	local weapon_number = 0;
+	local auxCount = 0;
+	local weaponCount = 0;
 
 	for i = 1, #cells, 1 do
 		local cell = cells[i];
 		Private.AddCell(mech, i, cell);
 
 		if(cell.ModuleType == Types.MechModules.Aux) then
-			aux_number = aux_number + 1;
+			auxCount = auxCount + 1;
 		end
 		if(cell.ModuleType == Types.MechModules.Weapon) then
-			weapon_number = weapon_number + 1;
+			weaponCount = weaponCount + 1;
 		end
 	end
 
-	ds_map_add(mech, "number_of_aux",	  aux_number);
-	ds_map_add(mech, "number_of_weapons", weapon_number);
+	if (weaponCount > 12) then
+		local message = "Trying add more than 12 weapons to a mech.\n";
+		message = message.."Adding more than 12 weapons will result in the game crashing when the mech enters combat.\n";
+		message = message.."Debug info:\nWeapon count: "..weaponCount;
+		Common.ShowError(message);
+	end
+
+	ds_map_add(mech, "number_of_aux",	  auxCount);
+	ds_map_add(mech, "number_of_weapons", weaponCount);
 	ds_map_add(mech, "number_of_cells",   #cells);
 end
 

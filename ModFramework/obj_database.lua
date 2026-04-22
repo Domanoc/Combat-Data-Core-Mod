@@ -24,14 +24,9 @@ function create(q,v_modid)
 
 	--Register the framework
 	Internal.RegisterFramework();
-	
+
 	--TODO LIST
 	--For existing mods::
-
-	--Show example of research modding and adding
-	--Moving existing research
-	--Relinking existing research
-	--Adding unlocks to existing research
 
 	--Show example of mech modding and adding
 
