@@ -160,7 +160,7 @@ function Private.GetResearchByPosition(position)
 	local obj_research_panel = Common.GetObjResearchPanel();
 	local ResearchIndexes = Types.ResearchIndexes;
 	for index, researchItem in ipairs(obj_research_panel.mres) do
-		if (researchItem[ResearchIndexes.Position] == position) then
+		if (researchItem[ResearchIndexes.Position] == position and researchItem[ResearchIndexes.Condition] ~= nil) then
 			return index;
 		end
 	end

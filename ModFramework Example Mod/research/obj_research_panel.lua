@@ -44,7 +44,7 @@ function create(q, v_modid)
 	});
 
 	--We can move any research to a new position will keeping its links
-	Mod.Research.MoveResearch(baseResearchResNumbers.ROCKET_LAUNCH, 10);
+	Mod.Research.MoveResearch(baseResearchResNumbers.ROCKET_LAUNCH, 0);
 end
 
 ---if activated = true
