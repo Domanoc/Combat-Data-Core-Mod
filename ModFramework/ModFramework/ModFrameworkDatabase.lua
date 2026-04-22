@@ -81,6 +81,7 @@ function Database.AddMech(mechData)
 		ComponentSize = mechData.ComponentSize,
 		IsResearched = mechData.IsResearched,
 		CanBeConstructed = mechData.CanBeConstructed,
+		GiveFreeItem = mechData.GiveFreeItem,
 		BlueLength = 0,
 		WeaponDescription = ""
 	}
@@ -180,6 +181,7 @@ function Database.AddWeapon(weaponData)
 		ComponentSize = weaponData.ComponentSize,
 		IsResearched = weaponData.IsResearched,
 		CanBeConstructed = weaponData.CanBeConstructed,
+		GiveFreeItem = weaponData.GiveFreeItem,
 		BlueLength = weaponData.BlueLength,
 		WeaponDescription = weaponData.WeaponDescription
 	}
@@ -234,6 +236,7 @@ function Database.AddSolenoid(solenoidData)
 		ComponentSize = solenoidData.ComponentSize,
 		IsResearched = solenoidData.IsResearched,
 		CanBeConstructed = solenoidData.CanBeConstructed,
+		GiveFreeItem = solenoidData.GiveFreeItem,
 		BlueLength = 0,
 		WeaponDescription = ""
 	}

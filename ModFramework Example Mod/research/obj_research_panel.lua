@@ -15,19 +15,15 @@ function create(q, v_modid)
 	local componentTypes = Mod.Types.ComponentTypes;
 	local baseResearchResNumbers = Mod.Types.BaseResearchResNumbers;
 
-	--Show example of research modding and adding
-	--Adding a modded research with unlocks
-	--Moving existing research
-	--Relinking existing research
-	--Adding unlocks to existing research
-
-	--when we want a research to include an unlock we need to include the references
-	--with this function we can get our modded components that we made in obj_database.lua
+	--When we want a research to include an unlock we need to include the references.
+	--An component that is added as research unlock will, add a copy on completion and or unlock the production of item based on this setting.
+	--With this function we can get our modded components that we made in "obj_database.lua".
 	local unlocks = Mod.Common.GetModdedComponents({
 		{ Name = "example_mech", ComponentType = componentTypes.Mech },
 	});
 	
-	Mod.Research.AddResearch({
+	--We can create a new research and as a return value we get the new res number to create links with.
+	local exampleResearchResNumber = Mod.Research.AddResearch({
 		Name = "example_research_1",							--the name of the research, used to find its reference
 		Position = 40,											--position number on the research tree. You can see positions in the game with f6 (debug mode)
 		PrerequisiteResearchResNumber = 						--the res number of the prerequisite research that unlocks this research, each research can only be the prerequisite for 3 other researches. leave nil for no prerequisite.
@@ -43,13 +39,40 @@ function create(q, v_modid)
 		UnlockedComponents = unlocks							--the components that are unlocked by this research
 	});
 
-	--We can move any research to a new position will keeping its links
+	--We can use the previous research return to set it as a prerequisite for a new research.
+	Mod.Research.AddResearch({
+		Name = "example_research_2",							--the name of the research, used to find its reference
+		Position = 31,											--position number on the research tree. You can see positions in the game with f6 (debug mode)
+		PrerequisiteResearchResNumber = 						--the res number of the prerequisite research that unlocks this research, each research can only be the prerequisite for 3 other researches. leave nil for no prerequisite.
+			exampleResearchResNumber,
+		Condition = researchConditions.Closed,					--condition (0-closed, 1-opened, 2-researching, 3-researched)
+		RequiredDays = 4,										--the required days to complete the research
+		RequiredStaff = 10,										--the required available staff to start the research
+		ReseachIcon = researchIcons.Survival,					--the info on what icon to use
+		Description = 											--the description text for the research
+			"Example Research 2:#Text that will explain what this unlocks.",
+		SpritePath = 											--path to the sprite used for the research
+			modFilepath.."sprites\\example_research.png",
+		UnlockedComponents = {}									--the components that are unlocked by this research
+	});
+
+	--We can retrieve the data of a research that was added by the framework, even if it was made by another mod.
+	--however if loading one from another mod that mod has to be before this mod in the load order.
+	local example2 = Mod.Common.GetModdedResearch("example_research_2");
+
+	--We can search for a single component to add as an unlock to an existing research
+	local unlock = Mod.Common.GetModdedComponent("example_mech", componentTypes.Mech);
+	--The existing research can be a base research or one from another mod.
+	--However if adding one to a research from another mod that mod has to be before this mod in the load order.
+	Mod.Research.AddUnlock(baseResearchResNumbers.NEW_MECH_PLATE, unlock);
+
+	--We can move any research to a new position and it will keep its links.
 	Mod.Research.MoveResearch(baseResearchResNumbers.ROCKET_LAUNCH, 0);
 
-	--We can relink a research to a new prerequisite research
+	--We can relink a research to a new prerequisite research.
 	Mod.Research.ChangePrerequisite(baseResearchResNumbers.PROCESSOR_PROGRAMS, baseResearchResNumbers.REPAIR_SHOP);
 
-	--We can clear the links a research has to make it easier to rearange the tech tree
+	--We can clear the links a research has to make it easier to rearange the tech tree.
 	Mod.Research.ClearUnlockLinks(baseResearchResNumbers.NEW_MECH_PLATE);
 end
 

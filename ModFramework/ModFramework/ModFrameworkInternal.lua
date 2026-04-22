@@ -255,7 +255,7 @@ function Private.ProcessMechUnlock(component, giveItem)
 		shopComponent.researched = true; --activates the shop component
 	end
 
-	if (giveItem == true) then
+	if (giveItem == true and component.GiveFreeItem) then
 		Engineering.AddMech(component.Index);
 	end
 end
@@ -270,7 +270,7 @@ function Private.ProcessWeaponUnlock(component, giveItem)
 		shopComponent.researched = true; --activates the shop component
 	end
 
-	if (giveItem == true) then
+	if (giveItem == true and component.GiveFreeItem) then
 		Engineering.AddWeapon(component.Index, false);
 	end
 end
@@ -285,7 +285,7 @@ function Private.ProcessSolenoidUnlock(component, giveItem)
 		shopComponent.researched = true; --activates the shop component
 	end
 
-	if (giveItem == true) then
+	if (giveItem == true and component.GiveFreeItem) then
 		Engineering.AddSolenoid(component.Index);
 	end
 end
