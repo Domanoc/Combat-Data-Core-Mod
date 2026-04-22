@@ -36,8 +36,8 @@ function create(q,v_modid)
 		ReloadTime = 	   3,
 		BattleTime = 	   3,
 		MechCells = {
-			 {ModuleType = mechModules.Reactor, X =   0, Y = 15} --reactor
-			,{ModuleType = mechModules.Cabin, 	X =   0, Y = 22} --cabin
+			 {ModuleType = mechModules.Cabin, 	X =   0, Y = 22} --cabin
+			,{ModuleType = mechModules.Reactor, X =   0, Y = 15} --reactor
 			,{ModuleType = mechModules.Motor, 	X =   5, Y =  4} --motor 1
 			,{ModuleType = mechModules.Motor, 	X =  -5, Y =  4} --motor 2
 			,{ModuleType = mechModules.Motor, 	X =   5, Y =  9} --motor 3

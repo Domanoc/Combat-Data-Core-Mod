@@ -17,7 +17,14 @@ local Research = {};
 ---Adds a research item to the tech tree
 ---@param item ResearchData The dataset for the new research item
 function Research.AddResearch(item)
-
+	local checkPosition = Private.GetResearchByPosition(item.Position);
+	if(checkPosition ~= nil) then
+		local message = "Trying to set the new research to a position that is already ocupied.\n";
+		message = message.."Check if the correct position was given, or if a another mod in the load order assigned the position.\n\n";
+		message = message.."Debug info:\nResearch name: "..item.Name.."\nDesired position: "..item.Position;
+		Common.ShowError(message);
+		return nil;
+	end
 
 	local obj_research_panel = Common.GetObjResearchPanel();
 	local ResearchIndexes = Types.ResearchIndexes;
@@ -26,34 +33,36 @@ function Research.AddResearch(item)
 	local mres = {};
 	mres = obj_research_panel.mres;
 	--get the count of researches and increase it by 1
-	local research_count = obj_research_panel.number_of_res + 1;
+	local researchCount = obj_research_panel.number_of_res + 1;
 
 	--index for the new item, +1 because lua arrays start with 1
-	local researchItemIndex = research_count + 1;
-	mres[researchItemIndex][ResearchIndexes.Position] = item.Position; 					  --position number on the research tree. You can see positions in the game with f6 (debug mode)
-	mres[researchItemIndex][ResearchIndexes.Link_1] = -4; 								  --link 1
-	mres[researchItemIndex][ResearchIndexes.Link_2] = -4; 								  --link 2
-	mres[researchItemIndex][ResearchIndexes.Link_3] = -4; 								  --link 3
-	mres[researchItemIndex][ResearchIndexes.Condition] = item.Condition;			      --condition (0-closed, 1-opened, 2-researching, 3-researched)
-	mres[researchItemIndex][ResearchIndexes.RequiredDays] = item.RequiredDays; 	      --required days
-	mres[researchItemIndex][ResearchIndexes.RequiredStaff] = item.RequiredStaff;         --require science staff
-	mres[researchItemIndex][ResearchIndexes.IconType] = item.ReseachIcon.IconType;		  --research icon type (0-combat, 1-production, 2-passability)
-	mres[researchItemIndex][ResearchIndexes.IconSubtype] = item.ReseachIcon.IconSubType; --research icon subtype (see left column in the game in research menu)
-	mres[researchItemIndex][ResearchIndexes.Description] = item.Description;			  --research text
+	local resNumber = researchCount;
+	local researchIndex = researchCount + 1;
+	mres[researchIndex][ResearchIndexes.Position] = item.Position; 					 --position number on the research tree. You can see positions in the game with f6 (debug mode)
+	mres[researchIndex][ResearchIndexes.Link_1] = -4; 								 --link 1
+	mres[researchIndex][ResearchIndexes.Link_2] = -4; 								 --link 2
+	mres[researchIndex][ResearchIndexes.Link_3] = -4; 								 --link 3
+	mres[researchIndex][ResearchIndexes.Condition] = item.Condition;			     --condition (0-closed, 1-opened, 2-researching, 3-researched)
+	mres[researchIndex][ResearchIndexes.RequiredDays] = item.RequiredDays; 	      	 --required days
+	mres[researchIndex][ResearchIndexes.RequiredStaff] = item.RequiredStaff;         --require science staff
+	mres[researchIndex][ResearchIndexes.IconType] = item.ReseachIcon.IconType;		 --research icon type (0-combat, 1-production, 2-passability)
+	mres[researchIndex][ResearchIndexes.IconSubtype] = item.ReseachIcon.IconSubType; --research icon subtype (see left column in the game in research menu)
+	mres[researchIndex][ResearchIndexes.Description] = item.Description;			 --research text
 	
 	if(item.PrerequisiteResearchPosition ~= -4) then
 		local prerequisiteIndex = Private.GetResearchByPosition(item.PrerequisiteResearchPosition);
 		if (prerequisiteIndex ~= nil) then
 			local prerequisiteResearch = mres[prerequisiteIndex];
 			if(prerequisiteResearch[Types.ResearchIndexes.Link_1] == -4) then
-				prerequisiteResearch[Types.ResearchIndexes.Link_1] = research_count;
+				prerequisiteResearch[Types.ResearchIndexes.Link_1] = researchCount;
 			elseif(prerequisiteResearch[Types.ResearchIndexes.Link_2] == -4)  then
-				prerequisiteResearch[Types.ResearchIndexes.Link_2] = research_count;
+				prerequisiteResearch[Types.ResearchIndexes.Link_2] = researchCount;
 			elseif(prerequisiteResearch[Types.ResearchIndexes.Link_3] == -4)  then
-				prerequisiteResearch[Types.ResearchIndexes.Link_3] = research_count;
+				prerequisiteResearch[Types.ResearchIndexes.Link_3] = researchCount;
 			else
-				local message = "Trying to set the prerequisite research for research '"..item.Name.."'. but the prerequisite already has 3 linked researches.\n\n";
-				message = message.."Rearange the research tree so there are no more that 3 unlocks per research."
+				local message = "Trying to set the prerequisite research but the prerequisite already has 3 linked researches.\n";
+				message = message.."Check if the correct position was given, or rearange the research tree so there are no more that 3 unlocks per research.\n\n";
+				message = message.."Debug info:\nResearch name: "..item.Name.."\nDesired prerequisite position: "..item.PrerequisiteResearchPosition;
 				Common.ShowError(message);
 			end
 		end
@@ -75,7 +84,7 @@ function Research.AddResearch(item)
 
 	--send array back
 	obj_research_panel.mres = mres;
-	obj_research_panel.number_of_res = research_count;
+	obj_research_panel.number_of_res = researchCount;
 
 	---@type ModdedComponent[]
 	local unlockedComponents = {};
@@ -87,13 +96,15 @@ function Research.AddResearch(item)
 
 	---@type ModdedResearch
 	local moddedResearch = {
-		Index = researchItemIndex,
+		Index = researchIndex,
 		InitialCondition = item.Condition,
 		Name = item.Name,
-		ResNumber = researchItemIndex - 1,
+		ResNumber = resNumber,
 		UnlockedComponents = unlockedComponents
 	}
 	table.insert(Storage.ModdedResearchList, moddedResearch);
+
+	return resNumber;
 end
 
 ---Gets the mres research item by its position value
