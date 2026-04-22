@@ -48,6 +48,9 @@ function create(q, v_modid)
 
 	--We can relink a research to a new prerequisite research
 	Mod.Research.ChangePrerequisite(baseResearchResNumbers.PROCESSOR_PROGRAMS, baseResearchResNumbers.REPAIR_SHOP);
+
+	--We can clear the links a research has to make it easier to rearange the tech tree
+	Mod.Research.ClearUnlockLinks(baseResearchResNumbers.NEW_MECH_PLATE);
 end
 
 ---if activated = true

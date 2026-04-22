@@ -193,11 +193,11 @@ function Research.ChangePrerequisite(resNumber, newPrerequisiteResNumber)
 		end
 	end
 
-	if(prerequisite[Types.ResearchIndexes.Link_1] == -4)  then
+	if(prerequisite[ResearchIndexes.Link_1] == -4)  then
 		prerequisite[Types.ResearchIndexes.Link_1] = resNumber;
-	elseif(prerequisite[Types.ResearchIndexes.Link_2] == -4)  then
+	elseif(prerequisite[ResearchIndexes.Link_2] == -4)  then
 		prerequisite[Types.ResearchIndexes.Link_2] = resNumber;
-	elseif(prerequisite[Types.ResearchIndexes.Link_3] == -4)  then
+	elseif(prerequisite[ResearchIndexes.Link_3] == -4)  then
 		prerequisite[Types.ResearchIndexes.Link_3] = resNumber;
 	else
 		local message = "Trying to set the prerequisite research but the prerequisite already has 3 linked researches.\n";
@@ -206,6 +206,34 @@ function Research.ChangePrerequisite(resNumber, newPrerequisiteResNumber)
 		message = message.."Debug info:\nResearch res number: "..resNumber.."\nPrerequisite res number: "..newPrerequisiteResNumber;
 		Common.ShowError(message);
 	end
+
+	--send array back
+	obj_research_panel.mres = mres;
+end
+
+---Remove all unlock links (that unlock other researches on completion) on a given research
+---@param resNumber number the res numer of the research that has its links cleared
+function Research.ClearUnlockLinks(resNumber)
+
+	local obj_research_panel = Common.GetObjResearchPanel();
+	local ResearchIndexes = Types.ResearchIndexes;
+
+	--Copy the array to the working set
+	local mres = {};
+	mres = obj_research_panel.mres;
+
+	local research = mres[resNumber + 1];
+	if(research == nil) then
+		local message = "Trying to remove all links from a research but the reference was nil.\n";
+			message = message.."Check if the correct res number was given. Found in the debug view (F6) of the research screen (upper left white number)\n\n";
+			message = message.."Debug info:\nResearch res number: "..resNumber;
+			Common.ShowError(message);
+		return;
+	end
+
+	research[ResearchIndexes.Link_1] = -4;
+	research[ResearchIndexes.Link_2] = -4;
+	research[ResearchIndexes.Link_3] = -4;
 
 	--send array back
 	obj_research_panel.mres = mres;
