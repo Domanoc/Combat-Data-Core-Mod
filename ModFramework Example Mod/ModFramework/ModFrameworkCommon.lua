@@ -241,6 +241,13 @@ function Common.DumpObjToMessage(ref)
 	local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline;
 	local prefix = callerPrint.."\n##############\n";
 	local values = {};
+
+	if(ref == nil) then
+		local message = "This is a nil value";
+		show_message(prefix..message);
+		return;
+	end
+
 	if(type(ref) == "table") then
 		prefix = prefix.."TABLE\n##############\n";
 		for key, refValue in pairs(ref) do
@@ -252,18 +259,19 @@ function Common.DumpObjToMessage(ref)
 		end
 		local message = table.concat(values, ",\n");
 		show_message(prefix..message);
-	else
-		prefix = prefix.."GAMEMAKER STRUCT\n##############\n";
-		for key, refValue in pairs(struct_get_names(ref)) do
-			local refValueString = tostring(ref[refValue]);
-			if (type(ref[refValue]) == "table") then
-				refValueString = Private.TableToString(ref[refValue]);
-			end
-			table.insert(values, tostring(key).."::"..tostring(refValue).."::"..refValueString);
-		end
-		local message = table.concat(values, ",\n");
-		show_message(prefix..message);
+		return;
 	end
+
+	prefix = prefix.."GAMEMAKER STRUCT\n##############\n";
+	for key, refValue in pairs(struct_get_names(ref)) do
+		local refValueString = tostring(ref[refValue]);
+		if (type(ref[refValue]) == "table") then
+			refValueString = Private.TableToString(ref[refValue]);
+		end
+		table.insert(values, tostring(key).."::"..tostring(refValue).."::"..refValueString);
+	end
+	local message = table.concat(values, ",\n");
+	show_message(prefix..message);
 end
 
 ---Convert a table into a single line of key value pairs

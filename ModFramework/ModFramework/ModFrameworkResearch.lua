@@ -49,11 +49,16 @@ function Research.AddResearch(item)
 	mres[researchIndex][ResearchIndexes.IconSubtype] = item.ReseachIcon.IconSubType; --research icon subtype (see left column in the game in research menu)
 	mres[researchIndex][ResearchIndexes.Description] = item.Description;			 --research text
 	
-	if(item.PrerequisiteResearchPosition ~= -4) then
-		local prerequisiteIndex = Private.GetResearchByPosition(item.PrerequisiteResearchPosition);
+	if(item.PrerequisiteResearchResNumber ~= -4) then
+		local prerequisiteIndex = item.PrerequisiteResearchResNumber + 1;
 		if (prerequisiteIndex ~= nil) then
 			local prerequisiteResearch = mres[prerequisiteIndex];
-			if(prerequisiteResearch[Types.ResearchIndexes.Link_1] == -4) then
+			if(prerequisiteResearch == nil) then
+				local message = "Trying to set the prerequisite research but the prerequisite reference was nil.\n";
+				message = message.."Check if the correct res number was given. Found in the debug view (F6) of the research screen (upper left white number)\n\n";
+				message = message.."Debug info:\nResearch name: "..item.Name.."\nPrerequisite res number: "..item.PrerequisiteResearchResNumber;
+				Common.ShowError(message);
+			elseif(prerequisiteResearch[Types.ResearchIndexes.Link_1] == -4)  then
 				prerequisiteResearch[Types.ResearchIndexes.Link_1] = researchCount;
 			elseif(prerequisiteResearch[Types.ResearchIndexes.Link_2] == -4)  then
 				prerequisiteResearch[Types.ResearchIndexes.Link_2] = researchCount;
@@ -61,8 +66,9 @@ function Research.AddResearch(item)
 				prerequisiteResearch[Types.ResearchIndexes.Link_3] = researchCount;
 			else
 				local message = "Trying to set the prerequisite research but the prerequisite already has 3 linked researches.\n";
-				message = message.."Check if the correct position was given, or rearange the research tree so there are no more that 3 unlocks per research.\n\n";
-				message = message.."Debug info:\nResearch name: "..item.Name.."\nDesired prerequisite position: "..item.PrerequisiteResearchPosition;
+				message = message.."Check if the correct res number was given, or rearange the research tree so there are no more that 3 unlocks per research.\n";
+				message = message.."Each research res number can be found in the debug view (F6) of the research screen (upper left white number).\n\n";
+				message = message.."Debug info:\nResearch name: "..item.Name.."\nPrerequisite res number: "..item.PrerequisiteResearchResNumber;
 				Common.ShowError(message);
 			end
 		end

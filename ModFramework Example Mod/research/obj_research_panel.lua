@@ -26,10 +26,10 @@ function create(q, v_modid)
 	Mod.Research.AddResearch({
 		Name = "example_research_1",							--The name of the research, used to find its reference
 		Position = 40,											--position number on the research tree. You can see positions in the game with f6 (debug mode)
-		PrerequisiteResearchPosition = 51,						--the position of the prerequisite research that unlocks this research, each research can only be the prerequisite for 3 other researches. leave nil for no prerequisite.
+		PrerequisiteResearchResNumber = 3,						--the position of the prerequisite research that unlocks this research, each research can only be the prerequisite for 3 other researches. leave nil for no prerequisite.
 		Condition = researchConditions.Closed,					--condition (0-closed, 1-opened, 2-researching, 3-researched)
 		RequiredDays = 4,										--the required days to complete the research
-		RequiredStaff = 0,										--the required available staff to start the research
+		RequiredStaff = 10,										--the required available staff to start the research
 		ReseachIcon = researchIcons.Research,					--the info on what icon to use
 		Description = 											--the description text for the research
 			"Example Research 1:#Text that will explain what this unlocks.",

@@ -92,7 +92,7 @@
 ---@class ResearchData dataset for a new research item
 ---@field Name string the name of the research item, used to find its references
 ---@field Position number position number on the research tree. You can see positions in the game with f6 (debug mode)
----@field PrerequisiteResearchPosition number? the position of the prerequisite research that unlocks this research, each research can only be the prerequisite for 3 other researches. leave nil for no prerequisite.
+---@field PrerequisiteResearchResNumber number? the res number of the prerequisite research that unlocks this research, each research can only be the prerequisite for 3 other researches. leave nil for no prerequisite.
 ---@field Condition ResearchCondition condition (0-closed, 1-opened, 2-researching, 3-researched)
 ---@field RequiredDays number the required days to complete the research
 ---@field RequiredStaff number the required available staff to start the research
@@ -107,7 +107,7 @@
 
 ---@class ModdedResearch dataset for a stored modded research item
 ---@field Index number the assigned index for the modded research item
----@field ResNumber number the number for the research as found in the debug (F6) of the research screen (upper left white number)
+---@field ResNumber number the number for the research as found in the debug view (F6) of the research screen (upper left white number)
 ---@field InitialCondition ResearchCondition the condition the modded research item was created with (0-closed, 1-opened, 2-researching, 3-researched)
 ---@field Name string the name of the research item
 ---@field UnlockedComponents ModdedComponent[] the components that are unlocked by this research

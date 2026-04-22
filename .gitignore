@@ -1,1 +1,10 @@
+# Exclude the vscode files
 .vscode/
+
+# Exclude the powershell scripst
+.powershell
+
+# Exclude the export logs
+MirrorModFramework.log
+ExportModFramework.log
+ExportExampleMod.log
