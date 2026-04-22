@@ -36,6 +36,9 @@ function Module.RegisterFramework()
 			end
 		end
 	end
+
+	local language = variable_global_get("language_file"):gsub("/","\\"):match("^.+\\(.+)$");
+	Storage.SelectedLanguage = language;
 end
 
 ---Use in the create function of obj_battle_map.lua

@@ -5,6 +5,9 @@
 ---Access to the Storage of mod framework variables.
 local Storage = {};
 
+---@type string the language file setting that is seleced, example "loc_english.ini"
+Storage.SelectedLanguage = "";
+
 ---A list of the registered mods
 ---@type ModRegistration[]
 Storage.ModRegistrations = {};

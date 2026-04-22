@@ -85,9 +85,9 @@ end
 function draw_top_menu(q)
 	Internal.FixWeaponDescriptions();
 	Internal.FixModdedResearch();
-	
+
 	local keys = Mod.Types.VirtualKeys;
-	if keyboard_check_pressed(keys.F9) then
+	if keyboard_check_pressed(keys.F9) then		
 		Mod.Common.ShowMessage("Unlocking all Research.");
 		Mod.Research.UnlockAllResearch();
     end
