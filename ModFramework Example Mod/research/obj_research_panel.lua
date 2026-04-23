@@ -45,6 +45,7 @@ function create(q, v_modid)
 			,{ LanguageFile = "loc_spanish.ini", Value = "Ejemplo de investigación 1:#Texto que explicará qué desbloquea esto." }
 			,{ LanguageFile = "loc_chinese.ini", Value = "研究示例 1:#解释这将解锁什么内容的文本" }
 			,{ LanguageFile = "loc_italian.ini", Value = "Esempio di ricerca 1:#Testo che spiegherà cosa sblocca." }
+			,{ LanguageFile = "japanese.ini", Value = "研究例 1:#これが何を可能にするかを説明するテキスト。" }
 		},
 		SpritePath = 											--path to the sprite used for the research
 			modFilepath.."sprites\\example_research.png",
@@ -62,6 +63,9 @@ function create(q, v_modid)
 		RequiredStaff = 10,										--the required available staff to start the research
 		ReseachIcon = researchIcons.Survival,					--the info on what icon to use
 		Description = {											--the description text for the research
+			--We can provide full language support like this, atleast 1 language is needed
+			--LanguageFile variable should match the language file ini that the string targets
+			--Value should contain the string in the correct language for that language file
 			 { LanguageFile = "loc_english.ini", Value = "Example Research 2:#Text that will explain what this unlocks." }
 			,{ LanguageFile = "loc_french.ini", Value = "Exemple de recherche 2:#Texte qui expliquera ce que cela débloque." }
 			,{ LanguageFile = "loc_german.ini", Value = "Beispielrecherche 2:#Text, der erklärt, was dadurch freigeschaltet wird." }
@@ -71,6 +75,7 @@ function create(q, v_modid)
 			,{ LanguageFile = "loc_spanish.ini", Value = "Ejemplo de investigación 2:#Texto que explicará qué desbloquea esto." }
 			,{ LanguageFile = "loc_chinese.ini", Value = "研究示例 2:#解释这将解锁什么内容的文本" }
 			,{ LanguageFile = "loc_italian.ini", Value = "Esempio di ricerca 2:#Testo che spiegherà cosa sblocca." }
+			,{ LanguageFile = "japanese.ini", Value = "研究例 2:#これが何を可能にするかを説明するテキスト。" }
 		},
 		SpritePath = 											--path to the sprite used for the research
 			modFilepath.."sprites\\example_research.png",
@@ -78,7 +83,7 @@ function create(q, v_modid)
 	});
 
 	--We can retrieve the data of a research that was added by the framework, even if it was made by another mod.
-	--however if loading one from another mod that mod has to be before this mod in the load order.
+	--however if loading one from another mod, that mod has to be before this mod in the load order.
 	local example2 = Mod.Common.GetModdedResearch("example_research_2");
 
 	--We can search for a single component to add as an unlock to an existing research

@@ -41,6 +41,7 @@ end
 function Common.SelectCorrectLocalizedString(localizedStrings)
 	local englishValue = nil;
 
+	--Find the correct language
 	for _, localizedString in pairs(localizedStrings) do
 		if (localizedString.LanguageFile == Storage.SelectedLanguage) then
 			return localizedString.Value;
@@ -51,10 +52,18 @@ function Common.SelectCorrectLocalizedString(localizedStrings)
 		end
 	end
 
+	--if not found fall back to english
 	if (englishValue ~= nil) then
 		return englishValue;
 	end
 
+	--if not found fall back to the first value
+	local firstValue = localizedStrings[1];
+	if (firstValue ~= nil) then
+		return firstValue.Value;
+	end
+
+	--return an error message
 	return "failed to find localized string";
 end
 
