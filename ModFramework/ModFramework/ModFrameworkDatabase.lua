@@ -151,12 +151,12 @@ function Database.AddWeapon(weaponData)
 	local obj_database = Common.GetObjDatabase();
 
 	--Copy the array to the working set
-	local weapon_stat_array = {};
-	weapon_stat_array = obj_database.weapon_stat;
+	local weapon_stat = {};
+	weapon_stat = obj_database.weapon_stat;
 
-	local weapon_index = #weapon_stat_array + 1;
-	weapon_stat_array[weapon_index] = ds_map_create();
-	local weapon = weapon_stat_array[weapon_index];
+	local weaponIndex = #weapon_stat + 1;
+	weapon_stat[weaponIndex] = ds_map_create();
+	local weapon = weapon_stat[weaponIndex];
 
 	--ENGINEERING PRICE
 	ds_map_add(weapon, "price_metallite",	weaponData.PriceMetallite);
@@ -181,34 +181,34 @@ function Database.AddWeapon(weaponData)
 
 	--SPRITES
 	--small sprite
-	local small_sprite = Common.AddSprite(weaponData.SpriteSmall, 0, false, false, 0, 0);
-	ds_map_add(weapon, "sprite", small_sprite);
+	local smallSprite = Common.AddSprite(weaponData.SpriteSmall, 0, false, false, 0, 0);
+	ds_map_add(weapon, "sprite", smallSprite);
 	--huge sprite
-	local huge_sprite = Common.AddSprite(weaponData.SpriteHuge, 0, false, false, 199, 134);
+	local hugeSprite = Common.AddSprite(weaponData.SpriteHuge, 0, false, false, 199, 134);
 	--big sprite
-	local big_sprite = Common.AddSprite(weaponData.SpriteBig, 0, false, false, 199, 134);
+	local bigSprite = Common.AddSprite(weaponData.SpriteBig, 0, false, false, 199, 134);
 	--merge the big and huge sprites
-	Common.MergeSprite(big_sprite, huge_sprite);
-	ds_map_add(weapon, "sprite_big", big_sprite);
+	Common.MergeSprite(bigSprite, hugeSprite);
+	ds_map_add(weapon, "sprite_big", bigSprite);
 
 	--Add the newly modded item to the component list. So we can find the reference later.
 	---@type ModdedComponent
 	local moddedComponent = {
 		ComponentType = Types.ComponentTypes.Weapon,
-		Index = weapon_index - 1,
-		Sprite = small_sprite,
+		Index = weaponIndex - 1,
+		Sprite = smallSprite,
 		Name = weaponData.Name,
 		ComponentSize = weaponData.ComponentSize,
 		IsResearched = weaponData.IsResearched,
 		CanBeConstructed = weaponData.CanBeConstructed,
 		GiveFreeItem = weaponData.GiveFreeItem,
 		BlueLength = weaponData.BlueLength,
-		WeaponDescription = weaponData.WeaponDescription
+		WeaponDescription = Common.SelectCorrectLocalizedString(weaponData.Description)
 	}
 	table.insert(Storage.ModdedComponentList, moddedComponent);
 
 	--return new data
-	obj_database.weapon_stat = weapon_stat_array;
+	obj_database.weapon_stat = weapon_stat;
 end
 
 ---Add a new solenoid to the games obj_database

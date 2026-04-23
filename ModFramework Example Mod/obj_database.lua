@@ -14,7 +14,7 @@ function create(q,v_modid)
 	local componentSizes = Mod.Types.ComponentSizes;
 	local weaponTypes = Mod.Types.WeaponTypes;
 
-	--An example on creating a modded mech
+	--An example for creating a modded mech
 	Mod.Database.AddMech({
 		Name = 			   "example_mech",		 --The name of the mech, used to find its references
 		ComponentSize =    componentSizes.Large, --The size of the component when constructing it. 1 for single slot or 5 for a full row
@@ -56,83 +56,48 @@ function create(q,v_modid)
 		SpriteMeleeHorizontal = modFilepath.."sprites\\example_mech_melee_horizontal.png"   --The animation atlas for a horizontal melee,  optional if the mech has no melee
 	});
 
---	----------------------
---	--HIGH TECH SOLONOID--
---	----------------------
---	Mod.Database.AddSolenoid({
---		name = 			   "high_tech_solenoid",
---		component_size =   componentSizes.small,
---		researched =       false,
---		CanBeConstructed = true,
---		price_metallite =  150,
---		price_bjorn = 	   150,
---		price_munilon =    200,
---		price_skalaknit =  25,
---		price_staff = 	   70,
---		production_days =  4,
---		power = 		   3,
---		induction = 	   1,
---		sprite = 		   current_file_path.."sprites/high_tech_solenoid.png"
---	});
---
---	------------
---	--HOWITZER--
---	------------
---	Mod.Database.AddWeapon({
---		name =			    "howitzer_weapon",
---		WeaponDescription = "240-MM HOWITZER GUN.",
---		component_size =    componentSizes.small,
---		researched =        false,
---		CanBeConstructed =  true,
---		price_metallite =   200,
---		price_bjorn = 	    50,
---		price_munilon =     30,
---		price_skalaknit =   60,
---		price_staff = 	    45,
---		production_days =   4,
---		weapon_type = 	    weaponTypes.white,
---		fire_rate = 	    25,
---		weight = 		    48,
---		accuracy = 		    1.5,
---		energy = 		    5,
---		damage = 		    80,
---		penetration = 	    15,
---		projectile_speed =  18,
---		energy_buffed =     0,
---		BlueLength =        0,
---		sprite_small =      current_file_path.."sprites/howitzer_small.png",
---		sprite_big = 	    current_file_path.."sprites/howitzer_big.png",
---		sprite_huge = 	    current_file_path.."sprites/howitzer_huge.png"
---	});
---	----------------------
---	--LASER PULSE CANNON--
---	----------------------
---	Mod.Database.AddWeapon({
---		name =			    "laser_pulse_cannon_weapon",
---		WeaponDescription = "EXTENDED RANGE LASER PULSE CANNON.#Uses an internal power unit to provide most of the energy. Can be boosted by providing additional power.",
---		component_size =    componentSizes.small,
---		researched =        false,
---		CanBeConstructed =  true,
---		price_metallite =   250,
---		price_bjorn = 	    245,
---		price_munilon =     500,
---		price_skalaknit =   130,
---		price_staff = 	    110,
---		production_days =   8,
---		weapon_type = 	    weaponTypes.blue,
---		fire_rate = 	    600,
---		weight = 		    80,
---		accuracy = 		    0,
---		energy = 		    10,
---		damage = 		    40,
---		penetration = 	    5,
---		projectile_speed =  0,
---		energy_buffed =     0,
---		BlueLength = 	    2000,
---		sprite_small =      current_file_path.."sprites/laser_pulse_cannon_small.png",
---		sprite_big = 	    current_file_path.."sprites/laser_pulse_cannon_big.png",
---		sprite_huge = 	    current_file_path.."sprites/laser_pulse_cannon_huge.png"
---	});
+	--An example for creating a modded weapon
+	Mod.Database.AddWeapon({
+		Name = 			    "example_weapon",	  --The name of the mech, used to find its references
+		--We can provide full language support like this, atleast 1 language is needed
+		--LanguageFile variable should match the language file ini that the string targets
+		--Value should contain the string in the correct language for that language file
+		Description = {
+			 { LanguageFile = "loc_english.ini", Value = "Description text for this weapon." }
+			,{ LanguageFile = "loc_french.ini", Value = "Texte descriptif de cette arme." }
+			,{ LanguageFile = "loc_german.ini", Value = "Beschreibungstext für diese Waffe." }
+			,{ LanguageFile = "loc_polish.ini", Value = "Tekst opisujący tę broń." }
+			,{ LanguageFile = "loc_portuguese_brazil.ini", Value = "Texto descritivo para esta arma." }
+			,{ LanguageFile = "loc_russian.ini", Value = "Описание данного оружия." }
+			,{ LanguageFile = "loc_spanish.ini", Value = "Texto descriptivo de esta arma." }
+			,{ LanguageFile = "loc_chinese.ini", Value = "该武器的描述文字。" }
+			,{ LanguageFile = "loc_italian.ini", Value = "Testo descrittivo per quest'arma." }
+			,{ LanguageFile = "japanese.ini", Value = "この武器の説明文。" }
+		},
+		ComponentSize =     componentSizes.Large, --The size of the component when constructing it. 1 for single slot or 5 for a full row
+		IsResearched = 	    true,				  --Set to true if its pre researched, else false.
+		CanBeConstructed =  true,				  --Set to true if it can be constructed in the component shop, false otherwise
+		GiveFreeItem = 	    true,				  --Set to true to return a free copy when triggered as an unlock
+		PriceMetallite =    1000,				  --The amount of metallite needed to produce this weapon
+		PriceBjorn = 	    1000,				  --The amount of bjorn needed to produce this weapon
+		PriceMunilon =      1000,				  --The amount of munilon needed to produce this weapon
+		PriceSkalaknit =    1000,				  --The amount of skalaknit needed to produce this weapon
+		PriceStaff = 	    1000,				  --The amount of staff needed to produce this weapon
+		ProductionDays =    2,					  --The amount of days it takes to produce this weapon
+		WeaponType =	    "white",			  --the type of weapon (white = ballistic, red = rockets, blue = laser/tesla, yellow = thermal)
+		FireRate =		    25,					  --the base fire rate. higher values offer a faster rate, 600 with full firespeed points will fill the firespeed bar completely
+		Weight = 		    48,					  --the base weight of the weapon
+		Accuracy = 		    1.5,				  --the base accuracy for the weapon. accuracy in degrees, 0 is perfect accuracy
+		EnergyCost = 		5,					  --the base energy cost of the weapon
+		Damage = 		    80,					  --the base damage value of the weapon
+		Penetration = 	    15,					  --the base penetration value of the weapon
+		ProjectileSpeed =   18,					  --the base projectile speed of the weapon
+		IsEnergyBuffed =    false,				  --whether the energy cost boost damage output, for laser/tesla weapons this is an additional increase on their native bonus.
+		BlueLength =        0,					  --the range of a blue weapon, default is 750
+		SpriteSmall =       modFilepath.."sprites/example_weapon_small.png",	--the small sprite for the weapon
+		SpriteBig = 	    modFilepath.."sprites/example_weapon_big.png",		--the big sprite for the weapon
+		SpriteHuge = 	    modFilepath.."sprites/example_weapon_huge.png",		--the huge sprite for the weapon
+	});
 end
 
 ---saving system deletes the file and creates new one before saving new info

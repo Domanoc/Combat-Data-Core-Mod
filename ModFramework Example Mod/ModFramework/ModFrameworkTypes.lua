@@ -164,6 +164,23 @@ local ComponentSizes = {
 };
 Types.ComponentSizes = ComponentSizes;
 
+---The weapon mech indexes
+local BaseWeapons = {
+	SIX_BARRELED_GUN = 0,
+	ROCKET_SYSTEM = 1,
+	TANK_GUN = 2,
+	MISSILE_LAUNCHER = 3,
+	HIGH_POWER_IMPULSE_LASER = 4,
+	RAPID_FIRING_LASER = 5,
+	FLAMETHROWER = 6,
+	MASS_ACCELERATOR = 7,
+	TESLA_CANNON = 8,
+	PLASMA_ACCELERATOR = 9,
+	TOXIN_SPRAYER = 10,
+	PARTICLE_EMITTER = 11,
+}
+Types.BaseWeapons = BaseWeapons;
+
 ---A non complete list of Virtual Keys
 local VirtualKeys = {
 	--Control keys

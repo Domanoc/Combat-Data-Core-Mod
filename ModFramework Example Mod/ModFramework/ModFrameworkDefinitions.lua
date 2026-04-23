@@ -75,7 +75,7 @@
 ---@field SpriteBig string the big sprite for the weapon
 ---@field SpriteHuge string the huge sprite for the weapon
 ---@field BlueLength number the range of a blue weapon, default is 750
----@field WeaponDescription string the description text for a weapon. used when the weapon is added to the main slot in engineering.
+---@field Description LocalizedString[] the description text for a weapon. used when the weapon is added to the main slot in engineering.
 
 ---@class SolenoidData dataset for adding a new solenoid
 ---@field Name string the name of the mech, used to find its references
