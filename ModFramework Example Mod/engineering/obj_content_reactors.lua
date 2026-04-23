@@ -6,8 +6,10 @@ function create(q,v_modid)--one time script when save is loaded
 	--load the mod framework as a global for use within this file
 	Mod = require("ModFrameworkModule");
 
-	--If its a game loaded from a save we dont add new items.
+	--This function is run everytime the game is started
+	--We need to check if the this start is a new game or from a loaded save
 	if(Mod.Common.IsLoadedGame()) then
+		--Since we dont want to add new items on loaded saves we return the function here.
 		return;
 	end
 

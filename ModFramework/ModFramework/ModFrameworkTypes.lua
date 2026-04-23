@@ -15,6 +15,18 @@ local MechModules = {
 };
 Types.MechModules = MechModules;
 
+---The base mech indexes
+local BaseMechs = {
+	Miner = 0,
+	Castle = 1,
+	Plate = 2,
+	Holo = 3,
+	Quadro = 4,
+	Tentacle = 5,
+	Triangle = 6,
+}
+Types.BaseMechs = BaseMechs;
+
 ---Component types
 local ComponentTypes = {
 	Mech = 1,
@@ -94,6 +106,7 @@ local ResearchIcons = {
 };
 Types.ResearchIcons = ResearchIcons;
 
+---The base research res numbers
 local BaseResearchResNumbers = {
 	PREPARATIONS = 0,
 	TANK_GUN = 1,
