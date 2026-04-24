@@ -11,17 +11,17 @@ function create(q,v_modid)
 end
 
 ---saves mech blueprint event. uses "data/f_mech_construction_slot"
----@param q any
+---@param q game_obj_big_holder
 function save_mech(q)
 end
 
 ---loads mech blueprint event. uses "data/f_mech_construction_slot"
----@param q any
+---@param q game_obj_big_holder
 function load_mech(q)
 end
 
 ---inside mouse_check_button_pressed(mb_left)
----@param q any
+---@param q game_obj_big_holder
 function activate_menu(q)
 end
 
