@@ -10,6 +10,8 @@ local Engineering = {}
 
 ---Access to the Common functions.
 local Common = require("ModFrameworkCommon")
+---Access to the private functions in this file.
+local Private = {}
 
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
@@ -24,22 +26,20 @@ function Engineering.AddMech(mech_number, name)
 	--Copy the array to the working set
 	local list_mech = obj_content_mechs.list_mech
 
-	local number_of_items = obj_content_mechs.number_of_items + 1
-	local obj_mech_item = asset_get_index("obj_mech_item")
-	list_mech[number_of_items] = instance_create_depth(0, 0, 0, obj_mech_item)
-	local added_mech = list_mech[number_of_items]
-	added_mech.my_num = 		number_of_items - 1
+	local array_size = #list_mech
+	local itemIndex = array_size + 1
+	local added_mech = Private.AddMechItemInstance()
+	added_mech.my_num = 		array_size
 	added_mech.mech_number = 	mech_number
+	added_mech.new_module = 	false
 	if(name ~= nil) then
 		added_mech.mech_name = 	name
 	end
-	added_mech.start_x = 		8
-	added_mech.start_y = 		266
-	added_mech.new_module = 	0
+	list_mech[itemIndex] = added_mech
 
 	--return new data
 	obj_content_mechs.list_mech = list_mech
-	obj_content_mechs.number_of_items = number_of_items
+	obj_content_mechs.number_of_items = #list_mech
 end
 
 ---Adds a component of type weapon to engineering
@@ -130,6 +130,13 @@ function Engineering.AddMagnet(magnet_number)
 	--return new data
 	obj_content_magnet.list_magnet = list_magnet
 	obj_content_magnet.number_of_items = number_of_items
+end
+
+---Create a new obj_mech_item instance
+---@return game_obj_mech_item objMechItem the new obj_mech_item instance
+function Private.AddMechItemInstance()
+	local obj_mech_item = asset_get_index("obj_mech_item")
+	return instance_create_depth(0, 0, 0, obj_mech_item)
 end
 
 ------------------------------------------------------------------------------

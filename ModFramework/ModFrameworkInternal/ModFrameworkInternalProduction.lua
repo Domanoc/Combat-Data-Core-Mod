@@ -233,10 +233,10 @@ function Private.AddSolenoid(component)
 	obj_component_shop.comp_solenoid = comp_solenoid
 end
 
----Create a new game_obj_component instance
+---Create a new obj_component instance
 ---@param x number the x coordinate where to draw
 ---@param y number the y coordinate where to draw
----@return game_obj_component objComponent the new game_obj_component instance
+---@return game_obj_component objComponent the new obj_component instance
 function Private.AddComponentInstance(x, y)
 	local obj_component = Common.GetObjComponent()
 	return instance_create_depth(x, y, -500, obj_component)
