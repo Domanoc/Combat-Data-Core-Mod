@@ -310,12 +310,14 @@ function Common.DumpObjToMessage(ref)
 	end
 
 	prefix = prefix.."GAMEMAKER STRUCT"..spacerLine
-	for key, refValue in pairs(struct_get_names(ref)) do
-		local refValueString = tostring(ref[refValue])
-		if (type(ref[refValue]) == "table") then
-			refValueString = Private.TableToString(ref[refValue])
+	local sortedKeyNames = struct_get_names(ref)
+	table.sort(sortedKeyNames)
+	for key, keyName in pairs(sortedKeyNames) do
+		local refValueString = tostring(ref[keyName])
+		if (type(ref[keyName]) == "table") then
+			refValueString = Private.TableToString(ref[keyName])
 		end
-		table.insert(values, tostring(key).."::"..tostring(refValue).."::"..refValueString)
+		table.insert(values, tostring(key).."::"..tostring(keyName).."::"..refValueString)
 	end
 	local message = table.concat(values, ",\n")
 	show_message(prefix..message)
@@ -386,8 +388,11 @@ function Common.ToClassTypeMessage(ref)
 		table.insert(values, "---As not all values may be present at every point of the game.")
 		table.insert(values, "---Or values could be missing from the definition.")
 		table.insert(values, "---@class game_")
-		for _, v in pairs(struct_get_names(ref)) do
-			table.insert(values, "---@field "..tostring(v).." "..type(ref[v]))
+
+		local sortedKeyNames = struct_get_names(ref)
+		table.sort(sortedKeyNames)
+		for _, keyName in pairs(sortedKeyNames) do
+			table.insert(values, "---@field "..tostring(keyName).." "..type(ref[keyName]))
 		end
 		local message = table.concat(values, "\n")
 		show_message(prefix..message)

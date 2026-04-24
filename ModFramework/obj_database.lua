@@ -67,16 +67,20 @@ function create(q,v_modid)
 end
 
 ---saving system deletes the file and creates new one before saving new info
----@param q any
+---@param q game_obj_database
 function save_game_pre_event(q)
 end
 
+---@param q game_obj_database
 function save_game_post_event(q)
 end
 
+---@param q game_obj_database
 function load_game_pre_event(q)
 end
 
+---Called after the game is loaded
+---@param q game_obj_database
 function load_game_post_event(q)
 	Internal.Production.SetModdedSprites()
 end
@@ -114,9 +118,11 @@ function draw_top_menu(q)
 		local comp_solenoid = 			obj_component_shop.comp_solenoid
 		local comp_wep = 				obj_component_shop.comp_wep
 
-		Mod.Common.DumpObjToMessage(comp_wep)
+		--Mod.Common.ToClassTypeMessage(q)
     end
 end
 
+---The draw call thay runs every frame while debug is active (F6)
+---@param q game_obj_database
 function draw_debug(q)
 end

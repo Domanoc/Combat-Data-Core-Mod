@@ -106,17 +106,25 @@ end
 function save_game_pre_event(q)
 end
 
+---@param q game_obj_database
 function save_game_post_event(q)
 end
 
+---@param q game_obj_database
 function load_game_pre_event(q)
 end
 
+---Called after the game is loaded
+---@param q game_obj_database
 function load_game_post_event(q)
 end
 
+---The draw call thay runs every frame
+---@param q game_obj_database
 function draw_top_menu(q)
 end
 
+---The draw call thay runs every frame while debug is active (F6)
+---@param q game_obj_database
 function draw_debug(q)
 end

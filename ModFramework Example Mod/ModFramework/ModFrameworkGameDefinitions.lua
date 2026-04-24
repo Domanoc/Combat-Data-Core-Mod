@@ -405,133 +405,133 @@
 ---@field text_days string
 ---@field text_staff string
 
----This is an auto generated class definition. 
+---This is an auto generated class definition.
 ---
 ---Please use the found values as a starting point for your use.
 ---As not all values may be present at every point of the game.
 ---Or values could be missing from the definition.
 ---@class game_obj_component_shop
----@field piston_start_x number
----@field text_max_pressure string
----@field text_beacon string
----@field text_reaction string
----@field safety_start_x number
----@field comp_reactor table
----@field text_current_res string
----@field comp_beacon game_obj_component
----@field show_menu boolean
----@field text_multiplier string
----@field text_impact_res string
----@field new_item_type number
----@field minus_place number
----@field wheel_size_img number
----@field comp_safety table
----@field text_damage string
----@field text_armor string
----@field add boolean
----@field price_metallite number
----@field text_coolent string
----@field mech_start_y number
----@field text_menu_weapon_size string
----@field text_weight string
----@field light_up_table boolean
----@field text_reload string
----@field comp_wep table
----@field text_days string
----@field text_power_motor string
----@field price_skalaknit number
----@field comp_kernel table
----@field text_speed_motor string
----@field next_day boolean
----@field text_skalaknit string
----@field kernel_start_y number
----@field text_aux string
----@field comp_magnet table
----@field disassemble_pressed number
----@field cabin_start_x number
----@field injector_start_y number
----@field text_slowdown string
----@field text_heat string
----@field text_metallite string
----@field text_rocket string
----@field text_firespeed string
----@field text_menu_reactors string
----@field t_reaction_slowdown number
----@field days_left number
----@field motor_start_y number
----@field comp_piston table
----@field text_output string
----@field text_move_z string
----@field text_safety string
----@field new_item_data_type number
----@field text_menu_support string
----@field text_energy string
----@field text_bjorn string
----@field change boolean
----@field comp_rocket number
 ---@field activated boolean
----@field text_penetration string
----@field comp_city_parts number
----@field mech_start_x number
----@field cur_item number
----@field text_menu_to_order string
----@field text_weapons string
----@field order_pressed number
----@field text_menu_add string
----@field text_district string
----@field weapon_start_y number
----@field text_armor_parts string
----@field price_munilon number
----@field comp_injector table
----@field text_accuracy string
----@field text_speed_mech string
----@field text_menu_hangar_b string
----@field kernel_start_x number
----@field text_pressure string
----@field price_staff number
----@field comp_lr_armor_middle table
----@field injector_start_x number
----@field text_city_parts string
----@field play_sound boolean
----@field reactor_start_y number
----@field text_menu_order string
----@field text_battle string
----@field motor_start_x number
----@field hanger_mass table[]
----@field comp_motor table
----@field text_temp string
----@field text_move_y string
----@field piston_start_y number
----@field st_lua table
----@field weapon_size number
----@field safety_start_y number
----@field comp_cabin table
----@field show_menu_img number
----@field text_munilon string
----@field text_control string
----@field text_induction string
----@field text_menu_to_disassemble string
----@field weapon_start_x number
----@field comp_solenoid table
----@field t_armor_parts number
----@field comp_engineer number
----@field cur_item_type number
----@field text_menu_weapons string
----@field text_menu_hangar_a string
----@field text_power_solenoid string
----@field t_city_parts number
----@field comp_lr_armor_end table
+---@field add boolean
 ---@field array_lua table
----@field reactor_start_x number
----@field text_menu_mechs string
----@field hangar_order number
----@field comp_mech table
+---@field cabin_start_x number
 ---@field cabin_start_y number
+---@field change boolean
+---@field comp_beacon game_obj_component --the shop component for the beacon
+---@field comp_cabin game_obj_component[] --array containing the shop components for cabins
+---@field comp_city_parts game_obj_component --the shop component for the city parts
+---@field comp_engineer game_obj_component --the shop component for the engineer
+---@field comp_injector game_obj_component[] --array containing the shop components for injectors
+---@field comp_kernel game_obj_component[] --array containing the shop components for kernels
+---@field comp_lr_armor_end game_obj_component[] --array containing the shop components for end armor
+---@field comp_lr_armor_middle game_obj_component[] --array containing the shop components for middle armor
+---@field comp_magnet game_obj_component[] --array containing the shop components for magnets
+---@field comp_mech game_obj_component[] --array containing the shop components for mechs
+---@field comp_motor game_obj_component[] --array containing the shop components for motos
+---@field comp_piston game_obj_component[] --array containing the shop components for pistons
+---@field comp_reactor game_obj_component[] --array containing the shop components for reactors
+---@field comp_rocket game_obj_component --the shop component for the rocket
+---@field comp_safety game_obj_component[] --array containing the shop components for safety
+---@field comp_solenoid game_obj_component[] --array containing the shop components for solenoids
+---@field comp_wep game_obj_component[] --array containing the shop components for weapons
+---@field cur_item number
+---@field cur_item_type number
+---@field days_left number
+---@field disassemble_pressed number
+---@field hangar_order number
+---@field hanger_mass table
+---@field injector_start_x number
+---@field injector_start_y number
+---@field kernel_start_x number
+---@field kernel_start_y number
+---@field light_up_table boolean
+---@field mech_start_x number
+---@field mech_start_y number
+---@field minus_place number
+---@field motor_start_x number
+---@field motor_start_y number
+---@field new_item_data_type number
+---@field new_item_type number
+---@field next_day boolean
+---@field order_pressed number
+---@field piston_start_x number
+---@field piston_start_y number
+---@field play_sound boolean
 ---@field price_bjorn number
----@field text_staff string
----@field text_move_x string
+---@field price_metallite number
+---@field price_munilon number
+---@field price_skalaknit number
+---@field price_staff number
+---@field reactor_start_x number
+---@field reactor_start_y number
 ---@field research_weapon_size boolean
+---@field safety_start_x number
+---@field safety_start_y number
+---@field show_menu boolean
+---@field show_menu_img number
+---@field st_lua table
+---@field t_armor_parts number
+---@field t_city_parts number
+---@field t_reaction_slowdown number
+---@field text_accuracy string
+---@field text_armor string
+---@field text_armor_parts string
+---@field text_aux string
+---@field text_battle string
+---@field text_beacon string
+---@field text_bjorn string
+---@field text_city_parts string
+---@field text_control string
+---@field text_coolent string
+---@field text_current_res string
+---@field text_damage string
+---@field text_days string
+---@field text_district string
+---@field text_energy string
+---@field text_firespeed string
+---@field text_heat string
 ---@field text_heat_res string
+---@field text_impact_res string
+---@field text_induction string
+---@field text_max_pressure string
+---@field text_menu_add string
+---@field text_menu_hangar_a string
+---@field text_menu_hangar_b string
+---@field text_menu_mechs string
+---@field text_menu_order string
+---@field text_menu_reactors string
+---@field text_menu_support string
+---@field text_menu_to_disassemble string
+---@field text_menu_to_order string
+---@field text_menu_weapon_size string
+---@field text_menu_weapons string
+---@field text_metallite string
+---@field text_move_x string
+---@field text_move_y string
+---@field text_move_z string
+---@field text_multiplier string
+---@field text_munilon string
+---@field text_output string
+---@field text_penetration string
+---@field text_power_motor string
+---@field text_power_solenoid string
+---@field text_pressure string
+---@field text_reaction string
+---@field text_reload string
+---@field text_rocket string
+---@field text_safety string
+---@field text_skalaknit string
+---@field text_slowdown string
+---@field text_speed_mech string
+---@field text_speed_motor string
+---@field text_staff string
+---@field text_temp string
+---@field text_weapons string
+---@field text_weight string
+---@field weapon_size number
+---@field weapon_start_x number
+---@field weapon_start_y number
+---@field wheel_size_img number
 
 ---This is an auto generated class definition.
 ---
@@ -539,15 +539,15 @@
 ---As not all values may be present at every point of the game.
 ---Or values could be missing from the definition.
 ---@class game_obj_component
+---@field comp_data_type number the index number of the component
+---@field comp_type ComponentType the type of component
 ---@field item_pos number
----@field size_x number
----@field size_y number
----@field size ComponentSize the size of the component when constructing it.
 ---@field logo number the index of the sprite, use -4 to auto set it
 ---@field logo_index number
 ---@field researched boolean when true the component can be constructed
----@field comp_type ComponentType the type of component
----@field comp_data_type number the index number of the component
+---@field size ComponentSize the size of the component when constructing it.
+---@field size_x number
+---@field size_y number
 
 ---This is an auto generated class definition. 
 ---
