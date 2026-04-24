@@ -1,18 +1,21 @@
---------------------------
---COMMON------------------
---------------------------
-
----Access to the Storage of mod framework variables.
-local Storage = require("ModFrameworkStorage");
+------------------------------------------------------------------------------
+--- COMMON FUNCTIONS ---------------------------------------------------------
+------------------------------------------------------------------------------
 
 ---Access to the Common functions.
-local Common = {};
----Access to the private functions in this file.
-local Private = {};
+---@class ModFrameworkCommon
+local Common = {}
 
-----------------------------
-----------------------------
-----------------------------
+------------------------------------------------------------------------------
+
+---Access to the Storage of mod framework variables.
+local Storage = require("ModFrameworkStorage")
+---Access to the private functions in this file.
+local Private = {}
+
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 
 ---Gets the filepath to the mod folder
 ---@param name string the name of the mod folder
@@ -20,16 +23,16 @@ local Private = {};
 function Common.GetModPath(name)
 	for _, mod in pairs(Storage.ModRegistrations) do
 		if (mod.Name == name) then
-			return mod.Path;
+			return mod.Path
 		end
 	end
-	return nil;
+	return nil
 end
 
 ---Checks if this is a game loaded from a save. 
 ---@return boolean isLoadedGame true if this is a game loaded from a save, false otherwise.
 function Common.IsLoadedGame()
-	return variable_global_get("mech_engineer_load");
+	return variable_global_get("mech_engineer_load")
 end
 
 ---Selects the string based on the games current language setting,
@@ -39,37 +42,37 @@ end
 ---@param localizedStrings LocalizedString[] the localized strings dataset
 ---@return string
 function Common.SelectCorrectLocalizedString(localizedStrings)
-	local englishValue = nil;
+	local englishValue = nil
 
 	--Find the correct language
 	for _, localizedString in pairs(localizedStrings) do
 		if (localizedString.LanguageFile == Storage.SelectedLanguage) then
-			return localizedString.Value;
+			return localizedString.Value
 		end
 
 		if (localizedString.LanguageFile == "loc_english.ini") then
-			englishValue = localizedString.Value;
+			englishValue = localizedString.Value
 		end
 	end
 
 	--if not found fall back to english
 	if (englishValue ~= nil) then
-		return englishValue;
+		return englishValue
 	end
 
 	--if not found fall back to the first value
-	local firstValue = localizedStrings[1];
+	local firstValue = localizedStrings[1]
 	if (firstValue ~= nil) then
-		return firstValue.Value;
+		return firstValue.Value
 	end
 
 	--return an error message
-	return "failed to find localized string";
+	return "failed to find localized string"
 end
 
-----------------------------
---FRAMEWORK OBJECT GETTERS--
-----------------------------
+------------------------------------------------------------------------------
+--- FRAMEWORK OBJECT GETTERS -------------------------------------------------
+------------------------------------------------------------------------------
 
 ---Gets the modded component
 ---@param name string the name of the component
@@ -78,10 +81,10 @@ end
 function Common.GetModdedComponent(name, type)
 	for _, moddedComponent in ipairs(Storage.ModdedComponentList) do
 		if (moddedComponent.Name == name and moddedComponent.ComponentType == type) then
-			return moddedComponent;
+			return moddedComponent
 		end
 	end
-	return nil;
+	return nil
 end
 
 ---Gets the modded components based on the search criteria
@@ -89,16 +92,16 @@ end
 ---@return ModdedComponent[] components the components found, or and empty list
 function Common.GetModdedComponents(searchCriteria)
 	---@type ModdedComponent[]
-	local foundComponents = {};
+	local foundComponents = {}
 
 	for _, search in ipairs(searchCriteria) do
-		local component = Common.GetModdedComponent(search.Name, search.ComponentType);
+		local component = Common.GetModdedComponent(search.Name, search.ComponentType)
 		if(component ~= nil) then
-			table.insert(foundComponents, component);
+			table.insert(foundComponents, component)
 		end
 	end
 
-	return foundComponents;
+	return foundComponents
 end
 
 ---Gets the modded research item
@@ -107,73 +110,79 @@ end
 function Common.GetModdedResearch(name)
 	for _, moddedComponent in ipairs(Storage.ModdedResearchList) do
 		if (moddedComponent.Name == name) then
-			return moddedComponent;
+			return moddedComponent
 		end
 	end
-	return nil;
+	return nil
 end
 
-----------------------------
---GAME OBJECT GETTERS-------
-----------------------------
+------------------------------------------------------------------------------
+--- GAME OBJECT GETTERS ------------------------------------------------------
+------------------------------------------------------------------------------
 
 ---Gets the reference for "obj_database"
 ---@return game_obj_database obj_database the reference for "obj_database"
 function Common.GetObjDatabase()
-	return asset_get_index("obj_database");
+	return asset_get_index("obj_database")
 end
 
 ---Gets the reference for "obj_component_shop"
 ---@return game_obj_component_shop obj_component_shop the reference for "obj_component_shop"
 function Common.GetObjComponentShop()
-	return asset_get_index("obj_component_shop");
+	return asset_get_index("obj_component_shop")
+end
+
+---Gets the reference for "obj_component"
+---@return game_obj_component obj_component the reference for "obj_component"
+function Common.GetObjComponent()
+	return asset_get_index("obj_component")
 end
 
 ---Gets the reference for "obj_weapon_test"
 ---@return game_obj_weapon_test obj_weapon_test the reference for "obj_weapon_test"
 function Common.GetObjWeaponTest()
-	return asset_get_index("obj_weapon_test");
+	return asset_get_index("obj_weapon_test")
 end
 
 ---Gets the reference for "obj_research_panel"
 ---@return game_obj_research_panel obj_research_panel the reference for "obj_research_panel"
 function Common.GetObjResearchPanel()
-	return asset_get_index("obj_research_panel");
+	return asset_get_index("obj_research_panel")
 end
 
 ---Gets the reference for "obj_content_mechs"
 ---@return game_obj_content_mechs obj_content_mechs the reference for "obj_content_mechs"
 function Common.GetObjContentMechs()
-	return asset_get_index("obj_content_mechs");
+	return asset_get_index("obj_content_mechs")
 end
 
 ---Gets the reference for "obj_content_magnet"
 ---@return game_obj_content_magnet obj_content_magnet the reference for "obj_content_magnet"
 function Common.GetObjContentMagnet()
-	return asset_get_index("obj_content_magnet");
+	return asset_get_index("obj_content_magnet")
 end
 
 ---Gets the reference for "obj_content_weapons"
 ---@return game_obj_content_weapons obj_content_weapons the reference for "obj_content_weapons"
 function Common.GetObjContentWeapons()
-	return asset_get_index("obj_content_weapons");
+	return asset_get_index("obj_content_weapons")
 end
 
 ---Gets the reference for "obj_content_solenoid"
 ---@return game_obj_content_solenoid obj_content_solenoid the reference for "obj_content_solenoid"
 function Common.GetObjContentSolenoid()
-	return asset_get_index("obj_content_solenoid");
+	return asset_get_index("obj_content_solenoid")
 end
 
 ---Gets the reference for "obj_content_reactor"
 ---@return game_obj_content_reactor obj_content_reactor the reference for "obj_content_reactor"
 function Common.GetObjContentReactor()
-	return asset_get_index("obj_content_reactor");
+	return asset_get_index("obj_content_reactor")
 end
 
-----------------------------
---SPRITE FUNCTION WRAPPERS--
-----------------------------
+------------------------------------------------------------------------------
+--- SPRITE FUNCTION WRAPPERS -------------------------------------------------
+------------------------------------------------------------------------------
 
 ---With this function you can add an image as a sprite, loading it from an external source where the image file to be loaded should always be in either *.png, *.gif, *.jpg/jpeg
 ---
@@ -186,13 +195,13 @@ end
 ---@param yOrig number Indicate the y position of the origin in the sprite.
 ---@return number spriteIndex the index for the loaded sprite 
 function Common.AddSprite(filepath, numberOfImages, removeback, smooth, xOrig, yOrig)
-	local imageIndex = sprite_add(filepath, numberOfImages, removeback, smooth, xOrig, yOrig);
+	local imageIndex = sprite_add(filepath, numberOfImages, removeback, smooth, xOrig, yOrig)
 	if(imageIndex < 0) then
-		local message = "The sprite loading from path: '"..filepath.."' failed.\n\n";
-		message = message.."Make sure the filepath of the sprite is correct.";
-		Common.ShowError(message);
+		local message = "The sprite loading from path: '"..filepath.."' failed.\n\n"
+		message = message.."Make sure the filepath of the sprite is correct."
+		Common.ShowError(message)
 	end
-	return imageIndex;
+	return imageIndex
 end
 
 ---This function will merge the sprite indexed in "secondSpriteIndex" with that which is indexed in "firstSpriteIndex". 
@@ -205,19 +214,19 @@ end
 ---@param secondSpriteIndex number the index for the sprite to merge
 function Common.MergeSprite(firstSpriteIndex, secondSpriteIndex)
 	if(firstSpriteIndex < 0) then
-		local message = "Cannot merge sprites the first sprite index provided was not referencing a sprite.\n\n";
-		message = message.."Make sure the filepath of the sprite is correct.";
-		Common.ShowError(message);
+		local message = "Cannot merge sprites the first sprite index provided was not referencing a sprite.\n\n"
+		message = message.."Make sure the filepath of the sprite is correct."
+		Common.ShowError(message)
 	end
 	if(secondSpriteIndex < 0) then
-		local message = "Cannot merge sprites the second sprite index provided was not referencing a sprite.\n\n";
-		message = message.."Make sure the filepath of the sprite is correct.";
-		Common.ShowError(message);
+		local message = "Cannot merge sprites the second sprite index provided was not referencing a sprite.\n\n"
+		message = message.."Make sure the filepath of the sprite is correct."
+		Common.ShowError(message)
 	end
 	if (firstSpriteIndex < 0 or secondSpriteIndex < 0) then
-		return;
+		return
 	end
-	sprite_merge(firstSpriteIndex, secondSpriteIndex);
+	sprite_merge(firstSpriteIndex, secondSpriteIndex)
 end
 
 ---This function will delete a sprite from the game, freeing any memory that was reserved for it.
@@ -226,20 +235,20 @@ end
 ---@param spriteIndex number the index for the sprite to delete
 function Common.DeleteSprite(spriteIndex)
 	if(spriteIndex < 0) then
-		local message = "Cannot delete the sprite the index provided was not referencing a sprite.";
-		Common.ShowError(message);
-		return;
+		local message = "Cannot delete the sprite the index provided was not referencing a sprite."
+		Common.ShowError(message)
+		return
 	end
-	sprite_delete(spriteIndex);
+	sprite_delete(spriteIndex)
 end
 
 
---------------------------
---DEBUG HELPER FUNCTIONS--
---------------------------
+------------------------------------------------------------------------------
+--- DEBUG HELPER FUNCTIONS ---------------------------------------------------
+------------------------------------------------------------------------------
 
 ---A spacerLine for the print functions
-local spacerLine = "\n###################################################\n";
+local spacerLine = "\n###################################################\n"
 
 ---A debug helper function:
 ---Prints a message box with the value
@@ -248,10 +257,10 @@ local spacerLine = "\n###################################################\n";
 ---@param value string|number the value to show
 function Common.ShowMessage(value)
 	local info = debug.getinfo(2, "Sl")
-	local caller = info.short_src:gsub("/","\\");
-	local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline;
-	local prefix = callerPrint..spacerLine;
-	show_message(prefix..tostring(value));
+	local caller = info.short_src:gsub("/","\\")
+	local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline
+	local prefix = callerPrint..spacerLine
+	show_message(prefix..tostring(value))
 end
 
 ---A debug helper function:
@@ -261,11 +270,11 @@ end
 ---@param message string the error message to show
 function Common.ShowError(message)
 	local info = debug.getinfo(2, "Sl")
-	local caller = info.short_src:gsub("/","\\");
-	local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline;
-	local prefix = "MOD FRAMEWORK ERROR"..spacerLine;
-	local suffix = spacerLine..callerPrint..spacerLine..debug.traceback("Error", 2).."\n\n";
-	show_message(prefix..message..suffix);
+	local caller = info.short_src:gsub("/","\\")
+	local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline
+	local prefix = "MOD FRAMEWORK ERROR"..spacerLine
+	local suffix = spacerLine..callerPrint..spacerLine..debug.traceback("Error", 2).."\n\n"
+	show_message(prefix..message..suffix)
 end
 
 ---A debug helper function:
@@ -275,54 +284,54 @@ end
 ---@param ref any the Gamemaker struct reference or table reference
 function Common.DumpObjToMessage(ref)
 	local info = debug.getinfo(2, "Sl")
-	local caller = info.short_src:gsub("/","\\");
-	local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline;
-	local prefix = callerPrint..spacerLine;
-	local values = {};
+	local caller = info.short_src:gsub("/","\\")
+	local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline
+	local prefix = callerPrint..spacerLine
+	local values = {}
 
 	if(ref == nil) then
-		local message = "This is a nil value";
-		show_message(prefix..message);
-		return;
+		local message = "This is a nil value"
+		show_message(prefix..message)
+		return
 	end
 
 	if(type(ref) == "table") then
-		prefix = prefix.."TABLE"..spacerLine;
+		prefix = prefix.."TABLE"..spacerLine
 		for key, refValue in pairs(ref) do
-			local refValueString = tostring(refValue);
+			local refValueString = tostring(refValue)
 			if (type(refValue) == "table") then
-				refValueString = Private.TableToString(refValue);
+				refValueString = Private.TableToString(refValue)
 			end
-			table.insert(values, tostring(key).."::"..refValueString);
+			table.insert(values, tostring(key).."::"..refValueString)
 		end
-		local message = table.concat(values, ",\n");
-		show_message(prefix..message);
-		return;
+		local message = table.concat(values, ",\n")
+		show_message(prefix..message)
+		return
 	end
 
-	prefix = prefix.."GAMEMAKER STRUCT"..spacerLine;
+	prefix = prefix.."GAMEMAKER STRUCT"..spacerLine
 	for key, refValue in pairs(struct_get_names(ref)) do
-		local refValueString = tostring(ref[refValue]);
+		local refValueString = tostring(ref[refValue])
 		if (type(ref[refValue]) == "table") then
-			refValueString = Private.TableToString(ref[refValue]);
+			refValueString = Private.TableToString(ref[refValue])
 		end
-		table.insert(values, tostring(key).."::"..tostring(refValue).."::"..refValueString);
+		table.insert(values, tostring(key).."::"..tostring(refValue).."::"..refValueString)
 	end
-	local message = table.concat(values, ",\n");
-	show_message(prefix..message);
+	local message = table.concat(values, ",\n")
+	show_message(prefix..message)
 end
 
 ---Convert a table into a single line of key value pairs
 ---@param ref table the table to convert
 ---@return string value the string value with key value pairs, truncated to 120 chars
 function Private.TableToString(ref)
-	local values = {};
+	local values = {}
 	for key, refValue in pairs(ref) do
-		table.insert(values, tostring(key).."="..tostring(refValue));
+		table.insert(values, tostring(key).."="..tostring(refValue))
 	end
-	local value = table.concat(values, ", ");
-	value = Private.Truncate(value, 120);
-	return "TABLE:: { ".. value.." }";
+	local value = table.concat(values, ", ")
+	value = Private.Truncate(value, 120)
+	return "TABLE:: { ".. value.." }"
 end
 
 ---Truncate a string to a max lenght
@@ -343,16 +352,16 @@ end
 ---@param ds_map ds_map the reference to the ds_map
 function Common.DsmapToMessage(ds_map)
 	local info = debug.getinfo(2, "Sl")
-	local caller = info.short_src:gsub("/","\\");
-	local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline;
-	local prefix = callerPrint..spacerLine;
+	local caller = info.short_src:gsub("/","\\")
+	local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline
+	local prefix = callerPrint..spacerLine
 
-	local values = {};
+	local values = {}
     for k, v in pairs(ds_map_keys_to_array(ds_map)) do
-        table.insert(values, tostring(k).."::"..tostring(v).."::"..tostring(ds_map_find_value(ds_map, v)));
+        table.insert(values, tostring(k).."::"..tostring(v).."::"..tostring(ds_map_find_value(ds_map, v)))
     end
-    local message = table.concat(values, ",\n");
-	show_message(prefix..message);
+    local message = table.concat(values, ",\n")
+	show_message(prefix..message)
 end
 
 ---A debug helper function:
@@ -363,26 +372,30 @@ end
 ---@param ref any the Gamemaker struct reference
 function Common.ToClassTypeMessage(ref)
 	local info = debug.getinfo(2, "Sl")
-	local caller = info.short_src:gsub("/","\\");
-	local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline;
-	local prefix = callerPrint..spacerLine;
+	local caller = info.short_src:gsub("/","\\")
+	local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline
+	local prefix = callerPrint..spacerLine
 
-	local values = {};
+	local values = {}
 	if(type(ref) == "table") then
-		show_message(prefix.."Can't convert a table.");
+		show_message(prefix.."Can't convert a table.")
 	else
-		table.insert(values, "---This is an auto generated class definition.");
-		table.insert(values, "---");
-		table.insert(values, "---Please use the found values as a starting point for your use.");
-		table.insert(values, "---As not all values may be present at every point of the game.");
-		table.insert(values, "---Or values could be missing from the definition.");
-		table.insert(values, "---@class game_");
+		table.insert(values, "---This is an auto generated class definition.")
+		table.insert(values, "---")
+		table.insert(values, "---Please use the found values as a starting point for your use.")
+		table.insert(values, "---As not all values may be present at every point of the game.")
+		table.insert(values, "---Or values could be missing from the definition.")
+		table.insert(values, "---@class game_")
 		for _, v in pairs(struct_get_names(ref)) do
-			table.insert(values, "---@field "..tostring(v).." "..type(ref[v]));
+			table.insert(values, "---@field "..tostring(v).." "..type(ref[v]))
 		end
-		local message = table.concat(values, "\n");
-		show_message(prefix..message);
+		local message = table.concat(values, "\n")
+		show_message(prefix..message)
 	end
 end
 
-return Common;
+------------------------------------------------------------------------------
+--- EXPORT COMMON ------------------------------------------------------------
+------------------------------------------------------------------------------
+
+return Common

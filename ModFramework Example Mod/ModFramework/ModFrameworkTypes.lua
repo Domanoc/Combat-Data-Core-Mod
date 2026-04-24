@@ -1,19 +1,17 @@
---------------------------
---Mod Framework Types   --
---------------------------
+------------------------------------------------------------------------------
+--- MODFRAMEWORK TYPES -------------------------------------------------------
+------------------------------------------------------------------------------
 
 ---Access to Types used by the framework.
-local Types = {};
+---@class ModFrameworkTypes
+local Types = {}
 
----MechModule identifiers
-local MechModules = {
-	Aux = 1,
-	Motor = 2,
-	Reactor = 3,
-	Weapon = 4,
-	Cabin = 5
-};
-Types.MechModules = MechModules;
+------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------
+--- MECH TYPES ---------------------------------------------------------------
+------------------------------------------------------------------------------
 
 ---The base mech indexes
 local BaseMechs = {
@@ -25,7 +23,23 @@ local BaseMechs = {
 	Tentacle = 5,
 	Triangle = 6,
 }
-Types.BaseMechs = BaseMechs;
+Types.BaseMechs = BaseMechs
+
+---MechModule identifiers
+---@class MechModules
+local MechModules = {
+	Aux = 1,
+	Motor = 2,
+	Reactor = 3,
+	Weapon = 4,
+	Cabin = 5
+}
+Types.MechModules = MechModules
+
+
+------------------------------------------------------------------------------
+--- COMPONENT TYPES ----------------------------------------------------------
+------------------------------------------------------------------------------
 
 ---Component types
 local ComponentTypes = {
@@ -45,66 +59,53 @@ local ComponentTypes = {
 	Rocket = 97,
 	Beacon = 98,
 	CityParts = 99
-};
-Types.ComponentTypes = ComponentTypes;
+}
+Types.ComponentTypes = ComponentTypes
+
+---component sizes
+local ComponentSizes = {
+	--a single hanger slot
+	Small = 1,
+	--a full hanger row, 5 slots
+	Large = 5
+}
+Types.ComponentSizes = ComponentSizes
+
+
+------------------------------------------------------------------------------
+--- WEAPON TYPES -------------------------------------------------------------
+------------------------------------------------------------------------------
+
+---The weapon mech indexes
+local BaseWeapons = {
+	SIX_BARRELED_GUN = 0,
+	ROCKET_SYSTEM = 1,
+	TANK_GUN = 2,
+	MISSILE_LAUNCHER = 3,
+	HIGH_POWER_IMPULSE_LASER = 4,
+	RAPID_FIRING_LASER = 5,
+	FLAMETHROWER = 6,
+	MASS_ACCELERATOR = 7,
+	TESLA_CANNON = 8,
+	PLASMA_ACCELERATOR = 9,
+	TOXIN_SPRAYER = 10,
+	PARTICLE_EMITTER = 11,
+}
+Types.BaseWeapons = BaseWeapons
 
 ---Weapon type identifiers
 local WeaponTypes = {
-	White = "White",	--ballistic
-	Red = "Red",		--rockets
-	Blue = "Blue",		--laser/tesla
-	Yellow = "Yellow",  --thermal
-};
-Types.WeaponTypes = WeaponTypes;
+	White = "white",	--ballistic
+	Red = "red",		--rockets
+	Blue = "blue",		--laser/tesla
+	Yellow = "yellow",  --thermal
+}
+Types.WeaponTypes = WeaponTypes
 
----Reseach index identifiers for the mres tables
-local ResearchIndexes = {
-	Position = 1, 		--position number on the research tree. You can see positions in the game with f6 (debug mode)
-	Link_1 = 2,			--link 1, Link to open the next research. Should contain the number of the research from the array
-	Link_2 = 3,			--link 2, Link to open the next research. Should contain the number of the research from the array
-	Link_3 = 4,			--link 3, Link to open the next research. Should contain the number of the research from the array
-	Condition = 5,		--condition (0-closed, 1-opened, 2-researching, 3-researched)
-	RequiredDays = 6,	--the required days to complete the research
-	RequiredStaff = 7,	--the required available staff to start the research
-	IconType = 8,		--research icon type (0-combat, 1-production, 2-passability)
-	IconSubtype = 9, 	--research icon subtype (see left column in the game in research menu)
-	Description = 10	--the description text for the research
-};
-Types.ResearchIndexes = ResearchIndexes;
 
----Research conditions
-local ResearchConditions = {
-	--It is closed, the prerequisites need to be completed
-	Closed = 0,
-	--It can be selected to start researching
-	Opened = 1,
-	--It is currently being researched
-	Researching = 2,
-	--The research is complete
-	Researched = 3
-};
-Types.ResearchConditions = ResearchConditions;
-
----Research icons
----@type table<string, ReseachIcon>
-local ResearchIcons = {
-	Damage = 		{ IconType = 0 , IconSubType = 0 },
-	Survival = 		{ IconType = 0 , IconSubType = 1 },
-	Engineering = 	{ IconType = 1 , IconSubType = 0 },
-	Production = 	{ IconType = 1 , IconSubType = 1 },
-	Research = 		{ IconType = 1 , IconSubType = 2 },
-	Plains = 		{ IconType = 2 , IconSubType = 0 },
-	Ocean = 		{ IconType = 2 , IconSubType = 1 },
-	Wasteland = 	{ IconType = 2 , IconSubType = 2 },
-	Desert = 		{ IconType = 2 , IconSubType = 3 },
-	Swamp = 		{ IconType = 2 , IconSubType = 4 },
-	Volcano = 		{ IconType = 2 , IconSubType = 5 },
-	Snow = 			{ IconType = 2 , IconSubType = 6 },
-	City = 			{ IconType = 2 , IconSubType = 7 },
-	Mountain = 		{ IconType = 2 , IconSubType = 8 },
-	Cave = 			{ IconType = 2 , IconSubType = 9 },
-};
-Types.ResearchIcons = ResearchIcons;
+------------------------------------------------------------------------------
+--- RESEARCH TYPES -----------------------------------------------------------
+------------------------------------------------------------------------------
 
 ---The base research res numbers
 local BaseResearchResNumbers = {
@@ -152,34 +153,62 @@ local BaseResearchResNumbers = {
 	CYBORGIZATION = 41,
 	CYBORG_SQUADS = 42,
 	DEPTH_CHARGE = 43,
-};
-Types.BaseResearchResNumbers = BaseResearchResNumbers;
-
----component sizes
-local ComponentSizes = {
-	--a single hanger slot
-	Small = 1,
-	--a full hanger row, 5 slots
-	Large = 5
-};
-Types.ComponentSizes = ComponentSizes;
-
----The weapon mech indexes
-local BaseWeapons = {
-	SIX_BARRELED_GUN = 0,
-	ROCKET_SYSTEM = 1,
-	TANK_GUN = 2,
-	MISSILE_LAUNCHER = 3,
-	HIGH_POWER_IMPULSE_LASER = 4,
-	RAPID_FIRING_LASER = 5,
-	FLAMETHROWER = 6,
-	MASS_ACCELERATOR = 7,
-	TESLA_CANNON = 8,
-	PLASMA_ACCELERATOR = 9,
-	TOXIN_SPRAYER = 10,
-	PARTICLE_EMITTER = 11,
 }
-Types.BaseWeapons = BaseWeapons;
+Types.BaseResearchResNumbers = BaseResearchResNumbers
+
+---Reseach index identifiers for the mres tables
+local ResearchIndexes = {
+	Position = 1, 		--position number on the research tree. You can see positions in the game with f6 (debug mode)
+	Link_1 = 2,			--link 1, Link to open the next research. Should contain the number of the research from the array
+	Link_2 = 3,			--link 2, Link to open the next research. Should contain the number of the research from the array
+	Link_3 = 4,			--link 3, Link to open the next research. Should contain the number of the research from the array
+	Condition = 5,		--condition (0-closed, 1-opened, 2-researching, 3-researched)
+	RequiredDays = 6,	--the required days to complete the research
+	RequiredStaff = 7,	--the required available staff to start the research
+	IconType = 8,		--research icon type (0-combat, 1-production, 2-passability)
+	IconSubtype = 9, 	--research icon subtype (see left column in the game in research menu)
+	Description = 10	--the description text for the research
+}
+Types.ResearchIndexes = ResearchIndexes
+
+---Research conditions
+local ResearchConditions = {
+	--It is closed, the prerequisites need to be completed
+	Closed = 0,
+	--It can be selected to start researching
+	Opened = 1,
+	--It is currently being researched
+	Researching = 2,
+	--The research is complete
+	Researched = 3
+}
+Types.ResearchConditions = ResearchConditions
+
+---Research icons
+---@class ResearchIcons
+local ResearchIcons = {
+	Damage = 		{ IconType = 0 , IconSubType = 0 },
+	Survival = 		{ IconType = 0 , IconSubType = 1 },
+	Engineering = 	{ IconType = 1 , IconSubType = 0 },
+	Production = 	{ IconType = 1 , IconSubType = 1 },
+	Research = 		{ IconType = 1 , IconSubType = 2 },
+	Plains = 		{ IconType = 2 , IconSubType = 0 },
+	Ocean = 		{ IconType = 2 , IconSubType = 1 },
+	Wasteland = 	{ IconType = 2 , IconSubType = 2 },
+	Desert = 		{ IconType = 2 , IconSubType = 3 },
+	Swamp = 		{ IconType = 2 , IconSubType = 4 },
+	Volcano = 		{ IconType = 2 , IconSubType = 5 },
+	Snow = 			{ IconType = 2 , IconSubType = 6 },
+	City = 			{ IconType = 2 , IconSubType = 7 },
+	Mountain = 		{ IconType = 2 , IconSubType = 8 },
+	Cave = 			{ IconType = 2 , IconSubType = 9 },
+}
+Types.ResearchIcons = ResearchIcons
+
+
+------------------------------------------------------------------------------
+--- OTHER TYPES --------------------------------------------------------------
+------------------------------------------------------------------------------
 
 ---A non complete list of Virtual Keys
 local VirtualKeys = {
@@ -279,7 +308,11 @@ local VirtualKeys = {
 	F10 = 121,
 	F11 = 122,
 	F12 = 123,
-};
-Types.VirtualKeys = VirtualKeys;
+}
+Types.VirtualKeys = VirtualKeys
 
-return Types;
+------------------------------------------------------------------------------
+--- EXPORT TYPES -------------------------------------------------------------
+------------------------------------------------------------------------------
+
+return Types

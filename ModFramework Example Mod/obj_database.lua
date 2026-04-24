@@ -4,21 +4,22 @@
 ---@param v_modid string
 function create(q,v_modid)
 	--load the mod framework as a global for use within this file
-	Mod = require("ModFrameworkModule");
+	Mod = require("ModFrameworkModule")
 
 	--path to the mod folder
-	local modFilepath = Mod.Common.GetModPath("ModFramework Example Mod");
+	local modFilepath = Mod.Common.GetModPath("ModFramework Example Mod")
 
 	--load needed types
-	local mechModules = Mod.Types.MechModules;
-	local componentSizes = Mod.Types.ComponentSizes;
-	local weaponTypes = Mod.Types.WeaponTypes;
+
+	local mechModules = Mod.Types.MechModules
+	local componentSizes = Mod.Types.ComponentSizes
+	local weaponTypes = Mod.Types.WeaponTypes
 
 	--An example for creating a modded mech
 	Mod.Database.AddMech({
 		Name = 			   "example_mech",		 --The name of the mech, used to find its references
 		ComponentSize =    componentSizes.Large, --The size of the component when constructing it. 1 for single slot or 5 for a full row
-		IsResearched = 	   false,				 --Set to true if its pre researched, else false.
+		IsResearched = 	   true,				 --Set to true if its pre researched, else false.
 		CanBeConstructed = true,				 --Set to true if it can be constructed in the component shop, false otherwise
 		GiveFreeItem = 	   true,				 --Set to true to return a free copy when triggered as an unlock
 		PriceMetallite =   1000,				 --The amount of metallite needed to produce this mech
@@ -54,7 +55,7 @@ function create(q,v_modid)
 		SpriteBattleDead = 	  	modFilepath.."sprites\\example_mech_dead.png",				--The death sprite when the mech gets destroyed during battle
 		SpriteMeleeVertical = 	modFilepath.."sprites\\example_mech_melee_vertical.png",    --The animation atlas for a vertical melee, optional if the mech has no melee
 		SpriteMeleeHorizontal = modFilepath.."sprites\\example_mech_melee_horizontal.png"   --The animation atlas for a horizontal melee,  optional if the mech has no melee
-	});
+	})
 
 	--An example for creating a modded weapon
 	Mod.Database.AddWeapon({
@@ -84,7 +85,7 @@ function create(q,v_modid)
 		PriceSkalaknit =    1000,				  --The amount of skalaknit needed to produce this weapon
 		PriceStaff = 	    1000,				  --The amount of staff needed to produce this weapon
 		ProductionDays =    2,					  --The amount of days it takes to produce this weapon
-		WeaponType =	    "white",			  --the type of weapon (white = ballistic, red = rockets, blue = laser/tesla, yellow = thermal)
+		WeaponType =	    weaponTypes.White,	  --the type of weapon (white = ballistic, red = rockets, blue = laser/tesla, yellow = thermal)
 		FireRate =		    25,					  --the base fire rate. higher values offer a faster rate, 600 with full firespeed points will fill the firespeed bar completely
 		Weight = 		    48,					  --the base weight of the weapon
 		Accuracy = 		    1.5,				  --the base accuracy for the weapon. accuracy in degrees, 0 is perfect accuracy
@@ -97,7 +98,7 @@ function create(q,v_modid)
 		SpriteSmall =       modFilepath.."sprites/example_weapon_small.png",	--the small sprite for the weapon
 		SpriteBig = 	    modFilepath.."sprites/example_weapon_big.png",		--the big sprite for the weapon
 		SpriteHuge = 	    modFilepath.."sprites/example_weapon_huge.png",		--the huge sprite for the weapon
-	});
+	})
 end
 
 ---saving system deletes the file and creates new one before saving new info

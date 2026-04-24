@@ -4,23 +4,23 @@
 ---@param v_modid string
 function create(q, v_modid)
 	--load the mod framework as a global for use within this file
-	Mod = require("ModFrameworkModule");
+	Mod = require("ModFrameworkModule")
 
 	--path to the mod folder
-	local modFilepath = Mod.Common.GetModPath("ModFramework Example Mod");
+	local modFilepath = Mod.Common.GetModPath("ModFramework Example Mod")
 
 	--load needed types
-	local researchIcons = Mod.Types.ResearchIcons;
-	local researchConditions = Mod.Types.ResearchConditions;
-	local componentTypes = Mod.Types.ComponentTypes;
-	local baseResearchResNumbers = Mod.Types.BaseResearchResNumbers;
+	local researchIcons = Mod.Types.ResearchIcons
+	local researchConditions = Mod.Types.ResearchConditions
+	local componentTypes = Mod.Types.ComponentTypes
+	local baseResearchResNumbers = Mod.Types.BaseResearchResNumbers
 
 	--When we want a research to include an unlock we need to include the references.
 	--An component that is added as research unlock will, add a copy on completion and or unlock the production of item based on this setting.
 	--With this function we can get our modded components that we made in "obj_database.lua".
 	local unlocks = Mod.Common.GetModdedComponents({
 		{ Name = "example_mech", ComponentType = componentTypes.Mech },
-	});
+	})
 	
 	--We can create a new research and as a return value we get the new res number to create links with.
 	local exampleResearchResNumber = Mod.Research.AddResearch({
@@ -50,7 +50,7 @@ function create(q, v_modid)
 		SpritePath = 											--path to the sprite used for the research
 			modFilepath.."sprites\\example_research.png",
 		UnlockedComponents = unlocks							--the components that are unlocked by this research
-	});
+	})
 
 	--We can use the previous research return to set it as a prerequisite for a new research.
 	Mod.Research.AddResearch({
@@ -80,26 +80,26 @@ function create(q, v_modid)
 		SpritePath = 											--path to the sprite used for the research
 			modFilepath.."sprites\\example_research.png",
 		UnlockedComponents = {}									--the components that are unlocked by this research
-	});
+	})
 
 	--We can retrieve the data of a research that was added by the framework, even if it was made by another mod.
 	--however if loading one from another mod, that mod has to be before this mod in the load order.
-	local example2 = Mod.Common.GetModdedResearch("example_research_2");
+	local example2 = Mod.Common.GetModdedResearch("example_research_2")
 
 	--We can search for a single component to add as an unlock to an existing research
-	local unlock = Mod.Common.GetModdedComponent("example_mech", componentTypes.Mech);
+	local unlock = Mod.Common.GetModdedComponent("example_mech", componentTypes.Mech)
 	--The existing research can be a base research or one from another mod.
 	--However if adding one to a research from another mod that mod has to be before this mod in the load order.
-	Mod.Research.AddUnlock(baseResearchResNumbers.NEW_MECH_PLATE, unlock);
+	Mod.Research.AddUnlock(baseResearchResNumbers.NEW_MECH_PLATE, unlock)
 
 	--We can move any research to a new position and it will keep its links.
-	Mod.Research.MoveResearch(baseResearchResNumbers.ROCKET_LAUNCH, 0);
+	Mod.Research.MoveResearch(baseResearchResNumbers.ROCKET_LAUNCH, 0)
 
 	--We can relink a research to a new prerequisite research.
-	Mod.Research.ChangePrerequisite(baseResearchResNumbers.PROCESSOR_PROGRAMS, baseResearchResNumbers.REPAIR_SHOP);
+	Mod.Research.ChangePrerequisite(baseResearchResNumbers.PROCESSOR_PROGRAMS, baseResearchResNumbers.REPAIR_SHOP)
 
 	--We can clear the links a research has to make it easier to rearange the tech tree.
-	Mod.Research.ClearUnlockLinks(baseResearchResNumbers.NEW_MECH_PLATE);
+	Mod.Research.ClearUnlockLinks(baseResearchResNumbers.NEW_MECH_PLATE)
 end
 
 ---if activated = true

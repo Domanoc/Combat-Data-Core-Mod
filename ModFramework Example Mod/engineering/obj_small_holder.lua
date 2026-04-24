@@ -3,8 +3,6 @@
 ---@param q any
 ---@param v_modid string
 function create(q,v_modid)--one time script when save is loaded
-	--load the mod framework as a global for use within this file
-	Mod = require("ModFrameworkModule");
 end
 
 --in draw event
