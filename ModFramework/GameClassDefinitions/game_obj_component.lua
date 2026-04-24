@@ -1,0 +1,15 @@
+---This is an auto generated class definition.
+---
+---Please use the found values as a starting point for your use.
+---As not all values may be present at every point of the game.
+---Or values could be missing from the definition.
+---@class game_obj_component
+---@field comp_data_type number the index number of the component
+---@field comp_type ComponentType the type of component
+---@field item_pos number
+---@field logo number the index of the sprite, use -4 to auto set it
+---@field logo_index number
+---@field researched boolean when true the component can be constructed
+---@field size ComponentSize the size of the component when constructing it.
+---@field size_x number
+---@field size_y number
