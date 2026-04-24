@@ -79,15 +79,15 @@ function Production.SetModdedSprites()
 	obj_component_shop.hanger_mass = hanger_mass
 end
 
-local updateWeaponDesc = true
+local isWeaponDescComplete = false
 ---Use in the draw_top_menu function of obj_database.lua
 ---
 ---The modded weapon descriptions need to be set in the ini output
 function Production.SetModdedWeaponDescriptions()
 	local obj_weapon_test = Common.GetObjWeaponTest()
 
-	--We check if the ini has been loaded
-	if(obj_weapon_test.load_ini == false and updateWeaponDesc == true) then
+	--We check if the ini has been loaded or if the update is complete
+	if(obj_weapon_test.load_ini == false or isWeaponDescComplete == true) then
 		return
 	end
 
@@ -105,7 +105,7 @@ function Production.SetModdedWeaponDescriptions()
 	obj_weapon_test.weapon_description = weaponDescriptions
 
 	--we only need to run this once so we set the flag to false
-	updateWeaponDesc = false
+	isWeaponDescComplete = true
 end
 
 ---Use in the create function of obj_component_shop.lua

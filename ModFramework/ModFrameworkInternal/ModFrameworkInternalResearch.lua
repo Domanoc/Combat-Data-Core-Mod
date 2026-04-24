@@ -42,7 +42,7 @@ function Research.FixResearchPanelList()
     obj_research_panel.mres = newMres;
 end
 
-local fixResearch = true
+local isResearchFixed = false
 ---Use in the draw_top_menu function of obj_database.lua
 ---
 ---In the event the mod is added to an existing save the newly added mod research is all defaulted to 0 days remaining and condition 0 (closed).
@@ -52,8 +52,7 @@ function Research.FixModdedResearch()
 	local isIniLoaded = obj_weapon_test.load_ini
 
 	--We can only fix the research after all the loading is done. so we can piggyback on the load flag for obj_weapon_test
-	if(isIniLoaded == true and fixResearch == false) then
-		--We only need to run this once per game load.
+	if(obj_weapon_test.load_ini == false or isResearchFixed == true) then
 		return
 	end
 
@@ -86,7 +85,7 @@ function Research.FixModdedResearch()
 	end
 
 	--we only need to run this once so we set the flag to false
-	fixResearch = false
+	isResearchFixed = true
 end
 
 ---Use in the create function of obj_research.lua
