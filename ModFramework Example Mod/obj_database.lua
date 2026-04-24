@@ -122,6 +122,13 @@ end
 ---The draw call thay runs every frame
 ---@param q game_obj_database
 function draw_top_menu(q)
+	--Here are some funtions to help with testing
+	--Its recommended to remove these before releasing your mod
+	local keys = Mod.Types.VirtualKeys
+	if keyboard_check_pressed(keys.F9) then
+		Mod.Common.ShowMessage("Unlocking all Research.")
+		Mod.Research.UnlockAllResearch()
+    end
 end
 
 ---The draw call thay runs every frame while debug is active (F6)

@@ -129,8 +129,102 @@ function Production.SetModdedWeaponDescriptions()
 	--return new data
 	obj_weapon_test.weapon_description = weaponDescriptions
 
-	--we only need to run this once so we set the flag to false
+	--we only need to run this once so we set the flag to true
 	isWeaponDescComplete = true
+end
+
+local areComponentsUpdated = false
+function Production.FixShopComponents()
+	--if the components are set skip
+	if (areComponentsUpdated == true) then
+		return
+	end
+
+	local obj_component_shop = Common.GetObjComponentShop()
+
+	table.insert(Storage.ShopComponents, obj_component_shop.comp_beacon)
+	table.insert(Storage.ShopComponents, obj_component_shop.comp_city_parts)
+	table.insert(Storage.ShopComponents, obj_component_shop.comp_engineer)
+	table.insert(Storage.ShopComponents, obj_component_shop.comp_rocket)
+	Private.StoreShopComponents(obj_component_shop.comp_cabin)
+	Private.StoreShopComponents(obj_component_shop.comp_injector)
+	Private.StoreShopComponents(obj_component_shop.comp_kernel)
+	Private.StoreShopComponents(obj_component_shop.comp_lr_armor_end)
+	Private.StoreShopComponents(obj_component_shop.comp_lr_armor_middle)
+	Private.StoreShopComponents(obj_component_shop.comp_magnet)
+	Private.StoreShopComponents(obj_component_shop.comp_mech)
+	Private.StoreShopComponents(obj_component_shop.comp_motor)
+	Private.StoreShopComponents(obj_component_shop.comp_piston)
+	Private.StoreShopComponents(obj_component_shop.comp_reactor)
+	Private.StoreShopComponents(obj_component_shop.comp_safety)
+	Private.StoreShopComponents(obj_component_shop.comp_solenoid)
+	Private.StoreShopComponents(obj_component_shop.comp_wep)
+
+	for _, value in pairs(Storage.ShopComponents) do
+		value.researched = true;
+		value.x = 0
+		value.y = 0
+	end
+
+	--18 slots under additional
+--	local startX = 20
+--	local startY = 485
+--	for i = 0, 17, 1 do
+--		local x = startX + 97 * (i % 3)
+--		local y = startY + 97 * (i // 3)
+--		local index = i + 1
+--
+--		Storage.ShopComponents[index].x = x
+--		Storage.ShopComponents[index].y = y
+--	end
+
+	--30 slots under mech
+--	local startX = 320
+--	local startY = 485
+--	for i = 0, 29, 1 do
+--		local x = startX + 97 * (i % 5)
+--		local y = startY + 97 * (i // 5)
+--		local index = i + 1
+--
+--		Storage.ShopComponents[index].x = x
+--		Storage.ShopComponents[index].y = y
+--	end
+
+	--24 slots under weapons
+--	local startX = 1120
+--	local startY = 221
+--	for i = 0, 23, 1 do
+--		local x = startX + 97 * (i % 8)
+--		local y = startY + 97 * (i // 8)
+--		local index = i + 1
+--		Storage.ShopComponents[index].x = x
+--		Storage.ShopComponents[index].y = y
+--	end
+
+	--8 slots under support
+--	local startX = 1120
+--	local startY = 595
+--	for i = 0, 7, 1 do
+--		local x = startX + 97 * (i % 8)
+--		local y = startY + 97 * (i // 8)
+--		local index = i + 1
+--		Storage.ShopComponents[index].x = x
+--		Storage.ShopComponents[index].y = y
+--	end
+
+	--24 slots under reactors
+	local startX = 1120
+	local startY = 765
+	for i = 0, 23, 1 do
+		local x = startX + 97 * (i % 8)
+		local y = startY + 97 * (i // 8)
+		local index = i + 1
+		Storage.ShopComponents[index].x = x
+		Storage.ShopComponents[index].y = y
+	end
+
+	--we only need to run this once so we set the flag to true
+	areComponentsUpdated = true
 end
 
 ---Use in the create function of obj_component_shop.lua
@@ -265,6 +359,14 @@ end
 function Private.AddComponentInstance(x, y)
 	local obj_component = Common.GetObjComponent()
 	return instance_create_depth(x, y, -500, obj_component)
+end
+
+---Store the shop components
+---@param array game_obj_component[] the components to store
+function Private.StoreShopComponents(array)
+	for _, component in pairs(array) do
+		table.insert(Storage.ShopComponents, component)
+	end
 end
 
 ------------------------------------------------------------------------------

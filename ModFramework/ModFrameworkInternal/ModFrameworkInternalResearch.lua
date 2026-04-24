@@ -84,7 +84,7 @@ function Research.FixModdedResearch()
 		--both these conditions shouldn't need our attention as they are most likely part of normal gameplay
 	end
 
-	--we only need to run this once so we set the flag to false
+	--we only need to run this once so we set the flag to true
 	isResearchFixed = true
 end
 

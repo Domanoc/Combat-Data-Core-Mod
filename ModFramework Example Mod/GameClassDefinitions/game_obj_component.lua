@@ -13,3 +13,5 @@
 ---@field size ComponentSize the size of the component when constructing it.
 ---@field size_x number
 ---@field size_y number
+---@field x number the x position of the instance
+---@field y number the y position of the instance

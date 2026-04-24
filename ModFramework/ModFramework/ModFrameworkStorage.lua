@@ -28,6 +28,10 @@ Storage.LoadedResearchList = {}
 ---@type ModdedResearch[]
 Storage.ModdedResearchList = {}
 
+---We keep a list of the shop components. So we can reference them later.
+---@type game_obj_component[]
+Storage.ShopComponents = {}
+
 ------------------------------------------------------------------------------
 --- EXPORT STORAGE -----------------------------------------------------------
 ------------------------------------------------------------------------------

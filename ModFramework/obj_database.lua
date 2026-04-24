@@ -1,3 +1,5 @@
+---@type game_obj_component_shop?
+local obj_component_shop = nil;
 
 ---One time script when the game is started
 ---@param q game_obj_database
@@ -26,12 +28,20 @@ function create(q,v_modid)
 	--Register the framework
 	Internal.RegisterFramework()
 
-	-- you can change sprites with this
-	local engineringSprite = asset_get_index("spr_back_shop")
-	sprite_replace(engineringSprite, currentFilePath.."sprites\\spr_back_shop.png", 1, false, false, 0, 0)
+	--we change the shop sprite to allow better rearranging of the items
+	local engineeringSprite = asset_get_index("spr_back_shop")
+	show_message(engineeringSprite)
+	sprite_replace(engineeringSprite, currentFilePath.."sprites\\spr_back_shop.png", 1, false, false, 0, 0)
+
+	local robotSprite = asset_get_index("spr_engineer_robot")
+	sprite_replace(robotSprite, currentFilePath.."sprites\\spr_engineer_robot.png", 1, false, false, 0, 0)
+
+	obj_component_shop = Mod.Common.GetObjComponentShop();
 
 	--TODO LIST
 	--For existing mods::
+
+	--Improve the production slot selection for new items
 
 	--Show example of solenoid modding and adding
 	--Support for pilot modding
@@ -59,11 +69,9 @@ function create(q,v_modid)
 	--Support for safety modding
 	--Show example of safety modding and adding
 
-	--Improve the production slot selection for new items
-
 	--Review documetation
 
-	--localization???
+	--resize spr_engineer_robot.png to fit within the component square
 end
 
 ---saving system deletes the file and creates new one before saving new info
@@ -89,37 +97,21 @@ end
 ---@param q game_obj_database
 function draw_top_menu(q)
 	Internal.Production.SetModdedWeaponDescriptions()
+	Internal.Production.FixShopComponents()
 	Internal.Research.FixModdedResearch()
 
 	local keys = Mod.Types.VirtualKeys
-	if keyboard_check_pressed(keys.F9) then
-		Mod.Common.ShowMessage("Unlocking all Research.")
-		Mod.Research.UnlockAllResearch()
-    end
-
-	if keyboard_check_pressed(keys.F10) then		
-		local obj_component_shop = Mod.Common.GetObjComponentShop()
-
-		local comp_beacon = 			obj_component_shop.comp_beacon
-		local comp_cabin = 				obj_component_shop.comp_cabin
-		local comp_city_parts = 		obj_component_shop.comp_city_parts
-		local comp_engineer = 			obj_component_shop.comp_engineer
-		local comp_injector = 			obj_component_shop.comp_injector
-		local comp_kernel = 			obj_component_shop.comp_kernel
-		local comp_lr_armor_end = 		obj_component_shop.comp_lr_armor_end
-		local comp_lr_armor_middle = 	obj_component_shop.comp_lr_armor_middle
-		local comp_magnet = 			obj_component_shop.comp_magnet
-		local comp_mech = 				obj_component_shop.comp_mech
-		local comp_motor = 				obj_component_shop.comp_motor
-		local comp_piston = 			obj_component_shop.comp_piston
-		local comp_reactor = 			obj_component_shop.comp_reactor
-		local comp_rocket = 			obj_component_shop.comp_rocket
-		local comp_safety = 			obj_component_shop.comp_safety
-		local comp_solenoid = 			obj_component_shop.comp_solenoid
-		local comp_wep = 				obj_component_shop.comp_wep
-
-		--Mod.Common.ToClassTypeMessage(q)
-    end
+	local mouseButtons = Mod.Types.MouseButtons
+	local mx = window_mouse_get_x()
+	local my = window_mouse_get_y()
+	if (obj_component_shop ~= nil and obj_component_shop.activated == true) then
+		if keyboard_check_pressed(keys.F10) then
+			--Mod.Common.DumpObjToMessage(obj_component_shop)
+    	end
+		if (mouse_check_button_pressed(mouseButtons.Left)) then
+			--show_message("coord: "..mx..","..my)
+		end
+	end
 end
 
 ---The draw call thay runs every frame while debug is active (F6)

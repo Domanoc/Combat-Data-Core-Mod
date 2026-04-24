@@ -211,6 +211,7 @@ Types.ResearchIcons = ResearchIcons
 ------------------------------------------------------------------------------
 
 ---A non complete list of Virtual Keys
+---@class VirtualKeys
 local VirtualKeys = {
 	--Control keys
 
@@ -310,6 +311,19 @@ local VirtualKeys = {
 	F12 = 123,
 }
 Types.VirtualKeys = VirtualKeys
+
+---A list of mouse buttons
+---@class MouseButtons
+local MouseButtons = {
+	Left = 1,
+	Right = 2,
+	Middle = 3,
+	Side1 = 4,
+	Side2 = 5,
+	any = -1,
+	None = 0
+}
+Types.MouseButtons = MouseButtons
 
 ------------------------------------------------------------------------------
 --- EXPORT TYPES -------------------------------------------------------------

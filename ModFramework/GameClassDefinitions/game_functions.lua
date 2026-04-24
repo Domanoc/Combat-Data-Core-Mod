@@ -80,3 +80,12 @@ surface_free = surface_free
 ---When you are working with surfaces, you should always use this function whenever you are finished using them.
 ---@type fun(ind:number, fname:string, imgnumb:number, removeback:boolean, smooth:boolean, xorig:number, yorig:number)
 sprite_replace = sprite_replace
+---Returns true once, the moment you click, Doesn’t repeat if you hold the button
+---@type fun(numb:number):boolean
+mouse_check_button_pressed = mouse_check_button_pressed
+---Gets the mouse position x in window/screen coordinates, (0,0) = top-left of the window
+---@type fun():number
+window_mouse_get_x = window_mouse_get_x
+---Gets the mouse position y in window/screen coordinates, (0,0) = top-left of the window
+---@type fun():number
+window_mouse_get_y = window_mouse_get_y

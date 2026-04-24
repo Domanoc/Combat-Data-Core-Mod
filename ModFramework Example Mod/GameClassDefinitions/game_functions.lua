@@ -1,75 +1,5 @@
 ---@class ds_map A reference handle to the gamemaker ds_map data structure, stores key and value pairs.
 
----This is an auto generated class definition. 
----
----Please use the found values as a starting point for your use.
----As not all values may be present at every point of the game.
----Or values could be missing from the definition.
----@class game_obj_big_holder_weapon
----@field original_energy number
----@field set_point_weight number
----@field special_acc_buf number
----@field wep_prior table
----@field stat_energy number
----@field weapon_number number
----@field name string
----@field stat_penetration number
----@field buf_wire_plus number
----@field sound_pack number
----@field stat_weight number
----@field set_point_current number
----@field stat_damage number
----@field energy_buffed number
----@field rate_of_fire number
----@field weapon_type_num number
----@field my_holder number
----@field special_rtf_buf number
----@field change_x number
----@field special_buf_type number
----@field weapon_spr_big number
----@field original_penetration number
----@field start_y number
----@field special_ele_buf number
----@field set_point_max number
----@field special_weight_buf number
----@field original_accuracy number
----@field original_weight number
----@field special_num_buf number
----@field number_of_deleted number
----@field homing_power number
----@field size_huge number
----@field set_point_energy number
----@field check_special boolean
----@field special_sp_buf number
----@field change_y number
----@field original_rate_of_fire number
----@field number_of_holders number
----@field original_damage number
----@field item_pos number
----@field set_point_penetration number
----@field special_life_buf number
----@field my_mech number
----@field stat_dps number
----@field buf_wire_minus number
----@field set_point_accuracy number
----@field weapon_type string
----@field special_pen_buf number
----@field pretend_gun number
----@field special_buf_slow number
----@field my_num number
----@field weapon_spr number
----@field created boolean
----@field start_x number
----@field special_dmg_buf number
----@field set_point_fire_speed number
----@field original_speed number
----@field new_module boolean
----@field weapon_data number
----@field deleted boolean
----@field accuracy_fault number
----@field hover boolean
----@field blue_length number the range of a blue weapon
-
 --------------------------------------------
 --Documentation for used mod functions -----
 --------------------------------------------
@@ -150,3 +80,12 @@ surface_free = surface_free
 ---When you are working with surfaces, you should always use this function whenever you are finished using them.
 ---@type fun(ind:number, fname:string, imgnumb:number, removeback:boolean, smooth:boolean, xorig:number, yorig:number)
 sprite_replace = sprite_replace
+---Returns true once, the moment you click, Doesn’t repeat if you hold the button
+---@type fun(numb:number):boolean
+mouse_check_button_pressed = mouse_check_button_pressed
+---Gets the mouse position x in window/screen coordinates, (0,0) = top-left of the window
+---@type fun():number
+window_mouse_get_x = window_mouse_get_x
+---Gets the mouse position y in window/screen coordinates, (0,0) = top-left of the window
+---@type fun():number
+window_mouse_get_y = window_mouse_get_y
