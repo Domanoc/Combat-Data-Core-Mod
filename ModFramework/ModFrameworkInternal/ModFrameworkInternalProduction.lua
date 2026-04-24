@@ -43,6 +43,31 @@ function Production.FixShopWeaponList()
 	obj_component_shop.comp_wep = newCompWep
 end
 
+---Use in the create function of obj_component_shop.lua
+---
+---Fixes the empty references in the list_weapon table
+function Production.FixContentWeaponList()
+	if(Common.IsLoadedGame()) then
+		--This issue is only present on new games
+		return
+	end
+	local obj_content_weapons = Common.GetObjContentWeapons()
+
+	--Copy the array to the working set
+	local list_weapon = obj_content_weapons.list_weapon
+	local newListWep = {}
+
+	--the comp_wep has a lot of empty entries we will remove them to reduce modding complexity
+	for _, value in pairs(list_weapon) do
+		if (value ~= -4) then
+			table.insert(newListWep, value)
+		end
+	end
+
+	--return the updated table
+	obj_content_weapons.list_weapon = newListWep
+end
+
 ---Use in the load_game_post_event function of obj_database.lua
 ---
 ---This Fixes the missing production sprites after loading a modded game

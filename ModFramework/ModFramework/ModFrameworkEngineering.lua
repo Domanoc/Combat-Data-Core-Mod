@@ -26,16 +26,16 @@ function Engineering.AddMech(mech_number, name)
 	--Copy the array to the working set
 	local list_mech = obj_content_mechs.list_mech
 
-	local array_size = #list_mech
-	local itemIndex = array_size + 1
-	local added_mech = Private.AddMechItemInstance()
-	added_mech.my_num = 		array_size
-	added_mech.mech_number = 	mech_number
-	added_mech.new_module = 	false
+	local arraySize = #list_mech
+	local itemIndex = arraySize + 1
+	local addedMech = Private.AddMechItemInstance()
+	addedMech.my_num =		  arraySize
+	addedMech.mech_number =	  mech_number
+	addedMech.new_module =	  true
 	if(name ~= nil) then
-		added_mech.mech_name = 	name
+		addedMech.mech_name = name
 	end
-	list_mech[itemIndex] = added_mech
+	list_mech[itemIndex] = addedMech
 
 	--return new data
 	obj_content_mechs.list_mech = list_mech
@@ -51,19 +51,18 @@ function Engineering.AddWeapon(weapon_number, huge)
 	--Copy the array to the working set
 	local list_weapon = obj_content_weapons.list_weapon
 
-	local number_of_items = obj_content_weapons.number_of_items + 1
-	local obj_weapon_item = asset_get_index("obj_weapon_item")
-	list_weapon[number_of_items] = instance_create_depth(0, 0, 0, obj_weapon_item)
-	local added_weapon = list_weapon[number_of_items]
-	added_weapon.my_num = 			number_of_items - 1
-	added_weapon.weapon_number = 	weapon_number
-	added_weapon.start_x = 			8
-	added_weapon.start_y = 			266
-	added_weapon.size_huge = 		huge
+	local array_size = #list_weapon
+	local itemIndex = array_size + 1
+	local addedWeapon = Private.AddWeaponItemInstance()
+	addedWeapon.my_num = 		array_size
+	addedWeapon.weapon_number = weapon_number
+	addedWeapon.size_huge = 	huge
+	addedWeapon.new_module = 	true
+	list_weapon[itemIndex] = addedWeapon
 
 	--return new data
 	obj_content_weapons.list_weapon = list_weapon
-	obj_content_weapons.number_of_items = number_of_items
+	obj_content_weapons.number_of_items = #list_weapon
 end
 
 ---Adds a component of type solenoid to engineering
@@ -137,6 +136,13 @@ end
 function Private.AddMechItemInstance()
 	local obj_mech_item = asset_get_index("obj_mech_item")
 	return instance_create_depth(0, 0, 0, obj_mech_item)
+end
+
+---Create a new obj_weapon_item instance
+---@return game_obj_weapon_item objMechItem the new obj_weapon_item instance
+function Private.AddWeaponItemInstance()
+	local obj_weapon_item = asset_get_index("obj_weapon_item")
+	return instance_create_depth(0, 0, 0, obj_weapon_item)
 end
 
 ------------------------------------------------------------------------------

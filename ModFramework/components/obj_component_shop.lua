@@ -4,9 +4,6 @@
 function create(q)--one time script when save is loaded	
 	--Only needed in the framework setup, is not needed for mods
 	Internal = require("ModFrameworkInternal")
-	--load the mod framework as a global for use within this file
-	Mod = require("ModFrameworkModule")
-
 	Internal.Production.FixShopWeaponList()
 	Internal.Production.AddModdedComponents()
 end
