@@ -39,6 +39,7 @@ function Production.FixShopWeaponList()
 		table.insert(newCompWep, comp_wep[i])
 	end
 
+	--return the updated table
 	obj_component_shop.comp_wep = newCompWep
 end
 

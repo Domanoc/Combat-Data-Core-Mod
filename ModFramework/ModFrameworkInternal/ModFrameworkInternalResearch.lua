@@ -23,6 +23,25 @@ local Private = {}
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 
+---Use in the create function of obj_research_panel.lua
+---
+---Fixes the empty references in the mres table
+function Research.FixResearchPanelList()
+	local obj_research_panel = Common.GetObjResearchPanel()
+
+    --Copy the array to the working set
+    local mres = obj_research_panel.mres
+    local newMres = {};
+
+    --the mres has a lot of empty entries we will remove them to reduce modding complexity
+    for i = 1, 44, 1 do
+        table.insert(newMres, mres[i])
+    end
+
+    --return the updated table
+    obj_research_panel.mres = newMres;
+end
+
 local fixResearch = true
 ---Use in the draw_top_menu function of obj_database.lua
 ---

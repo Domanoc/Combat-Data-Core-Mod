@@ -45,16 +45,17 @@ function Research.AddResearch(item)
 	--index for the new item, +1 because lua arrays start with 1
 	local resNumber = researchCount
 	local researchIndex = researchCount + 1
-	local newResearch = mres[researchIndex]
-	newResearch[ResearchIndexes.Position] = item.Position 					 --position number on the research tree. You can see positions in the game with f6 (debug mode)
-	newResearch[ResearchIndexes.Link_1] = -4 								 --link 1
-	newResearch[ResearchIndexes.Link_2] = -4 								 --link 2
-	newResearch[ResearchIndexes.Link_3] = -4 								 --link 3
-	newResearch[ResearchIndexes.Condition] = item.Condition			     --condition (0-closed, 1-opened, 2-researching, 3-researched)
-	newResearch[ResearchIndexes.RequiredDays] = item.RequiredDays 	      	 --required days
-	newResearch[ResearchIndexes.RequiredStaff] = item.RequiredStaff         --require science staff
-	newResearch[ResearchIndexes.IconType] = item.ReseachIcon.IconType		 --research icon type (0-combat, 1-production, 2-passability)
-	newResearch[ResearchIndexes.IconSubtype] = item.ReseachIcon.IconSubType --research icon subtype (see left column in the game in research menu)
+	local newResearch = {}
+	newResearch[ResearchIndexes.Position] = item.Position					--position number on the research tree. You can see positions in the game with f6 (debug mode)
+	newResearch[ResearchIndexes.Link_1] = -4 								--link 1
+	newResearch[ResearchIndexes.Link_2] = -4 								--link 2
+	newResearch[ResearchIndexes.Link_3] = -4 								--link 3
+	newResearch[ResearchIndexes.Condition] = item.Condition					--condition (0-closed, 1-opened, 2-researching, 3-researched)
+	newResearch[ResearchIndexes.RequiredDays] = item.RequiredDays			--required days
+	newResearch[ResearchIndexes.RequiredStaff] = item.RequiredStaff			--require science staff
+	newResearch[ResearchIndexes.IconType] = item.ReseachIcon.IconType		--research icon type (0-combat, 1-production, 2-passability)
+	newResearch[ResearchIndexes.IconSubtype] = item.ReseachIcon.IconSubType	--research icon subtype (see left column in the game in research menu)
+	mres[researchIndex] = newResearch;
 
 	local description = Common.SelectCorrectLocalizedString(item.Description)
 	newResearch[ResearchIndexes.Description] = description			 		--research text
