@@ -376,6 +376,7 @@ function Private.ArrangeSupportComponents()
         StartY = 595
     }
 
+    --The robot engineer sprite was bleeding out of its component button so we edit it for the shop
     obj_component_shop.comp_engineer.logo = Storage.SpriteShopRobotCompressed
 
     ---@type game_obj_component[]

@@ -20,6 +20,7 @@ function create(q, v_modid)
 	--With this function we can get our modded components that we made in "obj_database.lua".
 	local unlocks = Mod.Common.GetModdedComponents({
 		{ Name = "example_mech", ComponentType = componentTypes.Mech },
+		{ Name = "example_solenoid", ComponentType = componentTypes.Solenoid }
 	})
 	
 	--We can create a new research and as a return value we get the new res number to create links with.
@@ -87,10 +88,10 @@ function create(q, v_modid)
 	local example2 = Mod.Common.GetModdedResearch("example_research_2")
 
 	--We can search for a single component to add as an unlock to an existing research
-	local unlock = Mod.Common.GetModdedComponent("example_mech", componentTypes.Mech)
+	local unlock = Mod.Common.GetModdedComponent("example_weapon", componentTypes.Weapon)
 	--The existing research can be a base research or one from another mod.
 	--However if adding one to a research from another mod that mod has to be before this mod in the load order.
-	Mod.Research.AddUnlock(baseResearchResNumbers.NEW_MECH_PLATE, unlock)
+	Mod.Research.AddUnlock(baseResearchResNumbers.TANK_GUN, unlock)
 
 	--We can move any research to a new position and it will keep its links.
 	Mod.Research.MoveResearch(baseResearchResNumbers.ROCKET_LAUNCH, 0)

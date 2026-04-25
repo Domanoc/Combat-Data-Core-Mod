@@ -13,7 +13,22 @@ function create(q,v_modid)--one time script when save is loaded
 		return
 	end
 
-	for i = 1, 10, 1 do
-		Mod.Engineering.AddSolenoid(1)
+	--load needed types
+	local componentTypes = Mod.Types.ComponentTypes
+	local baseSolenoids = Mod.Types.BaseSolenoids
+
+	--We can retrieve the data of a modded component that was added by the framework, even if it was made by another mod.
+	--however if loading one from another mod, that mod has to be before this mod in the load order.
+	local example_solenoid = Mod.Common.GetModdedComponent("example_solenoid", componentTypes.Solenoid)
+
+	--We need to check for nil since a the component we searched for might not have existed.
+	if(example_solenoid ~= nil) then
+		--example on how to add 2 solenoids
+		Mod.Engineering.AddSolenoid(example_solenoid.Index)
+		Mod.Engineering.AddSolenoid(example_solenoid.Index)
 	end
+
+	--If we want to add a base solenoid we can use the Mod.Types.BaseSolenoids references to add the correct one
+	Mod.Engineering.AddSolenoid(baseSolenoids.BrownSolenoid)
+	Mod.Engineering.AddSolenoid(baseSolenoids.BlueSolenoid)
 end

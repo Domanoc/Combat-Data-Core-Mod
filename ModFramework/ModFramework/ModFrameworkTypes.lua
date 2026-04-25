@@ -64,7 +64,7 @@ local ComponentTypes = {
 }
 Types.ComponentTypes = ComponentTypes
 
----component sizes
+---Component sizes
 ---@class ComponentSizes
 local ComponentSizes = {
 	--a single hanger slot
@@ -79,7 +79,7 @@ Types.ComponentSizes = ComponentSizes
 --- WEAPON TYPES -------------------------------------------------------------
 ------------------------------------------------------------------------------
 
----The weapon mech indexes
+---The weapon indexes
 ---@class BaseWeapons
 local BaseWeapons = {
 	SIX_BARRELED_GUN = 0,
@@ -130,6 +130,17 @@ local ReactorTypes = {
 }
 Types.ReactorTypes = ReactorTypes
 
+------------------------------------------------------------------------------
+--- SOLENOID TYPES ------------------------------------------------------------
+------------------------------------------------------------------------------
+
+---The solenoid indexes
+---@class BaseSolenoids
+local BaseSolenoids = {
+	BrownSolenoid = 0,
+	BlueSolenoid = 1,
+}
+Types.BaseSolenoids = BaseSolenoids
 
 ------------------------------------------------------------------------------
 --- RESEARCH TYPES -----------------------------------------------------------

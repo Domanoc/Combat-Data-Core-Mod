@@ -27,13 +27,10 @@ function create(q,v_modid)
 	--For existing mods::
 
 	--logic to prevent duplicate component names
-
-	--Show example of solenoid modding and adding
 	--Support for pilot modding
 	--Show example of pilot modding and adding
 
 	--Nice to haves::
-
 	--Support for cabin modding
 	--Show example of cabin modding and adding
 	--Support for motor modding
@@ -54,8 +51,6 @@ function create(q,v_modid)
 	--Show example of safety modding and adding
 
 	--Review documetation
-
-	--resize spr_engineer_robot.png to fit within the component square
 end
 
 ---saving system deletes the file and creates new one before saving new info
