@@ -10,6 +10,7 @@
 - Added auto fix for missing weapon indicators on modded weapons in the shop
 - Added auto fix to stop the robot engineer from excessively bleeding out of its shop button
 - Added auto fix for modded production sprites on load when item was registrated through the framework
+- Added auto fix for modding research not having the correct day requirement when added to an existing save
 - Added localization support for weapon descriptions and research descriptions
 - Added page support for all shop sections when to many items are registered
 - Added type documentation on game objects
