@@ -73,6 +73,11 @@ function ComponentShop.FixRobotComponentBleed()
     end
 end
 
+---Sets the flag that a new shop update needs to run
+function ComponentShop.RequestShopUpdate()
+    Storage.IsShopUpdateNeeded = true
+end
+
 ---Arrange the shop components into its sections and pages
 function ComponentShop.RearrangeShopComponents()
 	--if the components are set skip
@@ -85,6 +90,13 @@ function ComponentShop.RearrangeShopComponents()
         --The others will be set when the pages change
 		component.x = -1000
 		component.y = -1000
+
+        --Convert all researched number into proper bools
+        if (component.researched == 0) then
+			component.researched = false
+		elseif (component.researched == 1) then
+			component.researched = true
+		end
 	end
 
     Private.CalculateMaxAdditionalPage()
@@ -543,7 +555,7 @@ function Private.ArrangeWeaponsLoopVertical(array, index, settings, indicatorTyp
 	for _, component in ipairs(array) do
 		local x = settings.StartX + componentSpacing * (index // settings.Cadence)
 		local y = settings.StartY + componentSpacing * (index % settings.Cadence)
-		if (component.researched == false or component.researched == 0) then
+		if (component.researched == false) then
             --We skip components that are not unlocked
 		elseif (index > upperBounds) then
 			return index + 1

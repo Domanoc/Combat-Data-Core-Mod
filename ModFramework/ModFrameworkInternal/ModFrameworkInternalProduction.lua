@@ -167,7 +167,7 @@ function Production.StoreShopComponents()
 	Private.StoreShopComponents(obj_component_shop.comp_solenoid)
 	Private.StoreShopComponents(obj_component_shop.comp_wep)
 
-	--Store weapons per weapon type
+	--Store weapons per type
 	for _, component in pairs(obj_component_shop.comp_wep) do
 		local weaponData = obj_database.weapon_stat[component.comp_data_type + 1]
 		local weaponType = ds_map_find_value(weaponData, "type")
@@ -182,6 +182,7 @@ function Production.StoreShopComponents()
 		end
 	end
 
+	--Store reactors per type
 	for _, component in pairs(obj_component_shop.comp_reactor) do
 		local reactorData = obj_database.reactor_stat[component.comp_data_type + 1]
 		local reactorType = ds_map_find_value(reactorData, "type")

@@ -119,7 +119,7 @@ function create(q,v_modid)
 			,{ LanguageFile = "japanese.ini", Value = "この武器の説明文。" }
 		},
 		ComponentSize =     componentSizes.Small, --The size of the component when constructing it. 1 for single slot or 5 for a full row
-		IsResearched = 	    false,				  --Set to true if its pre researched, else false.
+		IsResearched = 	    true,				  --Set to true if its pre researched, else false.
 		CanBeConstructed =  true,				  --Set to true if it can be constructed in the component shop, false otherwise
 		GiveFreeItem = 	    true,				  --Set to true to return a free copy when triggered as an unlock
 		PriceMetallite =    1000,				  --The amount of metallite needed to produce this weapon
@@ -162,7 +162,7 @@ function create(q,v_modid)
 			,{ LanguageFile = "japanese.ini", Value = "この武器の説明文。" }
 		},
 		ComponentSize =     componentSizes.Small, --The size of the component when constructing it. 1 for single slot or 5 for a full row
-		IsResearched = 	    false,				  --Set to true if its pre researched, else false.
+		IsResearched = 	    true,				  --Set to true if its pre researched, else false.
 		CanBeConstructed =  true,				  --Set to true if it can be constructed in the component shop, false otherwise
 		GiveFreeItem = 	    true,				  --Set to true to return a free copy when triggered as an unlock
 		PriceMetallite =    1000,				  --The amount of metallite needed to produce this weapon

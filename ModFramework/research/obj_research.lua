@@ -19,4 +19,5 @@ end
 ---@param res_number number the number of the research that is completed, the number for the research as found in the debug (F6) of the research screen (upper left white number)
 function research_done(q, res_number)
 	Internal.Research.ProcessResearchCompletion(q, res_number)
+	Internal.ComponentShop.RequestShopUpdate()
 end
