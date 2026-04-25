@@ -196,7 +196,7 @@ function Production.StoreShopComponents()
 			table.insert(Storage.ReactorComponents.Fusion, component)
 		end
 	end
-	
+
 	--we only need to run this once so we set the flag to true
 	areShopComponentsStored = true
 end
@@ -231,22 +231,18 @@ function Private.AddMech(component)
 	--Copy the array to the working set
 	local comp_mech = obj_component_shop.comp_mech
 
-	local array_size = #comp_mech
-	local mech_location_x = obj_component_shop.mech_start_x + icon_pixel_size * (array_size % 5)
-	local mech_location_y = obj_component_shop.mech_start_y + icon_pixel_size * (array_size // 5)
-
-	local component_item_index = array_size + 1
-	local added_mech_component = Private.AddComponentInstance(mech_location_x, mech_location_y)
-	added_mech_component.comp_type = Types.ComponentTypes.Mech	--mech
-	added_mech_component.comp_data_type = mech_number		--number in database
-	added_mech_component.logo = -4 						--auto assign based on obj_database info
-	added_mech_component.size = component_size				--number of slots used in construction
-	added_mech_component.researched = researched			--true for researched or false for not
-	comp_mech[component_item_index] = added_mech_component
+	local arraySize = #comp_mech
+	local componentIndex = arraySize + 1
+	local addedMechComponent = Private.AddComponentInstance()
+	addedMechComponent.comp_type = Types.ComponentTypes.Mech
+	addedMechComponent.comp_data_type = mech_number		--number in database
+	addedMechComponent.size = component_size			--number of slots used in construction
+	addedMechComponent.researched = researched			--true for researched or false for not
+	comp_mech[componentIndex] = addedMechComponent
 
 	--Add the newly modded shop component to the parent component. So we can find the reference later.
 	component.ShopComponent = {
-		Index = component_item_index,
+		Index = componentIndex,
 	}
 
 	--send array back
@@ -266,22 +262,18 @@ function Private.AddWeapon(component)
 	--Copy the array to the working set
 	local comp_wep = obj_component_shop.comp_wep
 
-	local array_size = #comp_wep
-	local weapon_location_x = obj_component_shop.weapon_start_x + icon_pixel_size * (array_size // 3)
-	local weapon_location_y = obj_component_shop.weapon_start_y + icon_pixel_size * (array_size % 3)
-
-	local component_item_index = array_size + 1
-	local added_weapon_component = Private.AddComponentInstance(weapon_location_x, weapon_location_y)
-	added_weapon_component.comp_type = Types.ComponentTypes.Weapon	--weapon
-	added_weapon_component.comp_data_type = weapon_number		--number in database
-	added_weapon_component.logo = -4 							--auto assign based on obj_database info
-	added_weapon_component.size = component_size				--number of slots used in construction
-	added_weapon_component.researched = researched				--true for researched or false for not
-	comp_wep[component_item_index] = added_weapon_component
+	local arraySize = #comp_wep
+	local componentIndex = arraySize + 1
+	local addedWeaponComponent = Private.AddComponentInstance()
+	addedWeaponComponent.comp_type = Types.ComponentTypes.Weapon
+	addedWeaponComponent.comp_data_type = weapon_number		--number in database
+	addedWeaponComponent.size = component_size				--number of slots used in construction
+	addedWeaponComponent.researched = researched			--true for researched or false for not
+	comp_wep[componentIndex] = addedWeaponComponent
 
 	--Add the newly modded shop component to the parent component. So we can find the reference later.
 	component.ShopComponent = {
-		Index = component_item_index,
+		Index = componentIndex,
 	}
 
 	--send array back
@@ -301,25 +293,18 @@ function Private.AddSolenoid(component)
 	--Copy the array to the working set
 	local comp_solenoid = obj_component_shop.comp_solenoid
 
-	local row = 2 		--row 3 as its a 0 based index, solonoids are in row 3 of the reactor box
-	local column = 4 	--column 5 as its a 0 based index, solonoids start at column 5 of the reactor box
-	local column_offset = column * icon_pixel_size
-	local array_size = #comp_solenoid
-	local solenoid_location_x = obj_component_shop.reactor_start_x + column_offset + icon_pixel_size * array_size
-	local solenoid_location_y = obj_component_shop.reactor_start_y + icon_pixel_size * row
-
-	local component_item_index = array_size + 1
-	local added_solenoid_component = Private.AddComponentInstance(solenoid_location_x, solenoid_location_y)
-	added_solenoid_component.comp_type = Types.ComponentTypes.Solenoid	--solenoid
-	added_solenoid_component.comp_data_type = solonoid_number		--number in database
-	added_solenoid_component.logo = -4 							--auto assign based on obj_database info
-	added_solenoid_component.size = component_size					--number of slots used in construction
-	added_solenoid_component.researched = researched				--true for researched or false for not
-	comp_solenoid[component_item_index] = added_solenoid_component
+	local arraySize = #comp_solenoid
+	local componentIndex = arraySize + 1
+	local addedSolenoidComponent = Private.AddComponentInstance()
+	addedSolenoidComponent.comp_type = Types.ComponentTypes.Solenoid
+	addedSolenoidComponent.comp_data_type = solonoid_number		--number in database
+	addedSolenoidComponent.size = component_size				--number of slots used in construction
+	addedSolenoidComponent.researched = researched				--true for researched or false for not
+	comp_solenoid[componentIndex] = addedSolenoidComponent
 
 	--Add the newly modded shop component to the parent component. So we can find the reference later.
 	component.ShopComponent = {
-		Index = component_item_index,
+		Index = componentIndex,
 	}
 
 	--send array back
@@ -327,12 +312,13 @@ function Private.AddSolenoid(component)
 end
 
 ---Create a new obj_component instance
----@param x number the x coordinate where to draw
----@param y number the y coordinate where to draw
 ---@return game_obj_component objComponent the new obj_component instance
-function Private.AddComponentInstance(x, y)
+function Private.AddComponentInstance()
 	local obj_component = Common.GetObjComponent()
-	return instance_create_depth(x, y, -500, obj_component)
+	local newComponent = instance_create_depth(0, 0, -500, obj_component)
+	--auto assign based on obj_database info
+	newComponent.logo = -4
+	return newComponent
 end
 
 ---Store the shop components
