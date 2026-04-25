@@ -46,13 +46,21 @@ local WeaponsComponents = {
 }
 Storage.WeaponsComponents = WeaponsComponents
 
----The reference to a left button
+---The reference to the shop left button
 ---@type number
 Storage.SpriteShopButtonLeft = -1
 
----The reference to a right button
+---The reference to the shop right button
 ---@type number
 Storage.SpriteShopButtonRight = -1
+
+---The reference to original icon for the robot engineer
+---@type number
+Storage.SpriteShopRobotOriginal = -1
+
+---The reference to compressed icon for the robot engineer
+---@type number
+Storage.SpriteShopRobotCompressed = -1
 
 ---Flag indicating if the shop icons need to be updated
 ---@type boolean

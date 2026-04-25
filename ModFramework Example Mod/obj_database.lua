@@ -100,9 +100,9 @@ function create(q,v_modid)
 		SpriteHuge = 	    modFilepath.."sprites/example_weapon_huge.png",		--the huge sprite for the weapon
 	})
 
-	for i = 1, 17, 1 do
+	for i = 1, 9, 1 do
 		Mod.Database.AddWeapon({
-		Name = 			    "example_weapon"..i,  --The name of the mech, used to find its references
+		Name = 			    "example_white_weapon"..i,  --The name of the mech, used to find its references
 		--We can provide full language support like this, atleast 1 language is needed
 		--LanguageFile variable should match the language file ini that the string targets
 		--Value should contain the string in the correct language for that language file
@@ -129,6 +129,49 @@ function create(q,v_modid)
 		PriceStaff = 	    10,					  --The amount of staff needed to produce this weapon
 		ProductionDays =    2,					  --The amount of days it takes to produce this weapon
 		WeaponType =	    weaponTypes.White,	  --the type of weapon (white = kinetic, red = missiles, blue = energy, yellow = thermal)
+		FireRate =		    25,					  --the base fire rate. higher values offer a faster rate, 600 with full firespeed points will fill the firespeed bar completely
+		Weight = 		    48,					  --the base weight of the weapon
+		Accuracy = 		    1.5,				  --the base accuracy for the weapon. accuracy in degrees, 0 is perfect accuracy
+		EnergyCost = 		5,					  --the base energy cost of the weapon
+		Damage = 		    80,					  --the base damage value of the weapon
+		Penetration = 	    15,					  --the base penetration value of the weapon
+		ProjectileSpeed =   18,					  --the base projectile speed of the weapon
+		IsEnergyBuffed =    false,				  --whether the energy cost boost damage output, for energy weapons this is an additional increase on their native bonus.
+		BlueLength =        0,					  --the range of a blue weapon, default is 750
+		SpriteSmall =       modFilepath.."sprites/example_weapon_small.png",	--the small sprite for the weapon
+		SpriteBig = 	    modFilepath.."sprites/example_weapon_big.png",		--the big sprite for the weapon
+		SpriteHuge = 	    modFilepath.."sprites/example_weapon_huge.png",		--the huge sprite for the weapon
+	})
+	end
+	for i = 1, 10, 1 do
+		Mod.Database.AddWeapon({
+		Name = 			    "example_blue_weapon"..i,  --The name of the mech, used to find its references
+		--We can provide full language support like this, atleast 1 language is needed
+		--LanguageFile variable should match the language file ini that the string targets
+		--Value should contain the string in the correct language for that language file
+		Description = {
+			 { LanguageFile = "loc_english.ini", Value = "Description text for this weapon." }
+			,{ LanguageFile = "loc_french.ini", Value = "Texte descriptif de cette arme." }
+			,{ LanguageFile = "loc_german.ini", Value = "Beschreibungstext für diese Waffe." }
+			,{ LanguageFile = "loc_polish.ini", Value = "Tekst opisujący tę broń." }
+			,{ LanguageFile = "loc_portuguese_brazil.ini", Value = "Texto descritivo para esta arma." }
+			,{ LanguageFile = "loc_russian.ini", Value = "Описание данного оружия." }
+			,{ LanguageFile = "loc_spanish.ini", Value = "Texto descriptivo de esta arma." }
+			,{ LanguageFile = "loc_chinese.ini", Value = "该武器的描述文字。" }
+			,{ LanguageFile = "loc_italian.ini", Value = "Testo descrittivo per quest'arma." }
+			,{ LanguageFile = "japanese.ini", Value = "この武器の説明文。" }
+		},
+		ComponentSize =     componentSizes.Small, --The size of the component when constructing it. 1 for single slot or 5 for a full row
+		IsResearched = 	    true,				  --Set to true if its pre researched, else false.
+		CanBeConstructed =  true,				  --Set to true if it can be constructed in the component shop, false otherwise
+		GiveFreeItem = 	    true,				  --Set to true to return a free copy when triggered as an unlock
+		PriceMetallite =    1000,				  --The amount of metallite needed to produce this weapon
+		PriceBjorn = 	    1000,				  --The amount of bjorn needed to produce this weapon
+		PriceMunilon =      1000,				  --The amount of munilon needed to produce this weapon
+		PriceSkalaknit =    1000,				  --The amount of skalaknit needed to produce this weapon
+		PriceStaff = 	    10,					  --The amount of staff needed to produce this weapon
+		ProductionDays =    2,					  --The amount of days it takes to produce this weapon
+		WeaponType =	    weaponTypes.Blue,	  --the type of weapon (white = kinetic, red = missiles, blue = energy, yellow = thermal)
 		FireRate =		    25,					  --the base fire rate. higher values offer a faster rate, 600 with full firespeed points will fill the firespeed bar completely
 		Weight = 		    48,					  --the base weight of the weapon
 		Accuracy = 		    1.5,				  --the base accuracy for the weapon. accuracy in degrees, 0 is perfect accuracy

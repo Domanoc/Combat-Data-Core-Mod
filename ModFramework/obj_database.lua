@@ -28,6 +28,8 @@ function create(q,v_modid)
 
 	--sprite_replace wrapper
 	--unlock all compo debugger
+	--Weapon icon sprites in the component buttons
+	--logic to prevent duplicate component names
 
 	--Improve the production slot selection for new items
 
@@ -88,7 +90,13 @@ function draw_top_menu(q)
 	Internal.Production.StoreShopComponents()
 	Internal.ComponentShop.RearrangeShopComponents()
 	Internal.ComponentShop.ShopDraw()
+	Internal.ComponentShop.FixRobotComponentBleed()
 	Internal.Research.FixModdedResearch()
+
+	local keys = Internal.Types.VirtualKeys
+	if keyboard_check_pressed(keys.F10) then
+		--Debugger breakpoint
+    end
 end
 
 ---The draw call thay runs every frame while debug is active (F6)

@@ -4,7 +4,7 @@
 
 ---Access to the Common functions.
 ---@class ModFrameworkInternal
-local Module = {}
+local ModFrameworkInternal = {}
 
 ------------------------------------------------------------------------------
 
@@ -17,30 +17,39 @@ local Common = require("ModFrameworkCommon")
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 
+---Access to the Common functions.
+ModFrameworkInternal.Common = Common
+
+local Types = require("ModFrameworkTypes")
+---Access to Types used by the framework.
+ModFrameworkInternal.Types = Types
+
+------------------------------------------------------------------------------
+
 local Battle = require("ModFrameworkInternalBattle")
 ---Access to the internal functions for the Battle.
-Module.Battle = Battle
+ModFrameworkInternal.Battle = Battle
 
 local ComponentShop = require("ModFrameworkInternalComponentShop")
 ---Access to the functions for the Component shop.
-Module.ComponentShop = ComponentShop
+ModFrameworkInternal.ComponentShop = ComponentShop
 
 local Engineering = require("ModFrameworkInternalEngineering")
 ---Access to the internal functions for the Engineering tab.
-Module.Engineering = Engineering
+ModFrameworkInternal.Engineering = Engineering
 
 local Production = require("ModFrameworkInternalProduction")
 ---Access to the internal functions for the Production tab.
-Module.Production = Production
+ModFrameworkInternal.Production = Production
 
 local Research = require("ModFrameworkInternalResearch")
 ---Access to the internal functions for the Research tab.
-Module.Research = Research
+ModFrameworkInternal.Research = Research
 
 ------------------------------------------------------------------------------
 
 ---Registers the framework and loaded mods.
-function Module.RegisterFramework()
+function ModFrameworkInternal.RegisterFramework()
 	for index, path in pairs(mod_info) do
 		local loadOrderId = tonumber(index:match("^(%d+)"))
 		local modFileId = tonumber(index:match("(%d+)$"))
@@ -70,4 +79,4 @@ end
 --- EXPORT MODFRAMEWORK INTERNALS --------------------------------------------
 ------------------------------------------------------------------------------
 
-return Module
+return ModFrameworkInternal

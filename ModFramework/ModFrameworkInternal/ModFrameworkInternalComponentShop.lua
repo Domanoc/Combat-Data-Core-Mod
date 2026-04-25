@@ -25,19 +25,19 @@ local Types = require("ModFrameworkTypes")
 local componentSpacing = 97
 ---The page status for the additional section
 ---@type ShopPagination
-local additionalPage = { CurrentPage = 0, MaxPage = 1 }
+local additionalPage = { CurrentPage = 0, MaxPage = 0 }
 ---The page status for the mechs section
 ---@type ShopPagination
-local mechsPage = { CurrentPage = 0, MaxPage = 1 }
+local mechsPage = { CurrentPage = 0, MaxPage = 0 }
 ---The page status for the weapons section
 ---@type ShopPagination
-local weaponsPage = { CurrentPage = 0, MaxPage = 1 }
+local weaponsPage = { CurrentPage = 0, MaxPage = 0 }
 ---The page status for the support section
 ---@type ShopPagination
-local supportPage = { CurrentPage = 0, MaxPage = 1 }
+local supportPage = { CurrentPage = 0, MaxPage = 0 }
 ---The page status for the reactors section
 ---@type ShopPagination
-local reactorsPage = { CurrentPage = 0, MaxPage = 1 }
+local reactorsPage = { CurrentPage = 0, MaxPage = 0 }
 
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
@@ -48,18 +48,32 @@ local reactorsPage = { CurrentPage = 0, MaxPage = 1 }
 ---Loads the needed shop sprites, so we can add buttons and rearrange the layout
 function ComponentShop.LoadShopSprites()
 	local modPath = Common.GetModPath("ModFramework");
-	Storage.SpriteShopButtonLeft = Common.AddSprite(modPath.."sprites//ShopButtonLeft.png", 2, false, false, 0, 0)
-	Storage.SpriteShopButtonRight = Common.AddSprite(modPath.."sprites//ShopButtonRight.png", 2, false, false, 0, 0)
+	Storage.SpriteShopButtonLeft = Common.AddSprite(modPath.."sprites\\ShopButtonLeft.png", 2, false, false, 0, 0)
+	Storage.SpriteShopButtonRight = Common.AddSprite(modPath.."sprites\\ShopButtonRight.png", 2, false, false, 0, 0)
+    Storage.SpriteShopRobotOriginal = asset_get_index("spr_engineer_robot")
+    Storage.SpriteShopRobotCompressed = Common.AddSprite(modPath.."sprites\\spr_engineer_robot.png", 1, false, false, 0, 0)
 
 	--We change the shop background sprite to allow better rearranging of the items
 	local engineeringSprite = asset_get_index("spr_back_shop")
 	sprite_replace(engineeringSprite, modPath.."sprites\\spr_back_shop.png", 1, false, false, 0, 0)
-
-	--The robot sprite was bleeding out of the construction box
-	local robotSprite = asset_get_index("spr_engineer_robot")
-	sprite_replace(robotSprite, modPath.."sprites\\spr_engineer_robot.png", 1, false, false, 0, 0)
 end
 
+---The robot sprite was bleeding out of the construction box so we replaced its icon
+---but when selected we set its full icon again
+function ComponentShop.FixRobotComponentBleed()
+    local obj_component_shop = Common.GetObjComponentShop()
+    local robotEngineer = obj_component_shop.comp_engineer
+    local currentItem = obj_component_shop.cur_item
+    if (currentItem == 0) then
+        return
+    end
+
+    if (currentItem.comp_data_type == robotEngineer.comp_data_type and currentItem.comp_type == robotEngineer.comp_type) then
+        currentItem.logo = Storage.SpriteShopRobotOriginal
+    end
+end
+
+---Arrange the shop components into its sections and pages
 function ComponentShop.RearrangeShopComponents()
 	--if the components are set skip
 	if (Storage.IsShopUpdateNeeded == false) then
@@ -68,57 +82,23 @@ function ComponentShop.RearrangeShopComponents()
 
 	for _, value in pairs(Storage.AllShopComponents) do
 		value.researched = true;
-		value.x = 0
-		value.y = 0
+        --We set all components off screen so we can arrange only the ones we have room for
+        --The others will be set when the pages change
+		value.x = -1000
+		value.y = -1000
 	end
 
-	Private.ArrangeWeaponComponents()
+    Private.CalculateMaxAdditionalPage()
+    Private.ArrangeAdditionalComponents()
 
-	--18 slots under additional
---	local startX = 20
---	local startY = 485
---	for i = 0, 17, 1 do
---		local x = startX + 97 * (i % 3)
---		local y = startY + 97 * (i // 3)
---		local index = i + 1
---
---		Storage.AllShopComponents[index].x = x
---		Storage.AllShopComponents[index].y = y
---	end
+    Private.CalculateMaxMechsPage()
+    Private.ArrangeMechsComponents()
 
-	--30 slots under mech
---	local startX = 320
---	local startY = 485
---	for i = 0, 29, 1 do
---		local x = startX + 97 * (i % 5)
---		local y = startY + 97 * (i // 5)
---		local index = i + 1
---
---		Storage.AllShopComponents[index].x = x
---		Storage.AllShopComponents[index].y = y
---	end
+    Private.CalculateMaxWeaponsPage()
+    Private.ArrangeWeaponsComponents()
 
-	--24 slots under weapons
---	local startX = 1120
---	local startY = 221
---	for i = 0, 23, 1 do
---		local x = startX + 97 * (i // 3)
---		local y = startY + 97 * (i % 3)
---		local index = i + 1
---		Storage.AllShopComponents[index].x = x
---		Storage.AllShopComponents[index].y = y
---	end
-
-	--8 slots under support
---	local startX = 1120
---	local startY = 595
---	for i = 0, 7, 1 do
---		local x = startX + 97 * (i % 8)
---		local y = startY + 97 * (i // 8)
---		local index = i + 1
---		Storage.AllShopComponents[index].x = x
---		Storage.AllShopComponents[index].y = y
---	end
+    Private.CalculateMaxSupportPage()
+    Private.ArrangeSupportComponents()
 
 	--24 slots under reactors
 --	local startX = 1120
@@ -141,12 +121,16 @@ function ComponentShop.ShopDraw()
 	if (obj_component_shop.activated == true) then
 
 		--Buttons for additional
-		Private.DrawButton(Storage.SpriteShopButtonLeft, 86, 454, Private.AdditionalLeftButtonPressed)
-		Private.DrawButton(Storage.SpriteShopButtonRight, 284, 454, Private.AdditionalRightButtonPressed)
+        if (additionalPage.MaxPage > 0) then
+            Private.DrawButton(Storage.SpriteShopButtonLeft, 86, 454, Private.AdditionalLeftButtonPressed)
+		    Private.DrawButton(Storage.SpriteShopButtonRight, 284, 454, Private.AdditionalRightButtonPressed)
+		end
 
 		--Buttons for mechs
-		Private.DrawButton(Storage.SpriteShopButtonLeft, 454, 454, Private.MechsLeftButtonPressed)
-		Private.DrawButton(Storage.SpriteShopButtonRight, 652, 454, Private.MechsRightButtonPressed)
+        if (mechsPage.MaxPage > 0) then
+            Private.DrawButton(Storage.SpriteShopButtonLeft, 454, 454, Private.MechsLeftButtonPressed)
+		    Private.DrawButton(Storage.SpriteShopButtonRight, 652, 454, Private.MechsRightButtonPressed)
+		end
 
 		--Buttons for weapons
 		if (weaponsPage.MaxPage > 0) then
@@ -155,12 +139,16 @@ function ComponentShop.ShopDraw()
 		end
 
 		--Buttons for support
-		Private.DrawButton(Storage.SpriteShopButtonLeft, 1398, 542, Private.SupportLeftButtonPressed)
-		Private.DrawButton(Storage.SpriteShopButtonRight, 1598, 542, Private.SupportRightButtonPressed)
+        if (supportPage.MaxPage > 0) then
+            Private.DrawButton(Storage.SpriteShopButtonLeft, 1398, 542, Private.SupportLeftButtonPressed)
+            Private.DrawButton(Storage.SpriteShopButtonRight, 1598, 542, Private.SupportRightButtonPressed)
+		end
 
 		--Buttons for reactors
-		Private.DrawButton(Storage.SpriteShopButtonLeft, 1398, 728, Private.ReactorsLeftButtonPressed)
-		Private.DrawButton(Storage.SpriteShopButtonRight, 1598, 728, Private.ReactorsRightButtonPressed)
+        if (reactorsPage.MaxPage > 0) then
+            Private.DrawButton(Storage.SpriteShopButtonLeft, 1398, 728, Private.ReactorsLeftButtonPressed)
+		    Private.DrawButton(Storage.SpriteShopButtonRight, 1598, 728, Private.ReactorsRightButtonPressed)
+		end
 	end
 end
 
@@ -184,51 +172,269 @@ function Private.DrawButton(image, x, y, func)
 	draw_sprite(image, isButtonDown, x, y)
 end
 
-function Private.ArrangeWeaponComponents()
+---Calculate and set the max page for the additional section
+function Private.CalculateMaxAdditionalPage()
+    local obj_component_shop = Common.GetObjComponentShop()
 
-	--24 slots under weapons
-	local slots = 24
-	local pageWidth = 776
-	local startX = 1120 - (pageWidth * weaponsPage)
-	local startY = 221
-	local index = 0
-	local cadence = 3
+    local count = 0
+    local slotsPerPage = 24
+    local cadence = 6
 
-	index = Private.ArrangeLoopVertical(Storage.WeaponsComponents.kineticWeapons, index, slots, cadence, startX, startY)
-	if (index % cadence ~= 0) then
-		index = index + (cadence - (index % cadence))
+    for _, component in ipairs(obj_component_shop.comp_cabin) do
+        if (component.researched == true) then
+            count = count + 1
+        end
+    end
+    count = Private.NextCadance(count, cadence)
+    for _, component in ipairs(obj_component_shop.comp_motor) do
+        if (component.researched == true) then
+            count = count + 1
+        end
+    end
+
+    local maxPages = math.ceil(count / slotsPerPage) - 1
+    additionalPage.MaxPage = maxPages
+end
+
+---Arranging the cabin and motor components in the 18 slots under the additional section
+function Private.ArrangeAdditionalComponents()
+    local obj_component_shop = Common.GetObjComponentShop()
+
+    local index = 0
+	local pageWidth = 3 * componentSpacing
+    ---@type ArrangeSettings
+    local settings = {
+        CurrentPage = additionalPage.CurrentPage,
+        SlotsPerPage = 18,
+        Cadence = 6,
+        StartX = 20 - (pageWidth * additionalPage.CurrentPage),
+        StartY = 485
+    }
+
+    index = Private.ArrangeLoopVertical(obj_component_shop.comp_cabin, index, settings)
+    index = Private.NextCadance(index, settings.Cadence)
+    index = Private.ArrangeLoopVertical(obj_component_shop.comp_motor, index, settings)
+end
+
+---Calculate and set the max page for the mechs section
+function Private.CalculateMaxMechsPage()
+    local obj_component_shop = Common.GetObjComponentShop()
+
+    local count = 0
+    local slotsPerPage = 30
+    local cadence = 5
+
+    for _, component in ipairs(obj_component_shop.comp_mech) do
+        if (component.researched == true) then
+            count = count + 1
+        end
+    end
+    count = Private.NextCadance(count, cadence)
+    for _, component in ipairs(obj_component_shop.comp_lr_armor_end) do
+        if (component.researched == true) then
+            count = count + 1
+        end
+    end
+    count = Private.NextCadance(count, cadence)
+    for _, component in ipairs(obj_component_shop.comp_lr_armor_middle) do
+        if (component.researched == true) then
+            count = count + 1
+        end
+    end
+
+    local maxPages = math.ceil(count / slotsPerPage) - 1
+    mechsPage.MaxPage = maxPages
+end
+
+---Arranging the mech and armor components in the 30 slots under the mechs section
+function Private.ArrangeMechsComponents()
+    local obj_component_shop = Common.GetObjComponentShop()
+
+    local index = 0
+	local pageWidth = 5 * componentSpacing
+    ---@type ArrangeSettings
+    local settings = {
+        CurrentPage = mechsPage.CurrentPage,
+        SlotsPerPage = 30,
+        Cadence = 5,
+        StartX = 320 - (pageWidth * mechsPage.CurrentPage),
+        StartY = 485
+    }
+
+    index = Private.ArrangeLoopHorizontal(obj_component_shop.comp_mech, index, settings)
+    index = Private.NextCadance(index, settings.Cadence)
+    index = Private.ArrangeLoopHorizontal(obj_component_shop.comp_lr_armor_end, index, settings)
+    index = Private.NextCadance(index, settings.Cadence)
+    index = Private.ArrangeLoopHorizontal(obj_component_shop.comp_lr_armor_middle, index, settings)
+end
+
+---Calculate and set the max page for the weapon section
+function Private.CalculateMaxWeaponsPage()
+    local count = 0
+    local slotsPerPage = 24
+    local cadence = 3
+
+    for _, component in ipairs(Storage.WeaponsComponents.kineticWeapons) do
+        if (component.researched == true) then
+            count = count + 1
+        end
+    end
+    count = Private.NextCadance(count, cadence)
+    for _, component in ipairs(Storage.WeaponsComponents.missileWeapons) do
+        if (component.researched == true) then
+            count = count + 1
+        end
+    end
+    count = Private.NextCadance(count, cadence)
+    for _, component in ipairs(Storage.WeaponsComponents.energyWeapons) do
+        if (component.researched == true) then
+            count = count + 1
+        end
+    end
+    count = Private.NextCadance(count, cadence)
+    for _, component in ipairs(Storage.WeaponsComponents.thermalWeapons) do
+        if (component.researched == true) then
+            count = count + 1
+        end
+    end
+
+    local maxPages = math.ceil(count / slotsPerPage) - 1
+    weaponsPage.MaxPage = maxPages
+end
+
+---Arranging the weapon components in the 24 slots under the weapons section
+function Private.ArrangeWeaponsComponents()
+    local index = 0
+	local pageWidth = 8 * componentSpacing
+    ---@type ArrangeSettings
+    local settings = {
+        CurrentPage = weaponsPage.CurrentPage,
+        SlotsPerPage = 24,
+        Cadence = 3,
+        StartX = 1120 - (pageWidth * weaponsPage.CurrentPage),
+        StartY = 221
+    }
+
+	index = Private.ArrangeLoopVertical(Storage.WeaponsComponents.kineticWeapons, index, settings)
+    index = Private.NextCadance(index, settings.Cadence)
+	index = Private.ArrangeLoopVertical(Storage.WeaponsComponents.missileWeapons, index, settings)
+	index = Private.NextCadance(index, settings.Cadence)
+	index = Private.ArrangeLoopVertical(Storage.WeaponsComponents.energyWeapons, index, settings)
+	index = Private.NextCadance(index, settings.Cadence)
+	index = Private.ArrangeLoopVertical(Storage.WeaponsComponents.thermalWeapons, index, settings)
+end
+
+---Calculate and set the max page for the support section
+function Private.CalculateMaxSupportPage()
+    local obj_component_shop = Common.GetObjComponentShop()
+
+    local count = 0
+    local slotsPerPage = 8
+
+    ---@type game_obj_component[]
+    local components = {
+        obj_component_shop.comp_city_parts,
+        obj_component_shop.comp_beacon,
+        obj_component_shop.comp_rocket,
+        obj_component_shop.comp_engineer,
+    }
+
+    for _, component in ipairs(components) do
+        if (component.researched == true) then
+            count = count + 1
+        end
+    end
+
+    local maxPages = math.ceil(count / slotsPerPage) - 1
+    supportPage.MaxPage = maxPages
+end
+
+---Arranging the city parts, lure, rocket, robot components in the 8 slots under the support section
+function Private.ArrangeSupportComponents()
+    local obj_component_shop = Common.GetObjComponentShop()
+
+    local index = 0
+	local pageWidth = 8 * componentSpacing
+    ---@type ArrangeSettings
+    local settings = {
+        CurrentPage = mechsPage.CurrentPage,
+        SlotsPerPage = 8,
+        Cadence = 8,
+        StartX = 1120 - (pageWidth * mechsPage.CurrentPage),
+        StartY = 595
+    }
+
+    obj_component_shop.comp_engineer.logo = Storage.SpriteShopRobotCompressed
+
+    ---@type game_obj_component[]
+    local components = {
+        obj_component_shop.comp_city_parts,
+        obj_component_shop.comp_beacon,
+        obj_component_shop.comp_rocket,
+        obj_component_shop.comp_engineer,
+    }
+    Private.ArrangeLoopHorizontal(components, index, settings)
+end
+
+---Skips the index to the next full row or column
+---@param index number the current index for the placement
+---@param cadence number the amount of items in a row/column
+---@return number index the new current index for the placement
+function Private.NextCadance(index, cadence)
+    if (index % cadence ~= 0) then
+		return index + (cadence - (index % cadence))
 	end
-	index = Private.ArrangeLoopVertical(Storage.WeaponsComponents.missileWeapons, index, slots, cadence, startX, startY)
-	if (index % cadence ~= 0) then
-		index = index + (cadence - (index % cadence))
-	end
-	index = Private.ArrangeLoopVertical(Storage.WeaponsComponents.energyWeapons, index, slots, cadence, startX, startY)
-	if (index % cadence ~= 0) then
-		index = index + (cadence - (index % cadence))
-	end
-	index = Private.ArrangeLoopVertical(Storage.WeaponsComponents.thermalWeapons, index, slots, cadence, startX, startY)
+    return index
 end
 
 ---Arrange components to a grid in vertical columns
----@param array game_obj_component[]
----@param index number
----@param startX number 
----@param startY number
----@return number
-function Private.ArrangeLoopVertical(array, index, slots, cadence, startX, startY)
-	for _, weapon in ipairs(array) do
-		local x = startX + componentSpacing * (index // cadence)
-		local y = startY + componentSpacing * (index % cadence)
-		local upperBounds = (slots - 1) + (slots * weaponsPage)
-		local lowerBounds = slots * weaponsPage
-		if (weapon.researched == false) then
+---@param array game_obj_component[] the components to be arranged
+---@param index number the current index for the placement
+---@param settings ArrangeSettings the settings for the arrangement
+---@return number index the new current index for the placement
+function Private.ArrangeLoopVertical(array, index, settings)
+    local upperBounds = (settings.SlotsPerPage - 1) + (settings.SlotsPerPage * settings.CurrentPage)
+	local lowerBounds = settings.SlotsPerPage * settings.CurrentPage
+
+	for _, component in ipairs(array) do
+		local x = settings.StartX + componentSpacing * (index // settings.Cadence)
+		local y = settings.StartY + componentSpacing * (index % settings.Cadence)
+		if (component.researched == false) then
+            --We skip components that are not unlocked
 		elseif (index > upperBounds) then
-			index = index + 1
+			return index + 1
 		elseif (index < lowerBounds) then
 			index = index + 1
 		else
-			weapon.x = x
-			weapon.y = y
+			component.x = x
+			component.y = y
+			index = index + 1
+		end
+	end
+	return index
+end
+
+---Arrange components to a grid in horizontal rows
+---@param array game_obj_component[] the components to be arranged
+---@param index number the current index for the placement
+---@param settings ArrangeSettings the settings for the arrangement
+---@return number index the new current index for the placement
+function Private.ArrangeLoopHorizontal(array, index, settings)
+    local upperBounds = (settings.SlotsPerPage - 1) + (settings.SlotsPerPage * settings.CurrentPage)
+	local lowerBounds = settings.SlotsPerPage * settings.CurrentPage
+
+	for _, component in ipairs(array) do
+		local x = settings.StartX + componentSpacing * (index % settings.Cadence)
+		local y = settings.StartY + componentSpacing * (index // settings.Cadence)
+		if (component.researched == false) then
+            --We skip components that are not unlocked
+		elseif (index > upperBounds) then
+			return index + 1
+		elseif (index < lowerBounds) then
+			index = index + 1
+		else
+			component.x = x
+			component.y = y
 			index = index + 1
 		end
 	end

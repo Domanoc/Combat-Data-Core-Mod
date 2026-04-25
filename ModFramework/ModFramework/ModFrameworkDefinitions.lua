@@ -1,6 +1,6 @@
 ---@alias ComponentSize 1|5 the amount of hangar slots used in construction
 
----@alias ComponentType 1|2|3|4|5|6|7|8|9|10|11|95|96|97|98|99 the type of component
+---@alias ComponentType 1|2|3|4|5|6|7|8|9|10|11|94|95|96|97|98|99 the type of component
 
 ---@alias WeaponType "white"|"red"|"blue"|"yellow" the type of weapon (white = kinetic, red = missiles, blue = energy, yellow = thermal)
 
@@ -140,7 +140,13 @@
 ---@field LanguageFile string the language file the string supports, example: "loc_english.ini"
 ---@field Value string the string with the value that matches the language represented by the language file
 
----@class ShopPagination
+---@class ShopPagination dataset containing the pagination info for a section
 ---@field CurrentPage number the current page the shop section is on
 ---@field MaxPage number the max number of pages that exists for this section
 
+---@class ArrangeSettings dataset containing the info needed to arrange components
+---@field CurrentPage number the current page (based on a 0 index)
+---@field SlotsPerPage number the amount of slots on a page
+---@field Cadence number the amount of items in a row/column
+---@field StartX number the starting x position
+---@field StartY number the starting y position
