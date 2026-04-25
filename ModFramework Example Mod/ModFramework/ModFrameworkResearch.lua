@@ -342,15 +342,10 @@ end
 --- DEBUG HELPER FUNCTIONS ---------------------------------------------------
 ------------------------------------------------------------------------------
 
-local UnlockAllResearch = true
 ---Use in the draw_top_menu function of obj_database.lua
 ---
 ---Sets all uncompleted research to unlock the next day
 function Research.UnlockAllResearch()
-	if (UnlockAllResearch == false) then
-		return
-	end
-
 	for _, research in ipairs(Storage.LoadedResearchList) do
 		if(research.condition ~= Types.ResearchConditions.Researched) then
 			research.condition = Types.ResearchConditions.Researching

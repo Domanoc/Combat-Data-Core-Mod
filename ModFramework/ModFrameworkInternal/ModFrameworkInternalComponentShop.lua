@@ -80,12 +80,11 @@ function ComponentShop.RearrangeShopComponents()
 		return
 	end
 
-	for _, value in pairs(Storage.AllShopComponents) do
-		value.researched = true;
+	for _, component in pairs(Storage.AllShopComponents) do
         --We set all components off screen so we can arrange only the ones we have room for
         --The others will be set when the pages change
-		value.x = -1000
-		value.y = -1000
+		component.x = -1000
+		component.y = -1000
 	end
 
     Private.CalculateMaxAdditionalPage()
