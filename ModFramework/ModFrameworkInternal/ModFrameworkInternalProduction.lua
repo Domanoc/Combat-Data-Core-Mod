@@ -18,9 +18,6 @@ local Common = require("ModFrameworkCommon")
 ---Access to Types used by the framework.
 local Types = require("ModFrameworkTypes")
 
----The size of the production tab items is always 96 pixels (width & height)
-local icon_pixel_size = 96
-
 ---Flag indicating if the shop components are stored
 local areShopComponentsStored = false
 

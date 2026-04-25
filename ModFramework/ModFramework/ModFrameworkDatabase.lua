@@ -6,6 +6,10 @@
 ---@class ModFrameworkDatabase
 local Database = {}
 
+---Access to the private functions in this file.
+---@class ModFrameworkDatabasePrivate
+local Private = {}
+
 ------------------------------------------------------------------------------
 
 ---Access to the Storage of mod framework variables.
@@ -14,8 +18,6 @@ local Storage = require("ModFrameworkStorage")
 local Common = require("ModFrameworkCommon")
 ---Access to Types used by the framework.
 local Types = require("ModFrameworkTypes")
----Access to the private functions in this file.
-local Private = {}
 
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------

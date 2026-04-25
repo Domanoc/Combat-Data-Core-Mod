@@ -6,12 +6,14 @@
 ---@class ModFrameworkCommon
 local Common = {}
 
+---Access to the private functions in this file.
+---@class ModFrameworkCommonPrivate
+local Private = {}
+
 ------------------------------------------------------------------------------
 
 ---Access to the Storage of mod framework variables.
 local Storage = require("ModFrameworkStorage")
----Access to the private functions in this file.
-local Private = {}
 
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------

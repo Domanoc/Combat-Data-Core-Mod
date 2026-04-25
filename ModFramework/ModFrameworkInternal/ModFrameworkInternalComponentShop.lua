@@ -100,18 +100,8 @@ function ComponentShop.RearrangeShopComponents()
     Private.CalculateMaxSupportPage()
     Private.ArrangeSupportComponents()
 
+    Private.CalculateMaxReactorsPage()
     Private.ArrangeReactorsComponents()
-
-	--24 slots under reactors
---	local startX = 1120
---	local startY = 765
---	for i = 0, 23, 1 do
---		local x = startX + 97 * (i % 8)
---		local y = startY + 97 * (i // 8)
---		local index = i + 1
---		Storage.AllShopComponents[index].x = x
---		Storage.AllShopComponents[index].y = y
---	end
 
 	--we only need to run this once so we set the flag to false
 	Storage.IsShopUpdateNeeded = false
@@ -351,7 +341,7 @@ function Private.CalculateMaxSupportPage()
     supportPage.MaxPage = maxPages
 end
 
----Arranging the city parts, lure, rocket, robot components in the 8 slots under the support section
+---Arranging the city parts, lure, rocket and robot components in the 8 slots under the support section
 function Private.ArrangeSupportComponents()
     local obj_component_shop = Common.GetObjComponentShop()
 
@@ -378,7 +368,67 @@ function Private.ArrangeSupportComponents()
     Private.ArrangeLoopHorizontal(components, index, settings)
 end
 
----Arranging the aaaaaaaaaaaaaaaaaaaaaa components in the 24 slots under the reactors section
+---Calculate and set the max page for the reactors section
+function Private.CalculateMaxReactorsPage()
+    local obj_component_shop = Common.GetObjComponentShop()
+
+    local count = 0
+    local slotsPerPage = 24
+    local cadence = 8
+
+    for _, component in ipairs(Storage.ReactorComponents.Combustion) do
+        if (component.researched == true) then
+            count = count + 1
+        end
+    end
+    for _, component in ipairs(obj_component_shop.comp_injector) do
+        if (component.researched == true) then
+            count = count + 1
+        end
+    end
+    for _, component in ipairs(obj_component_shop.comp_piston) do
+        if (component.researched == true) then
+            count = count + 1
+        end
+    end
+    count = Private.NextCadance(count, cadence)
+    for _, component in ipairs(Storage.ReactorComponents.Fission) do
+        if (component.researched == true) then
+            count = count + 1
+        end
+    end
+    for _, component in ipairs(obj_component_shop.comp_kernel) do
+        if (component.researched == true) then
+            count = count + 1
+        end
+    end
+    for _, component in ipairs(obj_component_shop.comp_safety) do
+        if (component.researched == true) then
+            count = count + 1
+        end
+    end
+    count = Private.NextCadance(count, cadence)
+    for _, component in ipairs(Storage.ReactorComponents.Fusion) do
+        if (component.researched == true) then
+            count = count + 1
+        end
+    end
+    for _, component in ipairs(obj_component_shop.comp_magnet) do
+        if (component.researched == true) then
+            count = count + 1
+        end
+    end
+    for _, component in ipairs(obj_component_shop.comp_solenoid) do
+        if (component.researched == true) then
+            count = count + 1
+        end
+    end
+
+    local maxPages = math.ceil(count / slotsPerPage) - 1
+    reactorsPage.MaxPage = maxPages
+end
+
+---Arranging the reactor, injector, piston, kernel, safety, magenet and solenoid components in the 24 slots under the reactors section
 function Private.ArrangeReactorsComponents()
     local obj_component_shop = Common.GetObjComponentShop()
 
@@ -386,7 +436,7 @@ function Private.ArrangeReactorsComponents()
 	local pageWidth = 8 * componentSpacing
     ---@type ArrangeSettings
     local settings = {
-        CurrentPage = mechsPage.CurrentPage,
+        CurrentPage = reactorsPage.CurrentPage,
         SlotsPerPage = 24,
         Cadence = 8,
         StartX = 1120 - (pageWidth * mechsPage.CurrentPage),

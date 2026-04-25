@@ -6,12 +6,14 @@
 ---@class ModFrameworkEngineering
 local Engineering = {}
 
+---Access to the private functions in this file.
+---@class ModFrameworkEngineeringPrivate
+local Private = {}
+
 ------------------------------------------------------------------------------
 
 ---Access to the Common functions.
 local Common = require("ModFrameworkCommon")
----Access to the private functions in this file.
-local Private = {}
 
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------

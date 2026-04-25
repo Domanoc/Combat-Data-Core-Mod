@@ -6,6 +6,10 @@
 ---@class ModFrameworkInternalResearch
 local Research = {}
 
+---Access to the private functions in this file.
+---@class ModFrameworkInternalResearchPrivate
+local Private = {}
+
 ------------------------------------------------------------------------------
 
 ---Access to the Storage of mod framework variables.
@@ -16,8 +20,6 @@ local Common = require("ModFrameworkCommon")
 local Types = require("ModFrameworkTypes")
 ---Access to the functions for the Engineering tab.
 local Engineering = require("ModFrameworkEngineering")
----Access to the private functions in this file.
-local Private = {}
 
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
