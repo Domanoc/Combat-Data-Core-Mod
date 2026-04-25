@@ -5,7 +5,4 @@
 .powershell
 
 # Exclude the export logs
-MirrorModFramework.log
-MirrorGameClassDefinitions.log
-ExportModFramework.log
-ExportExampleMod.log
+*.log

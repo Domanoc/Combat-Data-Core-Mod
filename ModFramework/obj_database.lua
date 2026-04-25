@@ -24,11 +24,7 @@ function create(q,v_modid)
 	Internal.ComponentShop.LoadShopSprites()
 
 	--TODO LIST
-	--For existing mods::
 
-	--logic to prevent duplicate component names
-	--Support for pilot modding
-	--Show example of pilot modding and adding
 
 	--Nice to haves::
 	--Support for cabin modding
@@ -49,6 +45,8 @@ function create(q,v_modid)
 	--Show example of kernel modding and adding
 	--Support for safety modding
 	--Show example of safety modding and adding
+	--Support for pilot modding
+	--Show example of pilot modding and adding
 
 	--Review documetation
 end

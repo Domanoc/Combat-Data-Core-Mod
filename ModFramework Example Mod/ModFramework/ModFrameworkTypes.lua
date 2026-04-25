@@ -247,6 +247,21 @@ local ResearchIcons = {
 }
 Types.ResearchIcons = ResearchIcons
 
+------------------------------------------------------------------------------
+--- PILOT TYPES --------------------------------------------------------------
+------------------------------------------------------------------------------
+
+---The activity types for the pilots
+---@class PilotActivities
+local PilotActivities = {
+	Eating = 0,
+	Sports = 1,
+	Resting = 2,
+	Walking = 3,
+	Unkown = 4,
+	Simulator = 5,
+}
+Types.PilotActivities = PilotActivities
 
 ------------------------------------------------------------------------------
 --- OTHER TYPES --------------------------------------------------------------
