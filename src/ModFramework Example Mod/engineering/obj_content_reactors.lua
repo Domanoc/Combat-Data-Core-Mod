@@ -13,7 +13,14 @@ function create(q,v_modid)--one time script when save is loaded
 		return
 	end
 
-	for i = 1, 8, 1 do
-		Mod.Engineering.AddReactor(2)
-	end
+	--load needed types
+	local baseReactors = Mod.Types.BaseReactors
+
+	--If we want to add a base reactor we can use the Mod.Types.BaseMechs references to add the correct one
+	Mod.Engineering.AddReactor(baseReactors.Combustion)
+	Mod.Engineering.AddReactor(baseReactors.Combustion)
+	Mod.Engineering.AddReactor(baseReactors.Fission)
+	Mod.Engineering.AddReactor(baseReactors.Fission)
+	Mod.Engineering.AddReactor(baseReactors.Fusion)
+	Mod.Engineering.AddReactor(baseReactors.Fusion)
 end

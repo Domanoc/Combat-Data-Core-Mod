@@ -13,9 +13,14 @@ function create(q,v_modid)--one time script when save is loaded
 		return
 	end
 
-	for i = 0, 2, 1 do
-		for o = 1, 10, 1 do
-			Mod.Engineering.AddMagnet(i)
-		end
-	end
+	--load needed types
+	local baseMagnets = Mod.Types.BaseMagnets
+
+	--If we want to add a base magnet we can use the Mod.Types.BaseMagnets references to add the correct one
+	Mod.Engineering.AddMagnet(baseMagnets.Curved)
+	Mod.Engineering.AddMagnet(baseMagnets.Curved)
+	Mod.Engineering.AddMagnet(baseMagnets.Horizontal)
+	Mod.Engineering.AddMagnet(baseMagnets.Horizontal)
+	Mod.Engineering.AddMagnet(baseMagnets.Vertical)
+	Mod.Engineering.AddMagnet(baseMagnets.Vertical)
 end
