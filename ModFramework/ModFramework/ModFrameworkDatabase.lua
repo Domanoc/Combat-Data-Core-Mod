@@ -26,6 +26,16 @@ local Types = require("ModFrameworkTypes")
 ---Adds a new mech to the games obj_database
 ---@param mechData MechData dataset for adding a new mech
 function Database.AddMech(mechData)
+	local component = Common.GetModdedComponent(mechData.Name, Types.ComponentTypes.Mech)
+	if (component ~= nil) then
+		local newName = string.sub(mechData.Name.."_"..tostring(irandom_range(1000, 10000000)), 1, -3)
+		local message = "Trying to add a new component, but the reference name was already used.\n"
+		message = message.."Please provide a reference name that is unique, consider adding a prefix or suffix referencing your mod to prevent other mods from using the same name.\n\n"
+		message = message.."Debug info:\nName given: "..mechData.Name.."\nGenerated name: "..newName
+		Common.ShowError(message)
+		mechData.Name = newName
+	end
+
 	local obj_database = Common.GetObjDatabase()
 
 	--Copy the array to the working set
@@ -156,6 +166,16 @@ end
 ---Add a new weapon to the games obj_database
 ---@param weaponData WeaponData
 function Database.AddWeapon(weaponData)
+	local component = Common.GetModdedComponent(weaponData.Name, Types.ComponentTypes.Weapon)
+	if (component ~= nil) then
+		local newName = string.sub(weaponData.Name.."_"..tostring(irandom_range(1000, 10000000)), 1, -3)
+		local message = "Trying to add a new component, but the reference name was already used.\n"
+		message = message.."Please provide a reference name that is unique, consider adding a prefix or suffix referencing your mod to prevent other mods from using the same name.\n\n"
+		message = message.."Debug info:\nName given: "..weaponData.Name.."\nGenerated name: "..newName
+		Common.ShowError(message)
+		weaponData.Name = newName
+	end
+
 	local obj_database = Common.GetObjDatabase()
 
 	--Copy the array to the working set
@@ -221,6 +241,15 @@ end
 ---Add a new solenoid to the games obj_database
 ---@param solenoidData SolenoidData
 function Database.AddSolenoid(solenoidData)
+	local component = Common.GetModdedComponent(solenoidData.Name, Types.ComponentTypes.Solenoid)
+	if (component ~= nil) then
+		local newName = string.sub(solenoidData.Name.."_"..tostring(irandom_range(1000, 10000000)), 1, -3)
+		local message = "Trying to add a new component, but the reference name was already used.\n"
+		message = message.."Please provide a reference name that is unique, consider adding a prefix or suffix referencing your mod to prevent other mods from using the same name.\n\n"
+		message = message.."Debug info:\nName given: "..solenoidData.Name.."\nGenerated name: "..newName
+		Common.ShowError(message)
+		solenoidData.Name = newName
+	end
 	local obj_database = Common.GetObjDatabase()
 
 	--Copy the array to the working set

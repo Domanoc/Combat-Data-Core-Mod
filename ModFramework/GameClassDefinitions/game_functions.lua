@@ -95,3 +95,6 @@ window_mouse_get_x = window_mouse_get_x
 ---Gets the mouse position y in window/screen coordinates, (0,0) = top-left of the window
 ---@type fun():number
 window_mouse_get_y = window_mouse_get_y
+---This function returns a random integer value within the given range (both inclusive).
+---@type fun(x1:number, x2:number): number
+irandom_range = irandom_range

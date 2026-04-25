@@ -82,7 +82,7 @@ function draw_top_menu(q)
 	Internal.Research.FixModdedResearch()
 
 	local keys = Internal.Types.VirtualKeys
-	if keyboard_check_pressed(keys.F10) then
+	if keyboard_check_pressed(keys.F11) then
 		--Debugger breakpoint
     end
 end
