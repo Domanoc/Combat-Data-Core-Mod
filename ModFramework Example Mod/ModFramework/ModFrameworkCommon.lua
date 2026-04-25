@@ -76,7 +76,7 @@ end
 
 ---Gets the modded component
 ---@param name string the name of the component
----@param type 1|2|3|4|5|6|7|8|9|10|11|95|96|97|98|99 the type of component
+---@param type ComponentType the type of component
 ---@return ModdedComponent? item the modded component if found, nil otherwise
 function Common.GetModdedComponent(name, type)
 	for _, moddedComponent in ipairs(Storage.ModdedComponentList) do
@@ -365,7 +365,9 @@ function Common.DsmapToMessage(ds_map)
 	local prefix = callerPrint..spacerLine
 
 	local values = {}
-    for k, v in pairs(ds_map_keys_to_array(ds_map)) do
+	local sortedKeyNames = ds_map_keys_to_array(ds_map)
+	table.sort(sortedKeyNames)
+    for k, v in pairs(sortedKeyNames) do
         table.insert(values, tostring(k).."::"..tostring(v).."::"..tostring(ds_map_find_value(ds_map, v)))
     end
     local message = table.concat(values, ",\n")

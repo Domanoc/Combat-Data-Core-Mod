@@ -14,6 +14,7 @@ local Types = {}
 ------------------------------------------------------------------------------
 
 ---The base mech indexes
+---@class BaseMechs
 local BaseMechs = {
 	Miner = 0,
 	Castle = 1,
@@ -42,6 +43,7 @@ Types.MechModules = MechModules
 ------------------------------------------------------------------------------
 
 ---Component types
+---@class ComponentTypes
 local ComponentTypes = {
 	Mech = 1,
 	Cabin = 2,
@@ -63,6 +65,7 @@ local ComponentTypes = {
 Types.ComponentTypes = ComponentTypes
 
 ---component sizes
+---@class ComponentSizes
 local ComponentSizes = {
 	--a single hanger slot
 	Small = 1,
@@ -77,6 +80,7 @@ Types.ComponentSizes = ComponentSizes
 ------------------------------------------------------------------------------
 
 ---The weapon mech indexes
+---@class BaseWeapons
 local BaseWeapons = {
 	SIX_BARRELED_GUN = 0,
 	ROCKET_SYSTEM = 1,
@@ -94,6 +98,7 @@ local BaseWeapons = {
 Types.BaseWeapons = BaseWeapons
 
 ---Weapon type identifiers
+---@class WeaponTypes
 local WeaponTypes = {
 	White = "white",	--kinetic
 	Red = "red",		--missiles
@@ -102,12 +107,26 @@ local WeaponTypes = {
 }
 Types.WeaponTypes = WeaponTypes
 
+------------------------------------------------------------------------------
+--- REACTOR TYPES ------------------------------------------------------------
+------------------------------------------------------------------------------
+
+---Reactor type identifiers
+---@class ReactorTypes
+local ReactorTypes = {
+	Combustion = 1,
+	Fission = 2,
+	Fusion = 3,
+}
+Types.ReactorTypes = ReactorTypes
+
 
 ------------------------------------------------------------------------------
 --- RESEARCH TYPES -----------------------------------------------------------
 ------------------------------------------------------------------------------
 
 ---The base research res numbers
+---@class BaseResearchResNumbers
 local BaseResearchResNumbers = {
 	PREPARATIONS = 0,
 	TANK_GUN = 1,
@@ -157,6 +176,7 @@ local BaseResearchResNumbers = {
 Types.BaseResearchResNumbers = BaseResearchResNumbers
 
 ---Reseach index identifiers for the mres tables
+---@class ResearchIndexes
 local ResearchIndexes = {
 	Position = 1, 		--position number on the research tree. You can see positions in the game with f6 (debug mode)
 	Link_1 = 2,			--link 1, Link to open the next research. Should contain the number of the research from the array
@@ -172,6 +192,7 @@ local ResearchIndexes = {
 Types.ResearchIndexes = ResearchIndexes
 
 ---Research conditions
+---@class ResearchConditions
 local ResearchConditions = {
 	--It is closed, the prerequisites need to be completed
 	Closed = 0,

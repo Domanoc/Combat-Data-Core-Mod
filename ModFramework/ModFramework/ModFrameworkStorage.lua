@@ -12,39 +12,51 @@ local Storage = {}
 ---@type string the language file setting that is seleced, example "loc_english.ini"
 Storage.SelectedLanguage = ""
 
----A list of the registered mods
+---A list of the registered mods.
 ---@type ModRegistration[]
 Storage.ModRegistrations = {}
 
----A list of the modded components. So we can reference them later.
+---A list of the modded components.
 ---@type ModdedComponent[]
 Storage.ModdedComponentList = {}
 
----We keep a list of all the researches the game has active. So we can reference them later.
+---We keep a list of all the researches the game has active.
 ---@type game_obj_research[]
 Storage.LoadedResearchList = {}
 
----We keep a list of the modded researches. So we can reference them later.
+---We keep a list of the modded researches.
 ---@type ModdedResearch[]
 Storage.ModdedResearchList = {}
 
----We keep a list of the shop components. So we can reference them later.
+---We keep a list of the all shop components.
 ---@type game_obj_component[]
 Storage.AllShopComponents = {}
 
----We keep a list of the shop weapon components. So we can reference them later.
+---We keep a list of the shop weapon components by type.
 ---@class WeaponsComponents
----@field kineticWeapons game_obj_component[] kinetic weapons
----@field missileWeapons game_obj_component[] missile weapons
----@field energyWeapons game_obj_component[] energy weapons
----@field thermalWeapons game_obj_component[] thermal weapons
+---@field Kinetic game_obj_component[] kinetic weapons
+---@field Missile game_obj_component[] missile weapons
+---@field Energy game_obj_component[] energy weapons
+---@field Thermal game_obj_component[] thermal weapons
 local WeaponsComponents = {
-    kineticWeapons = {},
-    missileWeapons = {},
-    energyWeapons = {},
-    thermalWeapons = {}
+    Kinetic = {},
+    Missile = {},
+    Energy = {},
+    Thermal = {}
 }
 Storage.WeaponsComponents = WeaponsComponents
+
+---We keep a list of the shop reactor components by type.
+---@class ReactorComponents
+---@field Combustion game_obj_component[] combustion reactors
+---@field Fission game_obj_component[] fission reactors
+---@field Fusion game_obj_component[] fusion reactors
+local ReactorComponents = {
+    Combustion = {},
+    Fission = {},
+    Fusion = {},
+}
+Storage.ReactorComponents = ReactorComponents
 
 ---The reference to the shop left button
 ---@type number

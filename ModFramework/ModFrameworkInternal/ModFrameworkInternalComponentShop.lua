@@ -100,6 +100,8 @@ function ComponentShop.RearrangeShopComponents()
     Private.CalculateMaxSupportPage()
     Private.ArrangeSupportComponents()
 
+    Private.ArrangeReactorsComponents()
+
 	--24 slots under reactors
 --	local startX = 1120
 --	local startY = 765
@@ -274,25 +276,25 @@ function Private.CalculateMaxWeaponsPage()
     local slotsPerPage = 24
     local cadence = 3
 
-    for _, component in ipairs(Storage.WeaponsComponents.kineticWeapons) do
+    for _, component in ipairs(Storage.WeaponsComponents.Kinetic) do
         if (component.researched == true) then
             count = count + 1
         end
     end
     count = Private.NextCadance(count, cadence)
-    for _, component in ipairs(Storage.WeaponsComponents.missileWeapons) do
+    for _, component in ipairs(Storage.WeaponsComponents.Missile) do
         if (component.researched == true) then
             count = count + 1
         end
     end
     count = Private.NextCadance(count, cadence)
-    for _, component in ipairs(Storage.WeaponsComponents.energyWeapons) do
+    for _, component in ipairs(Storage.WeaponsComponents.Energy) do
         if (component.researched == true) then
             count = count + 1
         end
     end
     count = Private.NextCadance(count, cadence)
-    for _, component in ipairs(Storage.WeaponsComponents.thermalWeapons) do
+    for _, component in ipairs(Storage.WeaponsComponents.Thermal) do
         if (component.researched == true) then
             count = count + 1
         end
@@ -315,13 +317,13 @@ function Private.ArrangeWeaponsComponents()
         StartY = 221
     }
 
-	index = Private.ArrangeLoopVertical(Storage.WeaponsComponents.kineticWeapons, index, settings)
+	index = Private.ArrangeLoopVertical(Storage.WeaponsComponents.Kinetic, index, settings)
     index = Private.NextCadance(index, settings.Cadence)
-	index = Private.ArrangeLoopVertical(Storage.WeaponsComponents.missileWeapons, index, settings)
+	index = Private.ArrangeLoopVertical(Storage.WeaponsComponents.Missile, index, settings)
 	index = Private.NextCadance(index, settings.Cadence)
-	index = Private.ArrangeLoopVertical(Storage.WeaponsComponents.energyWeapons, index, settings)
+	index = Private.ArrangeLoopVertical(Storage.WeaponsComponents.Energy, index, settings)
 	index = Private.NextCadance(index, settings.Cadence)
-	index = Private.ArrangeLoopVertical(Storage.WeaponsComponents.thermalWeapons, index, settings)
+	index = Private.ArrangeLoopVertical(Storage.WeaponsComponents.Thermal, index, settings)
 end
 
 ---Calculate and set the max page for the support section
@@ -374,6 +376,34 @@ function Private.ArrangeSupportComponents()
         obj_component_shop.comp_engineer,
     }
     Private.ArrangeLoopHorizontal(components, index, settings)
+end
+
+---Arranging the aaaaaaaaaaaaaaaaaaaaaa components in the 24 slots under the reactors section
+function Private.ArrangeReactorsComponents()
+    local obj_component_shop = Common.GetObjComponentShop()
+
+    local index = 0
+	local pageWidth = 8 * componentSpacing
+    ---@type ArrangeSettings
+    local settings = {
+        CurrentPage = mechsPage.CurrentPage,
+        SlotsPerPage = 24,
+        Cadence = 8,
+        StartX = 1120 - (pageWidth * mechsPage.CurrentPage),
+        StartY = 765
+    }
+
+    index = Private.ArrangeLoopHorizontal(Storage.ReactorComponents.Combustion, index, settings)
+    index = Private.ArrangeLoopHorizontal(obj_component_shop.comp_injector, index, settings)
+    index = Private.ArrangeLoopHorizontal(obj_component_shop.comp_piston, index, settings)
+    index = Private.NextCadance(index, settings.Cadence)
+    index = Private.ArrangeLoopHorizontal(Storage.ReactorComponents.Fission, index, settings)
+    index = Private.ArrangeLoopHorizontal(obj_component_shop.comp_kernel, index, settings)
+    index = Private.ArrangeLoopHorizontal(obj_component_shop.comp_safety, index, settings)
+    index = Private.NextCadance(index, settings.Cadence)
+    index = Private.ArrangeLoopHorizontal(Storage.ReactorComponents.Fusion, index, settings)
+    index = Private.ArrangeLoopHorizontal(obj_component_shop.comp_magnet, index, settings)
+    index = Private.ArrangeLoopHorizontal(obj_component_shop.comp_solenoid, index, settings)
 end
 
 ---Skips the index to the next full row or column

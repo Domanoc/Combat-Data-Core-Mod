@@ -175,16 +175,28 @@ function Production.StoreShopComponents()
 		local weaponData = obj_database.weapon_stat[component.comp_data_type + 1]
 		local weaponType = ds_map_find_value(weaponData, "type")
 		if (weaponType == Types.WeaponTypes.White) then
-			table.insert(Storage.WeaponsComponents.kineticWeapons, component)
+			table.insert(Storage.WeaponsComponents.Kinetic, component)
 		elseif (weaponType == Types.WeaponTypes.Red) then
-			table.insert(Storage.WeaponsComponents.missileWeapons, component)
+			table.insert(Storage.WeaponsComponents.Missile, component)
 		elseif (weaponType == Types.WeaponTypes.Blue) then
-			table.insert(Storage.WeaponsComponents.energyWeapons, component)
+			table.insert(Storage.WeaponsComponents.Energy, component)
 		elseif (weaponType == Types.WeaponTypes.Yellow) then
-			table.insert(Storage.WeaponsComponents.thermalWeapons, component)
+			table.insert(Storage.WeaponsComponents.Thermal, component)
 		end
 	end
 
+	for _, component in pairs(obj_component_shop.comp_reactor) do
+		local reactorData = obj_database.reactor_stat[component.comp_data_type + 1]
+		local reactorType = ds_map_find_value(reactorData, "type")
+		if (reactorType == Types.ReactorTypes.Combustion) then
+			table.insert(Storage.ReactorComponents.Combustion, component)
+		elseif (reactorType == Types.ReactorTypes.Fission) then
+			table.insert(Storage.ReactorComponents.Fission, component)
+		elseif (reactorType == Types.ReactorTypes.Fusion) then
+			table.insert(Storage.ReactorComponents.Fusion, component)
+		end
+	end
+	
 	--we only need to run this once so we set the flag to true
 	areShopComponentsStored = true
 end
