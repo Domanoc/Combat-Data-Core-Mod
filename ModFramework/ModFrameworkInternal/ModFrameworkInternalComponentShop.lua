@@ -55,7 +55,7 @@ function ComponentShop.LoadShopSprites()
 
 	--We change the shop background sprite to allow better rearranging of the items
 	local engineeringSprite = asset_get_index("spr_back_shop")
-	sprite_replace(engineeringSprite, modPath.."sprites\\spr_back_shop.png", 1, false, false, 0, 0)
+	Common.ReplaceSprite(engineeringSprite, modPath.."sprites\\spr_back_shop.png", 1, false, false, 0, 0)
 end
 
 ---The robot sprite was bleeding out of the construction box so we replaced its icon

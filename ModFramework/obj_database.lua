@@ -26,12 +26,8 @@ function create(q,v_modid)
 	--TODO LIST
 	--For existing mods::
 
-	--sprite_replace wrapper
-	--unlock all compo debugger
 	--Weapon icon sprites in the component buttons
 	--logic to prevent duplicate component names
-
-	--Improve the production slot selection for new items
 
 	--Show example of solenoid modding and adding
 	--Support for pilot modding

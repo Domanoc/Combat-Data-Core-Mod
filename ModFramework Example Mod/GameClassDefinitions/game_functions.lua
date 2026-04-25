@@ -77,9 +77,12 @@ surface_save = surface_save
 ---When you are working with surfaces, you should always use this function whenever you are finished using them.
 ---@type fun(surface_id: number)
 surface_free = surface_free
----When you are working with surfaces, you should always use this function whenever you are finished using them.
+---With this function you can replace a sprite with a new image, loading from an external source where the image file to be loaded should always be in either *.png, *.gif, *.jpg/jpeg
 ---@type fun(ind:number, fname:string, imgnumb:number, removeback:boolean, smooth:boolean, xorig:number, yorig:number)
 sprite_replace = sprite_replace
+---This function will return the name as a string of the specified sprite. if not found returns "<undefined>"
+---@type fun(index: number):string
+sprite_get_name = sprite_get_name
 ---Returns true once, the moment you click, Doesn’t repeat if you hold the button
 ---@type fun(numb:number):boolean
 mouse_check_button_pressed = mouse_check_button_pressed

@@ -244,6 +244,26 @@ function Common.DeleteSprite(spriteIndex)
 	sprite_delete(spriteIndex)
 end
 
+---With this function you can replace a sprite with a new image, loading from an external source where the image file to be loaded should always be in either *.png, *.gif, *.jpg/jpeg
+---
+---Use this instead of calling sprite_replace directly to prevent crashes when incorrect sprite data is passed.
+---@param spriteIndex number the index for the sprite that will be replaced 
+---@param filepath string The filepath of the file to add.
+---@param numberOfImages number Use to indicate the number of sub-images
+---@param removeback boolean Indicates whether to make all pixels with the background colour (left-bottom pixel) transparent.
+---@param smooth boolean Indicates whether to smooth the edges if transparent.
+---@param xOrig number Indicate the x position of the origin in the sprite.
+---@param yOrig number Indicate the y position of the origin in the sprite.
+function Common.ReplaceSprite(spriteIndex, filepath, numberOfImages, removeback, smooth, xOrig, yOrig)
+	local srpiteName = sprite_get_name(spriteIndex)
+	if(srpiteName == "<undefined>") then
+		local message = "Replacing the sprite with index: '"..spriteIndex.."' failed.\n\n"
+		message = message.."Make sure the index of the sprite is correct."
+		Common.ShowError(message)
+		return
+	end
+	sprite_replace(spriteIndex, filepath, numberOfImages, removeback, smooth, xOrig, yOrig)
+end
 
 ------------------------------------------------------------------------------
 --- DEBUG HELPER FUNCTIONS ---------------------------------------------------
