@@ -139,3 +139,8 @@
 ---@class LocalizedString dataset pair that matches the language file with a value in that language
 ---@field LanguageFile string the language file the string supports, example: "loc_english.ini"
 ---@field Value string the string with the value that matches the language represented by the language file
+
+---@class ShopPagination
+---@field CurrentPage number the current page the shop section is on
+---@field MaxPage number the max number of pages that exists for this section
+

@@ -21,10 +21,13 @@ function create(q,v_modid)
 	--Only needed in the framework setup, is not needed for mods
 	Internal = require("ModFrameworkInternal")
 	Internal.RegisterFramework()
-	Internal.Production.LoadShopSprites()
+	Internal.ComponentShop.LoadShopSprites()
 
 	--TODO LIST
 	--For existing mods::
+
+	--sprite_replace wrapper
+	--unlock all compo debugger
 
 	--Improve the production slot selection for new items
 
@@ -83,8 +86,8 @@ end
 function draw_top_menu(q)
 	Internal.Production.SetModdedWeaponDescriptions()
 	Internal.Production.StoreShopComponents()
-	Internal.Production.RearrangeShopComponents()
-	Internal.Production.ShopDraw()
+	Internal.ComponentShop.RearrangeShopComponents()
+	Internal.ComponentShop.ShopDraw()
 	Internal.Research.FixModdedResearch()
 end
 

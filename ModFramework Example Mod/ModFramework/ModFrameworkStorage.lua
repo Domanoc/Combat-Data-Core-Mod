@@ -54,6 +54,10 @@ Storage.SpriteShopButtonLeft = -1
 ---@type number
 Storage.SpriteShopButtonRight = -1
 
+---Flag indicating if the shop icons need to be updated
+---@type boolean
+Storage.IsShopUpdateNeeded = true
+
 ------------------------------------------------------------------------------
 --- EXPORT STORAGE -----------------------------------------------------------
 ------------------------------------------------------------------------------

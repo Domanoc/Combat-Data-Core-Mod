@@ -3,7 +3,7 @@
 ------------------------------------------------------------------------------
 
 ---Access to the functions for the Engineering tab.
----@class ModFrameworkEngineering
+---@class ModFrameworkInternalEngineering
 local Engineering = {}
 
 ------------------------------------------------------------------------------

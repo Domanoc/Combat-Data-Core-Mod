@@ -3,7 +3,7 @@
 ------------------------------------------------------------------------------
 
 ---Access to the internal functions for the Research tab.
----@class ModFrameworkResearch
+---@class ModFrameworkInternalResearch
 local Research = {}
 
 ------------------------------------------------------------------------------

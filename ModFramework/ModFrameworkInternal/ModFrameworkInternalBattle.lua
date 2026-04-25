@@ -3,7 +3,7 @@
 ------------------------------------------------------------------------------
 
 ---Access to the functions for the Battle.
----@class ModFrameworkBattle
+---@class ModFrameworkInternalBattle
 local Battle = {}
 
 ------------------------------------------------------------------------------

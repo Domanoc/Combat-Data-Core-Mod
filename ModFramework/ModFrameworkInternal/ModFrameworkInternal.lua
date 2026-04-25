@@ -21,6 +21,10 @@ local Battle = require("ModFrameworkInternalBattle")
 ---Access to the internal functions for the Battle.
 Module.Battle = Battle
 
+local ComponentShop = require("ModFrameworkInternalComponentShop")
+---Access to the functions for the Component shop.
+Module.ComponentShop = ComponentShop
+
 local Engineering = require("ModFrameworkInternalEngineering")
 ---Access to the internal functions for the Engineering tab.
 Module.Engineering = Engineering
