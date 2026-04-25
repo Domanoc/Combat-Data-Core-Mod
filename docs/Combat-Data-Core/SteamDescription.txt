@@ -1,0 +1,78 @@
+[h2]Lore[/h2]
+The excavation unit drilling through the collapsed sub-levels of Sector Gamma, stumbled upon the relic. A combat data core humming with residual energy, its surface etched with the lost sigil of the Iron Legion. Immediately, the city AI locked onto the discovery. Its diagnostic reports confirmed the core held a complete tactical archive from the devastating Unification Wars, detailing maneuvers and weapon systems far beyond current doctrine. Given the escalating severity of the conflict, the decision was made to allocate resources to unlock its secrets. The mission's survival now hinged entirely on cracking the Core's formidable encryption.
+
+[h2]Description[/h2]
+Add a new research tree that allows for a separate tech progression. Progression is gated behind decrypting cycles of the data core. Includes 4 new mech types. 2 new weapons and a solenoid for the thermonuclear reactor. The mod tries to stay balanced for the early and mid game. And offers some boosted upgrades for the endgame.
+
+[h2]Mechs[/h2]
+[h3]Nova[/h3]
+The Nova is the result of a green coffin that is militarized. It provides some extra armor and the ammunition storage and reload times have also been improved. It should provide an alternative to the Plate with trading an extra gun for an auxiliary slot and better underwater performance.
+
+[h3]Echo[/h3]
+A multi legged mech with 3 weapon slots. It has better impact resistance compared to the nova but loses some underwater capabilities. On land however it provides a stable weapons platform and is able to carry heavy weapons.
+
+[h3]Sentinel[/h3]
+A Large mech that can trade blows with the Castle. It may carry fewer weapons but is cheaper and faster to build. And better use of militarized armor provides more passive armor at a reduced weight.
+
+[h3]Behemoth[/h3]
+The pinnacle of mech design that provides a massive battery of weapons and armor. It’s gated by a lengthy decryption cycle but will provide an expensive endgame mech option.
+
+[h2]Other[/h2]
+[h3]Howitzer[/h3]
+A large 240mm artillery weapon repurposed for use in direct fire. It trades fire rate for higher damage compared to the 120mm tank gun. It also boosts a bit of extra penetration at the cost of more overall weight.
+
+[h3]Extended Range Laser Pulse Cannon[/h3]
+A heavy laser weapon that uses an internal power unit to provide most of the energy. Enabling it to fire at extended ranges from normal laser weaponry. Intended for endgame use.
+
+[h3]High Tech Solenoid[/h3]
+Adds a new solenoid that has better heat resistance. Allowing for high powered thermonuclear reactors without overheating. Intended for endgame use.
+
+[h2]Compatibility[/h2]
+For the best experience it’s best to use a new save. But it has been tested with adding it to an existing save.
+
+Since it uses the lower rows of the research tree it should be compatible with the other mech & weapon mods.
+
+[h2]Change Log[/h2]
+[b]2026-03-07: V1.8[/b]
+-Fixed the audio bug compatibility with the Simple Autocannon mod.
+
+[b]2025-12-12: V1.7[/b]
+-Cleaned the code to make it easier to read.
+
+[b]2025-10-22: V1.6[/b]
+-Fixed a missing prefix
+
+[b]2025-10-22: V1.5[/b]
+-Fixed an issue on the Behemoth sprite.
+-Added a modprefix to the mods global variables to prevent global variables collisions.
+
+[b]2025-10-21: V1.4[/b]
+-Fixed the range not updating correctly in battle for modded weapons.
+
+[b]2025-10-20: V1.3[/b]
+-Added Extended Range Laser Pulse Cannon.
+-Fixed research bug when adding mod to an existing save.
+-Cleaned the code to make it easier to read.
+
+[b]2025-10-17: V1.2[/b]
+-Added Echo mech.
+-Added new endgame solenoid.
+-Added Howitzer weapon.
+-Fixed the weapon overflow on the Behemoth by removing the last 2 weapon slots.
+
+[b]2025-10-9: V1.1[/b]
+-Fix crash when loading with modded mechs in the production queue.
+-Added load event to restore modded sprite references.
+
+[b]2025-10-6: V1.0[/b]
+-Created the mod.
+
+[h2]Credits[/h2]
+[b]KiberKreker[/b] - For creating the game that motivated me to make this mod.
+[b]skaianDestiny[/b] - For creating the “Skaian's Mech Pack” that I used as a template for this mod.
+[b]Google Gemini[/b] - For creating some random mechs and various other art that I used as a base for the pixel art.
+[b]Aseprite[/b] - For being a nice pixel art program.
+[b]1605153193[/b] - For helping find and fix the sprite bug.
+
+
+
