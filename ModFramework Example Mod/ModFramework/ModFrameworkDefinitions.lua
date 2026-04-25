@@ -150,3 +150,8 @@
 ---@field Cadence number the amount of items in a row/column
 ---@field StartX number the starting x position
 ---@field StartY number the starting y position
+
+---@class WeaponIndicatorLocation dataset containing the information to display a weapon indicator sprite
+---@field X number the x position
+---@field Y number the y position
+---@field SubImageIndex 0|1|2|3 the subimage that needs to be shown 

@@ -26,7 +26,6 @@ function create(q,v_modid)
 	--TODO LIST
 	--For existing mods::
 
-	--Weapon icon sprites in the component buttons
 	--logic to prevent duplicate component names
 
 	--Show example of solenoid modding and adding
@@ -41,7 +40,6 @@ function create(q,v_modid)
 	--Show example of motor modding and adding
 	--Support for reactor modding
 	--Show example of reactor modding and adding
-
 	--Support for magnet modding
 	--Show example of magnet modding and adding
 	--Support for injector modding
@@ -85,7 +83,6 @@ function draw_top_menu(q)
 	Internal.Production.SetModdedWeaponDescriptions()
 	Internal.Production.StoreShopComponents()
 	Internal.ComponentShop.RearrangeShopComponents()
-	Internal.ComponentShop.ShopDraw()
 	Internal.ComponentShop.FixRobotComponentBleed()
 	Internal.Research.FixModdedResearch()
 

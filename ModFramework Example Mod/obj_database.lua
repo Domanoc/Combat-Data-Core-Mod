@@ -85,7 +85,7 @@ function create(q,v_modid)
 		PriceSkalaknit =    1000,				  --The amount of skalaknit needed to produce this weapon
 		PriceStaff = 	    10,					  --The amount of staff needed to produce this weapon
 		ProductionDays =    2,					  --The amount of days it takes to produce this weapon
-		WeaponType =	    weaponTypes.White,	  --the type of weapon (white = kinetic, red = missiles, blue = energy, yellow = thermal)
+		WeaponType =	    weaponTypes.Kinetic,  --the type of weapon (white = kinetic, red = missiles, blue = energy, yellow = thermal)
 		FireRate =		    25,					  --the base fire rate. higher values offer a faster rate, 600 with full firespeed points will fill the firespeed bar completely
 		Weight = 		    48,					  --the base weight of the weapon
 		Accuracy = 		    1.5,				  --the base accuracy for the weapon. accuracy in degrees, 0 is perfect accuracy
@@ -128,7 +128,7 @@ function create(q,v_modid)
 		PriceSkalaknit =    1000,				  --The amount of skalaknit needed to produce this weapon
 		PriceStaff = 	    10,					  --The amount of staff needed to produce this weapon
 		ProductionDays =    2,					  --The amount of days it takes to produce this weapon
-		WeaponType =	    weaponTypes.White,	  --the type of weapon (white = kinetic, red = missiles, blue = energy, yellow = thermal)
+		WeaponType =	    weaponTypes.Kinetic,  --the type of weapon (white = kinetic, red = missiles, blue = energy, yellow = thermal)
 		FireRate =		    25,					  --the base fire rate. higher values offer a faster rate, 600 with full firespeed points will fill the firespeed bar completely
 		Weight = 		    48,					  --the base weight of the weapon
 		Accuracy = 		    1.5,				  --the base accuracy for the weapon. accuracy in degrees, 0 is perfect accuracy
@@ -171,7 +171,7 @@ function create(q,v_modid)
 		PriceSkalaknit =    1000,				  --The amount of skalaknit needed to produce this weapon
 		PriceStaff = 	    10,					  --The amount of staff needed to produce this weapon
 		ProductionDays =    2,					  --The amount of days it takes to produce this weapon
-		WeaponType =	    weaponTypes.Blue,	  --the type of weapon (white = kinetic, red = missiles, blue = energy, yellow = thermal)
+		WeaponType =	    weaponTypes.Energy,	  --the type of weapon (white = kinetic, red = missiles, blue = energy, yellow = thermal)
 		FireRate =		    25,					  --the base fire rate. higher values offer a faster rate, 600 with full firespeed points will fill the firespeed bar completely
 		Weight = 		    48,					  --the base weight of the weapon
 		Accuracy = 		    1.5,				  --the base accuracy for the weapon. accuracy in degrees, 0 is perfect accuracy

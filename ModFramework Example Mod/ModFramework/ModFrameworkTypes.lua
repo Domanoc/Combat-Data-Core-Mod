@@ -100,12 +100,22 @@ Types.BaseWeapons = BaseWeapons
 ---Weapon type identifiers
 ---@class WeaponTypes
 local WeaponTypes = {
-	White = "white",	--kinetic
-	Red = "red",		--missiles
-	Blue = "blue",		--energy
-	Yellow = "yellow",  --thermal
+	Kinetic = "white",
+	Missile = "red",
+	Energy = "blue",
+	Thermal = "yellow",
 }
 Types.WeaponTypes = WeaponTypes
+
+---Weapon indicator identifiers
+---@class WeaponInicator
+local WeaponInicator = {
+	Kinetic = 0,
+	Missile = 1,
+	Thermal = 2,
+	Energy = 3,
+}
+Types.WeaponInicator = WeaponInicator
 
 ------------------------------------------------------------------------------
 --- REACTOR TYPES ------------------------------------------------------------

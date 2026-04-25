@@ -58,6 +58,10 @@ local ReactorComponents = {
 }
 Storage.ReactorComponents = ReactorComponents
 
+---The reference list where additional weapon indicators need to be displayed
+---@type WeaponIndicatorLocation[]
+Storage.WeaponIndicators = {}
+
 ---The reference to the shop left button
 ---@type number
 Storage.SpriteShopButtonLeft = -1

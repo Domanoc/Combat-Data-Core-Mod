@@ -140,6 +140,12 @@ function ComponentShop.ShopDraw()
             Private.DrawButton(Storage.SpriteShopButtonLeft, 1398, 728, Private.ReactorsLeftButtonPressed)
 		    Private.DrawButton(Storage.SpriteShopButtonRight, 1598, 728, Private.ReactorsRightButtonPressed)
 		end
+
+        --Draw for the weapon indicators
+        local weaponIndicatorSprite = asset_get_index("spr_wep_indicator")
+        for _, weaponIndidator in ipairs(Storage.WeaponIndicators) do
+            draw_sprite_ext(weaponIndicatorSprite, weaponIndidator.SubImageIndex, weaponIndidator.X, weaponIndidator.Y, 2, 2, 0, 16777215, 1)
+        end
 	end
 end
 
@@ -306,13 +312,16 @@ function Private.ArrangeWeaponsComponents()
         StartY = 221
     }
 
-	index = Private.ArrangeLoopVertical(Storage.WeaponsComponents.Kinetic, index, settings)
+    --Clear the list
+    Storage.WeaponIndicators = {}
+
+	index = Private.ArrangeWeaponsLoopVertical(Storage.WeaponsComponents.Kinetic, index, settings, Types.WeaponInicator.Kinetic)
     index = Private.NextCadance(index, settings.Cadence)
-	index = Private.ArrangeLoopVertical(Storage.WeaponsComponents.Missile, index, settings)
+	index = Private.ArrangeWeaponsLoopVertical(Storage.WeaponsComponents.Missile, index, settings, Types.WeaponInicator.Missile)
 	index = Private.NextCadance(index, settings.Cadence)
-	index = Private.ArrangeLoopVertical(Storage.WeaponsComponents.Energy, index, settings)
+	index = Private.ArrangeWeaponsLoopVertical(Storage.WeaponsComponents.Energy, index, settings, Types.WeaponInicator.Energy)
 	index = Private.NextCadance(index, settings.Cadence)
-	index = Private.ArrangeLoopVertical(Storage.WeaponsComponents.Thermal, index, settings)
+	index = Private.ArrangeWeaponsLoopVertical(Storage.WeaponsComponents.Thermal, index, settings, Types.WeaponInicator.Thermal)
 end
 
 ---Calculate and set the max page for the support section
@@ -512,6 +521,42 @@ function Private.ArrangeLoopHorizontal(array, index, settings)
 		elseif (index < lowerBounds) then
 			index = index + 1
 		else
+			component.x = x
+			component.y = y
+			index = index + 1
+		end
+	end
+	return index
+end
+
+---Arrange weapon components to a grid in vertical columns
+---Has special logic to add weapon indicators
+---@param array game_obj_component[] the components to be arranged
+---@param index number the current index for the placement
+---@param settings ArrangeSettings the settings for the arrangement
+---@param indicatorType 0|1|2|3 the subimage that needs to be shown
+---@return number index the new current index for the placement
+function Private.ArrangeWeaponsLoopVertical(array, index, settings, indicatorType)
+    local upperBounds = (settings.SlotsPerPage - 1) + (settings.SlotsPerPage * settings.CurrentPage)
+	local lowerBounds = settings.SlotsPerPage * settings.CurrentPage
+
+	for _, component in ipairs(array) do
+		local x = settings.StartX + componentSpacing * (index // settings.Cadence)
+		local y = settings.StartY + componentSpacing * (index % settings.Cadence)
+		if (component.researched == false or component.researched == 0) then
+            --We skip components that are not unlocked
+		elseif (index > upperBounds) then
+			return index + 1
+		elseif (index < lowerBounds) then
+			index = index + 1
+		else
+            ---@type WeaponIndicatorLocation
+            local weaponIndidator = {
+                X = x + 76,
+                Y = y + 76,
+                SubImageIndex = indicatorType
+            }
+            table.insert(Storage.WeaponIndicators, weaponIndidator)
 			component.x = x
 			component.y = y
 			index = index + 1

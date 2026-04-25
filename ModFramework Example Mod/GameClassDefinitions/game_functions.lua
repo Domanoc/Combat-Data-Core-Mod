@@ -68,6 +68,9 @@ draw_clear_alpha = draw_clear_alpha
 ---This function draws the given sprite and sub-image at a position.
 ---@type fun(sprite: number, subimg: number, x: number, y: number)
 draw_sprite = draw_sprite
+---This function will draw the given sprite as in the function draw_sprite() but with additional options to change the scale, blending, rotation and alpha of the sprite being drawn.
+---@type fun(sprite: number, subimg:number, x:number, y:number, xscale:number, yscale:number, rot:number, colour:number, alpha:number)
+draw_sprite_ext = draw_sprite_ext
 ---This function resets all further drawing from the target surface back to the screen.
 ---@type fun()
 surface_reset_target = surface_reset_target
