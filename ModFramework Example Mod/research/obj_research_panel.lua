@@ -45,6 +45,7 @@ function create(q, v_modid)
 			,{ LanguageFile = "loc_russian.ini", Value = "Пример исследования 1:#Текст, который объяснит, что это открывает." }
 			,{ LanguageFile = "loc_spanish.ini", Value = "Ejemplo de investigación 1:#Texto que explicará qué desbloquea esto." }
 			,{ LanguageFile = "loc_chinese.ini", Value = "研究示例 1:#解释这将解锁什么内容的文本" }
+			,{ LanguageFile = "chs.ini", Value = "研究示例 1:#解释这将解锁什么内容的文本" }
 			,{ LanguageFile = "loc_italian.ini", Value = "Esempio di ricerca 1:#Testo che spiegherà cosa sblocca." }
 			,{ LanguageFile = "japanese.ini", Value = "研究例 1:#これが何を可能にするかを説明するテキスト。" }
 		},
@@ -75,6 +76,7 @@ function create(q, v_modid)
 			,{ LanguageFile = "loc_russian.ini", Value = "Пример исследования 2:#Текст, который объяснит, что это открывает." }
 			,{ LanguageFile = "loc_spanish.ini", Value = "Ejemplo de investigación 2:#Texto que explicará qué desbloquea esto." }
 			,{ LanguageFile = "loc_chinese.ini", Value = "研究示例 2:#解释这将解锁什么内容的文本" }
+			,{ LanguageFile = "chs.ini", Value = "研究示例 2:#解释这将解锁什么内容的文本" }
 			,{ LanguageFile = "loc_italian.ini", Value = "Esempio di ricerca 2:#Testo che spiegherà cosa sblocca." }
 			,{ LanguageFile = "japanese.ini", Value = "研究例 2:#これが何を可能にするかを説明するテキスト。" }
 		},

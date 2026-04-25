@@ -72,6 +72,7 @@ function create(q,v_modid)
 			,{ LanguageFile = "loc_russian.ini", Value = "Описание данного оружия." }
 			,{ LanguageFile = "loc_spanish.ini", Value = "Texto descriptivo de esta arma." }
 			,{ LanguageFile = "loc_chinese.ini", Value = "该武器的描述文字。" }
+			,{ LanguageFile = "chs.ini", Value = "该武器的描述文字。" }
 			,{ LanguageFile = "loc_italian.ini", Value = "Testo descrittivo per quest'arma." }
 			,{ LanguageFile = "japanese.ini", Value = "この武器の説明文。" }
 		},
