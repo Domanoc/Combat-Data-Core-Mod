@@ -2,7 +2,7 @@
 
 ---@alias ComponentType 1|2|3|4|5|6|7|8|9|10|11|95|96|97|98|99 the type of component
 
----@alias WeaponType "white"|"red"|"blue"|"yellow" the type of weapon (white = ballistic, red = rockets, blue = laser/tesla, yellow = thermal)
+---@alias WeaponType "white"|"red"|"blue"|"yellow" the type of weapon (white = kinetic, red = missiles, blue = energy, yellow = thermal)
 
 ---@alias ResearchCondition 0|1|2|3 condition (0-closed, 1-opened, 2-researching, 3-researched)
 
@@ -75,7 +75,7 @@
 ---@field PriceSkalaknit number the amount of skalaknit needed to produce this weapon
 ---@field PriceStaff number the amount of staff needed to produce this weapon
 ---@field ProductionDays number the amount of days it takes to produce this weapon
----@field WeaponType WeaponType the type of weapon (white = ballistic, red = rockets, blue = laser/tesla, yellow = thermal)
+---@field WeaponType WeaponType the type of weapon (white = kinetic, red = missiles, blue = energy, yellow = thermal)
 ---@field FireRate number the base fire rate. higher values offer a faster rate, 600 with full firespeed points will fill the firespeed bar completely
 ---@field Weight number the base weight of the weapon
 ---@field Accuracy number the base accuracy for the weapon. accuracy in degrees, 0 is perfect accuracy
@@ -83,7 +83,7 @@
 ---@field Damage number the base damage value of the weapon
 ---@field Penetration number the base penetration value of the weapon
 ---@field ProjectileSpeed number the base projectile speed of the weapon
----@field IsEnergyBuffed boolean whether the energy cost boost damage output, for laser/tesla weapons this is an additional increase on their native bonus.
+---@field IsEnergyBuffed boolean whether the energy cost boost damage output, for energy weapons this is an additional increase on their native bonus.
 ---@field SpriteSmall string the small sprite for the weapon
 ---@field SpriteBig string the big sprite for the weapon
 ---@field SpriteHuge string the huge sprite for the weapon

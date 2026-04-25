@@ -1,5 +1,3 @@
----@type game_obj_component_shop?
-local obj_component_shop = nil;
 
 ---One time script when the game is started
 ---@param q game_obj_database
@@ -20,23 +18,10 @@ function create(q,v_modid)
 	local modFrameworkInternal = ";"..currentFilePath.."ModFrameworkInternal\\?.lua"
 	package.path = package.path..modFramework..modFrameworkInternal
 
-	--load the mod framework as a global for use within this file
-	Mod = require("ModFrameworkModule")
 	--Only needed in the framework setup, is not needed for mods
 	Internal = require("ModFrameworkInternal")
-
-	--Register the framework
 	Internal.RegisterFramework()
-
-	--we change the shop sprite to allow better rearranging of the items
-	local engineeringSprite = asset_get_index("spr_back_shop")
-	show_message(engineeringSprite)
-	sprite_replace(engineeringSprite, currentFilePath.."sprites\\spr_back_shop.png", 1, false, false, 0, 0)
-
-	local robotSprite = asset_get_index("spr_engineer_robot")
-	sprite_replace(robotSprite, currentFilePath.."sprites\\spr_engineer_robot.png", 1, false, false, 0, 0)
-
-	obj_component_shop = Mod.Common.GetObjComponentShop();
+	Internal.Production.LoadShopSprites()
 
 	--TODO LIST
 	--For existing mods::
@@ -97,21 +82,10 @@ end
 ---@param q game_obj_database
 function draw_top_menu(q)
 	Internal.Production.SetModdedWeaponDescriptions()
-	Internal.Production.FixShopComponents()
+	Internal.Production.StoreShopComponents()
+	Internal.Production.RearrangeShopComponents()
+	Internal.Production.ShopDraw()
 	Internal.Research.FixModdedResearch()
-
-	local keys = Mod.Types.VirtualKeys
-	local mouseButtons = Mod.Types.MouseButtons
-	local mx = window_mouse_get_x()
-	local my = window_mouse_get_y()
-	if (obj_component_shop ~= nil and obj_component_shop.activated == true) then
-		if keyboard_check_pressed(keys.F10) then
-			--Mod.Common.DumpObjToMessage(obj_component_shop)
-    	end
-		if (mouse_check_button_pressed(mouseButtons.Left)) then
-			--show_message("coord: "..mx..","..my)
-		end
-	end
 end
 
 ---The draw call thay runs every frame while debug is active (F6)

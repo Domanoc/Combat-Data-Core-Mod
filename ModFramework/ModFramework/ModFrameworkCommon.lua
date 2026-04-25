@@ -297,7 +297,13 @@ function Common.DumpObjToMessage(ref)
 
 	if(type(ref) == "table") then
 		prefix = prefix.."TABLE"..spacerLine
-		for key, refValue in pairs(ref) do
+		local keys = {}
+		for k in pairs(ref) do
+			table.insert(keys, k)
+		end
+		table.sort(keys)
+		for _, key in ipairs(keys) do
+			local refValue = ref[key]
 			local refValueString = tostring(refValue)
 			if (type(refValue) == "table") then
 				refValueString = Private.TableToString(refValue)

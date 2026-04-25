@@ -17,8 +17,22 @@ local Types = require("ModFrameworkTypes")
 ---Access to the private functions in this file.
 local Private = {}
 
---The size of the production tab items is always 96 pixels (width & height)
+---The size of the production tab items is always 96 pixels (width & height)
 local icon_pixel_size = 96
+
+---The current page for the weapons
+local weaponPage = 0
+---The maximium page for the weapons
+local maxweaponPage = 1
+
+---Flag indicating if the shop icons need to be rearranged
+local isShopUpdateNeeded = true
+
+---Flag indicating if the shop components are stored
+local areShopComponentsStored = false
+
+---Flag indicating if the modded weapon descriptions are set
+local isWeaponDescComplete = false
 
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
@@ -104,7 +118,6 @@ function Production.SetModdedSprites()
 	obj_component_shop.hanger_mass = hanger_mass
 end
 
-local isWeaponDescComplete = false
 ---Use in the draw_top_menu function of obj_database.lua
 ---
 ---The modded weapon descriptions need to be set in the ini output
@@ -133,19 +146,20 @@ function Production.SetModdedWeaponDescriptions()
 	isWeaponDescComplete = true
 end
 
-local areComponentsUpdated = false
-function Production.FixShopComponents()
-	--if the components are set skip
-	if (areComponentsUpdated == true) then
+---Use in the draw_top_menu function of obj_database.lua
+---
+---Stores the shop components references
+function Production.StoreShopComponents()
+	--if the components are stored skip
+	if (areShopComponentsStored == true) then
 		return
 	end
 
 	local obj_component_shop = Common.GetObjComponentShop()
-
-	table.insert(Storage.ShopComponents, obj_component_shop.comp_beacon)
-	table.insert(Storage.ShopComponents, obj_component_shop.comp_city_parts)
-	table.insert(Storage.ShopComponents, obj_component_shop.comp_engineer)
-	table.insert(Storage.ShopComponents, obj_component_shop.comp_rocket)
+	table.insert(Storage.AllShopComponents, obj_component_shop.comp_beacon)
+	table.insert(Storage.AllShopComponents, obj_component_shop.comp_city_parts)
+	table.insert(Storage.AllShopComponents, obj_component_shop.comp_engineer)
+	table.insert(Storage.AllShopComponents, obj_component_shop.comp_rocket)
 	Private.StoreShopComponents(obj_component_shop.comp_cabin)
 	Private.StoreShopComponents(obj_component_shop.comp_injector)
 	Private.StoreShopComponents(obj_component_shop.comp_kernel)
@@ -160,11 +174,38 @@ function Production.FixShopComponents()
 	Private.StoreShopComponents(obj_component_shop.comp_solenoid)
 	Private.StoreShopComponents(obj_component_shop.comp_wep)
 
-	for _, value in pairs(Storage.ShopComponents) do
+	local obj_database = Common.GetObjDatabase()
+	for _, component in pairs(obj_component_shop.comp_wep) do
+		local weaponData = obj_database.weapon_stat[component.comp_data_type + 1]
+		local weaponType = ds_map_find_value(weaponData, "type")
+		if (weaponType == Types.WeaponTypes.White) then
+			table.insert(Storage.WeaponsComponents.kineticWeapons, component)
+		elseif (weaponType == Types.WeaponTypes.Red) then
+			table.insert(Storage.WeaponsComponents.missileWeapons, component)
+		elseif (weaponType == Types.WeaponTypes.Blue) then
+			table.insert(Storage.WeaponsComponents.energyWeapons, component)
+		elseif (weaponType == Types.WeaponTypes.Yellow) then
+			table.insert(Storage.WeaponsComponents.thermalWeapons, component)
+		end
+	end
+
+	--we only need to run this once so we set the flag to true
+	areShopComponentsStored = true
+end
+
+function Production.RearrangeShopComponents()
+	--if the components are set skip
+	if (isShopUpdateNeeded == false) then
+		return
+	end
+
+	for _, value in pairs(Storage.AllShopComponents) do
 		value.researched = true;
 		value.x = 0
 		value.y = 0
 	end
+
+	Private.ArrangeWeaponComponents()
 
 	--18 slots under additional
 --	local startX = 20
@@ -174,8 +215,8 @@ function Production.FixShopComponents()
 --		local y = startY + 97 * (i // 3)
 --		local index = i + 1
 --
---		Storage.ShopComponents[index].x = x
---		Storage.ShopComponents[index].y = y
+--		Storage.AllShopComponents[index].x = x
+--		Storage.AllShopComponents[index].y = y
 --	end
 
 	--30 slots under mech
@@ -186,19 +227,19 @@ function Production.FixShopComponents()
 --		local y = startY + 97 * (i // 5)
 --		local index = i + 1
 --
---		Storage.ShopComponents[index].x = x
---		Storage.ShopComponents[index].y = y
+--		Storage.AllShopComponents[index].x = x
+--		Storage.AllShopComponents[index].y = y
 --	end
 
 	--24 slots under weapons
 --	local startX = 1120
 --	local startY = 221
 --	for i = 0, 23, 1 do
---		local x = startX + 97 * (i % 8)
---		local y = startY + 97 * (i // 8)
+--		local x = startX + 97 * (i // 3)
+--		local y = startY + 97 * (i % 3)
 --		local index = i + 1
---		Storage.ShopComponents[index].x = x
---		Storage.ShopComponents[index].y = y
+--		Storage.AllShopComponents[index].x = x
+--		Storage.AllShopComponents[index].y = y
 --	end
 
 	--8 slots under support
@@ -208,23 +249,155 @@ function Production.FixShopComponents()
 --		local x = startX + 97 * (i % 8)
 --		local y = startY + 97 * (i // 8)
 --		local index = i + 1
---		Storage.ShopComponents[index].x = x
---		Storage.ShopComponents[index].y = y
+--		Storage.AllShopComponents[index].x = x
+--		Storage.AllShopComponents[index].y = y
 --	end
 
 	--24 slots under reactors
-	local startX = 1120
-	local startY = 765
-	for i = 0, 23, 1 do
-		local x = startX + 97 * (i % 8)
-		local y = startY + 97 * (i // 8)
-		local index = i + 1
-		Storage.ShopComponents[index].x = x
-		Storage.ShopComponents[index].y = y
-	end
+--	local startX = 1120
+--	local startY = 765
+--	for i = 0, 23, 1 do
+--		local x = startX + 97 * (i % 8)
+--		local y = startY + 97 * (i // 8)
+--		local index = i + 1
+--		Storage.AllShopComponents[index].x = x
+--		Storage.AllShopComponents[index].y = y
+--	end
 
-	--we only need to run this once so we set the flag to true
-	areComponentsUpdated = true
+	--we only need to run this once so we set the flag to false
+	isShopUpdateNeeded = false
+end
+
+---Use in the create function of obj_database.lua
+---
+---Loads the needed shop sprites, so we can add buttons and rearrange the layout
+function Production.LoadShopSprites()
+	local modPath = Common.GetModPath("ModFramework");
+	Storage.SpriteShopButtonLeft = Common.AddSprite(modPath.."sprites//ShopButtonLeft.png", 2, false, false, 0, 0)
+	Storage.SpriteShopButtonRight = Common.AddSprite(modPath.."sprites//ShopButtonRight.png", 2, false, false, 0, 0)
+
+	--We change the shop background sprite to allow better rearranging of the items
+	local engineeringSprite = asset_get_index("spr_back_shop")
+	sprite_replace(engineeringSprite, modPath.."sprites\\spr_back_shop.png", 1, false, false, 0, 0)
+
+	--The robot sprite was bleeding out of the construction box
+	local robotSprite = asset_get_index("spr_engineer_robot")
+	sprite_replace(robotSprite, modPath.."sprites\\spr_engineer_robot.png", 1, false, false, 0, 0)
+end
+
+function Production.ShopDraw()
+	local obj_component_shop = Common.GetObjComponentShop()
+	if (obj_component_shop.activated == true) then
+
+		--Buttons for additional
+		Private.DrawButton(Storage.SpriteShopButtonLeft, 86, 454, Private.LeftButtonPressed)
+		Private.DrawButton(Storage.SpriteShopButtonRight, 284, 454, Private.RightButtonPressed)
+
+		--Buttons for mechs
+		Private.DrawButton(Storage.SpriteShopButtonLeft, 454, 454, Private.LeftButtonPressed)
+		Private.DrawButton(Storage.SpriteShopButtonRight, 652, 454, Private.RightButtonPressed)
+
+		--Buttons for weapons
+		if (maxweaponPage > 0) then
+			Private.DrawButton(Storage.SpriteShopButtonLeft, 1398, 174, Private.LeftButtonPressed)
+		Private.DrawButton(Storage.SpriteShopButtonRight, 1598, 174, Private.RightButtonPressed)
+		end
+
+		--Buttons for support
+		Private.DrawButton(Storage.SpriteShopButtonLeft, 1398, 542, Private.LeftButtonPressed)
+		Private.DrawButton(Storage.SpriteShopButtonRight, 1598, 542, Private.RightButtonPressed)
+
+		--Buttons for reactors
+		Private.DrawButton(Storage.SpriteShopButtonLeft, 1398, 728, Private.LeftButtonPressed)
+		Private.DrawButton(Storage.SpriteShopButtonRight, 1598, 728, Private.RightButtonPressed)
+	end
+end
+
+function Private.LeftButtonPressed()
+	weaponPage = weaponPage - 1
+	isShopUpdateNeeded = true
+	if (weaponPage < 0) then
+		weaponPage = maxweaponPage
+	end
+end
+
+function Private.RightButtonPressed()
+	weaponPage = weaponPage + 1
+	isShopUpdateNeeded = true
+	if (weaponPage > maxweaponPage) then
+		weaponPage = 0
+	end
+end
+
+---Draws a button and listens for mouse left button press
+---@param image number the index of the image
+---@param x number the x coordinate where to draw
+---@param y number the y coordinate where to draw
+---@param func fun() the action on mouse left button press
+function Private.DrawButton(image, x, y, func)
+	local mx = window_mouse_get_x()
+	local my = window_mouse_get_y()
+	local isButtonDown
+	if (mx > x and mx < x + 22 and my > y and my < y + 24) then
+		isButtonDown = 1;
+		if (mouse_check_button_pressed(Types.MouseButtons.Left)) then
+			func()
+		end
+	else
+		isButtonDown = 0
+	end
+	draw_sprite(image, isButtonDown, x, y)
+end
+
+function Private.ArrangeWeaponComponents()
+
+	--24 slots under weapons
+	local slots = 24
+	local pageWidth = 776
+	local startX = 1120 - (pageWidth * weaponPage)
+	local startY = 221
+	local index = 0
+	local cadence = 3
+
+	index = Private.ArrangeLoopVertical(Storage.WeaponsComponents.kineticWeapons, index, slots, cadence, startX, startY)
+	if (index % cadence ~= 0) then
+		index = index + (cadence - (index % cadence))
+	end
+	index = Private.ArrangeLoopVertical(Storage.WeaponsComponents.missileWeapons, index, slots, cadence, startX, startY)
+	if (index % cadence ~= 0) then
+		index = index + (cadence - (index % cadence))
+	end
+	index = Private.ArrangeLoopVertical(Storage.WeaponsComponents.energyWeapons, index, slots, cadence, startX, startY)
+	if (index % cadence ~= 0) then
+		index = index + (cadence - (index % cadence))
+	end
+	index = Private.ArrangeLoopVertical(Storage.WeaponsComponents.thermalWeapons, index, slots, cadence, startX, startY)
+end
+
+---Arrange components to a grid in vertical columns
+---@param array game_obj_component[]
+---@param index number
+---@param startX number 
+---@param startY number
+---@return number
+function Private.ArrangeLoopVertical(array, index, slots, cadence, startX, startY)
+	for _, weapon in ipairs(array) do
+		local x = startX + 97 * (index // cadence)
+		local y = startY + 97 * (index % cadence)
+		local upperBounds = (slots - 1) + (slots * weaponPage)
+		local lowerBounds = slots * weaponPage
+		if (weapon.researched == false) then
+		elseif (index > upperBounds) then
+			index = index + 1
+		elseif (index < lowerBounds) then
+			index = index + 1
+		else
+			weapon.x = x
+			weapon.y = y
+			index = index + 1
+		end
+	end
+	return index
 end
 
 ---Use in the create function of obj_component_shop.lua
@@ -365,7 +538,7 @@ end
 ---@param array game_obj_component[] the components to store
 function Private.StoreShopComponents(array)
 	for _, component in pairs(array) do
-		table.insert(Storage.ShopComponents, component)
+		table.insert(Storage.AllShopComponents, component)
 	end
 end
 

@@ -95,9 +95,9 @@ Types.BaseWeapons = BaseWeapons
 
 ---Weapon type identifiers
 local WeaponTypes = {
-	White = "white",	--ballistic
-	Red = "red",		--rockets
-	Blue = "blue",		--laser/tesla
+	White = "white",	--kinetic
+	Red = "red",		--missiles
+	Blue = "blue",		--energy
 	Yellow = "yellow",  --thermal
 }
 Types.WeaponTypes = WeaponTypes
