@@ -55,8 +55,9 @@ function ModFrameworkInternal.RegisterFramework()
 		local modFileId = tonumber(index:match("(%d+)$"))
 
 		if (loadOrderId ~= nil and modFileId == 2) then
-			local name = path:match("mods\\([^\\]+)")
-			local modPath = path:gsub("obj_database.lua","")
+			local normalizedPath = path:gsub("/","\\")
+			local name = normalizedPath:match("mods\\([^\\]+)")
+			local modPath = normalizedPath:gsub("obj_database.lua","")
 			---@type ModRegistration
 			local mod = {
 				LoadOrderId = loadOrderId,

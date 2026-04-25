@@ -4,11 +4,6 @@
 ---@param v_modid string
 function create(q,v_modid)
 
-	--Make sure the paths in mod_info all use the same slashes style
-	for index, path in pairs(mod_info) do
-		mod_info[index] = path:gsub("/","\\")
-	end
-
 	--path to the current file
 	local currentFilePath = (mod_info[v_modid]):gsub("obj_database.lua","")
 
