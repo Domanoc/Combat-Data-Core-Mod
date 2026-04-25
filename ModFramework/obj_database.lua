@@ -26,7 +26,6 @@ function create(q,v_modid)
 	--TODO LIST
 	--For existing mods::
 
-	--update example sprites
 	--logic to prevent duplicate component names
 
 	--Show example of solenoid modding and adding
