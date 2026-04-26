@@ -72,6 +72,39 @@ function Common.SelectCorrectLocalizedString(localizedStrings)
 	return "failed to find localized string"
 end
 
+---Gets the phrase number for a given voice
+---@param voice PilotVoices the voice type
+---@return number phraseNumber the corresponding phrase number 
+function Common.GetPhraseNumber(voice)
+    local obj_database = Common.GetObjDatabase();
+
+    for _, pilot in pairs(obj_database.pilot_stat) do
+        local soundIndex = ds_map_find_value(pilot, "sound_index")
+        if (soundIndex == voice) then
+            return ds_map_find_value(pilot, "phrase_num")
+        end
+    end
+
+    local default = obj_database.pilot_stat[1]
+    return ds_map_find_value(default, "phrase_num")
+end
+
+---Get the index for a pilot template
+---@param name string the name for the pilot template to look for
+---@return number? index the index if found nil otherwise
+function Common.GetPilotTemplateIndex(name)
+	local obj_database = Common.GetObjDatabase();
+
+    for index, pilot in pairs(obj_database.pilot_stat) do
+        local templateName = ds_map_find_value(pilot, "name")
+        if (templateName == name) then
+            return index
+        end
+    end
+
+	return nil
+end
+
 ------------------------------------------------------------------------------
 --- FRAMEWORK OBJECT GETTERS -------------------------------------------------
 ------------------------------------------------------------------------------

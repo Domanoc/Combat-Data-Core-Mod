@@ -37,7 +37,7 @@ function create(q,v_modid)
 			,{ LanguageFile = "loc_italian.ini", Value = "Testo descrittivo di questa esperienza lavorativa." }
 			,{ LanguageFile = "japanese.ini", Value = "この職場体験に関する説明文。" }
 		},
-		Name = "John",				--the name of the pilot
+		Name = "JOHN",				--the name of the pilot
 		Voice = "male_scottish", 	--the voice used
 		Level = 0,					--the level of the pilot
 		LevelExperience = 10,		--the amount of experience in the current level
@@ -50,7 +50,7 @@ function create(q,v_modid)
 	--Not all fields are required so you can make one with a more limited set of data
 	--Missing data will be provided by the template
 	Mod.Hanger.AddPilot({
-		Template = "ZED", --this wil determine the used sprite and the missing optional values.
+		Template = "ELLEN", --this wil determine the used sprite and the missing optional values.
 		Age = 40,
 		IsCyborg = false,
 		--We can provide full language support like this, atleast 1 language is needed
@@ -70,6 +70,32 @@ function create(q,v_modid)
 			,{ LanguageFile = "japanese.ini", Value = "この職場体験に関する説明文。" }
 		},
 	})
+
+	--Instead of a template name we can provide the index for new pilot template
+	local emoticon = Mod.Common.GetPilotTemplateIndex("EMOTICON")
+	if (emoticon ~= nil) then
+		Mod.Hanger.AddPilot({
+			Template = emoticon, --this wil determine the used sprite and the missing optional values.
+			Age = 666,
+			IsCyborg = false,
+			--We can provide full language support like this, atleast 1 language is needed
+			--LanguageFile variable should match the language file ini that the string targets
+			--Value should contain the string in the correct language for that language file
+			WorkExperience = {
+				{ LanguageFile = "loc_english.ini", Value = "Description text for this weapon." }
+				,{ LanguageFile = "loc_french.ini", Value = "Texte descriptif de cette expérience professionnelle." }
+				,{ LanguageFile = "loc_german.ini", Value = "Beschreibungstext für dieses Praktikum." }
+				,{ LanguageFile = "loc_polish.ini", Value = "Tekst opisujący to doświadczenie zawodowe." }
+				,{ LanguageFile = "loc_portuguese_brazil.ini", Value = "Descrição da experiência profissional." }
+				,{ LanguageFile = "loc_russian.ini", Value = "Описание данной программы стажировки." }
+				,{ LanguageFile = "loc_spanish.ini", Value = "Texto descriptivo para esta experiencia laboral." }
+				,{ LanguageFile = "loc_chinese.ini", Value = "本次工作经历的描述文字。" }
+				,{ LanguageFile = "chs.ini", Value = "本次工作经历的描述文字。" }
+				,{ LanguageFile = "loc_italian.ini", Value = "Testo descrittivo di questa esperienza lavorativa." }
+				,{ LanguageFile = "japanese.ini", Value = "この職場体験に関する説明文。" }
+			},
+		})
+	end
 end
 
 ---every game tick if we are in the hangar menu and battle is not active

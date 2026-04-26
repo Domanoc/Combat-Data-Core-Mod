@@ -39,11 +39,9 @@ function Database.AddMech(mechData)
 	local obj_database = Common.GetObjDatabase()
 
 	--Copy the array to the working set
-	local mech_stat_array = obj_database.mech_stat
-
-	local mech_index = #mech_stat_array + 1
+	local mech_stat = obj_database.mech_stat
+	local mechIndex = #mech_stat + 1
 	local mech = ds_map_create()
-	mech_stat_array[mech_index] = mech
 
 	--ENGINEERING PRICE
 	ds_map_add(mech, "price_metallite",	mechData.PriceMetallite)
@@ -71,8 +69,8 @@ function Database.AddMech(mechData)
 
 	--SPRITES
 	--small sprite
-	local mech_sprite = Common.AddSprite(mechData.SpriteSmall, 0, false, false, 23, 49)
-	ds_map_add(mech, "sprite_small", mech_sprite)
+	local smallSprite = Common.AddSprite(mechData.SpriteSmall, 0, false, false, 23, 49)
+	ds_map_add(mech, "sprite_small", smallSprite)
 	--big sprite
 	ds_map_add(mech, "sprite_big", Common.AddSprite(mechData.SpriteBig, 0, false, false, 200, 343))
 	--battle sprite
@@ -102,12 +100,15 @@ function Database.AddMech(mechData)
 		ds_map_add(mech, "sprite_battle_melee_hor", Common.AddSprite(mechData.SpriteMeleeHorizontal, 7, true, false, 25, 25))
 	end
 
+	--Add the map the the list
+	mech_stat[mechIndex] = mech
+
 	--Add the newly modded item to the component list. So we can find the reference later.
 	---@type ModdedComponent
 	local moddedComponent = {
 		ComponentType = Types.ComponentTypes.Mech,
-		Index = mech_index - 1,
-		Sprite = mech_sprite,
+		Index = mechIndex - 1,
+		Sprite = smallSprite,
 		Name = mechData.Name,
 		ComponentSize = mechData.ComponentSize,
 		IsResearched = mechData.IsResearched,
@@ -119,7 +120,7 @@ function Database.AddMech(mechData)
 	table.insert(Storage.ModdedComponentList, moddedComponent)
 
 	--return new data
-	obj_database.mech_stat = mech_stat_array
+	obj_database.mech_stat = mech_stat
 end
 
 ---Adds the Cell data to the ds_map of the mech
@@ -180,10 +181,8 @@ function Database.AddWeapon(weaponData)
 
 	--Copy the array to the working set
 	local weapon_stat = obj_database.weapon_stat
-
 	local weaponIndex = #weapon_stat + 1
-	weapon_stat[weaponIndex] = ds_map_create()
-	local weapon = weapon_stat[weaponIndex]
+	local weapon = ds_map_create()
 
 	--ENGINEERING PRICE
 	ds_map_add(weapon, "price_metallite",	weaponData.PriceMetallite)
@@ -217,6 +216,9 @@ function Database.AddWeapon(weaponData)
 	--merge the big and huge sprites
 	Common.MergeSprite(bigSprite, hugeSprite)
 	ds_map_add(weapon, "sprite_big", bigSprite)
+
+	--Add the map the the list
+	weapon_stat[weaponIndex] = weapon
 
 	--Add the newly modded item to the component list. So we can find the reference later.
 	---@type ModdedComponent
@@ -253,40 +255,38 @@ function Database.AddSolenoid(solenoidData)
 	local obj_database = Common.GetObjDatabase()
 
 	--Copy the array to the working set
-	local solenoid_stat_array = obj_database.solenoid_stat
-
-	----------------------
-	--HIGH TECH SOLONOID--
-	----------------------
-	local high_tech_solenoid_index = #solenoid_stat_array + 1
-	solenoid_stat_array[high_tech_solenoid_index] = ds_map_create()
-	local high_tech_solenoid = solenoid_stat_array[high_tech_solenoid_index]
+	local solenoid_stat = obj_database.solenoid_stat
+	local solenoidIndex = #solenoid_stat + 1
+	local solenoid = ds_map_create()
 
 	--ENGINEERING PRICE
-	ds_map_add(high_tech_solenoid, "price_metallite",	solenoidData.PriceMetallite)
-	ds_map_add(high_tech_solenoid, "price_bjorn",		solenoidData.PriceBjorn)
-	ds_map_add(high_tech_solenoid, "price_munilon",		solenoidData.PriceMunilon)
-	ds_map_add(high_tech_solenoid, "price_skalaknit",	solenoidData.PriceSkalaknit)
-	ds_map_add(high_tech_solenoid, "price_staff",		solenoidData.PriceStaff)
-	ds_map_add(high_tech_solenoid, "days",				solenoidData.ProductionDays)
+	ds_map_add(solenoid, "price_metallite",	solenoidData.PriceMetallite)
+	ds_map_add(solenoid, "price_bjorn",		solenoidData.PriceBjorn)
+	ds_map_add(solenoid, "price_munilon",	solenoidData.PriceMunilon)
+	ds_map_add(solenoid, "price_skalaknit",	solenoidData.PriceSkalaknit)
+	ds_map_add(solenoid, "price_staff",		solenoidData.PriceStaff)
+	ds_map_add(solenoid, "days",			solenoidData.ProductionDays)
 
 	--STATS
-	ds_map_add(high_tech_solenoid, "hp",				1000)	--doesn't seem to do anything
-	ds_map_add(high_tech_solenoid, "power",				solenoidData.Power)
-	ds_map_add(high_tech_solenoid, "induction",			solenoidData.Induction)
-	ds_map_add(high_tech_solenoid, "weight",			2)		--cant find an effect on the reactor so i left it at the same value as a regular solenoid
-	ds_map_add(high_tech_solenoid, "type",				1)		--As far as i can see there is only type 1 for solenoids
+	ds_map_add(solenoid, "hp",				1000)	--doesn't seem to do anything
+	ds_map_add(solenoid, "power",			solenoidData.Power)
+	ds_map_add(solenoid, "induction",		solenoidData.Induction)
+	ds_map_add(solenoid, "weight",			2)		--cant find an effect on the reactor so i left it at the same value as a regular solenoid
+	ds_map_add(solenoid, "type",			1)		--As far as i can see there is only type 1 for solenoids
 
 	--SPRITE
-	local high_tech_solenoid_sprite = Common.AddSprite(solenoidData.Sprite, 0, false, false, 0, 0)
-	ds_map_add(high_tech_solenoid, "sprite", high_tech_solenoid_sprite)
+	local sprite = Common.AddSprite(solenoidData.Sprite, 0, false, false, 0, 0)
+	ds_map_add(solenoid, "sprite", sprite)
+
+	--Add the map the the list
+	solenoid_stat[solenoidIndex] = solenoid
 
 	--Add the newly modded item to the component list. So we can find the reference later.
 	---@type ModdedComponent
 	local moddedComponent = {
 		ComponentType = Types.ComponentTypes.Solenoid,
-		Index = high_tech_solenoid_index - 1,
-		Sprite = high_tech_solenoid_sprite,
+		Index = solenoidIndex - 1,
+		Sprite = sprite,
 		Name = solenoidData.Name,
 		ComponentSize = solenoidData.ComponentSize,
 		IsResearched = solenoidData.IsResearched,
@@ -298,7 +298,48 @@ function Database.AddSolenoid(solenoidData)
 	table.insert(Storage.ModdedComponentList, moddedComponent)
 
 	--return new data
-	obj_database.solenoid_stat = solenoid_stat_array
+	obj_database.solenoid_stat = solenoid_stat
+end
+
+---Add a new pilot template to the games obj_database
+---@param pilotData PilotTemplateData the dataset for creating a new pilot template
+function Database.AddPilotTemplate(pilotData)
+	local duplicate = Common.GetPilotTemplateIndex(pilotData.Name)
+	if (duplicate ~= nil) then
+		local newName = string.sub(pilotData.Name.."_"..tostring(irandom_range(1000, 10000000)), 1, -3)
+		local message = "Trying to add a new pilot template, but the reference name was already used.\n"
+		message = message.."Please provide a reference name that is unique.\n\n"
+		message = message.."Debug info:\nName given: "..pilotData.Name.."\nGenerated name: "..newName
+		Common.ShowError(message)
+		pilotData.Name = newName
+	end
+
+	local obj_database = Common.GetObjDatabase()
+
+	--Copy the array to the working set
+	local pilot_stat = obj_database.pilot_stat
+	local pilotIndex = #pilot_stat + 1
+	local pilot = ds_map_create()
+	local sprite = Common.AddSprite(pilotData.Sprite, 4, false, false, 23, 23)
+
+	ds_map_add(pilot, "hp",						1000);									  --doesn't seem to do anything
+	ds_map_add(pilot, "type",					1);										  --Seems to be a default value
+	ds_map_add(pilot, "name",					pilotData.Name);						  --the name of the pilot
+	ds_map_add(pilot, "level",					pilotData.Level);						  --the level of the pilot
+	ds_map_add(pilot, "level_ex",				pilotData.LevelExperience); 			  --the amount of experience in the current level
+	ds_map_add(pilot, "stat_skill",				pilotData.Skill);						  --the skill stat of the pilot (0-100)
+	ds_map_add(pilot, "stat_reaction",			pilotData.Reaction);					  --the reaction stat of the pilot (0-100)
+	ds_map_add(pilot, "stat_vitality",			pilotData.Vitality);					  --the vitality stat of the pilot (0-100)
+	ds_map_add(pilot, "stat_stress_resistance",	pilotData.StressResistance);			  --the stress resistance stat of the pilot (0-100)
+	ds_map_add(pilot, "sound_index",			pilotData.Voice);						  --the voice used by the pilot
+	ds_map_add(pilot, "phrase_num",				Common.GetPhraseNumber(pilotData.Voice)); --the voice used by the pilot
+	ds_map_add(pilot, "sprite",					sprite);								  --the sprite sheet for the pilot
+
+	--Add the map the the list
+	pilot_stat[pilotIndex] = pilot
+
+	--return new data
+	obj_database.pilot_stat = pilot_stat
 end
 
 ------------------------------------------------------------------------------

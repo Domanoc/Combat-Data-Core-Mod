@@ -101,6 +101,7 @@ function create(q,v_modid)
 		SpriteHuge = 	    modFilepath.."sprites\\example_weapon_huge.png",		--the huge sprite for the weapon
 	})
 
+	--An example for creating a modded solenoid
 	Mod.Database.AddSolenoid({
 		Name = "example_solenoid",
 		ComponentSize =     componentSizes.Small, --The size of the component when constructing it. 1 for single slot or 5 for a full row
@@ -116,6 +117,19 @@ function create(q,v_modid)
 		Power = 		    2,					  --the power value of the solenoid, lower numbers give more heat resist on reactor
 		Induction = 	    0.75,				  --the induction value of the solenoid, any deviation from 1 gives worse energy stats
 		Sprite = 		    modFilepath.."sprites\\example_solenoid.png"
+	})
+
+	--An example for creating a modded pilot template
+	Mod.Database.AddPilotTemplate({
+		Name = "EMOTICON",
+		Level = 1,
+		LevelExperience = 0,
+		Skill = 42,
+		Reaction = 30,
+		Vitality = 10,
+		StressResistance = 5,
+		Voice = "male_hispanic",
+		Sprite = modFilepath.."sprites\\example_pilot.png"
 	})
 end
 

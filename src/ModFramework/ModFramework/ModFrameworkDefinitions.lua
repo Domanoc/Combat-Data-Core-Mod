@@ -110,6 +110,17 @@
 ---@field Induction number the induction value of the solenoid, any deviation from 1 gives worse energy stats
 ---@field Sprite string the sprite for the solenoid
 
+---@class PilotTemplateData dataset for creating a new pilot template
+---@field Sprite string the sprite sheet for the pilot
+---@field Voice PilotVoices the voice used by the pilot
+---@field Name string the name of the pilot, also used as a value to lookup the reference, Recommended to use full uppercase as this is what the game does
+---@field Level number the level of the pilot
+---@field LevelExperience number the amount of experience in the current level
+---@field Skill number the skill stat of the pilot (0-100)
+---@field Reaction number the reaction stat of the pilot (0-100)
+---@field Vitality number the vitality stat of the pilot (0-100)
+---@field StressResistance number the stress resistance stat of the pilot (0-100)
+
 ---@class PilotData dataset for adding a new pilot
 ---@field Template number|PilotNames the base dataset to base the pilot on, either the index number in obj_database.pilot_stat or reference one of the existing pilots. this wil determine the used sprite.
 ---@field WorkExperience LocalizedString[] the description text for the work experience of the pilot.

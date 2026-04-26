@@ -30,6 +30,7 @@
         - Support to move existing researches
         - Support to relink existing researches
         - support to add framework handeled unlocks to existing researches
+    - Pilots
 - Added framework support to add to inventory
     - Cabins
     - Motors

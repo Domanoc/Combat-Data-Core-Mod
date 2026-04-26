@@ -61,7 +61,7 @@ function Private.AddPilotFromQueue(pilotData)
     --voice
     local soundIndex = Private.SetPilotVoice(templateData, pilotData.Voice)
     addedPilot.my_snd_index = soundIndex
-    addedPilot.phrase_number = Private.GetPhraseNumber(soundIndex)
+    addedPilot.phrase_number = Common.GetPhraseNumber(soundIndex)
     --pilot data values
     addedPilot.text_work_exp = Common.SelectCorrectLocalizedString(pilotData.WorkExperience)
     addedPilot.stat_age = pilotData.Age
@@ -77,23 +77,6 @@ function Private.AddPilotFromQueue(pilotData)
 	--return new data
 	obj_content_pilots.list_pilot = list_pilot
 	obj_content_pilots.number_of_items = #list_pilot
-end
-
----Gets the phrase number for a given voice
----@param voice string the voice type
----@return number phraseNumber the corresponding phrase number 
-function Private.GetPhraseNumber(voice)
-    local obj_database = Common.GetObjDatabase();
-
-    for key, pilot in pairs(obj_database.pilot_stat) do
-        local soundIndex = ds_map_find_value(pilot, "sound_index")
-        if (soundIndex == voice) then
-            return ds_map_find_value(pilot, "phrase_num")
-        end
-    end
-
-    local default = obj_database.pilot_stat[1]
-    return ds_map_find_value(default, "phrase_num")
 end
 
 ---Gets the correct data template from obj_database
