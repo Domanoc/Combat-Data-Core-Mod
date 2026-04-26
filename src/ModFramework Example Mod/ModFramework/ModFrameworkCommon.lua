@@ -28,6 +28,8 @@ function Common.GetModPath(name)
 			return mod.Path
 		end
 	end
+
+	Common.DumpObjToMessage(Storage.ModRegistrations)
 	return nil
 end
 

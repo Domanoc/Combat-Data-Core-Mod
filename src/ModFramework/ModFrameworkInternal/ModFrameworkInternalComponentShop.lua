@@ -158,6 +158,9 @@ function ComponentShop.ShopDraw()
         for _, weaponIndidator in ipairs(Storage.WeaponIndicators) do
             draw_sprite_ext(weaponIndicatorSprite, weaponIndidator.SubImageIndex, weaponIndidator.X, weaponIndidator.Y, 2, 2, 0, 16777215, 1)
         end
+
+        --Fix the mouse cursor moving behind the elements
+        Private.DrawMouseCursor()
 	end
 end
 
@@ -179,6 +182,20 @@ function Private.DrawButton(image, x, y, func)
 		isButtonDown = 0
 	end
 	draw_sprite(image, isButtonDown, x, y)
+end
+
+---Draws the mouse cursor at the mouse coordinates
+function Private.DrawMouseCursor()
+    local cursor = asset_get_index("spr_cursor")
+    local mx = window_mouse_get_x()
+	local my = window_mouse_get_y()
+	local isButtonDown
+	if (mouse_check_button(Types.MouseButtons.Left)) then
+		isButtonDown = 1;
+	else
+		isButtonDown = 0
+	end
+    draw_sprite_ext(cursor, isButtonDown, mx, my, 2, 2, 0, 16777215, 1)
 end
 
 ---Calculate and set the max page for the additional section

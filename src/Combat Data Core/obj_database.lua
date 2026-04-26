@@ -1,788 +1,630 @@
---To prevent collisions of global variables between mods.
---I have prefixed global variables of this mod.
---If copying code please change the prefix to something unique for your mod.
-local unique_mod_prefix = "CDC_";
 
---Game is made in GameMaker
---See the gamemaker documentation for the implimentation of the global functions
---example: variable_global_set, ds_map_add, sprite_add
---the exposed functions can be found in the list_of_functions.txt file found in the example mod
+---Check if the ModFramework can be found
+function CheckForModFramework()
+	local isLoaded = variable_global_get("IsModFrameworkLoaded")
+	if isLoaded ~= true then
+		local spacerLine = "\n###################################################\n"
+		local info = debug.getinfo(2, "Sl")
+		local caller = info.short_src:gsub("/","\\")
+		local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline
+		local prefix = "MOD FRAMEWORK ERROR"..spacerLine
+		local suffix = spacerLine..callerPrint..spacerLine..debug.traceback("Error", 2).."\n\n"
+		local message = "Cannot find the ModFramework!!\n"
+		message = message.."The ModFramework should be the first in the mod load order, please check an correct the mod load order."
+		message = message..spacerLine.."The mod will now purposefully make the game crash to prevent error message spam."
+		show_message(prefix..message..suffix)
 
---Module identifiers
-local modules = {
-	aux = 1,
-	motor = 2,
-	reactor = 3,
-	gun = 4,
-	cabin = 5
-};
-
---Component types
-local component_types = {
-	mech = 1,
-	cabin = 2,
-	motor = 3,
-	weapon = 4,
-	reactor = 5,
-	injector = 6,
-	piston = 7,
-	kernel = 8,
-	safety = 9,
-	magnet = 10,
-	solenoid = 11,
-	armor_layer_middle = 95,
-	armor_layer_end = 96,
-	rocket = 97,
-	beacon = 98,
-	city_parts = 99
-};
-
---Weapon type identifiers
-local weapon_types = {
-	white = "white",	--ballistic
-	red = "red",		--rockets
-	blue = "blue",		--laser/tesla
-	yellow = "yellow",  --thermal
-};
-
----@class modded_hanger_item
----@field component_type 1|2|3|4|5|6|7|8|9|10|11|95|96|97|98|99 the type of component
----@field index number the index of the component
----@field sprite number the index of the component sprite 
-local modded_hanger_item = {};
-
----@class mech_data dataset for adding a new mech
----@field price_metallite number the amount of metallite needed to produce this mech
----@field price_bjorn number the amount of bjorn needed to produce this mech
----@field price_munilon number the amount of munilon needed to produce this mech
----@field price_skalaknit number the amount of skalaknit needed to produce this mech
----@field price_staff number the amount of staff needed to produce this mech
----@field production_days number the amount of days it takes to produce this mech
----@field heat_resist number the heat resist value of the mech
----@field impact_resist number the impact resist value of the mech
----@field current_resist number the current resist value of the mech
----@field has_melee 0|1 Indicates if the mech can use a melee weapon
----@field passive_armor number the amount of passive armor the mech has
----@field weight number the base weight of the mech
----@field speed number the base speed of the mech
----@field reload_time number the base reload time of the mech
----@field battle_time number the base battle time of the mech (the lenght of time it has ammo reserves for to shoot)
----@field mech_cells mech_cell[] the dataset on what cells the mech has
----@field sprite_small string the small sprite for the mech
----@field sprite_big string the big sprite for the mech
----@field sprite_battle string the spritesheet for the mech used on the battle screen
----@field sprite_battle_dead string the sprite for a destroyed mech on the battle screen
----@field sprite_battle_melee_ver string|nil the vertical melee attack spritesheet used on the battle screen. optional if the mech has no melee
----@field sprite_battle_melee_hor string|nil the horizontal melee attack spritesheet used on the battle screen. optional if the mech has no melee
-local mech_data = {};
-
----@class mech_cell dataset on what cells a mech has
----@field moduleType 1|2|3|4|5 module type (1-aux, 2-motor, 3-reactor, 4-gun, 5-cabin)
----@field x number the x coordinate for the cell, use the mod_mech_grid_help.png for help determining the location
----@field y number the y coordinate for the cell, use the mod_mech_grid_help.png for help determining the location
-local mech_cell = {};
-
----@class weapon_data dataset for adding a new weapon
----@field price_metallite number the amount of metallite needed to produce this weapon
----@field price_bjorn number the amount of bjorn needed to produce this weapon
----@field price_munilon number the amount of munilon needed to produce this weapon
----@field price_skalaknit number the amount of skalaknit needed to produce this weapon
----@field price_staff number the amount of staff needed to produce this weapon
----@field production_days number the amount of days it takes to produce this weapon
----@field weapon_type "white"|"red"|"blue"|"yellow" the type of weapon (white = ballistic, red = rockets, blue = laser/tesla, yellow = thermal)
----@field fire_rate number the base fire rate. higher values offer a faster rate, 600 with full firespeed points will fill the firespeed bar completely
----@field weight number the base weight of the weapon
----@field accuracy number the base accuracy for the weapon. accuracy in degrees, 0 is perfect accuracy
----@field energy number the base energy cost of the weapon
----@field damage number the base damage value of the weapon
----@field penetration number the base penetration value of the weapon
----@field projectile_speed number the base projectile speed of the weapon
----@field energy_buffed 0|1 whether the energy cost boost damage output, 1 = yes, for laser/tesla weapons this is an additional increase on their native bonus.
----@field sprite_small string the small sprite for the weapon
----@field sprite_big string the big sprite for the weapon
----@field sprite_huge string the huge sprite for the weapon
-local weapon_data = {};
-
----@class solenoid_data dataset for adding a new solenoid
----@field price_metallite number the amount of metallite needed to produce this solenoid
----@field price_bjorn number the amount of bjorn needed to produce this solenoid
----@field price_munilon number the amount of munilon needed to produce this solenoid
----@field price_skalaknit number the amount of skalaknit needed to produce this solenoid
----@field price_staff number the amount of staff needed to produce this solenoid
----@field production_days number the amount of days it takes to produce this solenoid
----@field power number the power value of the solenoid, lower numbers give more heat resist on reactor
----@field induction number the induction value of the solenoid, any deviation from 1 gives worse energy stats
----@field sprite string the sprite for the solenoid
-local solenoid_data = {};
-
---A list of the modded components used to fix the sprite references on load
----@type modded_hanger_item[]
-local modded_component_list = {};
-
-function create(q,v_modid)  --mod_info[] is global, v_modid can be accessed in any create event as a second argument
-	---------------------------
-	--DEBUG SETTINGS-----------
-	---------------------------
-	variable_global_set(unique_mod_prefix.."debug_spawn_test_weapons", false);
-	variable_global_set(unique_mod_prefix.."debug_spawn_test_mechs", false);
-	variable_global_set(unique_mod_prefix.."debug_unlock_research", false);
-	---------------------------
-	---------------------------
-
-	--path to the current file
-	local current_file_path = (mod_info[v_modid]):gsub("obj_database.lua","");
-
-	-----------------
-	--MECHS----------
-	-----------------	
-
-	-----------------
-	--NOVA MECH------
-	-----------------
-	local nova_mech_index = AddMech({
-		price_metallite = 400,
-		price_bjorn = 	  200,
-		price_munilon =   320,
-		price_skalaknit = 220,
-		price_staff = 	  245,
-		production_days = 4,
-		heat_resist = 	  20,
-		impact_resist =   15,
-		current_resist =  40,
-		has_melee = 	  1,
-		passive_armor =   2,
-		weight = 		  65,
-		speed = 		  0.4,
-		reload_time = 	  3,
-		battle_time = 	  3,
-		mech_cells = {
-			{moduleType = modules.motor, 	x =   7, y =  6} --motor 1
-			,{moduleType = modules.motor, 	x =  -7, y =  6} --motor 2
-			,{moduleType = modules.motor, 	x =   7, y = 11} --motor 3
-			,{moduleType = modules.motor, 	x =  -7, y = 11} --motor 4
-			,{moduleType = modules.motor, 	x =   7, y = 16} --motor 5
-			,{moduleType = modules.motor, 	x =  -7, y = 16} --motor 6
-			,{moduleType = modules.reactor, x =   0, y = 18} --reactor
-			,{moduleType = modules.gun, 	x =  14, y = 20} --gun 1
-			,{moduleType = modules.gun, 	x = -14, y = 20} --gun 2
-			,{moduleType = modules.cabin, 	x =   0, y = 25} --cabin
-			,{moduleType = modules.aux, 	x =   6, y = 21} --aux 1
-			,{moduleType = modules.aux, 	x =  -6, y = 21} --aux 2
-			,{moduleType = modules.aux, 	x =   6, y = 27} --aux 3
-			,{moduleType = modules.aux, 	x =  -6, y = 27} --aux 4
-			,{moduleType = modules.aux, 	x =  11, y = 27} --aux 5
-			,{moduleType = modules.aux, 	x = -11, y = 27} --aux 6
-			,{moduleType = modules.aux, 	x =   0, y = 33} --aux 7
-		},
-		sprite_small = 			  current_file_path.."sprites/nova_small.png",
-		sprite_big = 			  current_file_path.."sprites/nova_big.png",
-		sprite_battle = 		  current_file_path.."sprites/nova_battle.png",
-		sprite_battle_dead = 	  current_file_path.."sprites/nova_dead.png",
-		sprite_battle_melee_ver = current_file_path.."sprites/nova_melee_vertical.png",
-		sprite_battle_melee_hor = current_file_path.."sprites/nova_melee_horizontal.png"
-	});
-	variable_global_set(unique_mod_prefix.."nova_mech_index", nova_mech_index);
-
-	-----------------
-	--SENTINEL MECH--
-	-----------------
-	local sentinel_mech_index = AddMech({
-		price_metallite = 1050,
-		price_bjorn = 	  730,
-		price_munilon =   1030,
-		price_skalaknit = 880,
-		price_staff = 	  325,
-		production_days = 6,
-		heat_resist = 	  25,
-		impact_resist =   90,
-		current_resist =  80,
-		has_melee = 	  1,
-		passive_armor =   5,
-		weight = 		  70,
-		speed = 		  0.2,
-		reload_time = 	  4,
-		battle_time = 	  5,
-		mech_cells = {
-			{moduleType = modules.motor, 	x =   8, y =  6} --motor 1
-			,{moduleType = modules.motor, 	x =  -8, y =  6} --motor 2
-			,{moduleType = modules.motor, 	x =   8, y = 11} --motor 3
-			,{moduleType = modules.motor, 	x =  -8, y = 11} --motor 4
-			,{moduleType = modules.motor, 	x =   7, y = 16} --motor 5
-			,{moduleType = modules.motor, 	x =  -7, y = 16} --motor 6
-			,{moduleType = modules.reactor, x =   0, y = 24} --reactor
-			,{moduleType = modules.gun, 	x =  14, y = 22} --gun 1
-			,{moduleType = modules.gun, 	x = -14, y = 22} --gun 2
-			,{moduleType = modules.gun, 	x =   7, y = 41} --gun 3
-			,{moduleType = modules.gun, 	x =  -7, y = 41} --gun 4
-			,{moduleType = modules.cabin, 	x =   0, y = 32} --cabin
-			,{moduleType = modules.aux, 	x =   6, y = 22} --aux 1
-			,{moduleType = modules.aux, 	x =  -6, y = 22} --aux 2
-			,{moduleType = modules.aux, 	x =   6, y = 35} --aux 3
-			,{moduleType = modules.aux, 	x =  -6, y = 35} --aux 4
-			,{moduleType = modules.aux, 	x =   6, y = 29} --aux 5
-			,{moduleType = modules.aux, 	x =  -6, y = 29} --aux 6
-			,{moduleType = modules.aux, 	x =  11, y = 33} --aux 7
-			,{moduleType = modules.aux, 	x = -11, y = 33} --aux 8
-		},
-		sprite_small = 			  current_file_path.."sprites/sentinel_small.png",
-		sprite_big = 			  current_file_path.."sprites/sentinel_big.png",
-		sprite_battle = 		  current_file_path.."sprites/sentinel_battle.png",
-		sprite_battle_dead = 	  current_file_path.."sprites/sentinel_dead.png",
-		sprite_battle_melee_ver = current_file_path.."sprites/sentinel_melee_vertical.png",
-		sprite_battle_melee_hor = current_file_path.."sprites/sentinel_melee_horizontal.png"
-	});
-	variable_global_set(unique_mod_prefix.."sentinel_mech_index", sentinel_mech_index);
-
-	-----------------
-	--BEHEMOTH MECH--
-	-----------------
-	local behemoth_mech_index = AddMech({
-		price_metallite = 4130,
-		price_bjorn = 	  1460,
-		price_munilon =   2300,
-		price_skalaknit = 2020,
-		price_staff = 	  600,
-		production_days = 8,
-		heat_resist = 	  45,
-		impact_resist =   95,
-		current_resist =  95,
-		has_melee = 	  1,
-		passive_armor =   10,
-		weight = 		  108,
-		speed = 		  0.1,
-		reload_time = 	  3,
-		battle_time = 	  12,
-		mech_cells = {
-			{moduleType = modules.motor, 	x =   7, y =  5} --motor 1
-			,{moduleType = modules.motor, 	x =  -7, y =  5} --motor 2
-			,{moduleType = modules.motor, 	x =   7, y =  9} --motor 3
-			,{moduleType = modules.motor, 	x =  -7, y =  9} --motor 4
-			,{moduleType = modules.motor, 	x =   7, y = 13} --motor 5
-			,{moduleType = modules.motor, 	x =  -7, y = 13} --motor 6
-			,{moduleType = modules.motor, 	x =   7, y = 17} --motor 7
-			,{moduleType = modules.motor, 	x =  -7, y = 17} --motor 8
-			,{moduleType = modules.reactor, x =   0, y = 22} --reactor
-			,{moduleType = modules.gun, 	x =  15, y = 27} --gun 1
-			,{moduleType = modules.gun, 	x = -15, y = 27} --gun 2
-			,{moduleType = modules.gun, 	x =  24, y = 27} --gun 3
-			,{moduleType = modules.gun, 	x = -24, y = 27} --gun 4
-			,{moduleType = modules.gun, 	x =  15, y = 21} --gun 5
-			,{moduleType = modules.gun, 	x = -15, y = 21} --gun 6
-			,{moduleType = modules.gun, 	x =  24, y = 21} --gun 7
-			,{moduleType = modules.gun, 	x = -24, y = 21} --gun 8
-			,{moduleType = modules.gun, 	x =  15, y = 15} --gun 9
-			,{moduleType = modules.gun, 	x = -15, y = 15} --gun 10
-			,{moduleType = modules.gun, 	x =  24, y = 15} --gun 11
-			,{moduleType = modules.gun, 	x = -24, y = 15} --gun 12
-			,{moduleType = modules.cabin, 	x =   0, y = 30} --cabin
-			,{moduleType = modules.aux, 	x =   6, y = 36} --aux 1
-			,{moduleType = modules.aux, 	x =  -6, y = 36} --aux 2
-			,{moduleType = modules.aux, 	x =  11, y = 36} --aux 3
-			,{moduleType = modules.aux, 	x = -11, y = 36} --aux 4
-			,{moduleType = modules.aux, 	x =   6, y = 31} --aux 5
-			,{moduleType = modules.aux, 	x =  -6, y = 31} --aux 6
-			,{moduleType = modules.aux, 	x =  11, y = 26} --aux 7
-			,{moduleType = modules.aux, 	x = -11, y = 26} --aux 8
-		},
-		sprite_small = 			  current_file_path.."sprites/behemoth_small.png",
-		sprite_big = 			  current_file_path.."sprites/behemoth_big.png",
-		sprite_battle = 		  current_file_path.."sprites/behemoth_battle.png",
-		sprite_battle_dead = 	  current_file_path.."sprites/behemoth_dead.png",
-		sprite_battle_melee_ver = current_file_path.."sprites/behemoth_melee_vertical.png",
-		sprite_battle_melee_hor = current_file_path.."sprites/behemoth_melee_horizontal.png"
-	});
-	variable_global_set(unique_mod_prefix.."behemoth_mech_index", behemoth_mech_index);
-
-	-----------------
-	--ECHO MECH------
-	-----------------
-	local echo_mech_index = AddMech({
-		price_metallite = 620,
-		price_bjorn = 	  275,
-		price_munilon =   520,
-		price_skalaknit = 400,
-		price_staff = 	  265,
-		production_days = 5,
-		heat_resist = 	  20,
-		impact_resist =   30,
-		current_resist =  20,
-		has_melee = 	  0,
-		passive_armor =   3,
-		weight = 		  80,
-		speed = 		  0.4,
-		reload_time = 	  2,
-		battle_time = 	  4,
-		mech_cells = {
-			{moduleType = modules.motor, 	x =   9, y =  7} --motor 1
-			,{moduleType = modules.motor, 	x =  -9, y =  7} --motor 2
-			,{moduleType = modules.motor, 	x =   6, y = 12} --motor 3
-			,{moduleType = modules.motor, 	x =  -6, y = 12} --motor 4
-			,{moduleType = modules.motor, 	x =  13, y = 15} --motor 5
-			,{moduleType = modules.motor, 	x = -13, y = 15} --motor 6
-			,{moduleType = modules.motor, 	x =   0, y = 16} --motor 7
-			,{moduleType = modules.reactor, x =   0, y = 22} --reactor
-			,{moduleType = modules.gun, 	x =  13, y = 28} --gun 1
-			,{moduleType = modules.gun, 	x = -13, y = 28} --gun 2
-			,{moduleType = modules.gun, 	x =   7, y = 35} --gun 3
-			,{moduleType = modules.cabin, 	x =   0, y = 29} --cabin
-			,{moduleType = modules.aux, 	x =   7, y = 19} --aux 1
-			,{moduleType = modules.aux, 	x =  -7, y = 19} --aux 2
-			,{moduleType = modules.aux, 	x =   6, y = 24} --aux 3
-			,{moduleType = modules.aux, 	x =  -6, y = 24} --aux 4
-			,{moduleType = modules.aux, 	x =   5, y = 29} --aux 5
-			,{moduleType = modules.aux, 	x =  -5, y = 29} --aux 6
-		},
-		sprite_small = 			  current_file_path.."sprites/echo_small.png",
-		sprite_big = 			  current_file_path.."sprites/echo_big.png",
-		sprite_battle = 		  current_file_path.."sprites/echo_battle.png",
-		sprite_battle_dead = 	  current_file_path.."sprites/echo_dead.png",
-	});
-	variable_global_set(unique_mod_prefix.."echo_mech_index", echo_mech_index);
-
-	-----------------
-	--SOLENOIDS------
-	-----------------
-
-	----------------------
-	--HIGH TECH SOLONOID--
-	----------------------
-	local high_tech_solenoid_index = AddSolenoid({
-		price_metallite = 150,
-		price_bjorn = 	  150,
-		price_munilon =   200,
-		price_skalaknit = 25,
-		price_staff = 	  70,
-		production_days = 4,
-		power = 		  3,
-		induction = 	  1,
-		sprite = 		  current_file_path.."sprites/high_tech_solenoid.png"
-	});
-	variable_global_set(unique_mod_prefix.."high_tech_solenoid_index", high_tech_solenoid_index);
-	
-	-----------------
-	--WEAPONS--------
-	-----------------
-
-	------------
-	--HOWITZER--
-	------------
-	local howitzer_weapon_index = AddWeapon({
-		price_metallite =  200,
-		price_bjorn = 	   50,
-		price_munilon =    30,
-		price_skalaknit =  60,
-		price_staff = 	   45,
-		production_days =  4,
-		weapon_type = 	   weapon_types.white,
-		fire_rate = 	   25,
-		weight = 		   48,
-		accuracy = 		   1.5,
-		energy = 		   5,
-		damage = 		   80,
-		penetration = 	   15,
-		projectile_speed = 18,
-		energy_buffed =    0,
-		sprite_small =     current_file_path.."sprites/howitzer_small.png",
-		sprite_big = 	   current_file_path.."sprites/howitzer_big.png",
-		sprite_huge = 	   current_file_path.."sprites/howitzer_huge.png"
-	});
-	variable_global_set(unique_mod_prefix.."howitzer_weapon_index", howitzer_weapon_index);
-	
-	----------------------
-	--LASER PULSE CANNON--
-	----------------------
-	local laser_pulse_cannon_weapon_index = AddWeapon({
-		price_metallite =  250,
-		price_bjorn = 	   245,
-		price_munilon =    500,
-		price_skalaknit =  130,
-		price_staff = 	   110,
-		production_days =  8,
-		weapon_type = 	   weapon_types.blue,
-		fire_rate = 	   600,
-		weight = 		   80,
-		accuracy = 		   0,
-		energy = 		   10,
-		damage = 		   40,
-		penetration = 	   5,
-		projectile_speed = 0,
-		energy_buffed =    0,
-		sprite_small =     current_file_path.."sprites/laser_pulse_cannon_small.png",
-		sprite_big = 	   current_file_path.."sprites/laser_pulse_cannon_big.png",
-		sprite_huge = 	   current_file_path.."sprites/laser_pulse_cannon_huge.png"
-	});
-	variable_global_set(unique_mod_prefix.."laser_pulse_cannon_weapon_index", laser_pulse_cannon_weapon_index);
-	--we want to mod the range later since this can only be done at runtime in battle or the object holder
-	variable_global_set(unique_mod_prefix.."laser_pulse_cannon_weapon_range", 2000);
+		--We force the game to crash
+		--if not the game will spam messages for every call it can make
+		sprite_merge(-999, -999)
+	end
 end
 
+---One time script when the game is started
+---@param q game_obj_database
+---@param v_modid string
+function create(q,v_modid)
+	--Check if the ModFramework can be found
+	CheckForModFramework()
+	--load the mod framework as a global for use within this file
+	Mod = require("ModFrameworkModule")
+
+	--path to the mod folder
+	local modFilepath = Mod.Common.GetModPath("Combat Data Core")
+
+	--load needed types
+	local mechModules = Mod.Types.MechModules
+	local componentSizes = Mod.Types.ComponentSizes
+	local weaponTypes = Mod.Types.WeaponTypes
+
+	------------------------------------------------------------------------------
+	--- MECHS --------------------------------------------------------------------
+	------------------------------------------------------------------------------
+	Mod.Database.AddMech({
+		Name = 			   "CDC_NovaMech",
+		ComponentSize =    componentSizes.Large,
+		IsResearched = 	   false,
+		CanBeConstructed = true,
+		GiveFreeItem = 	   true,
+		PriceMetallite =   400,
+		PriceBjorn = 	   200,
+		PriceMunilon =     320,
+		PriceSkalaknit =   220,
+		PriceStaff = 	   245,
+		ProductionDays =   4,
+		HeatResist = 	   20,
+		ImpactResist =     15,
+		CurrentResist =    40,
+		HasMelee = 	   	   true,
+		PassiveArmor =     2,
+		Weight = 		   65,
+		Speed = 		   0.4,
+		ReloadTime = 	   3,
+		BattleTime = 	   3,
+		MechCells = {
+			 {ModuleType = mechModules.Cabin, 	X =   0, Y = 25} --cabin
+			,{ModuleType = mechModules.Reactor, X =   0, Y = 18} --reactor
+			,{ModuleType = mechModules.Motor, 	X =   7, Y = 11} --motor 1
+			,{ModuleType = mechModules.Motor, 	X =  -7, Y = 11} --motor 2
+			,{ModuleType = mechModules.Motor, 	X =   7, Y = 16} --motor 3
+			,{ModuleType = mechModules.Motor, 	X =  -7, Y = 16} --motor 4
+			,{ModuleType = mechModules.Motor, 	X =   7, Y = 18} --motor 5
+			,{ModuleType = mechModules.Motor, 	X =  -7, Y = 18} --motor 6
+			,{ModuleType = mechModules.Weapon, 	X =  14, Y = 20} --Weapon 1
+			,{ModuleType = mechModules.Weapon, 	X = -14, Y = 20} --Weapon 2
+			,{ModuleType = mechModules.Aux, 	X =   6, Y = 21} --aux 1
+			,{ModuleType = mechModules.Aux, 	X =  -6, Y = 21} --aux 2
+			,{ModuleType = mechModules.Aux, 	X =   6, Y = 27} --aux 3
+			,{ModuleType = mechModules.Aux, 	X =  -6, Y = 27} --aux 4
+			,{ModuleType = mechModules.Aux, 	X =  11, Y = 27} --aux 5
+			,{ModuleType = mechModules.Aux, 	X = -11, Y = 27} --aux 6
+			,{ModuleType = mechModules.Aux, 	X =   0, Y = 33} --aux 7
+		},
+		SpriteSmall = 			modFilepath.."sprites\\nova_small.png",
+		SpriteBig = 			modFilepath.."sprites\\nova_big.png",
+		SpriteBattle = 		  	modFilepath.."sprites\\nova_battle.png",
+		SpriteBattleDead = 	  	modFilepath.."sprites\\nova_dead.png",
+		SpriteMeleeVertical = 	modFilepath.."sprites\\nova_melee_vertical.png",
+		SpriteMeleeHorizontal = modFilepath.."sprites\\nova_melee_horizontal.png"
+	})
+
+	Mod.Database.AddMech({
+		Name = 			   "CDC_SentinelMech",
+		ComponentSize =    componentSizes.Large,
+		IsResearched = 	   false,
+		CanBeConstructed = true,
+		GiveFreeItem = 	   true,
+		PriceMetallite =   1050,
+		PriceBjorn = 	   730,
+		PriceMunilon =     1030,
+		PriceSkalaknit =   880,
+		PriceStaff = 	   325,
+		ProductionDays =   6,
+		HeatResist = 	   25,
+		ImpactResist =     90,
+		CurrentResist =    80,
+		HasMelee = 	   	   true,
+		PassiveArmor =     5,
+		Weight = 		   70,
+		Speed = 		   0.2,
+		ReloadTime = 	   4,
+		BattleTime = 	   5,
+		MechCells = {
+			 {ModuleType = mechModules.Cabin, 	X =   0, Y = 32} --cabin
+			,{ModuleType = mechModules.Reactor, X =   0, Y = 24} --reactor
+			,{ModuleType = mechModules.Motor, 	X =   8, Y =  6} --motor 1
+			,{ModuleType = mechModules.Motor, 	X =  -8, Y =  6} --motor 2
+			,{ModuleType = mechModules.Motor, 	X =   8, Y = 11} --motor 3
+			,{ModuleType = mechModules.Motor, 	X =  -8, Y = 11} --motor 4
+			,{ModuleType = mechModules.Motor, 	X =   7, Y = 16} --motor 5
+			,{ModuleType = mechModules.Motor, 	X =  -7, Y = 16} --motor 6
+			,{ModuleType = mechModules.Weapon, 	X =  14, Y = 22} --Weapon 1
+			,{ModuleType = mechModules.Weapon, 	X = -14, Y = 22} --Weapon 2
+			,{ModuleType = mechModules.Weapon, 	X =   7, Y = 41} --Weapon 3
+			,{ModuleType = mechModules.Weapon, 	X =  -7, Y = 41} --Weapon 4
+			,{ModuleType = mechModules.Aux, 	X =   6, Y = 22} --aux 1
+			,{ModuleType = mechModules.Aux, 	X =  -6, Y = 22} --aux 2
+			,{ModuleType = mechModules.Aux, 	X =   6, Y = 35} --aux 3
+			,{ModuleType = mechModules.Aux, 	X =  -6, Y = 35} --aux 4
+			,{ModuleType = mechModules.Aux, 	X =   6, Y = 29} --aux 5
+			,{ModuleType = mechModules.Aux, 	X =  -6, Y = 29} --aux 6
+			,{ModuleType = mechModules.Aux, 	X =  11, Y = 33} --aux 7
+			,{ModuleType = mechModules.Aux, 	X = -11, Y = 33} --aux 8
+		},
+		SpriteSmall = 			modFilepath.."sprites\\sentinel_small.png",
+		SpriteBig = 			modFilepath.."sprites\\sentinel_big.png",
+		SpriteBattle = 		  	modFilepath.."sprites\\sentinel_battle.png",
+		SpriteBattleDead = 	  	modFilepath.."sprites\\sentinel_dead.png",
+		SpriteMeleeVertical = 	modFilepath.."sprites\\sentinel_melee_vertical.png",
+		SpriteMeleeHorizontal = modFilepath.."sprites\\sentinel_melee_horizontal.png"
+	})
+
+	Mod.Database.AddMech({
+		Name = 			   "CDC_BehemothMech",
+		ComponentSize =    componentSizes.Large,
+		IsResearched = 	   false,
+		CanBeConstructed = true,
+		GiveFreeItem = 	   true,
+		PriceMetallite =   4130,
+		PriceBjorn = 	   1460,
+		PriceMunilon =     2300,
+		PriceSkalaknit =   2020,
+		PriceStaff = 	   600,
+		ProductionDays =   8,
+		HeatResist = 	   45,
+		ImpactResist =     95,
+		CurrentResist =    95,
+		HasMelee = 	   	   true,
+		PassiveArmor =     10,
+		Weight = 		   108,
+		Speed = 		   0.1,
+		ReloadTime = 	   3,
+		BattleTime = 	   12,
+		MechCells = {
+			 {ModuleType = mechModules.Cabin, 	X =   0, Y = 30} --cabin
+			,{ModuleType = mechModules.Reactor, X =   0, Y = 22} --reactor
+			,{ModuleType = mechModules.Motor, 	X =   7, Y =  5} --motor 1
+			,{ModuleType = mechModules.Motor, 	X =  -7, Y =  5} --motor 2
+			,{ModuleType = mechModules.Motor, 	X =   7, Y =  9} --motor 3
+			,{ModuleType = mechModules.Motor, 	X =  -7, Y =  9} --motor 4
+			,{ModuleType = mechModules.Motor, 	X =   7, Y = 13} --motor 5
+			,{ModuleType = mechModules.Motor, 	X =  -7, Y = 13} --motor 6
+			,{ModuleType = mechModules.Motor, 	X =   7, Y = 17} --motor 7
+			,{ModuleType = mechModules.Motor, 	X =  -7, Y = 17} --motor 8
+			,{ModuleType = mechModules.Weapon, 	X =  15, Y = 27} --Weapon 1
+			,{ModuleType = mechModules.Weapon, 	X = -15, Y = 27} --Weapon 2
+			,{ModuleType = mechModules.Weapon, 	X =  24, Y = 27} --Weapon 3
+			,{ModuleType = mechModules.Weapon, 	X = -24, Y = 27} --Weapon 4
+			,{ModuleType = mechModules.Weapon, 	X =  15, Y = 21} --Weapon 5
+			,{ModuleType = mechModules.Weapon, 	X = -15, Y = 21} --Weapon 6
+			,{ModuleType = mechModules.Weapon, 	X =  24, Y = 21} --Weapon 7
+			,{ModuleType = mechModules.Weapon, 	X = -24, Y = 21} --Weapon 8
+			,{ModuleType = mechModules.Weapon, 	X =  15, Y = 15} --Weapon 9
+			,{ModuleType = mechModules.Weapon, 	X = -15, Y = 15} --Weapon 10
+			,{ModuleType = mechModules.Weapon, 	X =  24, Y = 15} --Weapon 11
+			,{ModuleType = mechModules.Weapon, 	X = -24, Y = 15} --Weapon 12
+			,{ModuleType = mechModules.Aux, 	X =   6, Y = 36} --aux 1
+			,{ModuleType = mechModules.Aux, 	X =  -6, Y = 36} --aux 2
+			,{ModuleType = mechModules.Aux, 	X =  11, Y = 36} --aux 3
+			,{ModuleType = mechModules.Aux, 	X = -11, Y = 36} --aux 4
+			,{ModuleType = mechModules.Aux, 	X =   6, Y = 31} --aux 5
+			,{ModuleType = mechModules.Aux, 	X =  -6, Y = 31} --aux 6
+			,{ModuleType = mechModules.Aux, 	X =  11, Y = 26} --aux 7
+			,{ModuleType = mechModules.Aux, 	X = -11, Y = 26} --aux 8
+		},
+		SpriteSmall = 			modFilepath.."sprites\\behemoth_small.png",
+		SpriteBig = 			modFilepath.."sprites\\behemoth_big.png",
+		SpriteBattle = 		  	modFilepath.."sprites\\behemoth_battle.png",
+		SpriteBattleDead = 	  	modFilepath.."sprites\\behemoth_dead.png",
+		SpriteMeleeVertical = 	modFilepath.."sprites\\behemoth_melee_vertical.png",
+		SpriteMeleeHorizontal = modFilepath.."sprites\\behemoth_melee_horizontal.png"
+	})
+
+	Mod.Database.AddMech({
+		Name = 			   "CDC_EchoMech",
+		ComponentSize =    componentSizes.Large,
+		IsResearched = 	   false,
+		CanBeConstructed = true,
+		GiveFreeItem = 	   true,
+		PriceMetallite =   620,
+		PriceBjorn = 	   275,
+		PriceMunilon =     520,
+		PriceSkalaknit =   400,
+		PriceStaff = 	   265,
+		ProductionDays =   5,
+		HeatResist = 	   20,
+		ImpactResist =     30,
+		CurrentResist =    20,
+		HasMelee = 	   	   false,
+		PassiveArmor =     3,
+		Weight = 		   80,
+		Speed = 		   0.4,
+		ReloadTime = 	   2,
+		BattleTime = 	   4,
+		MechCells = {
+			 {ModuleType = mechModules.Cabin, 	X =   0, Y = 29} --cabin
+			,{ModuleType = mechModules.Reactor, X =   0, Y = 22} --reactor
+			,{ModuleType = mechModules.Motor, 	X =   9, Y =  7} --motor 1
+			,{ModuleType = mechModules.Motor, 	X =  -9, Y =  7} --motor 2
+			,{ModuleType = mechModules.Motor, 	X =   6, Y = 12} --motor 3
+			,{ModuleType = mechModules.Motor, 	X =  -6, Y = 12} --motor 4
+			,{ModuleType = mechModules.Motor, 	X =  13, Y = 15} --motor 5
+			,{ModuleType = mechModules.Motor, 	X = -13, Y = 15} --motor 6
+			,{ModuleType = mechModules.Motor, 	X =   0, Y = 16} --motor 7
+			,{ModuleType = mechModules.Weapon, 	X =  13, Y = 28} --Weapon 1
+			,{ModuleType = mechModules.Weapon, 	X = -13, Y = 28} --Weapon 2
+			,{ModuleType = mechModules.Weapon, 	X =   7, Y = 35} --Weapon 3
+			,{ModuleType = mechModules.Aux, 	X =   7, Y = 19} --aux 1
+			,{ModuleType = mechModules.Aux, 	X =  -7, Y = 19} --aux 2
+			,{ModuleType = mechModules.Aux, 	X =   6, Y = 24} --aux 3
+			,{ModuleType = mechModules.Aux, 	X =  -6, Y = 24} --aux 4
+			,{ModuleType = mechModules.Aux, 	X =   5, Y = 29} --aux 5
+			,{ModuleType = mechModules.Aux, 	X =  -5, Y = 29} --aux 6
+		},
+		SpriteSmall = 			modFilepath.."sprites\\echo_small.png",
+		SpriteBig = 			modFilepath.."sprites\\echo_big.png",
+		SpriteBattle = 		  	modFilepath.."sprites\\echo_battle.png",
+		SpriteBattleDead = 	  	modFilepath.."sprites\\echo_dead.png"
+	})
+
+	------------------------------------------------------------------------------
+	--- SOLENOIDS ----------------------------------------------------------------
+	------------------------------------------------------------------------------
+
+	Mod.Database.AddSolenoid({
+		Name = "CDC_HighTechSolenoid",
+		ComponentSize =     componentSizes.Small,
+		IsResearched = 	    false,
+		CanBeConstructed =  true,
+		GiveFreeItem = 	    true,
+		PriceMetallite =    150,
+		PriceBjorn = 	    150,
+		PriceMunilon =      200,
+		PriceSkalaknit =    25,
+		PriceStaff = 	    70,
+		ProductionDays =    4,
+		Power = 		    3,
+		Induction = 	    1,
+		Sprite = 		    modFilepath.."sprites\\high_tech_solenoid.png"
+	})
+
+	------------------------------------------------------------------------------
+	--- WEAPONS ------------------------------------------------------------------
+	------------------------------------------------------------------------------
+
+	Mod.Database.AddWeapon({
+		Name = 			    "CDC_Howitzer",
+		Description = {
+			 { LanguageFile = "loc_english.ini", Value = "240-MM HOWITZER GUN" }
+			,{ LanguageFile = "loc_french.ini", Value = "CANON OBUSTER DE 240 MM" }
+			,{ LanguageFile = "loc_german.ini", Value = "240-MM-HAUEIZONE" }
+			,{ LanguageFile = "loc_polish.ini", Value = "HAUBICA 240 MM" }
+			,{ LanguageFile = "loc_portuguese_brazil.ini", Value = "OBUSEIRO DE 240 MM" }
+			,{ LanguageFile = "loc_russian.ini", Value = "240-мм гауитцер" }
+			,{ LanguageFile = "loc_spanish.ini", Value = "OBUS DE 240 MM" }
+			,{ LanguageFile = "loc_chinese.ini", Value = "240毫米榴弹炮" }
+			,{ LanguageFile = "chs.ini", Value = "240毫米榴弹炮" }
+			,{ LanguageFile = "loc_italian.ini", Value = "OBIETTIVO DA 240 MM" }
+			,{ LanguageFile = "japanese.ini", Value = "240ミリ榴弾砲" }
+		},
+		ComponentSize =     componentSizes.Small,
+		IsResearched = 	    false,
+		CanBeConstructed =  true,
+		GiveFreeItem = 	    true,
+		PriceMetallite =    200,
+		PriceBjorn = 	    50,
+		PriceMunilon =      30,
+		PriceSkalaknit =    60,
+		PriceStaff = 	    45,
+		ProductionDays =    4,
+		WeaponType =	    weaponTypes.Kinetic,
+		FireRate =		    25,
+		Weight = 		    48,
+		Accuracy = 		    1.5,
+		EnergyCost = 		5,
+		Damage = 		    80,
+		Penetration = 	    15,
+		ProjectileSpeed =   18,
+		IsEnergyBuffed =    false,
+		BlueLength =        0,
+		SpriteSmall =       modFilepath.."sprites\\howitzer_small.png",
+		SpriteBig = 	    modFilepath.."sprites\\howitzer_big.png",
+		SpriteHuge = 	    modFilepath.."sprites\\howitzer_huge.png",
+	})
+
+	Mod.Database.AddWeapon({
+		Name = 			    "CDC_LaserPulseCannon",
+		Description = {
+			 { LanguageFile = "loc_english.ini", Value = "EXTENDED RANGE LASER PULSE CANNON#Uses an internal power unit to provide most of the energy. Can be boosted by providing additional power." }
+			,{ LanguageFile = "loc_french.ini", Value = "CANON À IMPULSIONS LASER À PORTÉE ÉTENDUE#Utilise une unité d'alimentation interne pour fournir la majeure partie de l'énergie. Peut être suralimentée par un apport d'énergie supplémentaire." }
+			,{ LanguageFile = "loc_german.ini", Value = "Laserpulskanone mit erweiterter Reichweite#Nutzt eine interne Stromversorgungseinheit zur Bereitstellung des größten Teils der Energie. Die Leistung kann durch Zufuhr zusätzlicher Energie erhöht werden." }
+			,{ LanguageFile = "loc_polish.ini", Value = "LASEROWE DZIAŁO IMPULSOWE O ROZSZERZONYM ZASIĘGU#Wykorzystuje wewnętrzną jednostkę zasilania do dostarczania większości energii. Można ją zwiększyć, dostarczając dodatkową moc." }
+			,{ LanguageFile = "loc_portuguese_brazil.ini", Value = "CANHÃO DE PULSO LASER DE ALCANCE ESTENDIDO#Utiliza uma unidade de potência interna para fornecer a maior parte da energia. Pode ter sua potência aumentada fornecendo energia adicional." }
+			,{ LanguageFile = "loc_russian.ini", Value = "ЛАЗЕРНАЯ ИМПУЛЬСНАЯ ПУШКА БОЛЬШЕЙ ДАЛЬНОСТИ#Для обеспечения большей части энергии используется внутренний источник питания. Мощность может быть увеличена за счет подачи дополнительной энергии." }
+			,{ LanguageFile = "loc_spanish.ini", Value = "CAÑÓN DE PULSOS LÁSER DE ALCANCE EXTENDIDO#Utiliza una unidad de potencia interna para proporcionar la mayor parte de la energía. Puede mejorarse su rendimiento proporcionándole energía adicional." }
+			,{ LanguageFile = "loc_chinese.ini", Value = "远程激光脉冲炮#它使用内置动力装置提供大部分能量。可以通过提供额外动力来增强能量输出。" }
+			,{ LanguageFile = "chs.ini", Value = "远程激光脉冲炮#它使用内置动力装置提供大部分能量。可以通过提供额外动力来增强能量输出。" }
+			,{ LanguageFile = "loc_italian.ini", Value = "CANNONE A IMPULSI LASER A PORTATA ESTESA#Utilizza un'unità di alimentazione interna per fornire la maggior parte dell'energia. Può essere potenziata fornendo energia aggiuntiva." }
+			,{ LanguageFile = "japanese.ini", Value = "射程延長型レーザーパルス砲#内部電源ユニットでエネルギーの大部分を供給します。追加の電力を供給することで出力を向上させることができます。" }
+		},
+		ComponentSize =     componentSizes.Small,
+		IsResearched = 	    false,
+		CanBeConstructed =  true,
+		GiveFreeItem = 	    true,
+		PriceMetallite =    250,
+		PriceBjorn = 	    245,
+		PriceMunilon =      500,
+		PriceSkalaknit =    130,
+		PriceStaff = 	    110,
+		ProductionDays =    8,
+		WeaponType =	    weaponTypes.Energy,
+		FireRate =		    600,
+		Weight = 		    80,
+		Accuracy = 		    0,
+		EnergyCost = 		10,
+		Damage = 		    40,
+		Penetration = 	    5,
+		ProjectileSpeed =   0,
+		IsEnergyBuffed =    false,
+		BlueLength =        2000,
+		SpriteSmall =       modFilepath.."sprites\\laser_pulse_cannon_small.png",
+		SpriteBig = 	    modFilepath.."sprites\\laser_pulse_cannon_big.png",
+		SpriteHuge = 	    modFilepath.."sprites\\laser_pulse_cannon_huge.png",
+	})
+
+--	local nova_mech_index = AddMech({
+--		price_metallite = 400,
+--		price_bjorn = 	  200,
+--		price_munilon =   320,
+--		price_skalaknit = 220,
+--		price_staff = 	  245,
+--		production_days = 4,
+--		heat_resist = 	  20,
+--		impact_resist =   15,
+--		current_resist =  40,
+--		has_melee = 	  1,
+--		passive_armor =   2,
+--		weight = 		  65,
+--		speed = 		  0.4,
+--		reload_time = 	  3,
+--		battle_time = 	  3,
+--		mech_cells = {
+--			{moduleType = modules.motor, 	x =   7, y =  6} --motor 1
+--			,{moduleType = modules.motor, 	x =  -7, y =  6} --motor 2
+--			,{moduleType = modules.motor, 	x =   7, y = 11} --motor 3
+--			,{moduleType = modules.motor, 	x =  -7, y = 11} --motor 4
+--			,{moduleType = modules.motor, 	x =   7, y = 16} --motor 5
+--			,{moduleType = modules.motor, 	x =  -7, y = 16} --motor 6
+--			,{moduleType = modules.reactor, x =   0, y = 18} --reactor
+--			,{moduleType = modules.gun, 	x =  14, y = 20} --gun 1
+--			,{moduleType = modules.gun, 	x = -14, y = 20} --gun 2
+--			,{moduleType = modules.cabin, 	x =   0, y = 25} --cabin
+--			,{moduleType = modules.aux, 	x =   6, y = 21} --aux 1
+--			,{moduleType = modules.aux, 	x =  -6, y = 21} --aux 2
+--			,{moduleType = modules.aux, 	x =   6, y = 27} --aux 3
+--			,{moduleType = modules.aux, 	x =  -6, y = 27} --aux 4
+--			,{moduleType = modules.aux, 	x =  11, y = 27} --aux 5
+--			,{moduleType = modules.aux, 	x = -11, y = 27} --aux 6
+--			,{moduleType = modules.aux, 	x =   0, y = 33} --aux 7
+--		},
+--		sprite_small = 			  current_file_path.."sprites/nova_small.png",
+--		sprite_big = 			  current_file_path.."sprites/nova_big.png",
+--		sprite_battle = 		  current_file_path.."sprites/nova_battle.png",
+--		sprite_battle_dead = 	  current_file_path.."sprites/nova_dead.png",
+--		sprite_battle_melee_ver = current_file_path.."sprites/nova_melee_vertical.png",
+--		sprite_battle_melee_hor = current_file_path.."sprites/nova_melee_horizontal.png"
+--	});
+--	variable_global_set(unique_mod_prefix.."nova_mech_index", nova_mech_index);
+
+--	local sentinel_mech_index = AddMech({
+--		price_metallite = 1050,
+--		price_bjorn = 	  730,
+--		price_munilon =   1030,
+--		price_skalaknit = 880,
+--		price_staff = 	  325,
+--		production_days = 6,
+--		heat_resist = 	  25,
+--		impact_resist =   90,
+--		current_resist =  80,
+--		has_melee = 	  1,
+--		passive_armor =   5,
+--		weight = 		  70,
+--		speed = 		  0.2,
+--		reload_time = 	  4,
+--		battle_time = 	  5,
+--		mech_cells = {
+--			{moduleType = modules.motor, 	x =   8, y =  6} --motor 1
+--			,{moduleType = modules.motor, 	x =  -8, y =  6} --motor 2
+--			,{moduleType = modules.motor, 	x =   8, y = 11} --motor 3
+--			,{moduleType = modules.motor, 	x =  -8, y = 11} --motor 4
+--			,{moduleType = modules.motor, 	x =   7, y = 16} --motor 5
+--			,{moduleType = modules.motor, 	x =  -7, y = 16} --motor 6
+--			,{moduleType = modules.reactor, x =   0, y = 24} --reactor
+--			,{moduleType = modules.gun, 	x =  14, y = 22} --gun 1
+--			,{moduleType = modules.gun, 	x = -14, y = 22} --gun 2
+--			,{moduleType = modules.gun, 	x =   7, y = 41} --gun 3
+--			,{moduleType = modules.gun, 	x =  -7, y = 41} --gun 4
+--			,{moduleType = modules.cabin, 	x =   0, y = 32} --cabin
+--			,{moduleType = modules.aux, 	x =   6, y = 22} --aux 1
+--			,{moduleType = modules.aux, 	x =  -6, y = 22} --aux 2
+--			,{moduleType = modules.aux, 	x =   6, y = 35} --aux 3
+--			,{moduleType = modules.aux, 	x =  -6, y = 35} --aux 4
+--			,{moduleType = modules.aux, 	x =   6, y = 29} --aux 5
+--			,{moduleType = modules.aux, 	x =  -6, y = 29} --aux 6
+--			,{moduleType = modules.aux, 	x =  11, y = 33} --aux 7
+--			,{moduleType = modules.aux, 	x = -11, y = 33} --aux 8
+--		},
+--		sprite_small = 			  current_file_path.."sprites/sentinel_small.png",
+--		sprite_big = 			  current_file_path.."sprites/sentinel_big.png",
+--		sprite_battle = 		  current_file_path.."sprites/sentinel_battle.png",
+--		sprite_battle_dead = 	  current_file_path.."sprites/sentinel_dead.png",
+--		sprite_battle_melee_ver = current_file_path.."sprites/sentinel_melee_vertical.png",
+--		sprite_battle_melee_hor = current_file_path.."sprites/sentinel_melee_horizontal.png"
+--	});
+--	variable_global_set(unique_mod_prefix.."sentinel_mech_index", sentinel_mech_index);
+
+--	local behemoth_mech_index = AddMech({
+--		price_metallite = 4130,
+--		price_bjorn = 	  1460,
+--		price_munilon =   2300,
+--		price_skalaknit = 2020,
+--		price_staff = 	  600,
+--		production_days = 8,
+--		heat_resist = 	  45,
+--		impact_resist =   95,
+--		current_resist =  95,
+--		has_melee = 	  1,
+--		passive_armor =   10,
+--		weight = 		  108,
+--		speed = 		  0.1,
+--		reload_time = 	  3,
+--		battle_time = 	  12,
+--		mech_cells = {
+--			{moduleType = modules.motor, 	x =   7, y =  5} --motor 1
+--			,{moduleType = modules.motor, 	x =  -7, y =  5} --motor 2
+--			,{moduleType = modules.motor, 	x =   7, y =  9} --motor 3
+--			,{moduleType = modules.motor, 	x =  -7, y =  9} --motor 4
+--			,{moduleType = modules.motor, 	x =   7, y = 13} --motor 5
+--			,{moduleType = modules.motor, 	x =  -7, y = 13} --motor 6
+--			,{moduleType = modules.motor, 	x =   7, y = 17} --motor 7
+--			,{moduleType = modules.motor, 	x =  -7, y = 17} --motor 8
+--			,{moduleType = modules.reactor, x =   0, y = 22} --reactor
+--			,{moduleType = modules.gun, 	x =  15, y = 27} --gun 1
+--			,{moduleType = modules.gun, 	x = -15, y = 27} --gun 2
+--			,{moduleType = modules.gun, 	x =  24, y = 27} --gun 3
+--			,{moduleType = modules.gun, 	x = -24, y = 27} --gun 4
+--			,{moduleType = modules.gun, 	x =  15, y = 21} --gun 5
+--			,{moduleType = modules.gun, 	x = -15, y = 21} --gun 6
+--			,{moduleType = modules.gun, 	x =  24, y = 21} --gun 7
+--			,{moduleType = modules.gun, 	x = -24, y = 21} --gun 8
+--			,{moduleType = modules.gun, 	x =  15, y = 15} --gun 9
+--			,{moduleType = modules.gun, 	x = -15, y = 15} --gun 10
+--			,{moduleType = modules.gun, 	x =  24, y = 15} --gun 11
+--			,{moduleType = modules.gun, 	x = -24, y = 15} --gun 12
+--			,{moduleType = modules.cabin, 	x =   0, y = 30} --cabin
+--			,{moduleType = modules.aux, 	x =   6, y = 36} --aux 1
+--			,{moduleType = modules.aux, 	x =  -6, y = 36} --aux 2
+--			,{moduleType = modules.aux, 	x =  11, y = 36} --aux 3
+--			,{moduleType = modules.aux, 	x = -11, y = 36} --aux 4
+--			,{moduleType = modules.aux, 	x =   6, y = 31} --aux 5
+--			,{moduleType = modules.aux, 	x =  -6, y = 31} --aux 6
+--			,{moduleType = modules.aux, 	x =  11, y = 26} --aux 7
+--			,{moduleType = modules.aux, 	x = -11, y = 26} --aux 8
+--		},
+--		sprite_small = 			  current_file_path.."sprites/behemoth_small.png",
+--		sprite_big = 			  current_file_path.."sprites/behemoth_big.png",
+--		sprite_battle = 		  current_file_path.."sprites/behemoth_battle.png",
+--		sprite_battle_dead = 	  current_file_path.."sprites/behemoth_dead.png",
+--		sprite_battle_melee_ver = current_file_path.."sprites/behemoth_melee_vertical.png",
+--		sprite_battle_melee_hor = current_file_path.."sprites/behemoth_melee_horizontal.png"
+--	});
+--	variable_global_set(unique_mod_prefix.."behemoth_mech_index", behemoth_mech_index);
+
+--	local echo_mech_index = AddMech({
+--		price_metallite = 620,
+--		price_bjorn = 	  275,
+--		price_munilon =   520,
+--		price_skalaknit = 400,
+--		price_staff = 	  265,
+--		production_days = 5,
+--		heat_resist = 	  20,
+--		impact_resist =   30,
+--		current_resist =  20,
+--		has_melee = 	  0,
+--		passive_armor =   3,
+--		weight = 		  80,
+--		speed = 		  0.4,
+--		reload_time = 	  2,
+--		battle_time = 	  4,
+--		mech_cells = {
+--			{moduleType = modules.motor, 	x =   9, y =  7} --motor 1
+--			,{moduleType = modules.motor, 	x =  -9, y =  7} --motor 2
+--			,{moduleType = modules.motor, 	x =   6, y = 12} --motor 3
+--			,{moduleType = modules.motor, 	x =  -6, y = 12} --motor 4
+--			,{moduleType = modules.motor, 	x =  13, y = 15} --motor 5
+--			,{moduleType = modules.motor, 	x = -13, y = 15} --motor 6
+--			,{moduleType = modules.motor, 	x =   0, y = 16} --motor 7
+--			,{moduleType = modules.reactor, x =   0, y = 22} --reactor
+--			,{moduleType = modules.gun, 	x =  13, y = 28} --gun 1
+--			,{moduleType = modules.gun, 	x = -13, y = 28} --gun 2
+--			,{moduleType = modules.gun, 	x =   7, y = 35} --gun 3
+--			,{moduleType = modules.cabin, 	x =   0, y = 29} --cabin
+--			,{moduleType = modules.aux, 	x =   7, y = 19} --aux 1
+--			,{moduleType = modules.aux, 	x =  -7, y = 19} --aux 2
+--			,{moduleType = modules.aux, 	x =   6, y = 24} --aux 3
+--			,{moduleType = modules.aux, 	x =  -6, y = 24} --aux 4
+--			,{moduleType = modules.aux, 	x =   5, y = 29} --aux 5
+--			,{moduleType = modules.aux, 	x =  -5, y = 29} --aux 6
+--		},
+--		sprite_small = 			  current_file_path.."sprites/echo_small.png",
+--		sprite_big = 			  current_file_path.."sprites/echo_big.png",
+--		sprite_battle = 		  current_file_path.."sprites/echo_battle.png",
+--		sprite_battle_dead = 	  current_file_path.."sprites/echo_dead.png",
+--	});
+--	variable_global_set(unique_mod_prefix.."echo_mech_index", echo_mech_index);
+
+--	local high_tech_solenoid_index = AddSolenoid({
+--		price_metallite = 150,
+--		price_bjorn = 	  150,
+--		price_munilon =   200,
+--		price_skalaknit = 25,
+--		price_staff = 	  70,
+--		production_days = 4,
+--		power = 		  3,
+--		induction = 	  1,
+--		sprite = 		  current_file_path.."sprites/high_tech_solenoid.png"
+--	});
+--	variable_global_set(unique_mod_prefix.."high_tech_solenoid_index", high_tech_solenoid_index);
+
+--	local howitzer_weapon_index = AddWeapon({
+--		price_metallite =  200,
+--		price_bjorn = 	   50,
+--		price_munilon =    30,
+--		price_skalaknit =  60,
+--		price_staff = 	   45,
+--		production_days =  4,
+--		weapon_type = 	   weapon_types.white,
+--		fire_rate = 	   25,
+--		weight = 		   48,
+--		accuracy = 		   1.5,
+--		energy = 		   5,
+--		damage = 		   80,
+--		penetration = 	   15,
+--		projectile_speed = 18,
+--		energy_buffed =    0,
+--		sprite_small =     current_file_path.."sprites/howitzer_small.png",
+--		sprite_big = 	   current_file_path.."sprites/howitzer_big.png",
+--		sprite_huge = 	   current_file_path.."sprites/howitzer_huge.png"
+--	});
+--	variable_global_set(unique_mod_prefix.."howitzer_weapon_index", howitzer_weapon_index);
+
+--	local laser_pulse_cannon_weapon_index = AddWeapon({
+--		price_metallite =  250,
+--		price_bjorn = 	   245,
+--		price_munilon =    500,
+--		price_skalaknit =  130,
+--		price_staff = 	   110,
+--		production_days =  8,
+--		weapon_type = 	   weapon_types.blue,
+--		fire_rate = 	   600,
+--		weight = 		   80,
+--		accuracy = 		   0,
+--		energy = 		   10,
+--		damage = 		   40,
+--		penetration = 	   5,
+--		projectile_speed = 0,
+--		energy_buffed =    0,
+--		sprite_small =     current_file_path.."sprites/laser_pulse_cannon_small.png",
+--		sprite_big = 	   current_file_path.."sprites/laser_pulse_cannon_big.png",
+--		sprite_huge = 	   current_file_path.."sprites/laser_pulse_cannon_huge.png"
+--	});
+--	variable_global_set(unique_mod_prefix.."laser_pulse_cannon_weapon_range", 2000);
+end
+
+---saving system deletes the file and creates new one before saving new info
+---@param q any
 function save_game_pre_event(q)
-	--saving system deletes the file and creates new one before saving new info
 end
 
+---@param q game_obj_database
 function save_game_post_event(q)
 end
 
+---@param q game_obj_database
 function load_game_pre_event(q)
 end
 
+---Called after the game is loaded
+---@param q game_obj_database
 function load_game_post_event(q)
-	--Modded sprite data is not saved so we need to fix this after load
-	local obj_component_shop = asset_get_index("obj_component_shop");
-
-	--Copy the array to the working set
-	local hanger_mass = {};
-	hanger_mass = obj_component_shop.hanger_mass;
-
-	--Hanger identifiers
-	local hanger = {
-		component_type = 2,
-		item_index = 3,
-		logo = 5,
-		logo_index = 11
-	};
-
-	--We step through the hanger/production items to find our modded items
-	for _, hangar in ipairs(hanger_mass) do
-		for _, modded_item in ipairs(modded_component_list) do
-			if(hangar[hanger.component_type] == modded_item.component_type and hangar[hanger.item_index] == modded_item.index) then
-				--When the reference matches the modded element we set the relevant mod sprite to the logo and logo index.
-				hangar[hanger.logo] = modded_item.sprite;
-				hangar[hanger.logo_index] = modded_item.sprite;
-			end
-		end
-	end
-
-	--send array back
-	obj_component_shop.hanger_mass = hanger_mass;
 end
 
-local update_weapon_desc = true;
-local fix_research = true;
+---The draw call thay runs every frame
+---@param q game_obj_database
 function draw_top_menu(q)
-	--We need to update the weapon descriptions in the draw call since the ini isn't loaded in the create function
-	--however we only need to update once so we set the update_weapon_desc to false after the update to prevent repeat function spamming
-	local weapon_strings = asset_get_index("obj_weapon_test");
-	local is_ini_loaded = weapon_strings.load_ini;
-	--Wait till the ini is loaded.
-	if (is_ini_loaded == true and update_weapon_desc == true) then
-		update_weapon_desc = false;
-
-		--Copy the array to the working set
-		local weapon_description_array = {};
-		weapon_description_array = weapon_strings.weapon_description;
-
-		local howitzer_weapon_index = variable_global_get(unique_mod_prefix.."howitzer_weapon_index") + 1; --need to offset by 1 to use the index here
-		weapon_description_array[howitzer_weapon_index] = "240-MM HOWITZER GUN.";
-
-		local laser_pulse_cannon_weapon_index = variable_global_get(unique_mod_prefix.."laser_pulse_cannon_weapon_index") + 1; --need to offset by 1 to use the index here
-		weapon_description_array[laser_pulse_cannon_weapon_index] = "EXTENDED RANGE LASER PULSE CANNON.#Uses an internal power unit to provide most of the energy. Can be boosted by providing additional power.";
-
-		--return new data
-		weapon_strings.weapon_description = weapon_description_array;
-
-		--Use the next line to print a debug of the recorded weapon descriptions
-		--dump_obj_to_message(weapon_strings.weapon_description);
-    end
-
-	--We only fix the research after all the loading is done. so we can piggyback on the load flag for obj_weapon_test
-	if(is_ini_loaded == true and fix_research == true) then
-		fix_research = false;
-		--In the event the mod is added to an existing save the newly added mod research is all defaulted to 0 days remaining and condition 0 (closed).
-		--To fix this we need to validate the research states to see if its a valid state through gameplay or if its a state from loading into an existing save
-
-		local loaded_research_list = variable_global_get(unique_mod_prefix.."loaded_research_list");
-		local modded_research_list = variable_global_get(unique_mod_prefix.."modded_research_list");
-		local data_core_research_index = variable_global_get(unique_mod_prefix.."data_core_research_index");
-
-		for _, v in ipairs(modded_research_list) do
-			local research = loaded_research_list[v + 1];
-			
-			if(v == data_core_research_index and research.condition == 0) then
-				--special condition since this mod has a research that is set to condition 2 on mod load we need force it back to condition 2 if it was closed.
-				--all other states should be fine: 
-				--condition 1: it would mean the player stopped the research from continueing.
-				--condition 2: was de desired state to begin with.
-				--condition 3: it is already completed so should be a correct working data set.
-
-				research.condition = 2;
-				research.require_days = research.require_days_max;
-			elseif(research.condition == 0 and research.require_days ~= research.require_days_max) then
-				--Condition 0 (closed) -> research has never been started/unlocked it should have the default require_days values
-				research.require_days = research.require_days_max;
-			elseif(research.condition == 1 and research.require_days == 0)  then
-				--Condition 1 (opened) -> it should have days remaining between 1 and require_days_max, 0 should be excluded as it would have moved to the condition 3
-				--We only care about the case where require_days is at 0 since this would indicate a newly added research that was set to opened because the linked research was completed before.
-				research.require_days = research.require_days_max;
-			end
-
-			--condition 2 (researching) -> should be a valid state, we can't conclude if the number of days remaining is correct other than it should be less or equal to the max value.
-			--condition 3 (researched) -> require_days should be 0
-			--both these conditions shouldn't need our attention as they are most likely part of normal gameplay
-		end
-	end
 end
 
+---The draw call thay runs every frame while debug is active (F6)
+---@param q game_obj_database
 function draw_debug(q)
-end
-
----Adds a new mech
----@param mech_data mech_data dataset for adding a new mech
----@return number index the index of the newly added mech
-function AddMech(mech_data)
-	local obj_database = asset_get_index("obj_database");
-
-	--Copy the array to the working set
-	local mech_stat_array = {};
-	mech_stat_array = obj_database.mech_stat;
-
-	local mech_index = #mech_stat_array + 1;
-	local mech = ds_map_create();
-	mech_stat_array[mech_index] = mech;
-
-	--ENGINEERING PRICE
-	ds_map_add(mech, "price_metallite",	mech_data.price_metallite);
-	ds_map_add(mech, "price_bjorn",		mech_data.price_bjorn);
-	ds_map_add(mech, "price_munilon",	mech_data.price_munilon);
-	ds_map_add(mech, "price_skalaknit",	mech_data.price_skalaknit);
-	ds_map_add(mech, "price_staff",		mech_data.price_staff);
-	ds_map_add(mech, "days",			mech_data.production_days);
-
-	--RESISTANCES
-	ds_map_add(mech, "heat_resist",		mech_data.heat_resist);
-	ds_map_add(mech, "impact_resist",	mech_data.impact_resist);
-	ds_map_add(mech, "current_resist",	mech_data.current_resist);
-
-	--STATS
-	ds_map_add(mech, "hp", 				1000);  --1000 is the default for all mechs, not sure if the game does something with this value
-	ds_map_add(mech, "melee_option",	mech_data.has_melee);
-	ds_map_add(mech, "armor",			mech_data.passive_armor);
-	ds_map_add(mech, "weight",			mech_data.weight);
-	ds_map_add(mech, "speed",			mech_data.speed);
-	ds_map_add(mech, "reload_time",		mech_data.reload_time);
-	ds_map_add(mech, "battle_time",		mech_data.battle_time);
-
-	--MODULE CELLS
-	AddCells(mech, mech_data.mech_cells);
-
-	--SPRITES
-	--small sprite
-	local mech_sprite = sprite_add(mech_data.sprite_small, 0, false, false, 23, 49);
-	ds_map_add(mech, "sprite_small", mech_sprite);
-	--big sprite
-	ds_map_add(mech, "sprite_big", sprite_add(mech_data.sprite_big, 0, false, false, 199, 343));
-	--battle sprite
-	ds_map_add(mech, "sprite_battle", sprite_add(mech_data.sprite_battle, 2, true, false, 25, 25));
-	--dead sprite
-	ds_map_add(mech, "sprite_battle_dead", sprite_add(mech_data.sprite_battle_dead, 1, true, false, 23, 23));
-	--melee vertical
-	if(mech_data.sprite_battle_melee_ver ~= nil) then
-		ds_map_add(mech, "sprite_battle_melee_ver", sprite_add(mech_data.sprite_battle_melee_ver, 7, true, false, 17, 25));
-	end
-	--melee horizontal
-	if(mech_data.sprite_battle_melee_hor ~= nil) then
-		ds_map_add(mech, "sprite_battle_melee_hor", sprite_add(mech_data.sprite_battle_melee_hor, 7, true, false, 25, 25));
-	end
-
-	--Add the newly modded item to the component list to make sure the sprite gets reset on load
-	table.insert(modded_component_list, {
-		component_type = component_types.mech,
-		index = mech_index - 1,
-		sprite = mech_sprite
-	});
-
-	--return new data
-	obj_database.mech_stat = mech_stat_array;
-
-	return mech_index - 1;
-end
-
----Adds the Cell data to the ds_map of the mech
----@param mech ds_map the reference to the ds_map of the mech
----@param cells mech_cell[] the cell data array for the mech
-function AddCells(mech, cells)
-	local aux_number = 0;
-	local weapon_number = 0;
-
-	for i = 1, #cells, 1 do
-		local cell = cells[i];
-		AddCell(mech, i, cell);
-
-		if(cell.moduleType == modules.aux) then
-			aux_number = aux_number + 1;
-		end
-		if(cell.moduleType == modules.gun) then
-			weapon_number = weapon_number + 1;
-		end
-	end
-
-	ds_map_add(mech, "number_of_aux",	  aux_number);
-	ds_map_add(mech, "number_of_weapons", weapon_number);
-	ds_map_add(mech, "number_of_cells",   #cells);
-end
-
----Adds a new cell to the ds_map for the mech
----@param mech ds_map the reference to the ds_map of the mech
----@param cell_num number the number of the newly added cell
----@param cell mech_cell the data for the cell
-function AddCell(mech, cell_num, cell)
-	ds_map_add(mech, "cell_"..cell_num, 	cell.moduleType);
-	ds_map_add(mech, "cell_x_"..cell_num, 	cell.x);
-	ds_map_add(mech, "cell_y_"..cell_num, 	cell.y);
-end
-
----Add a new weapon
----@param weapon_data weapon_data
----@return number index the index of the newly added weapon
-function AddWeapon(weapon_data)
-	local obj_database = asset_get_index("obj_database");
-
-	--Copy the array to the working set
-	local weapon_stat_array = {};
-	weapon_stat_array = obj_database.weapon_stat;
-
-	------------
-	--HOWITZER--
-	------------
-	local weapon_index = #weapon_stat_array + 1;
-	weapon_stat_array[weapon_index] = ds_map_create();
-	local weapon = weapon_stat_array[weapon_index];
-
-	--ENGINEERING PRICE
-	ds_map_add(weapon, "price_metallite",	weapon_data.price_metallite);
-	ds_map_add(weapon, "price_bjorn",		weapon_data.price_bjorn);
-	ds_map_add(weapon, "price_munilon",		weapon_data.price_munilon);
-	ds_map_add(weapon, "price_skalaknit",	weapon_data.price_skalaknit);
-	ds_map_add(weapon, "price_staff",		weapon_data.price_staff);
-	ds_map_add(weapon, "days",				weapon_data.production_days);
-
-	--STATS
-	ds_map_add(weapon, "hp",				1000);	--a default value the game doesn't seem to use.
-	ds_map_add(weapon, "number",			3);		--doesn't seem to do anything
-	ds_map_add(weapon, "type",				weapon_data.weapon_type);
-	ds_map_add(weapon, "start_fire_speed",	weapon_data.fire_rate);
-	ds_map_add(weapon, "start_weight",		weapon_data.weight);
-	ds_map_add(weapon, "start_accuracy",	weapon_data.accuracy);
-	ds_map_add(weapon, "start_energy",		weapon_data.energy);
-	ds_map_add(weapon, "start_damage",		weapon_data.damage);
-	ds_map_add(weapon, "start_penetration",	weapon_data.penetration);
-	ds_map_add(weapon, "start_speed",		weapon_data.projectile_speed);
-	ds_map_add(weapon, "energy_buffed",		weapon_data.energy_buffed);
-
-	--SPRITES
-	--small sprite
-	local small_sprite = sprite_add(weapon_data.sprite_small, 0, false, false, 0, 0);
-	ds_map_add(weapon, "sprite", small_sprite);
-	--huge sprite
-	local huge_sprite = sprite_add(weapon_data.sprite_huge, 0, false, false, 199, 134);
-	--big sprite
-	local big_sprite = sprite_add(weapon_data.sprite_big, 0, false, false, 199, 134);
-	--merge the big and huge sprites
-	sprite_merge(big_sprite, huge_sprite);
-	ds_map_add(weapon, "sprite_big", big_sprite);
-
-	--Add the newly modded item to the component list to make sure the sprite gets reset on load
-	table.insert(modded_component_list, {
-		component_type = component_types.weapon,
-		index = weapon_index - 1,
-		sprite = small_sprite
-	});
-
-	--return new data
-	obj_database.weapon_stat = weapon_stat_array;
-
-	return weapon_index - 1;
-end
-
----Add a new solenoid
----@param solenoid_data solenoid_data
----@return number index the index of the newly added solenoid
-function AddSolenoid(solenoid_data)
-	local obj_database = asset_get_index("obj_database");
-
-	--Copy the array to the working set
-	local solenoid_stat_array = {};
-	solenoid_stat_array = obj_database.solenoid_stat;
-
-	----------------------
-	--HIGH TECH SOLONOID--
-	----------------------
-	local high_tech_solenoid_index = #solenoid_stat_array + 1;
-	solenoid_stat_array[high_tech_solenoid_index] = ds_map_create();
-	local high_tech_solenoid = solenoid_stat_array[high_tech_solenoid_index];
-
-	--ENGINEERING PRICE
-	ds_map_add(high_tech_solenoid, "price_metallite",	solenoid_data.price_metallite);
-	ds_map_add(high_tech_solenoid, "price_bjorn",		solenoid_data.price_bjorn);
-	ds_map_add(high_tech_solenoid, "price_munilon",		solenoid_data.price_munilon);
-	ds_map_add(high_tech_solenoid, "price_skalaknit",	solenoid_data.price_skalaknit);
-	ds_map_add(high_tech_solenoid, "price_staff",		solenoid_data.price_staff);
-	ds_map_add(high_tech_solenoid, "days",				solenoid_data.production_days);
-
-	--STATS
-	ds_map_add(high_tech_solenoid, "hp",				1000);	--doesn't seem to do anything
-	ds_map_add(high_tech_solenoid, "power",				solenoid_data.power);
-	ds_map_add(high_tech_solenoid, "induction",			solenoid_data.induction);
-	ds_map_add(high_tech_solenoid, "weight",			2);		--cant find an effect on the reactor so i left it at the same value as a regular solenoid
-	ds_map_add(high_tech_solenoid, "type",				1);		--As far as i can see there is only type 1 for solenoids
-
-	--SPRITE
-	local high_tech_solenoid_sprite = sprite_add(solenoid_data.sprite, 0, false, false, 0, 0);
-	ds_map_add(high_tech_solenoid, "sprite", high_tech_solenoid_sprite);
-
-	--Add the newly modded item to the component list to make sure the sprite gets reset on load
-	table.insert(modded_component_list, {
-		component_type = component_types.solenoid,
-		index = high_tech_solenoid_index - 1,
-		sprite = high_tech_solenoid_sprite
-	});
-
-	--return new data
-	obj_database.solenoid_stat = solenoid_stat_array;
-
-	return high_tech_solenoid_index - 1;
-end
-
-
-
-
-
-
---------------------------
---DEBUG HELPER FUNCTIONS--
---------------------------
-
----Prints a messagebox with the key and values of the gamemaker struct or table
----provide the reference id to the table
----The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
----@param ref any the Gamemaker struct reference or table reference
-function dump_obj_to_message(ref)
-	if(type(ref) == "table") then
-		local values = {};
-		for k, v in pairs(ref) do
-			table.insert(values, tostring(k).."::"..tostring(v));
-		end
-		local message = table.concat(values, ",\n");
-		show_message(message);
-	else
-		local values = {};
-		for k, v in pairs(struct_get_names(ref)) do
-			table.insert(values, tostring(k).."::"..tostring(v).."::"..tostring(ref[v]));
-		end
-		local message = table.concat(values, ",\n");
-		show_message(message);
-	end
-end
-
---Prints a messagebox with the key and values of the gamemaker ds_map
---provide the reference id to the ds_map
---The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
----@param ref any the reference to the ds_map
-function dump_ds_map_to_message(ref)
-	local values = {};
-    for k, v in pairs(ds_map_keys_to_array(ref)) do
-        table.insert(values, tostring(k).."::"..tostring(v).."::"..tostring(ds_map_find_value(ref, v)));
-    end
-    local message = table.concat(values, ",\n");
-	show_message(message);
 end

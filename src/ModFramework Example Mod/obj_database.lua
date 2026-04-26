@@ -33,7 +33,6 @@ function create(q,v_modid)
 	local modFilepath = Mod.Common.GetModPath("ModFramework Example Mod")
 
 	--load needed types
-
 	local mechModules = Mod.Types.MechModules
 	local componentSizes = Mod.Types.ComponentSizes
 	local weaponTypes = Mod.Types.WeaponTypes
@@ -110,13 +109,13 @@ function create(q,v_modid)
 		PriceStaff = 	    10,					  --The amount of staff needed to produce this weapon
 		ProductionDays =    2,					  --The amount of days it takes to produce this weapon
 		WeaponType =	    weaponTypes.Kinetic,  --the type of weapon (white = kinetic, red = missiles, blue = energy, yellow = thermal)
-		FireRate =		    25,					  --the base fire rate. higher values offer a faster rate, 600 with full firespeed points will fill the firespeed bar completely
+		FireRate =		    400,				  --the base fire rate. higher values offer a faster rate, 600 with full firespeed points will fill the firespeed bar completely
 		Weight = 		    48,					  --the base weight of the weapon
-		Accuracy = 		    1.5,				  --the base accuracy for the weapon. accuracy in degrees, 0 is perfect accuracy
+		Accuracy = 		    5.0,				  --the base accuracy for the weapon. accuracy in degrees, 0 is perfect accuracy
 		EnergyCost = 		5,					  --the base energy cost of the weapon
-		Damage = 		    80,					  --the base damage value of the weapon
-		Penetration = 	    15,					  --the base penetration value of the weapon
-		ProjectileSpeed =   18,					  --the base projectile speed of the weapon
+		Damage = 		    10,					  --the base damage value of the weapon
+		Penetration = 	    1,					  --the base penetration value of the weapon
+		ProjectileSpeed =   24,					  --the base projectile speed of the weapon
 		IsEnergyBuffed =    false,				  --whether the energy cost boost damage output, for energy weapons this is an additional increase on their native bonus.
 		BlueLength =        0,					  --the range of a blue weapon, default is 750
 		SpriteSmall =       modFilepath.."sprites\\example_weapon_small.png",	--the small sprite for the weapon

@@ -48,6 +48,11 @@ function Research.AddResearch(item)
 	local resNumber = researchCount
 	local researchIndex = researchCount + 1
 	local newResearch = {}
+
+	if (item.Condition == nil) then
+		item.Condition = Types.ResearchConditions.Closed
+	end
+
 	newResearch[ResearchIndexes.Position] = item.Position					--position number on the research tree. You can see positions in the game with f6 (debug mode)
 	newResearch[ResearchIndexes.Link_1] = -4 								--link 1
 	newResearch[ResearchIndexes.Link_2] = -4 								--link 2
@@ -62,7 +67,7 @@ function Research.AddResearch(item)
 	local description = Common.SelectCorrectLocalizedString(item.Description)
 	newResearch[ResearchIndexes.Description] = description			 		--research text
 
-	if(item.PrerequisiteResearchResNumber ~= -4) then
+	if(item.PrerequisiteResearchResNumber ~= nil) then
 		local prerequisiteIndex = item.PrerequisiteResearchResNumber + 1
 		if (prerequisiteIndex ~= nil) then
 			local prerequisiteResearch = mres[prerequisiteIndex]

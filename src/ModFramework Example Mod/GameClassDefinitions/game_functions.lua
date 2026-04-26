@@ -68,7 +68,7 @@ draw_clear_alpha = draw_clear_alpha
 ---This function draws the given sprite and sub-image at a position.
 ---@type fun(sprite: number, subimg: number, x: number, y: number)
 draw_sprite = draw_sprite
----This function will draw the given sprite as in the function draw_sprite() but with additional options to change the scale, blending, rotation and alpha of the sprite being drawn.
+---This function will draw the given sprite as in the function draw_sprite() but with additional options to change the scale, blending, rotation and alpha of the sprite being drawn. colour: 16777215 is default(white)
 ---@type fun(sprite: number, subimg:number, x:number, y:number, xscale:number, yscale:number, rot:number, colour:number, alpha:number)
 draw_sprite_ext = draw_sprite_ext
 ---This function resets all further drawing from the target surface back to the screen.
@@ -89,6 +89,9 @@ sprite_get_name = sprite_get_name
 ---Returns true once, the moment you click, Doesn’t repeat if you hold the button
 ---@type fun(numb:number):boolean
 mouse_check_button_pressed = mouse_check_button_pressed
+---Returns true while you click, repeats every frame if you hold the button
+---@type fun(numb:number):boolean
+mouse_check_button = mouse_check_button
 ---Gets the mouse position x in window/screen coordinates, (0,0) = top-left of the window
 ---@type fun():number
 window_mouse_get_x = window_mouse_get_x
