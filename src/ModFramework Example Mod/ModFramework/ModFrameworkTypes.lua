@@ -79,7 +79,7 @@ Types.ComponentSizes = ComponentSizes
 --- WEAPON TYPES -------------------------------------------------------------
 ------------------------------------------------------------------------------
 
----The weapon indexes
+---The base weapon indexes
 ---@class BaseWeapons
 local BaseWeapons = {
 	SIX_BARRELED_GUN = 0,
@@ -121,6 +121,15 @@ Types.WeaponInicator = WeaponInicator
 --- REACTOR TYPES ------------------------------------------------------------
 ------------------------------------------------------------------------------
 
+---The base reactors indexes
+---@class BaseReactors
+local BaseReactors = {
+	Combustion = 0,
+	Fission = 1,
+	Fusion = 2,
+}
+Types.BaseReactors = BaseReactors
+
 ---Reactor type identifiers
 ---@class ReactorTypes
 local ReactorTypes = {
@@ -134,7 +143,7 @@ Types.ReactorTypes = ReactorTypes
 --- MAGNET TYPES ------------------------------------------------------------
 ------------------------------------------------------------------------------
 
----The magnets indexes
+---The base magnets indexes
 ---@class BaseMagnets
 local BaseMagnets = {
 	Curved = 0,
@@ -147,7 +156,7 @@ Types.BaseMagnets = BaseMagnets
 --- SOLENOID TYPES ------------------------------------------------------------
 ------------------------------------------------------------------------------
 
----The solenoid indexes
+---The base solenoid indexes
 ---@class BaseSolenoids
 local BaseSolenoids = {
 	BrownSolenoid = 0,

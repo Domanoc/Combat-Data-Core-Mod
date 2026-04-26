@@ -27,9 +27,9 @@ function create(q,v_modid)
 	--Support for motor modding
 	--Show example of motor modding and adding
 	--Support for reactor modding
-	--Show example of reactor modding and adding
+	--Show example of reactor modding
 	--Support for magnet modding
-	--Show example of magnet modding and adding
+	--Show example of magnet modding
 	--Support for injector modding
 	--Show example of injector modding and adding
 	--Support for piston modding
