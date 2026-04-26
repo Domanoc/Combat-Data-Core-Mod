@@ -43,10 +43,10 @@ end
 ---Adds a component of type motor to engineering
 ---@param motorIndex number the index of the motor in the database.
 function Engineering.AddMotor(motorIndex)
-	local obj_content_mechs = Common.GetObjContentMotors()
+	local obj_content_motors = Common.GetObjContentMotors()
 
 	--Copy the array to the working set
-	local list_motor = obj_content_mechs.list_motor
+	local list_motor = obj_content_motors.list_motor
 
 	local arraySize = #list_motor
 	local itemIndex = arraySize + 1
@@ -57,8 +57,8 @@ function Engineering.AddMotor(motorIndex)
 	list_motor[itemIndex] = addedMotor
 
 	--return new data
-	obj_content_mechs.list_motor = list_motor
-	obj_content_mechs.number_of_items = #list_motor
+	obj_content_motors.list_motor = list_motor
+	obj_content_motors.number_of_items = #list_motor
 end
 
 ---Adds a component of type mech to engineering
@@ -154,10 +154,10 @@ end
 ---Adds a component of type piston to engineering
 ---@param pistonIndex number the index of the piston in the database.
 function Engineering.AddPiston(pistonIndex)
-	local obj_content_injector = Common.GetObjContentPiston()
+	local obj_content_piston = Common.GetObjContentPiston()
 
 	--Copy the array to the working set
-	local list_piston = obj_content_injector.list_piston
+	local list_piston = obj_content_piston.list_piston
 
 	local arraySize = #list_piston
 	local itemIndex = arraySize + 1
@@ -168,8 +168,29 @@ function Engineering.AddPiston(pistonIndex)
 	list_piston[itemIndex] = addedPiston
 
 	--return new data
-	obj_content_injector.list_piston = list_piston
-	obj_content_injector.number_of_items = #list_piston
+	obj_content_piston.list_piston = list_piston
+	obj_content_piston.number_of_items = #list_piston
+end
+
+---Adds a component of type kernel to engineering
+---@param kernelIndex number the index of the kernel in the database.
+function Engineering.AddKernel(kernelIndex)
+	local obj_content_kernel = Common.GetObjContentKernel()
+
+	--Copy the array to the working set
+	local list_kernel = obj_content_kernel.list_kernel
+
+	local arraySize = #list_kernel
+	local itemIndex = arraySize + 1
+	local addedKernel = Private.AddKernelItemInstance()
+	addedKernel.my_num = arraySize
+	addedKernel.kernel_number = kernelIndex
+	addedKernel.new_module = true
+	list_kernel[itemIndex] = addedKernel
+
+	--return new data
+	obj_content_kernel.list_kernel = list_kernel
+	obj_content_kernel.number_of_items = #list_kernel
 end
 
 ---Adds a component of type weapon to engineering
@@ -261,6 +282,20 @@ end
 function Private.AddPistonItemInstance()
 	local obj_piston_item = asset_get_index("obj_piston_item")
 	return instance_create_depth(0, 0, 0, obj_piston_item)
+end
+
+---Create a new obj_kernel_item instance
+---@return game_obj_kernel_item objKernelItem the new obj_kernel_item instance
+function Private.AddKernelItemInstance()
+	local obj_kernel_item = asset_get_index("obj_kernel_item")
+	return instance_create_depth(0, 0, 0, obj_kernel_item)
+end
+
+---Create a new obj_safety_item instance
+---@return game_obj_safety_item objSafetyItem the new obj_safety_item instance
+function Private.AddSafetyItemInstance()
+	local obj_safety_item = asset_get_index("obj_safety_item")
+	return instance_create_depth(0, 0, 0, obj_safety_item)
 end
 
 ---Create a new obj_magnet_item instance

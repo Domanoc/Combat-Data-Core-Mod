@@ -38,6 +38,7 @@
     - Reactors
     - Injectors
     - Pistons
+    - Kernels
     - Magnets
     - Solenoids
 - Added Debug functions

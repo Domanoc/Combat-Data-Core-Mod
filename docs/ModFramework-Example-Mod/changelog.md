@@ -14,12 +14,12 @@
     - Added example for adding mech items on game start
     - Added example for getting a modded mech reference
     - Added example for using framework types to reference base mechs
-- ### weapon
+- ### Weapon
     - Added example for adding a modded weapon
     - Added example for adding weapon items on game start
     - Added example for getting a modded weapon reference
     - Added example for using framework types to reference base weapons
-- ### reactor
+- ### Reactor
     - Added example for adding reactor items on game start
     - Added example for using framework types to reference base reactors
 - ### Injector
@@ -28,15 +28,18 @@
 - ### Piston
     - Added example for adding piston items on game start
     - Added example for using framework types to reference base pistons
-- ### magnet
+- ### Kernel
+    - Added example for adding kernel items on game start
+    - Added example for using framework types to reference base kernels
+- ### Magnet
     - Added example for adding magnet items on game start
     - Added example for using framework types to reference base magnets
-- ### solenoid
+- ### Solenoid
     - Added example for adding a modded solenoid
     - Added example for adding solenoid items on game start
     - Added example for getting a modded solenoid reference
     - Added example for using framework types to reference base solenoids
-- ### research
+- ### Research
     - Added example for adding a modded research
     - Added example for getting a modded research reference
     - Added example for linking modded researches
@@ -45,7 +48,7 @@
     - Added example for moving researches
     - Added example for relinking researches
     - Added example for using framework types to reference base researches
-- ### other
+- ### Other
     - Added example for using debug function to unlock all research the next day
     - Added example for using debug function to unlock all shop components
 
