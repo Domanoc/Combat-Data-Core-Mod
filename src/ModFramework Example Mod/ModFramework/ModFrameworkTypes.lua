@@ -8,36 +8,6 @@ local Types = {}
 
 ------------------------------------------------------------------------------
 
-
-------------------------------------------------------------------------------
---- MECH TYPES ---------------------------------------------------------------
-------------------------------------------------------------------------------
-
----The base mech indexes
----@class BaseMechs
-local BaseMechs = {
-	Miner = 0,
-	Castle = 1,
-	Plate = 2,
-	Holo = 3,
-	Quadro = 4,
-	Tentacle = 5,
-	Triangle = 6,
-}
-Types.BaseMechs = BaseMechs
-
----MechModule identifiers
----@class MechModules
-local MechModules = {
-	Aux = 1,
-	Motor = 2,
-	Reactor = 3,
-	Weapon = 4,
-	Cabin = 5
-}
-Types.MechModules = MechModules
-
-
 ------------------------------------------------------------------------------
 --- COMPONENT TYPES ----------------------------------------------------------
 ------------------------------------------------------------------------------
@@ -73,6 +43,52 @@ local ComponentSizes = {
 	Large = 5
 }
 Types.ComponentSizes = ComponentSizes
+
+
+------------------------------------------------------------------------------
+--- CABIN TYPES ---------------------------------------------------------------
+------------------------------------------------------------------------------
+
+---The base cabin indexes
+---@class BaseCabins
+local BaseCabins = {
+	Cabin_0 = 0,
+	Cabin_1 = 1,
+	Cabin_2 = 2,
+	Cabin_3 = 3,
+	Cabin_4 = 4,
+	Cabin_5 = 5,
+}
+Types.BaseCabins = BaseCabins
+
+
+------------------------------------------------------------------------------
+--- MECH TYPES ---------------------------------------------------------------
+------------------------------------------------------------------------------
+
+---The base mech indexes
+---@class BaseMechs
+local BaseMechs = {
+	Miner = 0,
+	Castle = 1,
+	Plate = 2,
+	Holo = 3,
+	Quadro = 4,
+	Tentacle = 5,
+	Triangle = 6,
+}
+Types.BaseMechs = BaseMechs
+
+---MechModule identifiers
+---@class MechModules
+local MechModules = {
+	Aux = 1,
+	Motor = 2,
+	Reactor = 3,
+	Weapon = 4,
+	Cabin = 5
+}
+Types.MechModules = MechModules
 
 
 ------------------------------------------------------------------------------

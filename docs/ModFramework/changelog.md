@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [v1.0] - 2026-xx-xx
+## [v0.1] - 2026-xx-xx
 ### Added
 - Added auto rearrange for shop components
 - Added auto register shop items on unlock or item registration through the framework
@@ -31,11 +31,12 @@
         - Support to relink existing researches
         - support to add framework handeled unlocks to existing researches
 - Added framework support to add to inventory
-    - Mech
+    - Cabins
+    - Mechs
     - Weapons
-    - Solenoids
     - Reactors
-    - Magnet
+    - Magnets
+    - Solenoids
 - Added Debug functions
     - Unlock all research next day
     - Unlock all shop components

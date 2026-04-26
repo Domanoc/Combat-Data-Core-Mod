@@ -23,7 +23,7 @@ function create(q,v_modid)
 
 	--Nice to haves::
 	--Support for cabin modding
-	--Show example of cabin modding and adding
+	--Show example of cabin modding
 	--Support for motor modding
 	--Show example of motor modding and adding
 	--Support for reactor modding

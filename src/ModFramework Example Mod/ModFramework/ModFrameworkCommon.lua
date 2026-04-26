@@ -152,16 +152,22 @@ function Common.GetObjResearchPanel()
 	return asset_get_index("obj_research_panel")
 end
 
+---Gets the reference for "obj_content_cabins"
+---@return game_obj_content_cabins obj_content_cabins the reference for "obj_content_cabins"
+function Common.GetObjContentCabins()
+	return asset_get_index("obj_content_cabins")
+end
+
+---Gets the reference for "obj_content_motors"
+---@return game_obj_content_motors obj_content_motors the reference for "obj_content_motors"
+function Common.GetObjContentMotors()
+	return asset_get_index("obj_content_motors")
+end
+
 ---Gets the reference for "obj_content_mechs"
 ---@return game_obj_content_mechs obj_content_mechs the reference for "obj_content_mechs"
 function Common.GetObjContentMechs()
 	return asset_get_index("obj_content_mechs")
-end
-
----Gets the reference for "obj_content_magnet"
----@return game_obj_content_magnet obj_content_magnet the reference for "obj_content_magnet"
-function Common.GetObjContentMagnet()
-	return asset_get_index("obj_content_magnet")
 end
 
 ---Gets the reference for "obj_content_weapons"
@@ -170,16 +176,46 @@ function Common.GetObjContentWeapons()
 	return asset_get_index("obj_content_weapons")
 end
 
----Gets the reference for "obj_content_solenoid"
----@return game_obj_content_solenoid obj_content_solenoid the reference for "obj_content_solenoid"
-function Common.GetObjContentSolenoid()
-	return asset_get_index("obj_content_solenoid")
-end
-
 ---Gets the reference for "obj_content_reactor"
 ---@return game_obj_content_reactor obj_content_reactor the reference for "obj_content_reactor"
 function Common.GetObjContentReactor()
 	return asset_get_index("obj_content_reactor")
+end
+
+---Gets the reference for "obj_content_piston"
+---@return game_obj_content_piston obj_content_piston the reference for "obj_content_piston"
+function Common.GetObjContentPiston()
+	return asset_get_index("obj_content_piston")
+end
+
+---Gets the reference for "obj_content_injector"
+---@return game_obj_content_injector obj_content_injector the reference for "obj_content_injector"
+function Common.GetObjContentInjector()
+	return asset_get_index("obj_content_injector")
+end
+
+---Gets the reference for "obj_content_kernel"
+---@return game_obj_content_kernel obj_content_kernel the reference for "obj_content_kernel"
+function Common.GetObjContentKernel()
+	return asset_get_index("obj_content_kernel")
+end
+
+---Gets the reference for "obj_content_safety"
+---@return game_obj_content_safety obj_content_safety the reference for "obj_content_safety"
+function Common.GetObjContentSafety()
+	return asset_get_index("obj_content_safety")
+end
+
+---Gets the reference for "obj_content_magnet"
+---@return game_obj_content_magnet obj_content_magnet the reference for "obj_content_magnet"
+function Common.GetObjContentMagnet()
+	return asset_get_index("obj_content_magnet")
+end
+
+---Gets the reference for "obj_content_solenoid"
+---@return game_obj_content_solenoid obj_content_solenoid the reference for "obj_content_solenoid"
+function Common.GetObjContentSolenoid()
+	return asset_get_index("obj_content_solenoid")
 end
 
 ------------------------------------------------------------------------------

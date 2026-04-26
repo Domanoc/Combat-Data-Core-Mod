@@ -12,4 +12,21 @@ function create(q,v_modid)
 		--Since we dont want to add new items on loaded saves we return the function here.
 		return
 	end
+
+	--load needed types
+	local baseCabins = Mod.Types.BaseCabins
+
+	--If we want to add a base mech we can use the Mod.Types.BaseCabins references to add the correct one
+	Mod.Engineering.AddCabin(baseCabins.Cabin_0)
+	Mod.Engineering.AddCabin(baseCabins.Cabin_0)
+	Mod.Engineering.AddCabin(baseCabins.Cabin_1)
+	Mod.Engineering.AddCabin(baseCabins.Cabin_1)
+	Mod.Engineering.AddCabin(baseCabins.Cabin_2)
+	Mod.Engineering.AddCabin(baseCabins.Cabin_2)
+	Mod.Engineering.AddCabin(baseCabins.Cabin_3)
+	Mod.Engineering.AddCabin(baseCabins.Cabin_3)
+	Mod.Engineering.AddCabin(baseCabins.Cabin_4)
+	Mod.Engineering.AddCabin(baseCabins.Cabin_4)
+	Mod.Engineering.AddCabin(baseCabins.Cabin_5)
+	Mod.Engineering.AddCabin(baseCabins.Cabin_5)
 end
