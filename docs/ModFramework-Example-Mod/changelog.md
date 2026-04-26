@@ -42,6 +42,8 @@
     - Added example for adding solenoid items on game start
     - Added example for getting a modded solenoid reference
     - Added example for using framework types to reference base solenoids
+- ### Pilot
+    - Added example for adding pilots on game start
 - ### Research
     - Added example for adding a modded research
     - Added example for getting a modded research reference

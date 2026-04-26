@@ -8,6 +8,10 @@
 
 ---@alias ModuleType 1|2|3|4|5 module type (1-aux, 2-motor, 3-reactor, 4-gun, 5-cabin)
 
+---@alias PilotVoices "male_indian"|"male_hispanic"|"male_aa"|"male_slovakian"|"male_romanian"|"male_russian"|"male_moroccan"|"male_scottish"|"female_italian"|"female_irish"|"female_japanese" the voice used by the pilot
+
+---@alias PilotNames "BOB"|"MARK"|"DOM"|"JOE"|"JENIPHER"|"BARBARA"|"ZED"|"FREEZ"|"DONALD"|"ELLEN"|"GREGORY" the names of the existing pilots
+
 ---the possible research positions
 ---@alias ResearchPosition 0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|36|37|38|39|40|41|42|43|44|45|46|47|48|49|50|51|52|53|54|55|56|57|58|59|60|61|62|63|64|65|66|67|68|69|70|71|72|73|74|75|76|77|78|79|80|81|82|83|84|85|86|87|88|89|90|91|92|93|94|95|96|97|98|99|100|101|102|103|104|105|106|107|108|109|110|111|112|113|114|115|116|117|118|119|120|121|122|123|124|125|126|127|128|129|130|131|132|133|134|135|136|137|138|139|140|141|142|143|144|145|146|147|148|149
 
@@ -105,6 +109,33 @@
 ---@field Power number the power value of the solenoid, lower numbers give more heat resist on reactor
 ---@field Induction number the induction value of the solenoid, any deviation from 1 gives worse energy stats
 ---@field Sprite string the sprite for the solenoid
+
+---@class PilotData dataset for adding a new pilot
+---@field Template number|PilotNames the base dataset to base the pilot on, either the index number in obj_database.pilot_stat or reference one of the existing pilots. this wil determine the used sprite.
+---@field WorkExperience LocalizedString[] the description text for the work experience of the pilot.
+---@field Age number the age of the pilot
+---@field IsCyborg boolean if true the pilot is a cyborg
+---@field Name string? the name for the pilot, leave nil to use the template settings
+---@field Voice PilotVoices? the voice used by the pilot, leave nil to use the template settings
+---@field Level number? the level of the pilot, leave nil to use the template settings
+---@field LevelExperience number? the amount of experience in the current level
+---@field Skill number? the skill stat of the pilot (0-100), leave nil to use the template settings
+---@field Reaction number? the reaction stat of the pilot (0-100), leave nil to use the template settings
+---@field Vitality number? the vitality stat of the pilot (0-100), leave nil to use the template settings
+---@field StressResistance number? the stress resistance stat of the pilot (0-100), leave nil to use the template settings
+
+---@class PilotDsMap the converted dataset for a pilot ds_map
+---@field Index number the index of the ds_map in obj_database.pilot_stat
+---@field Sprite number the sprite index
+---@field SoundIndex string the sound index value
+---@field PhraseNumber number the phrase number
+---@field Name string the name of the pilot
+---@field Level number the level of the pilot
+---@field LevelExperience number the amount of experience in the current level
+---@field Skill number the skill stat of the pilot (0-100)
+---@field Reaction number the reaction stat of the pilot (0-100)
+---@field Vitality number the vitality stat of the pilot (0-100)
+---@field StressResistance number the stress resistance stat of the pilot (0-100)
 
 ---@class ResearchData dataset for a new research item
 ---@field Name string the name of the research item, used to find its references

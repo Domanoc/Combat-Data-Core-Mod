@@ -104,6 +104,7 @@
 ---@field text_affair_unknown string
 ---@field text_affair_walk string
 ---@field text_busy string
+---@field text_choose string
 ---@field text_reaction string
 ---@field text_relation string
 ---@field text_stress string

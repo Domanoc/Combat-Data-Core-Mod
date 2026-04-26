@@ -46,11 +46,7 @@ function draw_top_menu(q)
 	Internal.ComponentShop.RearrangeShopComponents()
 	Internal.ComponentShop.FixRobotComponentBleed()
 	Internal.Research.FixModdedResearch()
-
-	local keys = Internal.Types.VirtualKeys
-	if keyboard_check_pressed(keys.F11) then
-		--Debugger breakpoint
-    end
+	Internal.Hanger.ProcessPilotDataQueue()
 end
 
 ---The draw call thay runs every frame while debug is active (F6)

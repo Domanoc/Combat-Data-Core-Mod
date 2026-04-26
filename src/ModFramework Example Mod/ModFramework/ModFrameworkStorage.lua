@@ -82,6 +82,10 @@ Storage.SpriteShopRobotCompressed = -1
 ---@type boolean
 Storage.IsShopUpdateNeeded = true
 
+---The queue for pilots to be added
+---@type PilotData[]
+Storage.PilotDataQueue = {}
+
 ------------------------------------------------------------------------------
 --- EXPORT STORAGE -----------------------------------------------------------
 ------------------------------------------------------------------------------

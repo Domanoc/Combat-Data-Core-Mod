@@ -171,7 +171,7 @@
 ---@field music_slowdown number
 ---@field news boolean
 ---@field next_battle_music boolean
----@field pilot_stat table
+---@field pilot_stat ds_map[]
 ---@field piston_stat table
 ---@field position_misc_x number
 ---@field position_misc_y number

@@ -38,6 +38,10 @@ local Engineering = require("ModFrameworkInternalEngineering")
 ---Access to the internal functions for the Engineering tab.
 ModFrameworkInternal.Engineering = Engineering
 
+local Hanger = require("ModFrameworkInternalHanger")
+---Access to the internal functions for the Hanger tab.
+ModFrameworkInternal.Hanger = Hanger
+
 local Production = require("ModFrameworkInternalProduction")
 ---Access to the internal functions for the Production tab.
 ModFrameworkInternal.Production = Production
@@ -46,6 +50,8 @@ local Research = require("ModFrameworkInternalResearch")
 ---Access to the internal functions for the Research tab.
 ModFrameworkInternal.Research = Research
 
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 
 ---Registers the framework and loaded mods.

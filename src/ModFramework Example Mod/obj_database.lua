@@ -151,6 +151,9 @@ function draw_top_menu(q)
 		Mod.Common.ShowMessage("Unlocking all components.")
 		Mod.Production.UnlockAllShopComponents()
     end
+	if keyboard_check_pressed(keys.F11) then
+		--Debugger breakpoint
+    end
 end
 
 ---The draw call thay runs every frame while debug is active (F6)

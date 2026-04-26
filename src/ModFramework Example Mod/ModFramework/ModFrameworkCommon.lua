@@ -218,6 +218,12 @@ function Common.GetObjContentSolenoid()
 	return asset_get_index("obj_content_solenoid")
 end
 
+---Gets the reference for "obj_content_pilots"
+---@return game_obj_content_pilots obj_content_pilots the reference for "obj_content_pilots"
+function Common.GetObjContentPilots()
+	return asset_get_index("obj_content_pilots")
+end
+
 ------------------------------------------------------------------------------
 --- SPRITE FUNCTION WRAPPERS -------------------------------------------------
 ------------------------------------------------------------------------------

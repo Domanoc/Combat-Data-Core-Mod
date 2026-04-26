@@ -42,6 +42,7 @@
     - Safeties
     - Magnets
     - Solenoids
+    - Pilots
 - Added Debug functions
     - Unlock all research next day
     - Unlock all shop components

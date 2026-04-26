@@ -19,6 +19,10 @@ local Engineering = require("ModFrameworkEngineering")
 ---Access to the functions for the Engineering tab.
 ModFramework.Engineering = Engineering
 
+local Hanger = require("ModFrameworkHanger")
+---Access to the functions for the Hanger tab.
+ModFramework.Hanger = Hanger
+
 local Production = require("ModFrameworkProduction")
 ---Access to the functions for the Production tab.
 ModFramework.Production = Production
