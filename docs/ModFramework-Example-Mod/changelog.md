@@ -22,6 +22,9 @@
 - ### reactor
     - Added example for adding reactor items on game start
     - Added example for using framework types to reference base reactors
+- ### Injector
+    - Added example for adding injector items on game start
+    - Added example for using framework types to reference base injectors
 - ### magnet
     - Added example for adding magnet items on game start
     - Added example for using framework types to reference base magnets

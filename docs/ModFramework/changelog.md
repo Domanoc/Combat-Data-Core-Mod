@@ -36,6 +36,7 @@
     - Mechs
     - Weapons
     - Reactors
+    - Injectors
     - Magnets
     - Solenoids
 - Added Debug functions

@@ -130,6 +130,27 @@ function Engineering.AddReactor(reactorIndex)
 	obj_content_reactor.number_of_items = #list_reactor
 end
 
+---Adds a component of type injector to engineering
+---@param injectorIndex number the index of the injector in the database.
+function Engineering.AddInjector(injectorIndex)
+	local obj_content_injector = Common.GetObjContentInjector()
+
+	--Copy the array to the working set
+	local list_injector = obj_content_injector.list_injector
+
+	local arraySize = #list_injector
+	local itemIndex = arraySize + 1
+	local addedInjector = Private.AddInjectorItemInstance()
+	addedInjector.my_num = arraySize
+	addedInjector.injector_number = injectorIndex
+	addedInjector.new_module = true
+	list_injector[itemIndex] = addedInjector
+
+	--return new data
+	obj_content_injector.list_injector = list_injector
+	obj_content_injector.number_of_items = #list_injector
+end
+
 ---Adds a component of type weapon to engineering
 ---@param magnetIndex number the index of the magnet in the database.
 function Engineering.AddMagnet(magnetIndex)
@@ -205,6 +226,20 @@ end
 function Private.AddReatorItemInstance()
 	local obj_reactor_item = asset_get_index("obj_reactor_item")
 	return instance_create_depth(0, 0, 0, obj_reactor_item)
+end
+
+---Create a new obj_injector_item instance
+---@return game_obj_injector_item objInjectorItem the new obj_injector_item instance
+function Private.AddInjectorItemInstance()
+	local obj_injector_item = asset_get_index("obj_injector_item")
+	return instance_create_depth(0, 0, 0, obj_injector_item)
+end
+
+---Create a new obj_piston_item instance
+---@return game_obj_piston_item objPistonItem the new obj_piston_item instance
+function Private.AddPistonItemInstance()
+	local obj_piston_item = asset_get_index("obj_piston_item")
+	return instance_create_depth(0, 0, 0, obj_piston_item)
 end
 
 ---Create a new obj_magnet_item instance
