@@ -80,6 +80,9 @@ function ModFrameworkInternal.RegisterFramework()
 
 	local language = variable_global_get("language_file"):gsub("/","\\"):match("^.+\\(.+)$")
 	Storage.SelectedLanguage = language
+
+	--Set a variable that mods can check before trying to load the framework
+	variable_global_set("IsModFrameworkLoaded", true);
 end
 
 ------------------------------------------------------------------------------
