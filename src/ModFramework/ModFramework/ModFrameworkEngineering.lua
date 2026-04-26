@@ -151,6 +151,27 @@ function Engineering.AddInjector(injectorIndex)
 	obj_content_injector.number_of_items = #list_injector
 end
 
+---Adds a component of type piston to engineering
+---@param pistonIndex number the index of the piston in the database.
+function Engineering.AddPiston(pistonIndex)
+	local obj_content_injector = Common.GetObjContentPiston()
+
+	--Copy the array to the working set
+	local list_piston = obj_content_injector.list_piston
+
+	local arraySize = #list_piston
+	local itemIndex = arraySize + 1
+	local addedPiston = Private.AddPistonItemInstance()
+	addedPiston.my_num = arraySize
+	addedPiston.piston_number = pistonIndex
+	addedPiston.new_module = true
+	list_piston[itemIndex] = addedPiston
+
+	--return new data
+	obj_content_injector.list_piston = list_piston
+	obj_content_injector.number_of_items = #list_piston
+end
+
 ---Adds a component of type weapon to engineering
 ---@param magnetIndex number the index of the magnet in the database.
 function Engineering.AddMagnet(magnetIndex)

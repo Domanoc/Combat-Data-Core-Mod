@@ -37,6 +37,7 @@
     - Weapons
     - Reactors
     - Injectors
+    - Pistons
     - Magnets
     - Solenoids
 - Added Debug functions

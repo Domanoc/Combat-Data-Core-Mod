@@ -12,4 +12,13 @@ function create(q,v_modid)
 		--Since we dont want to add new items on loaded saves we return the function here.
 		return
 	end
+
+	--load needed types
+	local basePistons = Mod.Types.BasePistons
+
+	--If we want to add a base mech we can use the Mod.Types.BasePistons references to add the correct one
+	Mod.Engineering.AddPiston(basePistons.LowPressure)
+	Mod.Engineering.AddPiston(basePistons.LowPressure)
+	Mod.Engineering.AddPiston(basePistons.HighPressure)
+	Mod.Engineering.AddPiston(basePistons.HighPressure)
 end
