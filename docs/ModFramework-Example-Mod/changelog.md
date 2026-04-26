@@ -6,6 +6,9 @@
 - ### Cabin
     - Added example for adding cabin items on game start
     - Added example for using framework types to reference base cabins
+- ### Motor
+    - Added example for adding motor items on game start
+    - Added example for using framework types to reference base motors
 - ### Mech
     - Added example for adding a modded mech
     - Added example for adding mech items on game start

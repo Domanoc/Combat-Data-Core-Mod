@@ -17,33 +17,6 @@ function create(q,v_modid)
 	Internal = require("ModFrameworkInternal")
 	Internal.RegisterFramework()
 	Internal.ComponentShop.LoadShopSprites()
-
-	--TODO LIST
-
-
-	--Nice to haves::
-	--Support for cabin modding
-	--Show example of cabin modding
-	--Support for motor modding
-	--Show example of motor modding and adding
-	--Support for reactor modding
-	--Show example of reactor modding
-	--Support for magnet modding
-	--Show example of magnet modding
-	--Support for injector modding
-	--Show example of injector modding and adding
-	--Support for piston modding
-	--Show example of piston modding and adding
-	--Support for armor modding
-	--Show example of armor modding and adding
-	--Support for kernel modding
-	--Show example of kernel modding and adding
-	--Support for safety modding
-	--Show example of safety modding and adding
-	--Support for pilot modding
-	--Show example of pilot modding and adding
-
-	--Review documetation
 end
 
 ---saving system deletes the file and creates new one before saving new info

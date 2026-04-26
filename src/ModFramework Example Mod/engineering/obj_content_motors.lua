@@ -12,4 +12,22 @@ function create(q,v_modid)
 		--Since we dont want to add new items on loaded saves we return the function here.
 		return
 	end
+
+	--load needed types
+	local baseMotors = Mod.Types.BaseMotors
+
+	--If we want to add a base motor we can use the Mod.Types.BaseMotors references to add the correct one
+	Mod.Engineering.AddMotor(baseMotors.Combustion_1)
+	Mod.Engineering.AddMotor(baseMotors.Combustion_1)
+	Mod.Engineering.AddMotor(baseMotors.Combustion_2)
+	Mod.Engineering.AddMotor(baseMotors.Combustion_2)
+	Mod.Engineering.AddMotor(baseMotors.Electric_1)
+	Mod.Engineering.AddMotor(baseMotors.Electric_1)
+	Mod.Engineering.AddMotor(baseMotors.Electric_1)
+	Mod.Engineering.AddMotor(baseMotors.Combustion_3)
+	Mod.Engineering.AddMotor(baseMotors.Combustion_3)
+	Mod.Engineering.AddMotor(baseMotors.Electric_2)
+	Mod.Engineering.AddMotor(baseMotors.Electric_2)
+	Mod.Engineering.AddMotor(baseMotors.Electric_3)
+	Mod.Engineering.AddMotor(baseMotors.Electric_3)
 end

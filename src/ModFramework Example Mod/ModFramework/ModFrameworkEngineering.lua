@@ -40,6 +40,27 @@ function Engineering.AddCabin(cabinIndex)
 	obj_content_cabins.number_of_items = #list_cabin
 end
 
+---Adds a component of type motor to engineering
+---@param motorIndex number the index of the motor in the database.
+function Engineering.AddMotor(motorIndex)
+	local obj_content_mechs = Common.GetObjContentMotors()
+
+	--Copy the array to the working set
+	local list_motor = obj_content_mechs.list_motor
+
+	local arraySize = #list_motor
+	local itemIndex = arraySize + 1
+	local addedMotor = Private.AddMotorItemInstance()
+	addedMotor.my_num = arraySize
+	addedMotor.motor_number = motorIndex
+	addedMotor.new_module = true
+	list_motor[itemIndex] = addedMotor
+
+	--return new data
+	obj_content_mechs.list_motor = list_motor
+	obj_content_mechs.number_of_items = #list_motor
+end
+
 ---Adds a component of type mech to engineering
 ---@param mechIndex number the index of the mech in the database.
 ---@param name string? the name of the new mech. Or nil for a random default name.
@@ -152,10 +173,17 @@ function Engineering.AddSolenoid(solenoidIndex)
 end
 
 ---Create a new obj_cabin_item instance
----@return game_obj_cabin_item objReactorItem the new obj_cabin_item instance
+---@return game_obj_cabin_item objCabinItem the new obj_cabin_item instance
 function Private.AddCabinItemInstance()
 	local obj_cabin_item = asset_get_index("obj_cabin_item")
 	return instance_create_depth(0, 0, 0, obj_cabin_item)
+end
+
+---Create a new obj_motor_item instance
+---@return game_obj_motor_item objMotorItem the new obj_motor_item instance
+function Private.AddMotorItemInstance()
+	local obj_motor_item = asset_get_index("obj_motor_item")
+	return instance_create_depth(0, 0, 0, obj_motor_item)
 end
 
 ---Create a new obj_mech_item instance

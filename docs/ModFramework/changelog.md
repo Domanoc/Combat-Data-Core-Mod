@@ -32,6 +32,7 @@
         - support to add framework handeled unlocks to existing researches
 - Added framework support to add to inventory
     - Cabins
+    - Motors
     - Mechs
     - Weapons
     - Reactors
