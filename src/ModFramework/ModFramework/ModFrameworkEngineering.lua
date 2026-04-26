@@ -193,6 +193,27 @@ function Engineering.AddKernel(kernelIndex)
 	obj_content_kernel.number_of_items = #list_kernel
 end
 
+---Adds a component of type safety to engineering
+---@param safetyIndex number the index of the safety in the database.
+function Engineering.AddSafety(safetyIndex)
+	local obj_content_safety = Common.GetObjContentSafety()
+
+	--Copy the array to the working set
+	local list_safety = obj_content_safety.list_safety
+
+	local arraySize = #list_safety
+	local itemIndex = arraySize + 1
+	local addedSafety = Private.AddSafetyItemInstance()
+	addedSafety.my_num = arraySize
+	addedSafety.safety_number = safetyIndex
+	addedSafety.new_module = true
+	list_safety[itemIndex] = addedSafety
+
+	--return new data
+	obj_content_safety.list_safety = list_safety
+	obj_content_safety.number_of_items = #list_safety
+end
+
 ---Adds a component of type weapon to engineering
 ---@param magnetIndex number the index of the magnet in the database.
 function Engineering.AddMagnet(magnetIndex)

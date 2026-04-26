@@ -31,6 +31,9 @@
 - ### Kernel
     - Added example for adding kernel items on game start
     - Added example for using framework types to reference base kernels
+- ### Safety
+    - Added example for adding safety items on game start
+    - Added example for using framework types to reference base safeties
 - ### Magnet
     - Added example for adding magnet items on game start
     - Added example for using framework types to reference base magnets

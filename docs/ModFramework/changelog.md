@@ -39,6 +39,7 @@
     - Injectors
     - Pistons
     - Kernels
+    - Safeties
     - Magnets
     - Solenoids
 - Added Debug functions
