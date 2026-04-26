@@ -12,4 +12,11 @@ function create(q,v_modid)
 		--Since we dont want to add new items on loaded saves we return the function here.
 		return
 	end
+
+	--load needed types
+	local baseSafety = Mod.Types.BaseSafety
+
+	--If we want to add a base safety we can use the Mod.Types.BaseSafety references to add the correct one
+	Mod.Engineering.AddSafety(baseSafety)
+	Mod.Engineering.AddSafety(baseSafety)
 end

@@ -16,7 +16,7 @@ function create(q,v_modid)
 	--load needed types
 	local baseInjectors = Mod.Types.BaseInjectors
 
-	--If we want to add a base mech we can use the Mod.Types.BaseInjectors references to add the correct one
+	--If we want to add a base injector we can use the Mod.Types.BaseInjectors references to add the correct one
 	Mod.Engineering.AddInjector(baseInjectors.LowPressure)
 	Mod.Engineering.AddInjector(baseInjectors.LowPressure)
 	Mod.Engineering.AddInjector(baseInjectors.HighPressure)

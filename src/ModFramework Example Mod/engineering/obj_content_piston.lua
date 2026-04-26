@@ -16,7 +16,7 @@ function create(q,v_modid)
 	--load needed types
 	local basePistons = Mod.Types.BasePistons
 
-	--If we want to add a base mech we can use the Mod.Types.BasePistons references to add the correct one
+	--If we want to add a base piston we can use the Mod.Types.BasePistons references to add the correct one
 	Mod.Engineering.AddPiston(basePistons.LowPressure)
 	Mod.Engineering.AddPiston(basePistons.LowPressure)
 	Mod.Engineering.AddPiston(basePistons.HighPressure)

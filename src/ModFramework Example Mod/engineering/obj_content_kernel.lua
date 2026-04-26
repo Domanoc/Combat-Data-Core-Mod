@@ -16,7 +16,7 @@ function create(q,v_modid)
 	--load needed types
 	local baseKernels = Mod.Types.BaseKernels
 
-	--If we want to add a base mech we can use the Mod.Types.BaseInjectors references to add the correct one
+	--If we want to add a base kernel we can use the Mod.Types.BaseKernels references to add the correct one
 	Mod.Engineering.AddKernel(baseKernels.Gray)
 	Mod.Engineering.AddKernel(baseKernels.Gray)
 	Mod.Engineering.AddKernel(baseKernels.Silver)
