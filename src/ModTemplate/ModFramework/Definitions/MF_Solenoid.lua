@@ -1,0 +1,15 @@
+---@class SolenoidData dataset for adding a new solenoid
+---@field Name string the name of the mech, used to find its references
+---@field ComponentSize ComponentSize the size of the component when constructing it.
+---@field IsResearched boolean set to true if its pre researched, else false.
+---@field CanBeConstructed boolean set to true if it can be constructed in the component shop, false otherwise
+---@field GiveFreeItem boolean set to true to return a free copy when triggered as an unlock
+---@field PriceMetallite number the amount of metallite needed to produce this solenoid
+---@field PriceBjorn number the amount of bjorn needed to produce this solenoid
+---@field PriceMunilon number the amount of munilon needed to produce this solenoid
+---@field PriceSkalaknit number the amount of skalaknit needed to produce this solenoid
+---@field PriceStaff number the amount of staff needed to produce this solenoid
+---@field ProductionDays number the amount of days it takes to produce this solenoid
+---@field Power number the power value of the solenoid, lower numbers give more heat resist on reactor
+---@field Induction number the induction value of the solenoid, any deviation from 1 gives worse energy stats
+---@field Sprite string the sprite for the solenoid

@@ -6,5 +6,3 @@
 
 # Exclude the export logs
 *.log
-
-!ModCompatibilityTesting.log
