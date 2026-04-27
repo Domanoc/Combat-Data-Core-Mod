@@ -46,7 +46,8 @@ end
 
 This will flag the framework to generate the needed localization files. This flag needs to be set before any items are added by the framework. else they are skipped.
 
-After adding the code, start the game with a your mod and the ModFramework in the load order. At start a message will popup to show you localization files are generated.
+After adding the code, start the game with a new save with a your mod and the ModFramework in the load order. At start a message will popup to show you localization files are generated.   
+Note: Its recommended to start a new save to run allow all the code to run. Else code that is skipped on loaded saves might cause the generation to miss records
 
 After the game is loaded, go to the folder "..\%YourModHere%\localization\" and you will find the generated files. The files are populated with the default values provided by your mod.
 

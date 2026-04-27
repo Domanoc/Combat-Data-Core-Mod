@@ -27,7 +27,7 @@ function Hanger.AddPilot(pilotData)
     ---@type LocalizedPilotData
     local localizedPilotData = {
         Template = pilotData.Template,
-        WorkExperience = Common.GetLocalizedString("PilotWorkExperience", "Pilot", pilotData.WorkExperience),
+        WorkExperience = Common.GetLocalizedString("PilotWorkExperience", pilotData.WorkExperience.ReferenceName, pilotData.WorkExperience.LocalizedString),
         Age = pilotData.Age,
         IsCyborg = pilotData.IsCyborg,
         Name = pilotData.Name,

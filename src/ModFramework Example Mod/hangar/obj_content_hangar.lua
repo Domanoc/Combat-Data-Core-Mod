@@ -6,10 +6,10 @@ function create(q,v_modid)
 	--load the mod framework as a global for use within this file
 	Mod = require("ModFrameworkModule")
 
-	--This function is run everytime the game is started
+	--This function is run every time the game is started
 	--We need to check if the this start is a new game or from a loaded save
 	if(Mod.Common.IsLoadedGame()) then
-		--Since we dont want to add new pilots on loaded saves we return the function here.
+		--Since we don't want to add new pilots on loaded saves we return the function here.
 		return
 	end
 
@@ -25,7 +25,9 @@ function create(q,v_modid)
 			--Data that represents a string that will be localized. Its recommended to be in english for code readability
 			--The other actual values will be pulled from the mods localization files
 			--Use the GenerateLocalizationFiles() function to generate the mods localization files in development
-			LocalizedDefaultValue = "Example work experience text."
+			LocalizedString = { LocalizedDefaultValue = "Example work experience text for pilot 1." },
+			--We need to set a reference name so the framework can resolve the localization
+			ReferenceName = "example_pilot_1"
 		},
 		Name = "JOHN",				--the name of the pilot
 		Voice = "male_scottish", 	--the voice used
@@ -47,7 +49,9 @@ function create(q,v_modid)
 			--Data that represents a string that will be localized. Its recommended to be in english for code readability
 			--The other actual values will be pulled from the mods localization files
 			--Use the GenerateLocalizationFiles() function to generate the mods localization files in development
-			LocalizedDefaultValue = "Example work experience text."
+			LocalizedString = { LocalizedDefaultValue = "Example of a reused work experience text." },
+			--We need to set a reference name so the framework can resolve the localization
+			ReferenceName = "example_pilot_reuse"
 		},
 	})
 
@@ -62,7 +66,9 @@ function create(q,v_modid)
 			--Data that represents a string that will be localized. Its recommended to be in english for code readability
 			--The other actual values will be pulled from the mods localization files
 			--Use the GenerateLocalizationFiles() function to generate the mods localization files in development
-			LocalizedDefaultValue = "Example work experience text."
+			LocalizedString = { LocalizedDefaultValue = "Example of a reused work experience text." },
+			--We can reuse a previous localized reference if the value is the same
+			ReferenceName = "example_pilot_reuse"
 		},
 		})
 	end
@@ -91,10 +97,6 @@ end
 ---check when placing city
 ---@param q game_obj_content_hangar
 function place_city(q,q_p)
-	--q_p = 1, if q_p = 0 can't place city on that cell
-	--mx = mouse_x
-	--my = mouse_y
-	--ds_grid_get(data_map_biom,mx,my) for checking bioms
 end
 
 ---skip day button
