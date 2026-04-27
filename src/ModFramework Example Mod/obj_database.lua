@@ -60,7 +60,7 @@ function create(q,v_modid)
 		Weight = 		   60,					 --The base weight of the mech
 		Speed = 		   0.4,					 --The base speed of the mech
 		ReloadTime = 	   3,					 --The base reload time of the mech
-		BattleTime = 	   3,					 --The base battle time of the mech (the lenght of time it has ammo reserves for to shoot)
+		BattleTime = 	   3,					 --The base battle time of the mech (the length of time it has ammo reserves for to shoot)
 		MechCells = {
 			 {ModuleType = mechModules.Cabin, 	X =   0, Y = 22} --cabin, the game is design for mechs to have only 1 cabin. adding more might result in issues	or unexpected behavior
 			,{ModuleType = mechModules.Reactor, X =   0, Y = 15} --reactor, the game is design for mechs to have only 1 reactor. adding more might result in issues	or unexpected behavior
@@ -101,7 +101,7 @@ function create(q,v_modid)
 		PriceStaff = 	    10,					  --The amount of staff needed to produce this weapon
 		ProductionDays =    2,					  --The amount of days it takes to produce this weapon
 		WeaponType =	    weaponTypes.Kinetic,  --the type of weapon (white = kinetic, red = missiles, blue = energy, yellow = thermal)
-		FireRate =		    400,				  --the base fire rate. higher values offer a faster rate, 600 with full firespeed points will fill the firespeed bar completely
+		FireRate =		    400,				  --the base fire rate. higher values offer a faster rate, 600 with full fire speed points will fill the fire speed bar completely
 		Weight = 		    48,					  --the base weight of the weapon
 		Accuracy = 		    5.0,				  --the base accuracy for the weapon. accuracy in degrees, 0 is perfect accuracy
 		EnergyCost = 		5,					  --the base energy cost of the weapon
@@ -165,10 +165,10 @@ end
 function load_game_post_event(q)
 end
 
----The draw call thay runs every frame
+---The draw call that runs every frame
 ---@param q game_obj_database
 function draw_top_menu(q)
-	--Here are some funtions to help with testing
+	--Here are some functions to help with testing
 	--Its recommended to remove these before releasing your mod
 	local keys = Mod.Types.VirtualKeys
 	if keyboard_check_pressed(keys.F9) then
@@ -184,7 +184,7 @@ function draw_top_menu(q)
     end
 end
 
----The draw call thay runs every frame while debug is active (F6)
+---The draw call that runs every frame while debug is active (F6)
 ---@param q game_obj_database
 function draw_debug(q)
 end

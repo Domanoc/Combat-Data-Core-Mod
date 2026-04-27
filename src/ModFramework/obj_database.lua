@@ -38,7 +38,7 @@ function load_game_post_event(q)
 	Internal.Production.SetModdedSprites()
 end
 
----The draw call thay runs every frame
+---The draw call that runs every frame
 ---@param q game_obj_database
 function draw_top_menu(q)
 	Internal.Production.SetModdedWeaponDescriptions()
@@ -49,7 +49,7 @@ function draw_top_menu(q)
 	Internal.Hanger.ProcessPilotDataQueue()
 end
 
----The draw call thay runs every frame while debug is active (F6)
+---The draw call that runs every frame while debug is active (F6)
 ---@param q game_obj_database
 function draw_debug(q)
 end

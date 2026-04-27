@@ -33,8 +33,11 @@
         "metallite",
         "modid",
         "munilon",
+        "paintable",
         "passability",
         "removeback",
-        "skalaknit"
+        "sandboxed",
+        "skalaknit",
+        "sumneko"
     ]
 }
