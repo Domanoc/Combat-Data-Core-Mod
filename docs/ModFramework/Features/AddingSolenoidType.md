@@ -17,9 +17,8 @@ There is currently no support for custom sprite sizes in the framework. So for b
 
 ## Code example
 ```lua
+--load the mod framework
 Mod = require("ModFrameworkModule")
-
-Mod.Common.GenerateLocalizationFiles()
 
 --path to the mod folder
 local modFilepath = Mod.Common.GetModPath()
@@ -52,5 +51,7 @@ The IsResearched, CanBeConstructed and GiveFreeItem flags will determines how th
 - CanBeConstructed = false, will not create a listing in the shop for this solenoid
 - GiveFreeItem = true, will trigger a free solenoid when a research unlocks this.
 
+---
+#### [Back to overview](../Overview.md)
 ---
 ##### [Home](../../../readme.md)
