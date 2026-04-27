@@ -1,7 +1,9 @@
 # Exclude the vscode files
-.vscode/
+.vscode/*
+!.vscode/
+!.vscode/settings.json
 
-# Exclude the powershell scripst
+# Exclude the powershell scripts
 .powershell
 
 # Exclude the export logs
