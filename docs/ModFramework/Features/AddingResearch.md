@@ -59,7 +59,7 @@ local exampleResearchResNumber = Mod.Research.AddResearch({
 ```
 
 ## Notes
-This type has [localization](../Localization.md) support
+This type has [localization](../Localization.md) support.
 
 ---
 #### [Back to overview](../Overview.md)

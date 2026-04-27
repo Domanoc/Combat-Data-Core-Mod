@@ -10,5 +10,19 @@
 - [Adding a new Research](./Features/AddingResearch.md)
 - [Adding a new pilot template](./Features/AddingPilotTemplate.md)
 
+## Adding new objects
+- [Adding new cabins](./Features/AddingCabinObject.md)
+- [Adding new motors](./Features/AddingMotorObject.md)
+- [Adding new mechs](./Features/AddingMechObject.md)
+- [Adding new weapons](./Features/AddingWeaponObject.md)
+- [Adding new reactors](./Features/AddingReactorObject.md)
+- [Adding new injectors](./Features/AddingInjectorObject.md)
+- [Adding new pistons](./Features/AddingPistonObject.md)
+- [Adding new kernels](./Features/AddingKernelObject.md)
+- [Adding new safeties](./Features/AddingSafetyObject.md)
+- [Adding new magnets](./Features/AddingMagnetObject.md)
+- [Adding new solenoids](./Features/AddingSolenoidObject.md)
+- [Adding new pilots](./Features/AddingPilotObject.md)
+
 ---
 ##### [Home](../../readme.md)

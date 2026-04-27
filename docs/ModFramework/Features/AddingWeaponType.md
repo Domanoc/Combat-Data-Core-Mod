@@ -76,7 +76,7 @@ The IsResearched, CanBeConstructed and GiveFreeItem flags will determines how th
 - CanBeConstructed = false, will not create a listing in the shop for this weapon
 - GiveFreeItem = true, will trigger a free weapon when a research unlocks this.
 
-This type has [localization](../Localization.md) support
+This type has [localization](../Localization.md) support.
 
 ---
 #### [Back to overview](../Overview.md)
