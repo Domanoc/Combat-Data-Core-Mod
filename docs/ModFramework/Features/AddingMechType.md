@@ -4,10 +4,9 @@
 ---
 
 ## Recommended usage
-use in "obj_database.lua"
+use in "obj_database.lua" in the create function
 
 ## Requirements
-
 - Set the name to something that will be unique, as this can be used to find the reference later and across other mods that use the framework.
 - 6 Sprites (2 optional)   
 There is currently no support for custom sprite sizes in the framework. So for best results provide the sprites in the sizes as listed.
@@ -52,6 +51,7 @@ local modFilepath = Mod.Common.GetModPath()
 
 --load needed types
 local mechModules = Mod.Types.MechModules
+local componentSizes = Mod.Types.ComponentSizes
 
 Mod.Database.AddMech({
     Name = 			   "example_mech",		 --The name of the mech, used to find its references
