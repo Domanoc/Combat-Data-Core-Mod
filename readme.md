@@ -15,11 +15,16 @@ https://store.steampowered.com/app/1428520/Mech_Engineer/
   [changelog](./docs/Combat-Data-Core/Changelog.md)
 
 ## ModFramework
-Want to make a mod with the ModFramework? [Getting started](./docs/ModFramework/GettingStarted.md)
+- Looking for an overview on the ModFramework features?   
+[Overview](./docs/ModFramework/Overview.md)
+- Want to make a mod with the ModFramework?   
+[Getting started](./docs/ModFramework/GettingStarted.md)
+- Want to report an issue?   
+[Reporting an issue](./docs/ModFramework/ReportAnIssue.md)
 
 
 ## Docs
 - [ModFramework](./docs/ModFramework/Index.md)
 - [ModFramework Example Mod](./docs/ModFramework-Example-Mod/index.md)
 - [Combat Data Core](./docs/Combat-Data-Core/Index.md)
-- [Index](./docs/Index.md)
+- [Docs](./docs/Index.md)
