@@ -1,9 +1,12 @@
 # Changelog
 
+## [v2.0] - tbd
+### Other
+- Started using the ModFramework
 
 ## [v1.8] - 2026-03-07
 ### Fixed
-- Fixed the audio bug compatibility with the Simple Autocannon mod.
+- Fixed the audio bug compatibility with the "Simple Autocannon" mod.
 
 ## [v1.7] - 2025-12-12
 ### Other
@@ -15,10 +18,10 @@
 
 ## [v1.5] - 2025-10-22
 ### Added
-- Added a modprefix to the mods global variables to prevent global variables collisions.
+- Added a mod prefix to the mods global variables to prevent global variables collisions.
 ### Fixed
 - Fixed an issue on the Behemoth sprite.
-Added a modprefix to the mods global variables to prevent global variables collisions.
+Added a mod prefix to the mods global variables to prevent global variables collisions.
 
 ## [v1.4] - 2025-10-21
 ### Fixed

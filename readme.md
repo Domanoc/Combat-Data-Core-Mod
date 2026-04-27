@@ -5,11 +5,14 @@ https://store.steampowered.com/app/1428520/Mech_Engineer/
 
 
 - This repo contains the source files for the steam mod "ModFramework"  
-  link pending
+  link pending   
+  [changelog](./docs/ModFramework/changelog.md)
 - This repo contains the source files for the steam mod "ModFramework Example Mod"  
-  link pending
+  link pending   
+  [changelog](./docs/ModFramework-Example-Mod/changelog.md)
 - This repo contains the source files for the steam mod "Combat Data Core"  
-  https://steamcommunity.com/sharedfiles/filedetails/?id=3581427607
+  https://steamcommunity.com/sharedfiles/filedetails/?id=3581427607   
+  [changelog](./docs/Combat-Data-Core/changelog.md)
 
 ## ModFramework
 Want to make a mod with the ModFramework? [Getting started](./docs/ModFramework/GettingStarted.md)

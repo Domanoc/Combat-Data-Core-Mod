@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [v1.0] - 2026-xx-xx
+## [v1.0] - tbd
 ### Added
 - ### Cabin
     - Added example for adding cabin items on game start
