@@ -1,14 +1,14 @@
 
 ---One time script when the game is started
----@param q any
+---@param q game_obj_content_weapons
 function create(q)--one time script when save is loaded
 	--load the mod framework as a global for use within this file
 	Mod = require("ModFrameworkModule")
 
-	--This function is run everytime the game is started
+	--This function is run every time the game is started
 	--We need to check if the this start is a new game or from a loaded save
 	if(Mod.Common.IsLoadedGame()) then
-		--Since we dont want to add new items on loaded saves we return the function here.
+		--Since we don't want to add new items on loaded saves we return the function here.
 		return
 	end
 
