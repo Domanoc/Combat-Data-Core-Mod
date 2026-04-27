@@ -48,7 +48,7 @@ Mod.Database.AddSolenoid({
 The IsResearched, CanBeConstructed and GiveFreeItem flags will determines how this solenoid is used by the framework.
 - IsResearched = false, will expect that the solenoid will be added to a research to unlock this.
 - IsResearched = true, will enable the solenoid from the game start provided CanBeConstructed = true is also set.
-- CanBeConstructed = false, will not create a listing in the shop for this solenoid
+- CanBeConstructed = false, will not create a listing in the shop for this solenoid.
 - GiveFreeItem = true, will trigger a free solenoid when a research unlocks this.
 
 ---

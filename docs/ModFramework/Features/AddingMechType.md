@@ -101,7 +101,7 @@ Mod.Database.AddMech({
 The IsResearched, CanBeConstructed and GiveFreeItem flags will determines how this mech is used by the framework.
 - IsResearched = false, will expect that the mech will be added to a research to unlock this.
 - IsResearched = true, will enable the mech from the game start provided CanBeConstructed = true is also set.
-- CanBeConstructed = false, will not create a listing in the shop for this mech
+- CanBeConstructed = false, will not create a listing in the shop for this mech.
 - GiveFreeItem = true, will trigger a free mech when a research unlocks this.
 
 ---

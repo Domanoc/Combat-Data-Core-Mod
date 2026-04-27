@@ -73,7 +73,7 @@ Mod.Database.AddWeapon({
 The IsResearched, CanBeConstructed and GiveFreeItem flags will determines how this weapon is used by the framework.
 - IsResearched = false, will expect that the weapon will be added to a research to unlock this.
 - IsResearched = true, will enable the weapon from the game start provided CanBeConstructed = true is also set.
-- CanBeConstructed = false, will not create a listing in the shop for this weapon
+- CanBeConstructed = false, will not create a listing in the shop for this weapon.
 - GiveFreeItem = true, will trigger a free weapon when a research unlocks this.
 
 This type has [localization](../Localization.md) support.

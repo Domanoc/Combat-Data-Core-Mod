@@ -1,7 +1,11 @@
 # ModFramework - Overview
 
 ## Features
+- [Battle sound fix](./BattleSoundFix.md)
+- [Component shop management](./ComponentShop.md)
+- [GameObject documentation](./GameObjectDocumentation.md)
 - [Localization](./Localization.md)
+
 
 ## Adding new types
 - [Adding a new mech type](./Features/AddingMechType.md)
