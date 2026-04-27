@@ -1,6 +1,6 @@
 # ModFramework - Component shop management
 
-#### [Back to overview](./Overview.md)
+#### [Back to overview](../Overview.md)
 ---
 
 ## Managing placement
@@ -26,6 +26,6 @@ It also fixes this for weapons not made by the framework.
 The game cannot hold the references to modded sprites between save and loading. The framework will ensure the items that are currently in production are repopulated with the correct sprites.
 
 ---
-#### [Back to overview](./Overview.md)
+#### [Back to overview](../Overview.md)
 ---
-##### [Home](../../readme.md)
+##### [Home](../../../readme.md)

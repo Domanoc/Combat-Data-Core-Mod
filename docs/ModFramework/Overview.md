@@ -1,10 +1,12 @@
 # ModFramework - Overview
 
 ## Features
-- [Battle sound fix](./BattleSoundFix.md)
-- [Component shop management](./ComponentShop.md)
+- [Battle sound fix](./Features/BattleSoundFix.md)
+- [Component shop management](./Features/ComponentShop.md)
+- [Debug functions](./Features/DebugFunctions.md)
 - [GameObject documentation](./GameObjectDocumentation.md)
-- [Localization](./Localization.md)
+- [Localization](./Features/Localization.md)
+- [Sprite function wrappers](./Features/SpriteFunctionWrappers.md)
 
 
 ## Adding new types

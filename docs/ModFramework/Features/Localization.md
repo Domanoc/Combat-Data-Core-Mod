@@ -1,6 +1,6 @@
 # ModFramework - Localization
 
-#### [Back to overview](./Overview.md)
+#### [Back to overview](../Overview.md)
 ---
 
 The ModFramework allows the mod to support localization for the users. 
@@ -73,6 +73,6 @@ Description = {
 ```
 
 ---
-#### [Back to overview](./Overview.md)
+#### [Back to overview](../Overview.md)
 ---
-##### [Home](../../readme.md)
+##### [Home](../../../readme.md)
