@@ -37,6 +37,8 @@ function create(q,v_modid)
 	local componentSizes = Mod.Types.ComponentSizes
 	local weaponTypes = Mod.Types.WeaponTypes
 
+	Mod.Common.GenerateLocalizationFiles()
+
 	------------------------------------------------------------------------------
 	--- MECHS --------------------------------------------------------------------
 	------------------------------------------------------------------------------

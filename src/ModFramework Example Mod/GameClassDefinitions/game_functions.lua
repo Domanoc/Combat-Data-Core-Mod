@@ -1,4 +1,4 @@
----@class ds_map A reference handle to the gamemaker ds_map data structure, stores key and value pairs.
+
 
 --------------------------------------------
 --Documentation for used mod functions -----

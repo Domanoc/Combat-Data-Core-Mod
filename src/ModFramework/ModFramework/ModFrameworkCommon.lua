@@ -19,6 +19,13 @@ local Storage = require("ModFrameworkStorage")
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 
+---Generates Localization files based on the values requested by the registered components
+function Common.GenerateLocalizationFiles()
+	Storage.GenerateLocalization = true
+
+	Common.ShowMessage("Now generating localization files, dont forget to remove this before releasing your mod.")
+end
+
 ---Gets the filepath to the mod folder
 ---@param name string the name of the mod folder
 ---@return string? filepath the filepath to the mod folder or nil if the mod was not found
@@ -355,11 +362,9 @@ local spacerLine = "\n###################################################\n"
 ---The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
 ---@param value string|number the value to show
 function Common.ShowMessage(value)
-	local info = debug.getinfo(2, "Sl")
-	local caller = info.short_src:gsub("/","\\")
-	local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline
-	local prefix = callerPrint..spacerLine
-	show_message(prefix..tostring(value))
+	local prefix = "MOD FRAMEWORK MESSAGE"..spacerLine
+	local suffix = "\n"..Private.Traceback(3)
+	show_message(prefix..tostring(value)..suffix)
 end
 
 ---A debug helper function:
@@ -368,11 +373,8 @@ end
 ---The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
 ---@param message string the error message to show
 function Common.ShowError(message)
-	local info = debug.getinfo(2, "Sl")
-	local caller = info.short_src:gsub("/","\\")
-	local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline
 	local prefix = "MOD FRAMEWORK ERROR"..spacerLine
-	local suffix = spacerLine..callerPrint..spacerLine..debug.traceback("Error", 2).."\n\n"
+	local suffix = "\n"..Private.Traceback(3)
 	show_message(prefix..message..suffix)
 end
 
@@ -382,15 +384,23 @@ end
 ---The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
 ---@param ref any the Gamemaker struct reference or table reference
 function Common.DumpObjToMessage(ref)
-	local info = debug.getinfo(2, "Sl")
-	local caller = info.short_src:gsub("/","\\")
-	local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline
-	local prefix = callerPrint..spacerLine
+	local prefix = "MOD FRAMEWORK"..spacerLine
+	local suffix = "\n"..Private.Traceback(3)
 	local values = {}
 
 	if(ref == nil) then
 		local message = "This is a nil value"
 		show_message(prefix..message)
+		return
+	end
+
+	if(type(ref) == "string") then
+		show_message(prefix..ref)
+		return
+	end
+
+	if(type(ref) == "boolean") then
+		show_message(prefix..tostring(ref))
 		return
 	end
 
@@ -425,7 +435,7 @@ function Common.DumpObjToMessage(ref)
 		table.insert(values, tostring(key).."::"..tostring(keyName).."::"..refValueString)
 	end
 	local message = table.concat(values, ",\n")
-	show_message(prefix..message)
+	show_message(prefix..message..suffix)
 end
 
 ---Convert a table into a single line of key value pairs
@@ -458,10 +468,8 @@ end
 ---The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
 ---@param ds_map ds_map the reference to the ds_map
 function Common.DsmapToMessage(ds_map)
-	local info = debug.getinfo(2, "Sl")
-	local caller = info.short_src:gsub("/","\\")
-	local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline
-	local prefix = callerPrint..spacerLine
+	local prefix = "MOD FRAMEWORK"..spacerLine
+	local suffix = "\n"..Private.Traceback(3)
 
 	local values = {}
 	local sortedKeyNames = ds_map_keys_to_array(ds_map)
@@ -470,7 +478,7 @@ function Common.DsmapToMessage(ds_map)
         table.insert(values, tostring(k).."::"..tostring(v).."::"..tostring(ds_map_find_value(ds_map, v)))
     end
     local message = table.concat(values, ",\n")
-	show_message(prefix..message)
+	show_message(prefix..message..suffix)
 end
 
 ---A debug helper function:
@@ -483,7 +491,7 @@ function Common.ToClassTypeMessage(ref)
 	local info = debug.getinfo(2, "Sl")
 	local caller = info.short_src:gsub("/","\\")
 	local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline
-	local prefix = callerPrint..spacerLine
+	local prefix = "MOD FRAMEWORK"..spacerLine..callerPrint..spacerLine
 
 	local values = {}
 	if(type(ref) == "table") then
@@ -504,6 +512,33 @@ function Common.ToClassTypeMessage(ref)
 		local message = table.concat(values, "\n")
 		show_message(prefix..message)
 	end
+end
+
+---Gets a traceback suffix for a message
+---@param level number? sets the level to any value more then 2 to skip util funcs
+---@return string traceback the traceback suffix for a message
+function Private.Traceback(level)
+	if(level == nil or level < 2) then
+		level = 2
+	end
+    local lines = {"Traceback:"}
+
+    while true do
+        local info = debug.getinfo(level, "nSl")
+        if not info then break end
+
+        table.insert(lines, string.format(
+            ">> %s (%s:%d)",
+            info.name or "anonymous",
+            info.short_src:gsub("/","\\"):gsub("[\r\n]+", " "),
+            info.currentline
+        ))
+
+        level = level + 1
+    end
+
+	local traceback = table.concat(lines, "\n")
+    return spacerLine..traceback..spacerLine
 end
 
 ------------------------------------------------------------------------------

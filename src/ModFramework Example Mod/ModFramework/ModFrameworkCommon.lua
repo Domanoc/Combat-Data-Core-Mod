@@ -19,6 +19,13 @@ local Storage = require("ModFrameworkStorage")
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 
+---Generates Localization files based on the values requested by the registered components
+function Common.GenerateLocalizationFiles()
+	Storage.GenerateLocalization = true
+
+	Common.ShowMessage("Now generating localization files, dont forget to remove this before releasing your mod.")
+end
+
 ---Gets the filepath to the mod folder
 ---@param name string the name of the mod folder
 ---@return string? filepath the filepath to the mod folder or nil if the mod was not found
@@ -355,11 +362,9 @@ local spacerLine = "\n###################################################\n"
 ---The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
 ---@param value string|number the value to show
 function Common.ShowMessage(value)
-	local info = debug.getinfo(2, "Sl")
-	local caller = info.short_src:gsub("/","\\")
-	local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline
-	local prefix = callerPrint..spacerLine
-	show_message(prefix..tostring(value))
+	local prefix = "MOD FRAMEWORK MESSAGE"..spacerLine
+	local suffix = "\n"..Private.Traceback(3)
+	show_message(prefix..tostring(value)..suffix)
 end
 
 ---A debug helper function:
@@ -391,6 +396,16 @@ function Common.DumpObjToMessage(ref)
 	if(ref == nil) then
 		local message = "This is a nil value"
 		show_message(prefix..message)
+		return
+	end
+
+	if(type(ref) == "string") then
+		show_message(prefix..ref)
+		return
+	end
+
+	if(type(ref) == "boolean") then
+		show_message(prefix..tostring(ref))
 		return
 	end
 
@@ -504,6 +519,33 @@ function Common.ToClassTypeMessage(ref)
 		local message = table.concat(values, "\n")
 		show_message(prefix..message)
 	end
+end
+
+---Gets a traceback suffix for a message
+---@param level number? sets the level to any value more then 2 to skip util funcs
+---@return string traceback the traceback suffix for a message
+function Private.Traceback(level)
+	if(level == nil or level < 2) then
+		level = 2
+	end
+    local lines = {"Traceback:"}
+
+    while true do
+        local info = debug.getinfo(level, "nSl")
+        if not info then break end
+
+        table.insert(lines, string.format(
+            ">> %s (%s:%d)",
+            info.name or "anonymous",
+            info.short_src:gsub("/","\\"):gsub("[\r\n]+", " "),
+            info.currentline
+        ))
+
+        level = level + 1
+    end
+
+	local traceback = table.concat(lines, "\n")
+    return spacerLine..traceback..spacerLine
 end
 
 ------------------------------------------------------------------------------

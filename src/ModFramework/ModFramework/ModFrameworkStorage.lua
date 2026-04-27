@@ -7,14 +7,26 @@
 local Storage = {}
 
 ------------------------------------------------------------------------------
-
-
----@type string the language file setting that is seleced, example "loc_english.ini"
-Storage.SelectedLanguage = ""
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 
 ---A list of the registered mods.
 ---@type ModRegistration[]
 Storage.ModRegistrations = {}
+
+------------------------------------------------------------------------------
+--- LOCALIZATION -------------------------------------------------------------
+------------------------------------------------------------------------------
+
+---@type boolean Flag indicating where to generate the localization files
+Storage.GenerateLocalization = false
+
+---@type string The language file setting that is seleced, example "loc_english.ini"
+Storage.SelectedLanguage = "loc_english.ini"
+
+------------------------------------------------------------------------------
+--- REFERENCE LISTS ----------------------------------------------------------
+------------------------------------------------------------------------------
 
 ---A list of the modded components.
 ---@type ModdedComponent[]
@@ -27,6 +39,14 @@ Storage.LoadedResearchList = {}
 ---We keep a list of the modded researches.
 ---@type ModdedResearch[]
 Storage.ModdedResearchList = {}
+
+---The queue for pilots to be added
+---@type PilotData[]
+Storage.PilotDataQueue = {}
+
+------------------------------------------------------------------------------
+--- COMPONENT SHOP -----------------------------------------------------------
+------------------------------------------------------------------------------
 
 ---We keep a list of the all shop components.
 ---@type game_obj_component[]
@@ -62,11 +82,11 @@ Storage.ReactorComponents = ReactorComponents
 ---@type WeaponIndicatorLocation[]
 Storage.WeaponIndicators = {}
 
----The reference to the shop left button
+---The reference to the left button
 ---@type number
 Storage.SpriteShopButtonLeft = -1
 
----The reference to the shop right button
+---The reference to the right button
 ---@type number
 Storage.SpriteShopButtonRight = -1
 
@@ -81,10 +101,6 @@ Storage.SpriteShopRobotCompressed = -1
 ---Flag indicating if the shop icons need to be updated
 ---@type boolean
 Storage.IsShopUpdateNeeded = true
-
----The queue for pilots to be added
----@type PilotData[]
-Storage.PilotDataQueue = {}
 
 ------------------------------------------------------------------------------
 --- EXPORT STORAGE -----------------------------------------------------------
