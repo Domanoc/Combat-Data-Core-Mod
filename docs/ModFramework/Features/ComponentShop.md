@@ -4,7 +4,7 @@
 ---
 
 ## Managing placement
-The framework Takes control of the placement for all shop components as long as these items either be found in the game_obj_component_shop or are created by the framework.
+The framework Takes control of the placement for all shop components as long as these items either be found in the [game_obj_component_shop](../../../src/ModFramework/GameClassDefinitions/game_obj_component_shop.lua) or are created by the framework.
 
 This ensures that mods don't have to track where to place shop components. They will be sorted and arranged as needed.
 
