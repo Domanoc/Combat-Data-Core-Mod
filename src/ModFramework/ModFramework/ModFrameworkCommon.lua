@@ -23,7 +23,7 @@ local Storage = require("ModFrameworkStorage")
 function Common.GenerateLocalizationFiles()
 	Storage.GenerateLocalization = true
 
-	Common.ShowMessage("Now generating localization files, dont forget to remove this before releasing your mod.")
+	Common.ShowMessage("Now generating localization files, don't forget to remove this before releasing your mod.")
 end
 
 ---Gets the filepath to the mod folder
@@ -41,8 +41,8 @@ function Common.GetModPath()
 
 	local normalizedPath = source:gsub("/","\\"):gsub("@","")
 	local root = normalizedPath:match("^(.-\\mods\\)")
-	local modfolder = normalizedPath:match("\\mods\\([^\\]+)")
-	local modPath = root..modfolder.."\\"
+	local modFolder = normalizedPath:match("\\mods\\([^\\]+)")
+	local modPath = root..modFolder.."\\"
 	return modPath
 end
 
@@ -101,8 +101,8 @@ function Private.GenerateLocalizationFiles(section, key, default)
 		local localizationPath = modFilepath.."localization\\"..localizationFile
 
 		ini_open(localizationPath)
-		local value = ini_read_string(section, key, "<UNDEFINDED>")
-		if (value == "<UNDEFINDED>") then
+		local value = ini_read_string(section, key, "<UNDEFINED>")
+		if (value == "<UNDEFINED>") then
 			ini_write_string(section, key, default.LocalizedDefaultValue)
 		end
 		ini_close()
@@ -303,7 +303,7 @@ end
 ---Use this instead of calling sprite_add directly to prevent crashes when incorrect sprite data is passed.
 ---@param filepath string The filepath of the file to add.
 ---@param numberOfImages number Use to indicate the number of sub-images
----@param removeback boolean Indicates whether to make all pixels with the background colour (left-bottom pixel) transparent.
+---@param removeback boolean Indicates whether to make all pixels with the background color (left-bottom pixel) transparent.
 ---@param smooth boolean Indicates whether to smooth the edges if transparent.
 ---@param xOrig number Indicate the x position of the origin in the sprite.
 ---@param yOrig number Indicate the y position of the origin in the sprite.
@@ -362,13 +362,13 @@ end
 ---@param spriteIndex number the index for the sprite that will be replaced 
 ---@param filepath string The filepath of the file to add.
 ---@param numberOfImages number Use to indicate the number of sub-images
----@param removeback boolean Indicates whether to make all pixels with the background colour (left-bottom pixel) transparent.
+---@param removeback boolean Indicates whether to make all pixels with the background color (left-bottom pixel) transparent.
 ---@param smooth boolean Indicates whether to smooth the edges if transparent.
 ---@param xOrig number Indicate the x position of the origin in the sprite.
 ---@param yOrig number Indicate the y position of the origin in the sprite.
 function Common.ReplaceSprite(spriteIndex, filepath, numberOfImages, removeback, smooth, xOrig, yOrig)
-	local srpiteName = sprite_get_name(spriteIndex)
-	if(srpiteName == "<undefined>") then
+	local spriteName = sprite_get_name(spriteIndex)
+	if(spriteName == "<undefined>") then
 		local message = "Replacing the sprite with index: '"..spriteIndex.."' failed.\n\n"
 		message = message.."Make sure the index of the sprite is correct."
 		Common.ShowError(message)
@@ -407,10 +407,10 @@ function Common.ShowError(message)
 end
 
 ---A debug helper function:
----Prints a message box with the key and values of the gamemaker struct or table
+---Prints a message box with the key and values of the GameMaker struct or table
 ---The message box freezes the game for de duration it is opened allowing it to be used as a breakpoint for debugging
 ---The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
----@param ref any the Gamemaker struct reference or table reference
+---@param ref any the GameMaker struct reference or table reference
 function Common.DumpObjToMessage(ref)
 	local prefix = "MOD FRAMEWORK"..spacerLine
 	local suffix = "\n"..Private.Traceback(3)
@@ -479,19 +479,19 @@ function Private.TableToString(ref)
 	return "TABLE:: { ".. value.." }"
 end
 
----Truncate a string to a max lenght
+---Truncate a string to a max length
 ---@param value string the string to truncate
----@param lenght number the max lenght
----@return string value returns the string truncated to the max lenght and adds ... if truncated
-function Private.Truncate(value, lenght)
-    if #value > lenght then
-        return value:sub(1, lenght - 3).."..."
+---@param length number the max length
+---@return string value returns the string truncated to the max length and adds ... if truncated
+function Private.Truncate(value, length)
+    if #value > length then
+        return value:sub(1, length - 3).."..."
     end
     return value
 end
 
 ---A debug helper function:
----Prints a messagebox with the key and values of the gamemaker ds_map
+---Prints a message box with the key and values of the GameMaker ds_map
 ---The message box freezes the game for de duration it is opened allowing it to be used as a breakpoint for debugging
 ---The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
 ---@param ds_map ds_map the reference to the ds_map
@@ -510,11 +510,11 @@ function Common.DsmapToMessage(ds_map)
 end
 
 ---A debug helper function:
----Prints a message box with the key and values of the gamemaker struct as a field definitions 
----This was used to convert gamemaker objects into a lua class definition
+---Prints a message box with the key and values of the GameMaker struct as a field definitions 
+---This was used to convert GameMaker objects into a lua class definition
 ---The message box freezes the game for de duration it is opened allowing it to be used as a breakpoint for debugging
 ---The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
----@param ref any the Gamemaker struct reference
+---@param ref any the GameMaker struct reference
 function Common.ToClassTypeMessage(ref)
 	local info = debug.getinfo(2, "Sl")
 	local caller = info.short_src:gsub("/","\\")
@@ -543,7 +543,7 @@ function Common.ToClassTypeMessage(ref)
 end
 
 ---Gets a traceback suffix for a message
----@param level number? sets the level to any value more then 2 to skip util funcs
+---@param level number? sets the level to any value more then 2 to skip util functions
 ---@return string traceback the traceback suffix for a message
 function Private.Traceback(level)
 	if(level == nil or level < 2) then
@@ -554,10 +554,11 @@ function Private.Traceback(level)
     while true do
         local info = debug.getinfo(level, "nSl")
         if not info then break end
+		if (info.name == nil) then break end
 
         table.insert(lines, string.format(
             ">> %s (%s:%d)",
-            info.name or "anonymous",
+            info.name,
             info.short_src:gsub("/","\\"):gsub("[\r\n]+", " "),
             info.currentline
         ))
