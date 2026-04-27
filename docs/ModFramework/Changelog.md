@@ -11,7 +11,7 @@
 - Added auto fix to stop the robot engineer from excessively bleeding out of its shop button
 - Added auto fix for modded production sprites on load when item was registered through the framework
 - Added auto fix for modding research not having the correct day requirement when added to an existing save
-- Added localization support for weapon descriptions and research descriptions
+- Added localization support for weapon descriptions, research descriptions and pilot work experience
 - Added page support for all shop sections when to many items are registered
 - Added type documentation on game objects
 - Added type documentation on ModFramework functions, types and classes

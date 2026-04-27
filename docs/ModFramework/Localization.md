@@ -1,4 +1,8 @@
 # ModFramework - Localization
+
+#### [Back to overview](./Overview.md)
+---
+
 The ModFramework allows the mod to support localization for the users. 
 - The localization is integrated in the games language selection.
 - And there is support for localization mods
@@ -68,5 +72,7 @@ Description = {
 },
 ```
 
+---
+#### [Back to overview](./Overview.md)
 ---
 ##### [Home](../../readme.md)

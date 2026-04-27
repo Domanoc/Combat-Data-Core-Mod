@@ -6,7 +6,7 @@ In this guide we will explain how to setup a new ModFramework mod from scratch. 
 There are several options
 - Create a folder and it contents manually
 - Copy an existing mod folder
-- Or we can use the template "ModTemplate" provided in this repo
+- Or we can use the template "[ModTemplate](../../src/ModTemplate/)" provided in this repo
 
 This guide will assume that we are creating the mod using the "ModTemplate" files.
 - Download the template
@@ -86,8 +86,8 @@ Note: The game object documentation is a work in progress don't take the provide
 ## The creative process
 Now all that remains the the creative process. And to get you going some starting points.
 
-- Take a look at the functions the framework provides.
-- Check out the "ModFramework Example Mod" as it provides basic examples on the framework features.
+- [Take a look at the functions the framework provides.](./Overview.md)
+- Check out the "[ModFramework Example Mod](../../src/ModFramework%20Example%20Mod/)" as it provides basic examples on the framework features.
 - Check out what existing mods do.
 - Ask you questions on the mech engineer discord in the #mods-discussions
 

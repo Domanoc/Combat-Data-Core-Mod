@@ -10,7 +10,7 @@ These 17 mods represent every mod on steam as of 2026-04-25
 Excluding my own mod "Combat Data Core" This mod has an update planned with full ModFramework support and thus excluded  
 
 4 Mods failed the tests.  
-1 Mod faild even without the ModFramework.  
+1 Mod failed even without the ModFramework.  
 All failed mods where fix with minimal edits and then passed all tests.  
 ### Failed mods:
 - Magic Wand (example mod)
@@ -18,7 +18,7 @@ All failed mods where fix with minimal edits and then passed all tests.
 - Skaian's Mech Pack
 - MinimumPilotStats
 
-## Test Senarios: chs mod
+## Test Scenarios: chs mod
 - Does it start without errors (clean save)? ✅
 - Can i open all tabs without error? ✅
 - Can i start a battle without errors? ✅
@@ -27,7 +27,7 @@ All failed mods where fix with minimal edits and then passed all tests.
 - Any errors when all the research is unlocked? ✅
 - Can i save and reload without errors (research unlocked)? ✅
 
-## Test Senarios: EZ difficulty
+## Test Scenarios: EZ difficulty
 - Does it start without errors (clean save)? ✅
 - Can i open all tabs without error? ✅
 - Can i start a battle without errors? ✅
@@ -36,7 +36,7 @@ All failed mods where fix with minimal edits and then passed all tests.
 - Any errors when all the research is unlocked? ✅
 - Can i save and reload without errors (research unlocked)? ✅
 
-## Test Senarios: Girl Pilot Mod
+## Test Scenarios: Girl Pilot Mod
 - Does it start without errors (clean save)? ✅
 - Can i open all tabs without error? ✅
 - Can i start a battle without errors? ✅
@@ -45,7 +45,7 @@ All failed mods where fix with minimal edits and then passed all tests.
 - Any errors when all the research is unlocked? ✅
 - Can i save and reload without errors (research unlocked)? ✅
 
-## Test Senarios: Heavy & Superheavy Mechs
+## Test Scenarios: Heavy & Superheavy Mechs
 - Does it start without errors (clean save)? ✅
 - Can i open all tabs without error? ✅
 - Can i start a battle without errors? ✅
@@ -54,7 +54,7 @@ All failed mods where fix with minimal edits and then passed all tests.
 - Any errors when all the research is unlocked? ✅
 - Can i save and reload without errors (research unlocked)? ✅
 
-## Test Senarios: Italian Translation mod
+## Test Scenarios: Italian Translation mod
 - Does it start without errors (clean save)? ✅
 - Can i open all tabs without error? ✅
 - Can i start a battle without errors? ✅
@@ -63,7 +63,7 @@ All failed mods where fix with minimal edits and then passed all tests.
 - Any errors when all the research is unlocked? ✅
 - Can i save and reload without errors (research unlocked)? ✅
 
-## Test Senarios: Japanese Translation mod
+## Test Scenarios: Japanese Translation mod
 - Does it start without errors (clean save)? ✅
 - Can i open all tabs without error? ✅
 - Can i start a battle without errors? ✅
@@ -72,7 +72,7 @@ All failed mods where fix with minimal edits and then passed all tests.
 - Any errors when all the research is unlocked? ✅
 - Can i save and reload without errors (research unlocked)? ✅
 
-## Test Senarios: KAWAII Pilot Mod
+## Test Scenarios: KAWAII Pilot Mod
 - Does it start without errors (clean save)? ✅
 - Can i open all tabs without error? ✅
 - Can i start a battle without errors? ✅
@@ -81,7 +81,7 @@ All failed mods where fix with minimal edits and then passed all tests.
 - Any errors when all the research is unlocked? ✅
 - Can i save and reload without errors (research unlocked)? ✅
 
-## Test Senarios: Magic Wand (example mod)
+## Test Scenarios: Magic Wand (example mod)
 - Does it start without errors (clean save)? ❌  
 The mod was reliant on there being empty researches and did not create its own reference.  
 Fix was 1 extra line of code.  
@@ -94,7 +94,7 @@ New tests with fixed mod.
 - Any errors when all the research is unlocked? ✅
 - Can i save and reload without errors (research unlocked)? ✅
 
-## Test Senarios: Pilot Stats Randomizer mod
+## Test Scenarios: Pilot Stats Randomizer mod
 - Does it start without errors (clean save)? ✅
 - Can i open all tabs without error? ✅
 - Can i start a battle without errors? ✅
@@ -103,7 +103,7 @@ New tests with fixed mod.
 - Any errors when all the research is unlocked? ✅
 - Can i save and reload without errors (research unlocked)? ✅
 
-## Test Senarios: Rebalance Mod
+## Test Scenarios: Rebalance Mod
 - Does it start without errors (clean save)? ✅
 - Can i open all tabs without error? ✅
 - Can i start a battle without errors? ✅
@@ -112,7 +112,7 @@ New tests with fixed mod.
 - Any errors when all the research is unlocked? ✅
 - Can i save and reload without errors (research unlocked)? ✅
 
-## Test Senarios: Robot Pilots Mod
+## Test Scenarios: Robot Pilots Mod
 - Does it start without errors (clean save)? ❌  
 The mod was reliant on there being empty researches and did not create its own reference.  
 Fix was 1 extra line of code.  
@@ -124,8 +124,9 @@ New tests with fixed mod.
 - Can i save and reload without errors? ✅
 - Any errors when all the research is unlocked? ✅
 - Can i save and reload without errors (research unlocked)? ✅
+- This mod provides a custom component type that is not accessible to other mods. This will might create conflicts with the rearranging of the shop components by the framework. Although this is currently in a section that doesn't see a growing list of items. ⚠️ 
 
-## Test Senarios: Simple Autocannon
+## Test Scenarios: Simple Autocannon
 - Does it start without errors (clean save)? ✅
 - Can i open all tabs without error? ✅
 - Can i start a battle without errors? ✅
@@ -134,7 +135,7 @@ New tests with fixed mod.
 - Any errors when all the research is unlocked? ✅
 - Can i save and reload without errors (research unlocked)? ✅
 
-## Test Senarios: Simple EML
+## Test Scenarios: Simple EML
 - Does it start without errors (clean save)? ✅
 - Can i open all tabs without error? ✅
 - Can i start a battle without errors? ✅
@@ -143,7 +144,7 @@ New tests with fixed mod.
 - Any errors when all the research is unlocked? ✅
 - Can i save and reload without errors (research unlocked)? ✅
 
-## Test Senarios: Skaian's Mech Pack
+## Test Scenarios: Skaian's Mech Pack
 - Does it start without errors (clean save)? ❌  
 The mod was reliant on there being empty researches and did not create its own reference.  
 Fix was 3 extra lines of code.  
@@ -156,7 +157,7 @@ New tests with fixed mod.
 - Any errors when all the research is unlocked? ✅
 - Can i save and reload without errors (research unlocked)? ✅
 
-## Test Senarios: MinimumPilotStats
+## Test Scenarios: MinimumPilotStats
 - Does it start without errors (clean save)? ✅
 - Can i open all tabs without error? ✅
 - Can i start a battle without errors? ✅
@@ -173,7 +174,7 @@ New tests with fixed mod.
 - Any errors when all the research is unlocked? ✅
 - Can i save and reload without errors (research unlocked)? ✅
 
-## Test Senarios: tinyFont
+## Test Scenarios: tinyFont
 - Does it start without errors (clean save)? ✅
 - Can i open all tabs without error? ✅
 - Can i start a battle without errors? ✅
@@ -182,7 +183,7 @@ New tests with fixed mod.
 - Any errors when all the research is unlocked? ✅
 - Can i save and reload without errors (research unlocked)? ✅
 
-## Test Senarios: Nozomiplus
+## Test Scenarios: Nozomiplus
 - Does it start without errors (clean save)? ✅
 - Can i open all tabs without error? ✅
 - Can i start a battle without errors? ✅
