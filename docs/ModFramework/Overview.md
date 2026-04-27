@@ -32,5 +32,8 @@
 - [Adding new solenoids](./Features/AddingSolenoidObject.md)
 - [Adding new pilots](./Features/AddingPilotObject.md)
 
+## Changing existing objects
+- [Changing research](./Features/ChangingResearch.md)
+
 ---
 ##### [Home](../../readme.md)

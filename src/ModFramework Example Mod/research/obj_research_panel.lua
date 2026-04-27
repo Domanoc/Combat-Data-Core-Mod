@@ -66,7 +66,7 @@ function create(q, v_modid)
 	})
 
 	--We can retrieve the data of a research that was added by the framework, even if it was made by another mod.
-	--however if loading one from another mod, that mod has to be before this mod in the load order.
+	--However if loading one from another mod, that mod has to be before this mod in the load order.
 	local example2 = Mod.Common.GetModdedResearch("example_research_2")
 
 	--We can search for a single component to add as an unlock to an existing research
@@ -81,7 +81,7 @@ function create(q, v_modid)
 	--We can relink a research to a new prerequisite research.
 	Mod.Research.ChangePrerequisite(baseResearchResNumbers.PROCESSOR_PROGRAMS, baseResearchResNumbers.REPAIR_SHOP)
 
-	--We can clear the links a research has to make it easier to rearange the tech tree.
+	--We can clear the links a research has to make it easier to rearrange the tech tree.
 	Mod.Research.ClearUnlockLinks(baseResearchResNumbers.NEW_MECH_PLATE)
 end
 
