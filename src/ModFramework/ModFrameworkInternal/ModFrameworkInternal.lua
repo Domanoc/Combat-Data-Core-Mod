@@ -78,7 +78,12 @@ function ModFrameworkInternal.RegisterFramework()
 		end
 	end
 
-	local language = variable_global_get("language_file"):gsub("/","\\"):match("^.+\\(.+)$")
+	local normalizedPath = variable_global_get("language_file"):gsub("/","\\")
+	local language = normalizedPath:match("^.+\\(.+)$")
+	if (language == "chs.ini") then
+		--both support the same language so we set it to the default to prevent duplication in framework localization
+		language = "loc_chinese.ini"
+	end
 	Storage.SelectedLanguage = language
 
 	--Set a variable that mods can check before trying to load the framework

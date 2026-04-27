@@ -29,8 +29,10 @@ function create(q,v_modid)
 	--load the mod framework as a global for use within this file
 	Mod = require("ModFrameworkModule")
 
+	Mod.Common.GenerateLocalizationFiles()
+
 	--path to the mod folder
-	local modFilepath = Mod.Common.GetModPath("ModFramework Example Mod")
+	local modFilepath = Mod.Common.GetModPath()
 
 	--load needed types
 	local mechModules = Mod.Types.MechModules
@@ -82,21 +84,11 @@ function create(q,v_modid)
 	--An example for creating a modded weapon
 	Mod.Database.AddWeapon({
 		Name = 			    "example_weapon",	  --The name of the mech, used to find its references
-		--We can provide full language support like this, atleast 1 language is needed
-		--LanguageFile variable should match the language file ini that the string targets
-		--Value should contain the string in the correct language for that language file
-		Description = {
-			 { LanguageFile = "loc_english.ini", Value = "Description text for this weapon." }
-			,{ LanguageFile = "loc_french.ini", Value = "Texte descriptif de cette arme." }
-			,{ LanguageFile = "loc_german.ini", Value = "Beschreibungstext für diese Waffe." }
-			,{ LanguageFile = "loc_polish.ini", Value = "Tekst opisujący tę broń." }
-			,{ LanguageFile = "loc_portuguese_brazil.ini", Value = "Texto descritivo para esta arma." }
-			,{ LanguageFile = "loc_russian.ini", Value = "Описание данного оружия." }
-			,{ LanguageFile = "loc_spanish.ini", Value = "Texto descriptivo de esta arma." }
-			,{ LanguageFile = "loc_chinese.ini", Value = "该武器的描述文字。" }
-			,{ LanguageFile = "chs.ini", Value = "该武器的描述文字。" }
-			,{ LanguageFile = "loc_italian.ini", Value = "Testo descrittivo per quest'arma." }
-			,{ LanguageFile = "japanese.ini", Value = "この武器の説明文。" }
+		Description = {							  --the description text for a weapon. used when the weapon is added to the main slot in engineering.
+			--Data that represents a string that will be localized. Its recommended to be in english for code readability
+			--The other actual values will be pulled from the mods localization files
+			--Use the GenerateLocalizationFiles() function to generate the mods localization files in development
+			LocalizedDefaultValue = "Description text for this weapon."
 		},
 		ComponentSize =     componentSizes.Small, --The size of the component when constructing it. 1 for single slot or 5 for a full row
 		IsResearched = 	    false,				  --Set to true if its pre researched, else false.

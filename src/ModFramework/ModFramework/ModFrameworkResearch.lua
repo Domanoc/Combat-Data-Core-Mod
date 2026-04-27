@@ -24,14 +24,14 @@ local Types = require("ModFrameworkTypes")
 ------------------------------------------------------------------------------
 
 ---Adds a research item to the tech tree
----@param item ResearchData the dataset for the new research item
+---@param researchData ResearchData the dataset for the new research item
 ---@return number? resNumber the number for the research as found in the debug view (F6) of the research screen (upper left white number)
-function Research.AddResearch(item)
-	local checkPosition = Private.GetResearchByPosition(item.Position)
+function Research.AddResearch(researchData)
+	local checkPosition = Private.GetResearchByPosition(researchData.Position)
 	if(checkPosition ~= nil) then
 		local message = "Trying to set the new research to a position that is already ocupied.\n"
 		message = message.."Check if the correct position was given, or if a another mod in the load order assigned the position.\n\n"
-		message = message.."Debug info:\nResearch name: "..item.Name.."\nDesired position: "..item.Position
+		message = message.."Debug info:\nResearch name: "..researchData.Name.."\nDesired position: "..researchData.Position
 		Common.ShowError(message)
 		return nil
 	end
@@ -49,32 +49,32 @@ function Research.AddResearch(item)
 	local researchIndex = researchCount + 1
 	local newResearch = {}
 
-	if (item.Condition == nil) then
-		item.Condition = Types.ResearchConditions.Closed
+	if (researchData.Condition == nil) then
+		researchData.Condition = Types.ResearchConditions.Closed
 	end
 
-	newResearch[ResearchIndexes.Position] = item.Position					--position number on the research tree. You can see positions in the game with f6 (debug mode)
-	newResearch[ResearchIndexes.Link_1] = -4 								--link 1
-	newResearch[ResearchIndexes.Link_2] = -4 								--link 2
-	newResearch[ResearchIndexes.Link_3] = -4 								--link 3
-	newResearch[ResearchIndexes.Condition] = item.Condition					--condition (0-closed, 1-opened, 2-researching, 3-researched)
-	newResearch[ResearchIndexes.RequiredDays] = item.RequiredDays			--required days
-	newResearch[ResearchIndexes.RequiredStaff] = item.RequiredStaff			--require science staff
-	newResearch[ResearchIndexes.IconType] = item.ReseachIcon.IconType		--research icon type (0-combat, 1-production, 2-passability)
-	newResearch[ResearchIndexes.IconSubtype] = item.ReseachIcon.IconSubType	--research icon subtype (see left column in the game in research menu)
+	newResearch[ResearchIndexes.Position] = researchData.Position					--position number on the research tree. You can see positions in the game with f6 (debug mode)
+	newResearch[ResearchIndexes.Link_1] = -4 										--link 1
+	newResearch[ResearchIndexes.Link_2] = -4 										--link 2
+	newResearch[ResearchIndexes.Link_3] = -4 										--link 3
+	newResearch[ResearchIndexes.Condition] = researchData.Condition					--condition (0-closed, 1-opened, 2-researching, 3-researched)
+	newResearch[ResearchIndexes.RequiredDays] = researchData.RequiredDays			--required days
+	newResearch[ResearchIndexes.RequiredStaff] = researchData.RequiredStaff			--require science staff
+	newResearch[ResearchIndexes.IconType] = researchData.ResearchIcon.IconType		--research icon type (0-combat, 1-production, 2-passability)
+	newResearch[ResearchIndexes.IconSubtype] = researchData.ResearchIcon.IconSubType	--research icon subtype (see left column in the game in research menu)
 	mres[researchIndex] = newResearch;
 
-	local description = Common.SelectCorrectLocalizedString(item.Description)
+	local description = Common.GetLocalizedString("ResearchDescription", researchData.Name, researchData.Description)
 	newResearch[ResearchIndexes.Description] = description			 		--research text
 
-	if(item.PrerequisiteResearchResNumber ~= nil) then
-		local prerequisiteIndex = item.PrerequisiteResearchResNumber + 1
+	if(researchData.PrerequisiteResearchResNumber ~= nil) then
+		local prerequisiteIndex = researchData.PrerequisiteResearchResNumber + 1
 		if (prerequisiteIndex ~= nil) then
 			local prerequisiteResearch = mres[prerequisiteIndex]
 			if(prerequisiteResearch == nil) then
 				local message = "Trying to set the prerequisite research but the prerequisite reference was nil.\n"
 				message = message.."Check if the correct res number was given. Found in the debug view (F6) of the research screen (upper left white number)\n\n"
-				message = message.."Debug info:\nResearch name: "..item.Name.."\nPrerequisite res number: "..item.PrerequisiteResearchResNumber
+				message = message.."Debug info:\nResearch name: "..researchData.Name.."\nPrerequisite res number: "..researchData.PrerequisiteResearchResNumber
 				Common.ShowError(message)
 			elseif(prerequisiteResearch[Types.ResearchIndexes.Link_1] == -4)  then
 				prerequisiteResearch[Types.ResearchIndexes.Link_1] = resNumber
@@ -86,15 +86,15 @@ function Research.AddResearch(item)
 				local message = "Trying to set the prerequisite research but the prerequisite already has 3 linked researches.\n"
 				message = message.."Check if the correct res number was given, or rearange the research tree so there are no more that 3 unlocks per research.\n"
 				message = message.."Each research res number can be found in the debug view (F6) of the research screen (upper left white number).\n\n"
-				message = message.."Debug info:\nResearch name: "..item.Name.."\nPrerequisite res number: "..item.PrerequisiteResearchResNumber
+				message = message.."Debug info:\nResearch name: "..researchData.Name.."\nPrerequisite res number: "..researchData.PrerequisiteResearchResNumber
 				Common.ShowError(message)
 			end
 		end
 	end
 
 	--add research sprite
-	local tmpSprite = Common.AddSprite(item.SpritePath, 0, false, false, 0, 0) --research sprite
-	local researchSpriteIndex = variable_global_get("research_items_spr")		--get the current sprite
+	local tmpSprite = Common.AddSprite(researchData.SpritePath, 0, false, false, 0, 0) --research sprite
+	local researchSpriteIndex = variable_global_get("research_items_spr")			   --get the current sprite
 	local researhSprites = -1
     if (researchSpriteIndex ~= -4) then
     	researhSprites = sprite_duplicate(researchSpriteIndex)
@@ -112,7 +112,7 @@ function Research.AddResearch(item)
 
 	---@type ModdedComponent[]
 	local unlockedComponents = {}
-	for _, value in pairs(item.UnlockedComponents) do
+	for _, value in pairs(researchData.UnlockedComponents) do
 		if(value ~= nil) then
 			table.insert(unlockedComponents, value)
 		end
@@ -121,8 +121,8 @@ function Research.AddResearch(item)
 	---@type ModdedResearch
 	local moddedResearch = {
 		Index = researchIndex,
-		InitialCondition = item.Condition,
-		Name = item.Name,
+		InitialCondition = researchData.Condition,
+		Name = researchData.Name,
 		ResNumber = resNumber,
 		UnlockedComponents = unlockedComponents
 	}

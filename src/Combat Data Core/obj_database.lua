@@ -30,7 +30,7 @@ function create(q,v_modid)
 	Mod = require("ModFrameworkModule")
 
 	--path to the mod folder
-	local modFilepath = Mod.Common.GetModPath("Combat Data Core")
+	local modFilepath = Mod.Common.GetModPath()
 
 	--load needed types
 	local mechModules = Mod.Types.MechModules
@@ -277,17 +277,7 @@ function create(q,v_modid)
 	Mod.Database.AddWeapon({
 		Name = 			    "CDC_Howitzer",
 		Description = {
-			 { LanguageFile = "loc_english.ini", Value = "240-MM HOWITZER GUN" }
-			,{ LanguageFile = "loc_french.ini", Value = "CANON OBUSTER DE 240 MM" }
-			,{ LanguageFile = "loc_german.ini", Value = "240-MM-HAUEIZONE" }
-			,{ LanguageFile = "loc_polish.ini", Value = "HAUBICA 240 MM" }
-			,{ LanguageFile = "loc_portuguese_brazil.ini", Value = "OBUSEIRO DE 240 MM" }
-			,{ LanguageFile = "loc_russian.ini", Value = "240-мм гауитцер" }
-			,{ LanguageFile = "loc_spanish.ini", Value = "OBUS DE 240 MM" }
-			,{ LanguageFile = "loc_chinese.ini", Value = "240毫米榴弹炮" }
-			,{ LanguageFile = "chs.ini", Value = "240毫米榴弹炮" }
-			,{ LanguageFile = "loc_italian.ini", Value = "OBIETTIVO DA 240 MM" }
-			,{ LanguageFile = "japanese.ini", Value = "240ミリ榴弾砲" }
+			LocalizedDefaultValue = "240-MM HOWITZER GUN"
 		},
 		ComponentSize =     componentSizes.Small,
 		IsResearched = 	    false,
@@ -317,17 +307,7 @@ function create(q,v_modid)
 	Mod.Database.AddWeapon({
 		Name = 			    "CDC_LaserPulseCannon",
 		Description = {
-			 { LanguageFile = "loc_english.ini", Value = "EXTENDED RANGE LASER PULSE CANNON#Uses an internal power unit to provide most of the energy. Can be boosted by providing additional power." }
-			,{ LanguageFile = "loc_french.ini", Value = "CANON À IMPULSIONS LASER À PORTÉE ÉTENDUE#Utilise une unité d'alimentation interne pour fournir la majeure partie de l'énergie. Peut être suralimentée par un apport d'énergie supplémentaire." }
-			,{ LanguageFile = "loc_german.ini", Value = "Laserpulskanone mit erweiterter Reichweite#Nutzt eine interne Stromversorgungseinheit zur Bereitstellung des größten Teils der Energie. Die Leistung kann durch Zufuhr zusätzlicher Energie erhöht werden." }
-			,{ LanguageFile = "loc_polish.ini", Value = "LASEROWE DZIAŁO IMPULSOWE O ROZSZERZONYM ZASIĘGU#Wykorzystuje wewnętrzną jednostkę zasilania do dostarczania większości energii. Można ją zwiększyć, dostarczając dodatkową moc." }
-			,{ LanguageFile = "loc_portuguese_brazil.ini", Value = "CANHÃO DE PULSO LASER DE ALCANCE ESTENDIDO#Utiliza uma unidade de potência interna para fornecer a maior parte da energia. Pode ter sua potência aumentada fornecendo energia adicional." }
-			,{ LanguageFile = "loc_russian.ini", Value = "ЛАЗЕРНАЯ ИМПУЛЬСНАЯ ПУШКА БОЛЬШЕЙ ДАЛЬНОСТИ#Для обеспечения большей части энергии используется внутренний источник питания. Мощность может быть увеличена за счет подачи дополнительной энергии." }
-			,{ LanguageFile = "loc_spanish.ini", Value = "CAÑÓN DE PULSOS LÁSER DE ALCANCE EXTENDIDO#Utiliza una unidad de potencia interna para proporcionar la mayor parte de la energía. Puede mejorarse su rendimiento proporcionándole energía adicional." }
-			,{ LanguageFile = "loc_chinese.ini", Value = "远程激光脉冲炮#它使用内置动力装置提供大部分能量。可以通过提供额外动力来增强能量输出。" }
-			,{ LanguageFile = "chs.ini", Value = "远程激光脉冲炮#它使用内置动力装置提供大部分能量。可以通过提供额外动力来增强能量输出。" }
-			,{ LanguageFile = "loc_italian.ini", Value = "CANNONE A IMPULSI LASER A PORTATA ESTESA#Utilizza un'unità di alimentazione interna per fornire la maggior parte dell'energia. Può essere potenziata fornendo energia aggiuntiva." }
-			,{ LanguageFile = "japanese.ini", Value = "射程延長型レーザーパルス砲#内部電源ユニットでエネルギーの大部分を供給します。追加の電力を供給することで出力を向上させることができます。" }
+			LocalizedDefaultValue = "EXTENDED RANGE LASER PULSE CANNON#Uses an internal power unit to provide most of the energy. Can be boosted by providing additional power."
 		},
 		ComponentSize =     componentSizes.Small,
 		IsResearched = 	    false,

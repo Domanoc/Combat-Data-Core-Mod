@@ -7,7 +7,7 @@ function create(q, v_modid)
 	Mod = require("ModFrameworkModule")
 
 	--path to the mod folder
-	local modFilepath = Mod.Common.GetModPath("ModFramework Example Mod")
+	local modFilepath = Mod.Common.GetModPath()
 
 	--load needed types
 	local researchIcons = Mod.Types.ResearchIcons
@@ -32,22 +32,12 @@ function create(q, v_modid)
 		Condition = researchConditions.Opened,					--condition (0-closed, 1-opened, 2-researching, 3-researched)
 		RequiredDays = 4,										--the required days to complete the research
 		RequiredStaff = 10,										--the required available staff to start the research
-		ReseachIcon = researchIcons.Research,					--the info on what icon to use
+		ResearchIcon = researchIcons.Research,					--the info on what icon to use
 		Description = {											--the description text for the research
-			--We can provide full language support like this, atleast 1 language is needed
-			--LanguageFile variable should match the language file ini that the string targets
-			--Value should contain the string in the correct language for that language file
-			 { LanguageFile = "loc_english.ini", Value = "Example Research 1:#Text that will explain what this unlocks." }
-			,{ LanguageFile = "loc_french.ini", Value = "Exemple de recherche 1:#Texte qui expliquera ce que cela débloque." }
-			,{ LanguageFile = "loc_german.ini", Value = "Beispielrecherche 1:#Text, der erklärt, was dadurch freigeschaltet wird." }
-			,{ LanguageFile = "loc_polish.ini", Value = "Przykładowe badanie 1:#Tekst wyjaśniający, co to odblokowuje." }
-			,{ LanguageFile = "loc_portuguese_brazil.ini", Value = "Exemplo de pesquisa 1: #Texto que explicará o que isso desbloqueia." }
-			,{ LanguageFile = "loc_russian.ini", Value = "Пример исследования 1:#Текст, который объяснит, что это открывает." }
-			,{ LanguageFile = "loc_spanish.ini", Value = "Ejemplo de investigación 1:#Texto que explicará qué desbloquea esto." }
-			,{ LanguageFile = "loc_chinese.ini", Value = "研究示例 1:#解释这将解锁什么内容的文本" }
-			,{ LanguageFile = "chs.ini", Value = "研究示例 1:#解释这将解锁什么内容的文本" }
-			,{ LanguageFile = "loc_italian.ini", Value = "Esempio di ricerca 1:#Testo che spiegherà cosa sblocca." }
-			,{ LanguageFile = "japanese.ini", Value = "研究例 1:#これが何を可能にするかを説明するテキスト。" }
+			--Data that represents a string that will be localized. Its recommended to be in english for code readability
+			--The other actual values will be pulled from the mods localization files
+			--Use the GenerateLocalizationFiles() function to generate the mods localization files in development
+			LocalizedDefaultValue = "Example Research 1:#Text that will explain what this unlocks."
 		},
 		SpritePath = 											--path to the sprite used for the research
 			modFilepath.."sprites\\example_research.png",
@@ -63,22 +53,12 @@ function create(q, v_modid)
 		Condition = researchConditions.Closed,					--condition (0-closed, 1-opened, 2-researching, 3-researched)
 		RequiredDays = 4,										--the required days to complete the research
 		RequiredStaff = 10,										--the required available staff to start the research
-		ReseachIcon = researchIcons.Survival,					--the info on what icon to use
+		ResearchIcon = researchIcons.Survival,					--the info on what icon to use
 		Description = {											--the description text for the research
-			--We can provide full language support like this, atleast 1 language is needed
-			--LanguageFile variable should match the language file ini that the string targets
-			--Value should contain the string in the correct language for that language file
-			 { LanguageFile = "loc_english.ini", Value = "Example Research 2:#Text that will explain what this unlocks." }
-			,{ LanguageFile = "loc_french.ini", Value = "Exemple de recherche 2:#Texte qui expliquera ce que cela débloque." }
-			,{ LanguageFile = "loc_german.ini", Value = "Beispielrecherche 2:#Text, der erklärt, was dadurch freigeschaltet wird." }
-			,{ LanguageFile = "loc_polish.ini", Value = "Przykładowe badanie 2:#Tekst wyjaśniający, co to odblokowuje." }
-			,{ LanguageFile = "loc_portuguese_brazil.ini", Value = "Exemplo de pesquisa 2: #Texto que explicará o que isso desbloqueia." }
-			,{ LanguageFile = "loc_russian.ini", Value = "Пример исследования 2:#Текст, который объяснит, что это открывает." }
-			,{ LanguageFile = "loc_spanish.ini", Value = "Ejemplo de investigación 2:#Texto que explicará qué desbloquea esto." }
-			,{ LanguageFile = "loc_chinese.ini", Value = "研究示例 2:#解释这将解锁什么内容的文本" }
-			,{ LanguageFile = "chs.ini", Value = "研究示例 2:#解释这将解锁什么内容的文本" }
-			,{ LanguageFile = "loc_italian.ini", Value = "Esempio di ricerca 2:#Testo che spiegherà cosa sblocca." }
-			,{ LanguageFile = "japanese.ini", Value = "研究例 2:#これが何を可能にするかを説明するテキスト。" }
+			--Data that represents a string that will be localized. Its recommended to be in english for code readability
+			--The other actual values will be pulled from the mods localization files
+			--Use the GenerateLocalizationFiles() function to generate the mods localization files in development
+			LocalizedDefaultValue = "Example Research 2:#Text that will explain what this unlocks."
 		},
 		SpritePath = 											--path to the sprite used for the research
 			modFilepath.."sprites\\example_research.png",

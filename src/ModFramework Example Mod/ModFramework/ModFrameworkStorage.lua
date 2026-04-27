@@ -24,6 +24,20 @@ Storage.GenerateLocalization = false
 ---@type string The language file setting that is seleced, example "loc_english.ini"
 Storage.SelectedLanguage = "loc_english.ini"
 
+---@type string[] The known Localizations files, example "loc_english.ini"
+Storage.KnownLocalizations = {
+    "loc_english.ini",
+    "loc_french.ini",
+    "loc_german.ini",
+    "loc_polish.ini",
+    "loc_portuguese_brazil.ini",
+    "loc_russian.ini",
+    "loc_spanish.ini",
+    "loc_chinese.ini",
+    "loc_italian.ini",
+    "japanese.ini",
+}
+
 ------------------------------------------------------------------------------
 --- REFERENCE LISTS ----------------------------------------------------------
 ------------------------------------------------------------------------------
@@ -41,7 +55,7 @@ Storage.LoadedResearchList = {}
 Storage.ModdedResearchList = {}
 
 ---The queue for pilots to be added
----@type PilotData[]
+---@type LocalizedPilotData[]
 Storage.PilotDataQueue = {}
 
 ------------------------------------------------------------------------------

@@ -27,9 +27,29 @@ function Common.GenerateLocalizationFiles()
 end
 
 ---Gets the filepath to the mod folder
+function Common.GetModPath()
+	local level = 2
+	local source
+	while true do
+        local info = debug.getinfo(level, "nSl")
+        if not info then break end
+		if (info.name == nil) then break end
+
+		source = info.source:gsub("/","\\")
+        level = level + 1
+    end
+
+	local normalizedPath = source:gsub("/","\\"):gsub("@","")
+	local root = normalizedPath:match("^(.-\\mods\\)")
+	local modfolder = normalizedPath:match("\\mods\\([^\\]+)")
+	local modPath = root..modfolder.."\\"
+	return modPath
+end
+
+---Gets the filepath to the mod folder
 ---@param name string the name of the mod folder
 ---@return string? filepath the filepath to the mod folder or nil if the mod was not found
-function Common.GetModPath(name)
+function Common.GetModPathByName(name)
 	for _, mod in pairs(Storage.ModRegistrations) do
 		if (mod.Name == name) then
 			return mod.Path
@@ -46,39 +66,47 @@ function Common.IsLoadedGame()
 	return variable_global_get("mech_engineer_load")
 end
 
----Selects the string based on the games current language setting,
----When not found will default to english,
----When english is not found will default to the first value
----When no values where provided will return a error value
----@param localizedStrings LocalizedString[] the localized strings dataset
----@return string
-function Common.SelectCorrectLocalizedString(localizedStrings)
-	local englishValue = nil
+---Selects the string based on the games current language setting
+---@param section LocalizationSections the section for the localized string
+---@param key string the key for the localized string
+---@param default LocalizedString the default return value if not found
+---@return string value the found string or the default value
+function Common.GetLocalizedString(section, key, default)
+	--generate the missing values if enabled
+	Private.GenerateLocalizationFiles(section, key, default)
 
-	--Find the correct language
-	for _, localizedString in pairs(localizedStrings) do
-		if (localizedString.LanguageFile == Storage.SelectedLanguage) then
-			return localizedString.Value
+	--get the file paths
+	local modFilepath = Common.GetModPath()
+	local localizationPath = modFilepath.."localization\\"..Storage.SelectedLanguage
+
+	--get the value or default
+	ini_open(localizationPath)
+	local value = ini_read_string(section, key, default.LocalizedDefaultValue)
+	ini_close()
+
+	return value
+end
+
+---When enabled generates the files for all known localizations
+---@param section LocalizationSections the section for the localized string
+---@param key string the key for the localized string
+---@param default LocalizedString the default value to set to new files
+function Private.GenerateLocalizationFiles(section, key, default)
+	if (Storage.GenerateLocalization == false) then
+		return
+	end
+
+	local modFilepath = Common.GetModPath()
+	for _, localizationFile in ipairs(Storage.KnownLocalizations) do
+		local localizationPath = modFilepath.."localization\\"..localizationFile
+
+		ini_open(localizationPath)
+		local value = ini_read_string(section, key, "<UNDEFINDED>")
+		if (value == "<UNDEFINDED>") then
+			ini_write_string(section, key, default.LocalizedDefaultValue)
 		end
-
-		if (localizedString.LanguageFile == "loc_english.ini") then
-			englishValue = localizedString.Value
-		end
+		ini_close()
 	end
-
-	--if not found fall back to english
-	if (englishValue ~= nil) then
-		return englishValue
-	end
-
-	--if not found fall back to the first value
-	local firstValue = localizedStrings[1]
-	if (firstValue ~= nil) then
-		return firstValue.Value
-	end
-
-	--return an error message
-	return "failed to find localized string"
 end
 
 ---Gets the phrase number for a given voice
@@ -373,11 +401,8 @@ end
 ---The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
 ---@param message string the error message to show
 function Common.ShowError(message)
-	local info = debug.getinfo(2, "Sl")
-	local caller = info.short_src:gsub("/","\\")
-	local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline
 	local prefix = "MOD FRAMEWORK ERROR"..spacerLine
-	local suffix = spacerLine..callerPrint..spacerLine..debug.traceback("Error", 2).."\n\n"
+	local suffix = "\n"..Private.Traceback(3)
 	show_message(prefix..message..suffix)
 end
 
@@ -387,10 +412,8 @@ end
 ---The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
 ---@param ref any the Gamemaker struct reference or table reference
 function Common.DumpObjToMessage(ref)
-	local info = debug.getinfo(2, "Sl")
-	local caller = info.short_src:gsub("/","\\")
-	local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline
-	local prefix = callerPrint..spacerLine
+	local prefix = "MOD FRAMEWORK"..spacerLine
+	local suffix = "\n"..Private.Traceback(3)
 	local values = {}
 
 	if(ref == nil) then
@@ -440,7 +463,7 @@ function Common.DumpObjToMessage(ref)
 		table.insert(values, tostring(key).."::"..tostring(keyName).."::"..refValueString)
 	end
 	local message = table.concat(values, ",\n")
-	show_message(prefix..message)
+	show_message(prefix..message..suffix)
 end
 
 ---Convert a table into a single line of key value pairs
@@ -473,10 +496,8 @@ end
 ---The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice
 ---@param ds_map ds_map the reference to the ds_map
 function Common.DsmapToMessage(ds_map)
-	local info = debug.getinfo(2, "Sl")
-	local caller = info.short_src:gsub("/","\\")
-	local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline
-	local prefix = callerPrint..spacerLine
+	local prefix = "MOD FRAMEWORK"..spacerLine
+	local suffix = "\n"..Private.Traceback(3)
 
 	local values = {}
 	local sortedKeyNames = ds_map_keys_to_array(ds_map)
@@ -485,7 +506,7 @@ function Common.DsmapToMessage(ds_map)
         table.insert(values, tostring(k).."::"..tostring(v).."::"..tostring(ds_map_find_value(ds_map, v)))
     end
     local message = table.concat(values, ",\n")
-	show_message(prefix..message)
+	show_message(prefix..message..suffix)
 end
 
 ---A debug helper function:
@@ -498,7 +519,7 @@ function Common.ToClassTypeMessage(ref)
 	local info = debug.getinfo(2, "Sl")
 	local caller = info.short_src:gsub("/","\\")
 	local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline
-	local prefix = callerPrint..spacerLine
+	local prefix = "MOD FRAMEWORK"..spacerLine..callerPrint..spacerLine
 
 	local values = {}
 	if(type(ref) == "table") then

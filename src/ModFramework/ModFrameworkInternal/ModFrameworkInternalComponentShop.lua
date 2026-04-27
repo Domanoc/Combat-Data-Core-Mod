@@ -47,7 +47,7 @@ local reactorsPage = { CurrentPage = 0, MaxPage = 0 }
 ---
 ---Loads the needed shop sprites, so we can add buttons and rearrange the layout
 function ComponentShop.LoadShopSprites()
-	local modPath = Common.GetModPath("ModFramework");
+	local modPath = Common.GetModPathByName("ModFramework");
 	Storage.SpriteShopButtonLeft = Common.AddSprite(modPath.."sprites\\ShopButtonLeft.png", 2, false, false, 0, 0)
 	Storage.SpriteShopButtonRight = Common.AddSprite(modPath.."sprites\\ShopButtonRight.png", 2, false, false, 0, 0)
     Storage.SpriteShopRobotOriginal = asset_get_index("spr_engineer_robot")

@@ -38,7 +38,7 @@ function Hanger.ProcessPilotDataQueue()
 end
 
 ---Add a new pilot to the hanger
----@param pilotData PilotData dataset for adding a new pilot
+---@param pilotData LocalizedPilotData dataset for adding a new pilot
 function Private.AddPilotFromQueue(pilotData)
 	local obj_content_pilots = Common.GetObjContentPilots()
 
@@ -63,7 +63,7 @@ function Private.AddPilotFromQueue(pilotData)
     addedPilot.my_snd_index = soundIndex
     addedPilot.phrase_number = Common.GetPhraseNumber(soundIndex)
     --pilot data values
-    addedPilot.text_work_exp = Common.SelectCorrectLocalizedString(pilotData.WorkExperience)
+    addedPilot.text_work_exp = pilotData.WorkExperience
     addedPilot.stat_age = pilotData.Age
     addedPilot.cyborg = pilotData.IsCyborg
     --template data values

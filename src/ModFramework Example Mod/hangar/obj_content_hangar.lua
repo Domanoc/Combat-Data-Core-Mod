@@ -21,21 +21,11 @@ function create(q,v_modid)
 		Template = "FREEZ", 		--this wil determine the used sprite and the missing optional values.
 		Age = 22,					--the age of the pilot
 		IsCyborg = false,			--if true the pilot is a cyborg
-		--We can provide full language support like this, atleast 1 language is needed
-		--LanguageFile variable should match the language file ini that the string targets
-		--Value should contain the string in the correct language for that language file
 		WorkExperience = {			--the text for the work experience
-			 { LanguageFile = "loc_english.ini", Value = "Description text for this weapon." }
-			,{ LanguageFile = "loc_french.ini", Value = "Texte descriptif de cette expérience professionnelle." }
-			,{ LanguageFile = "loc_german.ini", Value = "Beschreibungstext für dieses Praktikum." }
-			,{ LanguageFile = "loc_polish.ini", Value = "Tekst opisujący to doświadczenie zawodowe." }
-			,{ LanguageFile = "loc_portuguese_brazil.ini", Value = "Descrição da experiência profissional." }
-			,{ LanguageFile = "loc_russian.ini", Value = "Описание данной программы стажировки." }
-			,{ LanguageFile = "loc_spanish.ini", Value = "Texto descriptivo para esta experiencia laboral." }
-			,{ LanguageFile = "loc_chinese.ini", Value = "本次工作经历的描述文字。" }
-			,{ LanguageFile = "chs.ini", Value = "本次工作经历的描述文字。" }
-			,{ LanguageFile = "loc_italian.ini", Value = "Testo descrittivo di questa esperienza lavorativa." }
-			,{ LanguageFile = "japanese.ini", Value = "この職場体験に関する説明文。" }
+			--Data that represents a string that will be localized. Its recommended to be in english for code readability
+			--The other actual values will be pulled from the mods localization files
+			--Use the GenerateLocalizationFiles() function to generate the mods localization files in development
+			LocalizedDefaultValue = "Example work experience text."
 		},
 		Name = "JOHN",				--the name of the pilot
 		Voice = "male_scottish", 	--the voice used
@@ -50,24 +40,14 @@ function create(q,v_modid)
 	--Not all fields are required so you can make one with a more limited set of data
 	--Missing data will be provided by the template
 	Mod.Hanger.AddPilot({
-		Template = "ELLEN", --this wil determine the used sprite and the missing optional values.
-		Age = 40,
-		IsCyborg = false,
-		--We can provide full language support like this, atleast 1 language is needed
-		--LanguageFile variable should match the language file ini that the string targets
-		--Value should contain the string in the correct language for that language file
-		WorkExperience = {
-			 { LanguageFile = "loc_english.ini", Value = "Description text for this weapon." }
-			,{ LanguageFile = "loc_french.ini", Value = "Texte descriptif de cette expérience professionnelle." }
-			,{ LanguageFile = "loc_german.ini", Value = "Beschreibungstext für dieses Praktikum." }
-			,{ LanguageFile = "loc_polish.ini", Value = "Tekst opisujący to doświadczenie zawodowe." }
-			,{ LanguageFile = "loc_portuguese_brazil.ini", Value = "Descrição da experiência profissional." }
-			,{ LanguageFile = "loc_russian.ini", Value = "Описание данной программы стажировки." }
-			,{ LanguageFile = "loc_spanish.ini", Value = "Texto descriptivo para esta experiencia laboral." }
-			,{ LanguageFile = "loc_chinese.ini", Value = "本次工作经历的描述文字。" }
-			,{ LanguageFile = "chs.ini", Value = "本次工作经历的描述文字。" }
-			,{ LanguageFile = "loc_italian.ini", Value = "Testo descrittivo di questa esperienza lavorativa." }
-			,{ LanguageFile = "japanese.ini", Value = "この職場体験に関する説明文。" }
+		Template = "ELLEN", 		--this wil determine the used sprite and the missing optional values.
+		Age = 40,					--the age of the pilot
+		IsCyborg = false,			--if true the pilot is a cyborg
+		WorkExperience = {			--the text for the work experience
+			--Data that represents a string that will be localized. Its recommended to be in english for code readability
+			--The other actual values will be pulled from the mods localization files
+			--Use the GenerateLocalizationFiles() function to generate the mods localization files in development
+			LocalizedDefaultValue = "Example work experience text."
 		},
 	})
 
@@ -75,25 +55,15 @@ function create(q,v_modid)
 	local emoticon = Mod.Common.GetPilotTemplateIndex("EMOTICON")
 	if (emoticon ~= nil) then
 		Mod.Hanger.AddPilot({
-			Template = emoticon, --this wil determine the used sprite and the missing optional values.
-			Age = 666,
-			IsCyborg = false,
-			--We can provide full language support like this, atleast 1 language is needed
-			--LanguageFile variable should match the language file ini that the string targets
-			--Value should contain the string in the correct language for that language file
-			WorkExperience = {
-				{ LanguageFile = "loc_english.ini", Value = "Description text for this weapon." }
-				,{ LanguageFile = "loc_french.ini", Value = "Texte descriptif de cette expérience professionnelle." }
-				,{ LanguageFile = "loc_german.ini", Value = "Beschreibungstext für dieses Praktikum." }
-				,{ LanguageFile = "loc_polish.ini", Value = "Tekst opisujący to doświadczenie zawodowe." }
-				,{ LanguageFile = "loc_portuguese_brazil.ini", Value = "Descrição da experiência profissional." }
-				,{ LanguageFile = "loc_russian.ini", Value = "Описание данной программы стажировки." }
-				,{ LanguageFile = "loc_spanish.ini", Value = "Texto descriptivo para esta experiencia laboral." }
-				,{ LanguageFile = "loc_chinese.ini", Value = "本次工作经历的描述文字。" }
-				,{ LanguageFile = "chs.ini", Value = "本次工作经历的描述文字。" }
-				,{ LanguageFile = "loc_italian.ini", Value = "Testo descrittivo di questa esperienza lavorativa." }
-				,{ LanguageFile = "japanese.ini", Value = "この職場体験に関する説明文。" }
-			},
+			Template = emoticon, 	--this wil determine the used sprite and the missing optional values.
+			Age = 666,				--the age of the pilot
+			IsCyborg = false,		--if true the pilot is a cyborg
+			WorkExperience = {		--the text for the work experience
+			--Data that represents a string that will be localized. Its recommended to be in english for code readability
+			--The other actual values will be pulled from the mods localization files
+			--Use the GenerateLocalizationFiles() function to generate the mods localization files in development
+			LocalizedDefaultValue = "Example work experience text."
+		},
 		})
 	end
 end

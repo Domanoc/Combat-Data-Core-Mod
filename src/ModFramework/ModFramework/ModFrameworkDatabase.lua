@@ -232,7 +232,7 @@ function Database.AddWeapon(weaponData)
 		CanBeConstructed = weaponData.CanBeConstructed,
 		GiveFreeItem = weaponData.GiveFreeItem,
 		BlueLength = weaponData.BlueLength,
-		WeaponDescription = Common.SelectCorrectLocalizedString(weaponData.Description)
+		WeaponDescription = Common.GetLocalizedString("WeaponDescription", weaponData.Name, weaponData.Description)
 	}
 	table.insert(Storage.ModdedComponentList, moddedComponent)
 

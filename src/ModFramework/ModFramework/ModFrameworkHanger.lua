@@ -24,7 +24,23 @@ local Common = require("ModFrameworkCommon")
 ---Add a new pilot to the hanger
 ---@param pilotData PilotData dataset for adding a new pilot
 function Hanger.AddPilot(pilotData)
-    table.insert(Storage.PilotDataQueue, pilotData)
+    ---@type LocalizedPilotData
+    local localizedPilotData = {
+        Template = pilotData.Template,
+        WorkExperience = Common.GetLocalizedString("PilotWorkExperience", "Pilot", pilotData.WorkExperience),
+        Age = pilotData.Age,
+        IsCyborg = pilotData.IsCyborg,
+        Name = pilotData.Name,
+        Voice = pilotData.Voice,
+        Level = pilotData.Level,
+        LevelExperience = pilotData.LevelExperience,
+        Skill = pilotData.Skill,
+        Reaction = pilotData.Reaction,
+        Vitality = pilotData.Vitality,
+        StressResistance = pilotData.StressResistance,
+    }
+
+    table.insert(Storage.PilotDataQueue, localizedPilotData)
 end
 
 ------------------------------------------------------------------------------
