@@ -6,7 +6,7 @@ When confronted with invalid data it wil provide a error message box with releva
 
 
 ### Note:
-All function expect the framework to be loaded in the file. recommended is the create function.
+All functions expect the framework to be loaded in the file. recommended is the create function.
 ```lua
 --load the mod framework as a global for use within this file
 Mod = require("ModFrameworkModule")
