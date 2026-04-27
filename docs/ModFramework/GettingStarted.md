@@ -89,7 +89,7 @@ Now all that remains the the creative process. And to get you going some startin
 - [Take a look at the functions the framework provides.](./Overview.md)
 - Check out the "[ModFramework Example Mod](../../src/ModFramework%20Example%20Mod/)" as it provides basic examples on the framework features.
 - Check out what existing mods do.
-- Ask you questions on the mech engineer discord in the #mods-discussions
+- Ask your questions on the mech engineer discord in the #mods-discussions
 
 Good luck and happy modding.
 
