@@ -21,6 +21,8 @@ https://store.steampowered.com/app/1428520/Mech_Engineer/
 [Getting started](./docs/ModFramework/GettingStarted.md)
 - Want to report an issue?   
 [Reporting an issue](./docs/ModFramework/ReportAnIssue.md)
+- Looking for the gameobject documentation?   
+[GameObject documentation](./docs/ModFramework/GameObjectDocumentation.md)
 
 
 ## Docs

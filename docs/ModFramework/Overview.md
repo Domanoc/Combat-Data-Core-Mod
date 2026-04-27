@@ -5,7 +5,9 @@
 - [Component shop management](./Features/ComponentShop.md)
 - [Debug functions](./Features/DebugFunctions.md)
 - [GameObject documentation](./GameObjectDocumentation.md)
+- [GameObject Getters](./Features/GameObjectGetters.md)
 - [Localization](./Features/Localization.md)
+- [Research on existing saves fix](./Features/ResearchFix.md)
 - [Sprite function wrappers](./Features/SpriteFunctionWrappers.md)
 
 

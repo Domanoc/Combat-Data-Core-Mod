@@ -2,7 +2,8 @@
 
 - [Change log](./Changelog.md)
 - [Getting started](./GettingStarted.md)
-- [Localization](./Localization.md)
+- [Localization](./Features/Localization.md)
+- [GameObject documentation](./GameObjectDocumentation.md)
 - [Mod Compatibility Testing](./ModCompatibilityTesting.md)
 - [Overview](./Overview.md)
 - [Steam Description](./SteamDescription.txt)
