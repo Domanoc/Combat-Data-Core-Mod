@@ -7,7 +7,5 @@
 - [Overview](./Overview.md)
 - [Steam Description](./SteamDescription.txt)
 
-
-
------
+---
 ##### [Home](../../readme.md)

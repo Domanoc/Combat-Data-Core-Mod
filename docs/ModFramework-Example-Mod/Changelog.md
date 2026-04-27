@@ -60,7 +60,5 @@
     - Added example for using debug function to unlock all research the next day
     - Added example for using debug function to unlock all shop components
 
-
-
------
+---
 ##### [Home](../../readme.md)

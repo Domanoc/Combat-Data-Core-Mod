@@ -55,7 +55,5 @@ Added a mod prefix to the mods global variables to prevent global variables coll
 - Added Sentinel mech.
 - Added Behemoth mech.
 
-
-
------
+---
 ##### [Home](../../readme.md)

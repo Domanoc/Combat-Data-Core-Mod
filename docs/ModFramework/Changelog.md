@@ -52,7 +52,5 @@
     - Write the contents of a gamemaker ds map to a message
     - Write the contents of a table to a message
 
-
-
------
+---
 ##### [Home](../../readme.md)
