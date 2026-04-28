@@ -83,7 +83,7 @@ Mod.Common.ShowError("Could not do the thing i wanted to do.")
 
 ## Dumb object to message
 Useful for printing the contents of gamemaker structs or tables. you can copy the message box by selecting (default when opening) and using Ctrl+C. and then dump in your text editor of choice.   
-Note: since gamemaker structs are seen as numbers in lua this function cannot see the difference. Every number is treated as a gamemaker struct. So it wil throw an error when it was just a number.
+**Note:** since gamemaker structs are seen as numbers in lua this function cannot see the difference. Every number is treated as a gamemaker struct. So it wil throw an error when it was just a number.
 ```lua
 --Prints the contents of a object to a message box
 Mod.Common.DumpObjToMessage(object);
