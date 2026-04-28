@@ -24,6 +24,11 @@
     "cSpell.words": [
         "Aseprite",
         "Autocannon",
+        "bbbottom",
+        "bbleft",
+        "bboxmode",
+        "bbright",
+        "bbtop",
         "bjorn",
         "currentline",
         "Dsmap",
@@ -32,7 +37,10 @@
         "Gamemode",
         "gameobject",
         "gameobjects",
+        "halign",
         "Holo",
+        "imgnumb",
+        "irandom",
         "JENIPHER",
         "KAWAII",
         "KiberKreker",
@@ -47,8 +55,14 @@
         "Quadro",
         "removeback",
         "sandboxed",
+        "sepmasks",
         "skaian",
         "skalaknit",
-        "sumneko"
+        "subimg",
+        "sumneko",
+        "xorig",
+        "xscale",
+        "yorig",
+        "yscale"
     ]
 }

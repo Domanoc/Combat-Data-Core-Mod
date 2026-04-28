@@ -1,7 +1,6 @@
-------------------------------------------------------------------------------
---- GLOBAL MOD FUNCTIONS ---------------------------------------------------------
-------------------------------------------------------------------------------
 ---@meta
+
+---See the gamemaker documentation for further details on the functions
 
 ---This opens an ini file for reading and/or writing.
 ---If the ini file does not exist at the location, it may be created when writing.
