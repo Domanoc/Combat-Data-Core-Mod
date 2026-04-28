@@ -35,5 +35,9 @@
 ## Changing existing objects
 - [Changing research](./Features/ChangingResearch.md)
 
+## Steam workshop
+- [Upload mod to steam workshop](./docs/ModFramework/UploadingModToSteamWorkshop.md)   
+- [Update steam workshop mod](./docs/ModFramework/UpdatingWorkshopMod.md)
+
 ---
 ##### [Home](../../readme.md)

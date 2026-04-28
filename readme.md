@@ -23,6 +23,10 @@ https://store.steampowered.com/app/1428520/Mech_Engineer/
 [Reporting an issue](./docs/ModFramework/ReportAnIssue.md)
 - Looking for the gameobject documentation?   
 [GameObject documentation](./docs/ModFramework/GameObjectDocumentation.md)
+- Looking for instruction to upload/update to steam workshop?   
+[Upload mod to steam workshop](./docs/ModFramework/UploadingModToSteamWorkshop.md)   
+[Update steam workshop mod](./docs/ModFramework/UpdatingWorkshopMod.md)
+
 
 
 ## Docs
