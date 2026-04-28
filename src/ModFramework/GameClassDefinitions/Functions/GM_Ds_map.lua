@@ -6,7 +6,7 @@
 ---Lua sees ds maps as a number and you cant access the contents directly as you can with the gamemaker structs
 ---
 ---To work with ds maps use functions like: 
----ds_map_exists, ds_map_create, ds_map_destroy, ds_map_add, ds_map_copy, ds_map_find_value
+---ds_map_exists, ds_map_create, ds_map_destroy, ds_map_add, ds_map_copy, ds_map_find_value, ds_map_keys_to_array
 ---@class ds_map
 
 ---This function will return true if the specified key exists in the (previously created) DS map, and false if it does not.
@@ -50,3 +50,9 @@ function ds_map_copy(id, source) end
 ---@param key string The key to find.
 ---@return any value the value found or if no such key exists then the function will return undefined.
 function ds_map_find_value(id, key) end
+
+---With this function you can retrieve all of the keys that a DS map contains. 
+---You supply the DS map ID to get the keys from (as returned by ds_map_create()) and the function will return an array where each entry in the array is a key from the DS map.
+---@param id ds_map The id of the map to use.
+---@return table
+function ds_map_keys_to_array(id) end

@@ -1,0 +1,21 @@
+---@meta
+
+---See the gamemaker documentation for further details on the functions
+
+---Gets all the key values for a struct and returns them in an array
+---@param id number the index for the struct
+---@return string[] array the key values of the struct as strings
+function struct_get_names(id) end
+
+---This function gets the unique identifying index for a game asset from its name.
+---
+---If the asset is not found, the function will return a value of -1, otherwise it will return the unique index ID for the asset being checked. 
+---This ID can then be used in other functions as you would any other index value, like the sprite_index or the path_index, for example. 
+---Please note that although this function can be used to reference assets from strings (see example below), 
+---you should always make sure that the asset exists before using it otherwise you may get errors that will crash your game.
+---@param name any
+function asset_get_index(name) end
+
+---This function creates a pop-up message box which displays the given string and a button marked "Ok" to close it.
+---@param value string The string to show in the pop-up message.
+function show_message(value) end

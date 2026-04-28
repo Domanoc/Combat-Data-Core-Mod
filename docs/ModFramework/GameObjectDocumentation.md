@@ -13,7 +13,7 @@ Is a reference handle to the gamemaker struct data structure. When provided with
 Its a reference handle to the gamemaker ds_map data structure, stores key and value pairs.
 Lua sees ds maps as a number and you cant access the contents directly as you can with the gamemaker structs
 
-To work with ds maps use functions like: ds_map_exists, ds_map_create, ds_map_destroy, ds_map_add, ds_map_copy, ds_map_find_value
+To work with ds maps use functions like: ds_map_exists, ds_map_create, ds_map_destroy, ds_map_add, ds_map_copy, ds_map_find_value, ds_map_keys_to_array
 
 ### DS GRID
 Its a reference handle to the gamemaker ds_grid data structure. Its a dynamic 2D data structure used to store values in a grid (rows and columns).
