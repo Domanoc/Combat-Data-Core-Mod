@@ -1,4 +1,4 @@
-# ModFramework - Upload to Steam workshop
+# ModFramework - Update a steam workshop mod
 #### [Back to overview](./Overview.md)
 ---
 ## Checklist
