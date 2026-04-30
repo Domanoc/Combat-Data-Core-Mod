@@ -50,9 +50,14 @@ function Common.GetPilotTemplateIndex(name) end
 function Common.GetModdedComponent(referenceName, type) end
 
 ---Gets the custom component.
----@param referenceName string The reference name of the component.
+---@param referenceName string The reference name of the custom component.
 ---@return ModdedComponent? item The modded component if found, nil otherwise.
 function Common.GetCustomComponent(referenceName) end
+
+---Gets the custom component.
+---@param type number The type the custom component.
+---@return ModdedComponent? item The modded component if found, nil otherwise.
+function Common.GetCustomComponentByType(type) end
 
 ---Gets the modded components based on the search criteria.
 ---@param searchCriteria ModdedComponentSearchCriteria[] The components to search for.

@@ -180,11 +180,25 @@ function Common.GetModdedComponent(referenceName, type)
 end
 
 ---Gets the custom component.
----@param referenceName string The reference name of the component.
+---@param referenceName string The reference name of the custom component.
 ---@return ModdedComponent? item The modded component if found, nil otherwise.
 function Common.GetCustomComponent(referenceName)
 	for _, moddedComponent in ipairs(Storage.ModdedComponentList) do
 		if (moddedComponent.ReferenceName == referenceName and
+			moddedComponent.ComponentType >= 1000 and
+			moddedComponent.ComponentType < Storage.NextCustomComponentType) then
+			return moddedComponent
+		end
+	end
+	return nil
+end
+
+---Gets the custom component.
+---@param type number The type the custom component.
+---@return ModdedComponent? item The modded component if found, nil otherwise.
+function Common.GetCustomComponentByType(type)
+	for _, moddedComponent in ipairs(Storage.ModdedComponentList) do
+		if (moddedComponent.ComponentType == type and
 			moddedComponent.ComponentType >= 1000 and
 			moddedComponent.ComponentType < Storage.NextCustomComponentType) then
 			return moddedComponent

@@ -299,6 +299,16 @@ local PilotActivities = {
 }
 Types.PilotActivities = PilotActivities
 
+---Hangar index identifiers
+---@class HangerIndexes
+local HangerIndexes = {
+	component_type = 2,
+	item_index = 3,
+	logo = 5,
+	logo_index = 11
+}
+Types.HangerIndexes = HangerIndexes
+
 ---A non complete list of Virtual Keys
 ---@class VirtualKeys
 local VirtualKeys = {

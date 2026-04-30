@@ -103,23 +103,18 @@ function Production.SetModdedSprites()
 	local hanger_mass = obj_component_shop.hanger_mass
 
 	--Hanger identifiers
-	local hangerTableIndexes = {
-		component_type = 2,
-		item_index = 3,
-		logo = 5,
-		logo_index = 11
-	}
+	local hangerIndexes = Types.HangerIndexes
 
 	--We step through the hanger/production items to find our modded items
 	for _, hangar in ipairs(hanger_mass) do
-		local componentType = hangar[hangerTableIndexes.component_type]
-		local itemIndex = hangar[hangerTableIndexes.item_index]
+		local componentType = hangar[hangerIndexes.component_type]
+		local itemIndex = hangar[hangerIndexes.item_index]
 
 		for _, modded_item in ipairs(Storage.ModdedComponentList) do
 			if (componentType == modded_item.ComponentType and itemIndex == modded_item.ResourceNumber) then
 				--When the reference matches the modded element we set the relevant mod sprite to the logo and logo index.
-				hangar[hangerTableIndexes.logo] = modded_item.SpriteIndex
-				hangar[hangerTableIndexes.logo_index] = modded_item.SpriteIndex
+				hangar[hangerIndexes.logo] = modded_item.SpriteIndex
+				hangar[hangerIndexes.logo_index] = modded_item.SpriteIndex
 			end
 		end
 	end
@@ -345,6 +340,26 @@ function Production.DrawCustomComponentDescription()
 	end
 
 	CurrentComponentType = obj_component_shop.cur_item.comp_type
+end
+
+---Returns the staff that where used in the construction of the custom component
+---
+---Used in the done function of obj_component_shop.lua
+---@param hangerSlot number The hanger slot that has the completed item
+function Production.ReturnStaffAfterCustomComponentCompletion(hangerSlot)
+	local obj_component_shop = Common.GetObjComponentShop()
+
+	--load needed types
+	local hangerIndexes = Types.HangerIndexes
+
+	local hanger = obj_component_shop.hanger_mass[hangerSlot]
+	local componentType = hanger[hangerIndexes.component_type]
+	local component = Common.GetCustomComponentByType(componentType)
+	if (component ~= nil) then
+		local staff = variable_global_get("res_staff")
+		staff = staff + component.CustomData.PriceStaff
+		variable_global_set("res_staff", staff)
+	end
 end
 
 ---Get the part of the string that will fit. And scroll based on the lines DisplayStep.
