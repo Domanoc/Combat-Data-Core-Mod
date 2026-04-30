@@ -41,7 +41,7 @@ When making a mod using the ModFramework we can generate the needed localization
 In your mods "obj_database.lua" add the following to the create function.
 ```lua
 function create(q,v_modid)
-	Mod = require("ModFrameworkModule")
+	Mod = require("ModFramework")
 	Mod.Common.GenerateLocalizationFiles()
     --other code
 end

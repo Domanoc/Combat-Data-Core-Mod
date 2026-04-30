@@ -18,7 +18,7 @@ There is currently no support for custom sprite sizes in the framework. So for b
 ## Code example
 ```lua
 --load the mod framework
-Mod = require("ModFrameworkModule")
+Mod = require("ModFramework")
 
 --path to the mod folder
 local modFilepath = Mod.Common.GetModPath()
@@ -33,12 +33,13 @@ local baseResearchResNumbers = Mod.Types.BaseResearchResNumbers
 --An component that is added as research unlock will, add a copy on completion and or unlock the production of item based on this setting.
 --With this function we can get our modded components that we made in "obj_database.lua".
 local unlocks = Mod.Common.GetModdedComponents({
-    { Name = "example_mech", ComponentType = componentTypes.Mech }
+    { ReferenceName = "example_mech", ComponentType = componentTypes.Mech },
+    { ReferenceName = "example_solenoid", ComponentType = componentTypes.Solenoid }
 })
 
 --We can create a new research and as a return value we get the new res number to create links with.
 local exampleResearchResNumber = Mod.Research.AddResearch({
-    Name = "example_research_1",							--the name of the research, used to find its reference
+    ReferenceName = "example_research_1",					--the name of the research, used to find its reference
     Position = 40,											--position number on the research tree. You can see positions in the game with f6 (debug mode)
     PrerequisiteResearchResNumber = 						--the res number of the prerequisite research that unlocks this research, each research can only be the prerequisite for 3 other researches. leave nil for no prerequisite.
         baseResearchResNumbers.FIRST_GENERATION_ENGINE,

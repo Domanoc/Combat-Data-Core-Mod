@@ -23,21 +23,22 @@ There is currently no support for custom sprite sizes in the framework. So for b
 ## Code example
 ```lua
 --load the mod framework
-Mod = require("ModFrameworkModule")
+Mod = require("ModFramework")
 
 --path to the mod folder
 local modFilepath = Mod.Common.GetModPath()
 
+--An example for creating a modded pilot template
 Mod.Database.AddPilotTemplate({
-    Name = "EMOTICON",
-    Level = 1,
-    LevelExperience = 0,
-    Skill = 42,
-    Reaction = 30,
-    Vitality = 10,
-    StressResistance = 5,
-    Voice = "male_hispanic",
-    Sprite = modFilepath.."sprites\\example_pilot.png"
+	Name = "EMOTICON",		 --The name of the pilot, also used as a value to lookup the reference, Recommended to use full uppercase as this is what the game does.
+	Level = 1,				 --The level of the pilot.
+	LevelExperience = 0,	 --The amount of experience in the current level.
+	Skill = 42,				 --The skill stat of the pilot (0-100).
+	Reaction = 30,			 --The reaction stat of the pilot (0-100).
+	Vitality = 10,			 --The vitality stat of the pilot (0-100).
+	StressResistance = 5,	 --The stress resistance stat of the pilot (0-100).
+	Voice = "male_hispanic", --The voice used by the pilot.
+	SpritePath = modFilepath.."sprites\\example_pilot.png" --The filepath for the pilot sprite sheet. (expected 184x46 pixels, 4 frames)
 })
 ```
 

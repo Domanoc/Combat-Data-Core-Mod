@@ -10,7 +10,7 @@ use in "obj_database.lua" in the create function.
 - Set the name to something that will be unique, as this can be used to find the reference later and across other mods that use the framework.
 - 1 Sprite
 There is currently no support for custom sprite sizes in the framework. So for best results provide the sprites in the sizes as listed.
-    - Small sprite (32x32)   
+    - Small sprite (37x33)   
     The sprite is used in the production screen and in the inventory.   
     The sprite can be in color.   
     The sprite should have a transparent background.
@@ -18,7 +18,7 @@ There is currently no support for custom sprite sizes in the framework. So for b
 ## Code example
 ```lua
 --load the mod framework
-Mod = require("ModFrameworkModule")
+Mod = require("ModFramework")
 
 --path to the mod folder
 local modFilepath = Mod.Common.GetModPath()
@@ -26,21 +26,22 @@ local modFilepath = Mod.Common.GetModPath()
 --load needed types
 local componentSizes = Mod.Types.ComponentSizes
 
+--An example for creating a modded solenoid
 Mod.Database.AddSolenoid({
-    Name = "example_solenoid",
-    ComponentSize =     componentSizes.Small, --The size of the component when constructing it. 1 for single slot or 5 for a full row
-    IsResearched = 	    false,				  --Set to true if its pre researched, else false.
-    CanBeConstructed =  true,				  --Set to true if it can be constructed in the component shop, false otherwise
-    GiveFreeItem = 	    true,				  --Set to true to return a free copy when triggered as an unlock
-    PriceMetallite =    1000,				  --The amount of metallite needed to produce this weapon
-    PriceBjorn = 	    1000,				  --The amount of bjorn needed to produce this weapon
-    PriceMunilon =      1000,				  --The amount of munilon needed to produce this weapon
-    PriceSkalaknit =    1000,				  --The amount of skalaknit needed to produce this weapon
-    PriceStaff = 	    10,					  --The amount of staff needed to produce this weapon
-    ProductionDays =    2,					  --The amount of days it takes to produce this weapon
-    Power = 		    2,					  --the power value of the solenoid, lower numbers give more heat resist on reactor
-    Induction = 	    0.75,				  --the induction value of the solenoid, any deviation from 1 gives worse energy stats
-    Sprite = 		    modFilepath.."sprites\\example_solenoid.png"
+	ReferenceName = "example_solenoid",		  --The reference name of the solenoid, used to find its references
+	ComponentSize =     componentSizes.Small, --The size of the component when constructing it. 1 for single slot or 5 for a full row
+	IsResearched = 	    false,				  --Set to true if its pre researched, else false.
+	CanBeConstructed =  true,				  --Set to true if it can be constructed in the component shop, false otherwise
+	GiveFreeItem = 	    true,				  --Set to true to return a free copy when triggered as an unlock
+	PriceMetallite =    1000,				  --The amount of metallite needed to produce this solenoid
+	PriceBjorn = 	    1000,				  --The amount of bjorn needed to produce this solenoid
+	PriceMunilon =      1000,				  --The amount of munilon needed to produce this solenoid
+	PriceSkalaknit =    1000,				  --The amount of skalaknit needed to produce this solenoid
+	PriceStaff = 	    10,					  --The amount of staff needed to produce this solenoid
+	ProductionDays =    2,					  --The amount of days it takes to produce this solenoid
+	Power = 		    2,					  --the power value of the solenoid, lower numbers give more heat resist on reactor
+	Induction = 	    0.75,				  --the induction value of the solenoid, any deviation from 1 gives worse energy stats
+	SpritePath = 		modFilepath.."sprites\\example_solenoid.png" --The filepath for the solenoid sprite. (expected 37x33 pixels)
 })
 ```
 

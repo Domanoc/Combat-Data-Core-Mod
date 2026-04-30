@@ -25,9 +25,9 @@ local Engineering = require("ModFrameworkEngineering")
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 
----Use in the create function of obj_research_panel.lua
+---Fixes the empty references in the mres table.
 ---
----Fixes the empty references in the mres table
+---Used in the create function of obj_research_panel.lua
 function Research.FixResearchPanelList()
 	local obj_research_panel = Common.GetObjResearchPanel()
 
@@ -45,10 +45,10 @@ function Research.FixResearchPanelList()
 end
 
 local isResearchFixed = false
----Use in the draw_top_menu function of obj_database.lua
----
 ---In the event the mod is added to an existing save the newly added mod research is all defaulted to 0 days remaining and condition 0 (closed).
----To fix this we need to validate the research states to see if its a valid state through gameplay or if its a state from loading into an existing save
+---To fix this we need to validate the research states to see if its a valid state through gameplay or if its a state from loading into an existing save.
+---
+---Used in the draw_top_menu function of obj_database.lua
 function Research.FixModdedResearch()
 	local obj_weapon_test = Common.GetObjWeaponTest()
 	local isIniLoaded = obj_weapon_test.load_ini
@@ -90,19 +90,19 @@ function Research.FixModdedResearch()
 	isResearchFixed = true
 end
 
----Use in the create function of obj_research.lua
+---Store the games research items for later use.
 ---
----Used to store the games research items for later use.
+---Used in the create function of obj_research.lua
 ---@param item game_obj_research the research item to be stored
 function Research.StoreResearchReference(item)
 	table.insert(Storage.LoadedResearchList, item)
 end
 
----Use in the research_done function of obj_research.lua
+---Processes the completion event for the modded research.
 ---
----Processes the completion event for the modded research
----@param completedResearch game_obj_research the full reference to the game_research_item that is completed
----@param res_number number the number for the research as found in the debug (F6) of the research screen (upper left white number)
+---Used in the research_done function of obj_research.lua
+---@param completedResearch game_obj_research The full reference to the game_research_item that is completed.
+---@param res_number number The number for the research as found in the debug (F6) of the research screen (upper left white number).
 function Research.ProcessResearchCompletion(completedResearch, res_number)
 	for _, research in ipairs(Storage.ModdedResearchList) do
 		if (research.ResNumber == res_number) then
@@ -111,9 +111,9 @@ function Research.ProcessResearchCompletion(completedResearch, res_number)
 	end
 end
 
----Processes the unlocks and gives the free items if applicable
----@param completedResearch game_obj_research the full reference to the game_research_item that is completed
----@param unlockedComponents ModdedComponent[] the components that are unlocked
+---Processes the unlocks and gives the free items if applicable.
+---@param completedResearch game_obj_research The full reference to the game_research_item that is completed.
+---@param unlockedComponents ModdedComponent[] The components that are unlocked.
 function Private.ProcessResearchUnlocks(completedResearch, unlockedComponents)
 	for _, component in ipairs(unlockedComponents) do
 		if (component.ComponentType == Types.ComponentTypes.Mech) then
@@ -129,9 +129,9 @@ function Private.ProcessResearchUnlocks(completedResearch, unlockedComponents)
 	completedResearch.give_item = false
 end
 
----Processes the unlock for a mech type
----@param component ModdedComponent the mech component to process
----@param giveItem boolean true if a free item is given, false otherwise
+---Processes the unlock for a mech type.
+---@param component ModdedComponent The mech component to process.
+---@param giveItem boolean True if a free item is given, false otherwise.
 function Private.ProcessMechUnlock(component, giveItem)
 	if (component.ShopComponent ~= nil) then
 		component.ShopComponent.researched = true --activates the shop component
@@ -142,9 +142,9 @@ function Private.ProcessMechUnlock(component, giveItem)
 	end
 end
 
----Processes the unlock for a weapon type
----@param component ModdedComponent the weapon component to process
----@param giveItem boolean true if a free item is given, false otherwise
+---Processes the unlock for a weapon type.
+---@param component ModdedComponent The weapon component to process.
+---@param giveItem boolean True if a free item is given, false otherwise.
 function Private.ProcessWeaponUnlock(component, giveItem)
 	if (component.ShopComponent ~= nil) then
 		component.ShopComponent.researched = true --activates the shop component
@@ -155,9 +155,9 @@ function Private.ProcessWeaponUnlock(component, giveItem)
 	end
 end
 
----Processes the unlock for a solenoid type
----@param component ModdedComponent the solenoid component to process
----@param giveItem boolean true if a free item is given, false otherwise
+---Processes the unlock for a solenoid type.
+---@param component ModdedComponent The solenoid component to process.
+---@param giveItem boolean True if a free item is given, false otherwise.
 function Private.ProcessSolenoidUnlock(component, giveItem)
 	if (component.ShopComponent ~= nil) then
 		component.ShopComponent.researched = true --activates the shop component

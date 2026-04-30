@@ -41,7 +41,7 @@ function create(q,v_modid)
 
 	--An example for creating a modded mech
 	Mod.Database.AddMech({
-		ReferenceName =    "example_mech",		 --The name of the mech, used to find its references
+		ReferenceName =    "example_mech",		 --The reference name of the mech, used to find its references
 		ComponentSize =    componentSizes.Large, --The size of the component when constructing it. 1 for single slot or 5 for a full row
 		IsResearched = 	   false,				 --Set to true if its pre researched, else false.
 		CanBeConstructed = true,				 --Set to true if it can be constructed in the component shop, false otherwise
@@ -62,28 +62,28 @@ function create(q,v_modid)
 		ReloadTime = 	   3,					 --The base reload time of the mech
 		BattleTime = 	   3,					 --The base battle time of the mech (the length of time it has ammo reserves for to shoot)
 		MechCells = {
-			 {ModuleType = mechModules.Cabin, 	X =   0, Y = 22} --cabin, the game is design for mechs to have only 1 cabin. adding more might result in issues	or unexpected behavior
-			,{ModuleType = mechModules.Reactor, X =   0, Y = 15} --reactor, the game is design for mechs to have only 1 reactor. adding more might result in issues	or unexpected behavior
-			,{ModuleType = mechModules.Motor, 	X =   5, Y =  4} --motor 1, you can add more motors.
-			,{ModuleType = mechModules.Motor, 	X =  -5, Y =  4} --motor 2
-			,{ModuleType = mechModules.Motor, 	X =   5, Y =  9} --motor 3
-			,{ModuleType = mechModules.Motor, 	X =  -5, Y =  9} --motor 4
-			,{ModuleType = mechModules.Weapon, 	X =  10, Y = 16} --gun 1, you can add a maximum of 12 guns, the game throws errors when a mech has more
-			,{ModuleType = mechModules.Weapon, 	X = -10, Y = 16} --gun 2
-			,{ModuleType = mechModules.Aux, 	X =   6, Y = 23} --aux 1, you can add more auxiliary slots.
-			,{ModuleType = mechModules.Aux, 	X =  -6, Y = 23} --aux 2
+			{ModuleType = mechModules.Cabin, 	X =   0, Y = 22}, --cabin, the game is design for mechs to have only 1 cabin. adding more might result in issues	or unexpected behavior
+			{ModuleType = mechModules.Reactor, 	X =   0, Y = 15}, --reactor, the game is design for mechs to have only 1 reactor. adding more might result in issues	or unexpected behavior
+			{ModuleType = mechModules.Motor, 	X =   5, Y =  4}, --motor 1, you can add more motors.
+			{ModuleType = mechModules.Motor, 	X =  -5, Y =  4}, --motor 2
+			{ModuleType = mechModules.Motor, 	X =   5, Y =  9}, --motor 3
+			{ModuleType = mechModules.Motor, 	X =  -5, Y =  9}, --motor 4
+			{ModuleType = mechModules.Weapon, 	X =  10, Y = 16}, --gun 1, you can add a maximum of 12 guns, the game throws errors when a mech has more
+			{ModuleType = mechModules.Weapon, 	X = -10, Y = 16}, --gun 2
+			{ModuleType = mechModules.Aux, 		X =   6, Y = 23}, --aux 1, you can add more auxiliary slots.
+			{ModuleType = mechModules.Aux, 		X =  -6, Y = 23}, --aux 2
 		},
-		SpriteSmall = 			modFilepath.."sprites\\example_mech_small.png", 			--The sprite used at the production screen
-		SpriteBig = 			modFilepath.."sprites\\example_mech_big.png",				--The paintable mech sprite
-		SpriteBattle = 		  	modFilepath.."sprites\\example_mech_battle.png",			--The shoot and idle frames during battle
-		SpriteBattleDead = 	  	modFilepath.."sprites\\example_mech_dead.png",				--The death sprite when the mech gets destroyed during battle
-		SpriteMeleeVertical = 	modFilepath.."sprites\\example_mech_melee_vertical.png",    --The animation atlas for a vertical melee, optional if the mech has no melee
-		SpriteMeleeHorizontal = modFilepath.."sprites\\example_mech_melee_horizontal.png"   --The animation atlas for a horizontal melee,  optional if the mech has no melee
+		SpritePathProduction = 		modFilepath.."sprites\\example_mech_production.png", 		--The filepath for the mech's production sprite. Used on the production tab. (expected 46x49 pixels)
+		SpritePathBig = 			modFilepath.."sprites\\example_mech_big.png",				--The filepath for the mech's big sprite. Used in the engineering tab. (expected 398x343 pixels)
+		SpritePathBattle = 		  	modFilepath.."sprites\\example_mech_battle.png",			--The filepath for the mech's battle sprite sheet. Used in while in battle. (expected 100x50 pixels, 2 frames)
+		SpritePathDestroyed = 	  	modFilepath.."sprites\\example_mech_destroyed.png",			--The filepath for the mech's destroyed sprite. Used in while in destroyed battle. (expected 50x50 pixels)
+		SpritePathMeleeVertical = 	modFilepath.."sprites\\example_mech_melee_vertical.png",    --The filepath for the mech's vertical melee sprite sheet. Used in while in melee combat. (expected 350x50 pixels, 7 frames). optional if the mech has no melee.
+		SpritePathMeleeHorizontal = modFilepath.."sprites\\example_mech_melee_horizontal.png"   --The filepath for the mech's horizontal melee sprite sheet. Used in while in melee combat. (expected 350x50 pixels, 7 frames). optional if the mech has no melee.
 	})
 
 	--An example for creating a modded weapon
 	Mod.Database.AddWeapon({
-		ReferenceName = 			    "example_weapon",	  --The name of the mech, used to find its references
+		ReferenceName = 	"example_weapon",	  --The reference name of the weapon, used to find its references
 		Description = {							  --the description text for a weapon. used when the weapon is added to the main slot in engineering.
 			--Data that represents a string that will be localized. Its recommended to be in english for code readability
 			--The other actual values will be pulled from the mods localization files
@@ -110,14 +110,13 @@ function create(q,v_modid)
 		ProjectileSpeed =   24,					  --the base projectile speed of the weapon
 		IsEnergyBuffed =    false,				  --whether the energy cost boost damage output, for energy weapons this is an additional increase on their native bonus.
 		BlueLength =        0,					  --the range of a blue weapon, default is 750
-		SpriteSmall =       modFilepath.."sprites\\example_weapon_small.png",	--the small sprite for the weapon
-		SpriteBig = 	    modFilepath.."sprites\\example_weapon_big.png",		--the big sprite for the weapon
-		SpriteHuge = 	    modFilepath.."sprites\\example_weapon_huge.png",		--the huge sprite for the weapon
+		SpritePathProduction =	modFilepath.."sprites\\example_weapon_production.png",	--The filepath for the weapon's production sprite. Used on the production tab. (expected 56x24 pixels)
+		SpritePathBig =			modFilepath.."sprites\\example_weapon_big.png",			--The filepath for the weapon's big sprite. Used on the engineering tab. (expected 796x134 pixels, 2 frames)
 	})
 
 	--An example for creating a modded solenoid
 	Mod.Database.AddSolenoid({
-		ReferenceName = "example_solenoid",		  --The name of the solenoid, used to find its references
+		ReferenceName = "example_solenoid",		  --The reference name of the solenoid, used to find its references
 		ComponentSize =     componentSizes.Small, --The size of the component when constructing it. 1 for single slot or 5 for a full row
 		IsResearched = 	    false,				  --Set to true if its pre researched, else false.
 		CanBeConstructed =  true,				  --Set to true if it can be constructed in the component shop, false otherwise
@@ -130,20 +129,20 @@ function create(q,v_modid)
 		ProductionDays =    2,					  --The amount of days it takes to produce this solenoid
 		Power = 		    2,					  --the power value of the solenoid, lower numbers give more heat resist on reactor
 		Induction = 	    0.75,				  --the induction value of the solenoid, any deviation from 1 gives worse energy stats
-		Sprite = 		    modFilepath.."sprites\\example_solenoid.png"
+		SpritePath = 		modFilepath.."sprites\\example_solenoid.png" --The filepath for the solenoid sprite. (expected 37x33 pixels)
 	})
 
 	--An example for creating a modded pilot template
 	Mod.Database.AddPilotTemplate({
-		Name = "EMOTICON",
-		Level = 1,
-		LevelExperience = 0,
-		Skill = 42,
-		Reaction = 30,
-		Vitality = 10,
-		StressResistance = 5,
-		Voice = "male_hispanic",
-		Sprite = modFilepath.."sprites\\example_pilot.png"
+		Name = "EMOTICON",		 --The name of the pilot, also used as a value to lookup the reference, Recommended to use full uppercase as this is what the game does.
+		Level = 1,				 --The level of the pilot.
+		LevelExperience = 0,	 --The amount of experience in the current level.
+		Skill = 42,				 --The skill stat of the pilot (0-100).
+		Reaction = 30,			 --The reaction stat of the pilot (0-100).
+		Vitality = 10,			 --The vitality stat of the pilot (0-100).
+		StressResistance = 5,	 --The stress resistance stat of the pilot (0-100).
+		Voice = "male_hispanic", --The voice used by the pilot.
+		SpritePath = modFilepath.."sprites\\example_pilot.png" --The filepath for the pilot sprite sheet. (expected 184x46 pixels, 4 frames)
 	})
 
 	--An example for creating a custom component.
@@ -151,16 +150,16 @@ function create(q,v_modid)
 	--It will handle the shop position, description and cost.
 	--The result trigger needs to be done by the mod creator.
 	Mod.Database.AddCustomComponent({
-		ReferenceName = "example_custom_component",
-		ComponentSize =     componentSizes.Small, --The size of the component when constructing it. 1 for single slot or 5 for a full row
-		IsResearched = 	    true,				  --Set to true if its pre researched, else false.
-		PriceMetallite =    1000,				  --The amount of metallite needed to produce this custom component
-		PriceBjorn = 	    1000,				  --The amount of bjorn needed to produce this custom component
-		PriceMunilon =      1000,				  --The amount of munilon needed to produce this custom component
-		PriceSkalaknit =    1000,				  --The amount of skalaknit needed to produce this custom component
-		PriceStaff = 	    10,					  --The amount of staff needed to produce this custom component
-		ProductionDays =    2,					  --The amount of days it takes to produce this custom component
-		Sprite = 		    modFilepath.."sprites\\example_solenoid.png",
+		ReferenceName = 	"example_custom_component", --The reference name of the custom component, used to find its references
+		ComponentSize =     componentSizes.Small, 		--The size of the component when constructing it. 1 for single slot or 5 for a full row
+		IsResearched = 	    false,				  		--Set to true if its pre researched, else false.
+		PriceMetallite =    1000,				  		--The amount of metallite needed to produce this custom component
+		PriceBjorn = 	    1000,				  		--The amount of bjorn needed to produce this custom component
+		PriceMunilon =      1000,				  		--The amount of munilon needed to produce this custom component
+		PriceSkalaknit =    1000,				  		--The amount of skalaknit needed to produce this custom component
+		PriceStaff = 	    10,					  		--The amount of staff needed to produce this custom component
+		ProductionDays =    2,					  		--The amount of days it takes to produce this custom component
+		SpritePath = 		modFilepath.."sprites\\example_custom.png", --The filepath for the custom component sprite. (expected 48x48 pixels)
 		ShopDescription = {
 			--Add the lines that should be displayed in the shop description
 			--We can add a maximum of 10 lines. More will overflow the shop window.

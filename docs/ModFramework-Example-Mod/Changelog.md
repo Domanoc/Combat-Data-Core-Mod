@@ -56,6 +56,9 @@
     - Added example for moving researches
     - Added example for relinking researches
     - Added example for using framework types to reference base researches
+- ### Custom Component
+    - Added example for adding a custom component
+    - Added example for adding a trigger to a custom component
 - ### Other
     - Added example for using debug function to unlock all research the next day
     - Added example for using debug function to unlock all shop components

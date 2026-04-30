@@ -10,13 +10,13 @@
 - [Research on existing saves fix](./Features/ResearchFix.md)
 - [Sprite function wrappers](./Features/SpriteFunctionWrappers.md)
 
-
 ## Adding new types
 - [Adding a new mech type](./Features/AddingMechType.md)
 - [Adding a new weapon type](./Features/AddingWeaponType.md)
 - [Adding a new solenoid type](./Features/AddingSolenoidType.md)
 - [Adding a new Research](./Features/AddingResearch.md)
 - [Adding a new pilot template](./Features/AddingPilotTemplate.md)
+- [Adding a new custom component](./Features/AddingCustomType.md)
 
 ## Adding new objects
 - [Adding new cabins](./Features/AddingCabinObject.md)

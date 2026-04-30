@@ -13,7 +13,7 @@ use in "obj_content_mechs.lua" in the create function, for when adding items to 
 ---@param v_modid string
 function create(q,v_modid) -- one time script when save is loaded
 	--load the mod framework as a global for use within this file
-	Mod = require("ModFrameworkModule")
+	Mod = require("ModFramework")
 
 	--This function is run every time the game is started
 	--We need to check if the this start is a new game or from a loaded save
@@ -33,8 +33,8 @@ function create(q,v_modid) -- one time script when save is loaded
 	--We need to check for nil since a the component we searched for might not have existed.
 	if (example_mech ~= nil) then
 		--example on how to add 2 mechs
-		Mod.Engineering.AddMech(example_mech.Index, "example_mech")
-		Mod.Engineering.AddMech(example_mech.Index, "example_mech")
+		Mod.Engineering.AddMech(example_mech.ResourceNumber, "example_mech")
+		Mod.Engineering.AddMech(example_mech.ResourceNumber, "example_mech")
 	end
 
 	--If we want to add a base mech we can use the Mod.Types.BaseMechs references to add the correct one

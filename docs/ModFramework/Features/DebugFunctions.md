@@ -9,7 +9,7 @@ A list of general use framework helper functions:
 All functions expect the framework to be loaded in the file. Recommended place to load is the create function.
 ```lua
 --load the mod framework as a global for use within this file
-Mod = require("ModFrameworkModule")
+Mod = require("ModFramework")
 ```
 
 
@@ -32,7 +32,7 @@ end
 ```
 
 ## Unlock all shop components
-Sets all shop components to researched. This can be used to test the component shop. This action is not saved as the components state on load is determined by research unlocks or game events.
+Sets all shop components to researched. This can be used to test the component shop.
 
 Recommend use in "obj_database.lua" in the draw_top_menu function.
 ```lua
@@ -58,7 +58,7 @@ local modFilepath = Mod.Common.GetModPath()
 
 There is an alternative version to get the path by name
 ```lua
----path to the ModFramework folder
+--path to the ModFramework folder
 local modPath = Mod.Common.GetModPathByName("ModFramework")
 ```
 
@@ -95,7 +95,7 @@ Mod.Common.DsmapToMessage(ds_map)
 ```
 
 ## To Class Type message
-Was used to make the gameobject documentation as seen [here](../../src/ModFramework/GameClassDefinitions/).
+Was used to make the gameobject documentation as seen [here](../../../src/ModFramework/_GameDefinitions/Classes/).
 ```lua
 Mod.Common.ToClassTypeMessage(object)
 ```

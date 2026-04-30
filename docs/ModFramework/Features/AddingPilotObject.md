@@ -13,7 +13,7 @@ use in "obj_content_hangar.lua" in the create function, for when adding items to
 ---@param v_modid string
 function create(q,v_modid)
 	--load the mod framework as a global for use within this file
-	Mod = require("ModFrameworkModule")
+	Mod = require("ModFramework")
 
 	--This function is run every time the game is started
 	--We need to check if the this start is a new game or from a loaded save
@@ -72,13 +72,13 @@ function create(q,v_modid)
 			Age = 666,				--the age of the pilot
 			IsCyborg = false,		--if true the pilot is a cyborg
 			WorkExperience = {		--the text for the work experience
-			--Data that represents a string that will be localized. Its recommended to be in english for code readability
-			--The other actual values will be pulled from the mods localization files
-			--Use the GenerateLocalizationFiles() function to generate the mods localization files in development
-			LocalizedString = { LocalizedDefaultValue = "Example of a reused work experience text." },
-			--We can reuse a previous localized reference if the value is the same
-			ReferenceName = "example_pilot_reuse"
-		},
+				--Data that represents a string that will be localized. Its recommended to be in english for code readability
+				--The other actual values will be pulled from the mods localization files
+				--Use the GenerateLocalizationFiles() function to generate the mods localization files in development
+				LocalizedString = { LocalizedDefaultValue = "Example of a reused work experience text." },
+				--We can reuse a previous localized reference if the value is the same
+				ReferenceName = "example_pilot_reuse"
+			},
 		})
 	end
 end

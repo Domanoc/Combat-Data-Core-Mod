@@ -83,6 +83,9 @@ function create(q, v_modid)
 
 	--We can clear the links a research has to make it easier to rearrange the tech tree.
 	Mod.Research.ClearUnlockLinks(baseResearchResNumbers.NEW_MECH_PLATE)
+
+	--We can get a custom component to add as an unlock to a research
+	local unlock = Mod.Common.GetCustomComponent("example_custom_component")
 end
 
 ---if activated = true

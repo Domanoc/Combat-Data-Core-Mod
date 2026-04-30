@@ -28,6 +28,8 @@ function create(q,v_modid)
 	CheckForModFramework()
 	--load the mod framework as a global for use within this file
 	Mod = require("ModFramework")
+
+	--Your code here
 end
 
 ---saving system deletes the file and creates new one before saving new info

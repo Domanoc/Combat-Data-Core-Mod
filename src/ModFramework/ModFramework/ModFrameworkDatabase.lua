@@ -69,24 +69,25 @@ function Database.AddMech(mechData)
 
 	--SPRITES
 	--small sprite
-	local smallSpriteIndex = Common.AddSprite(mechData.SpriteSmall, 0, false, false, 23, 49)
-	ds_map_add(mech, "sprite_small", smallSpriteIndex)
+	local spriteIndex = Common.AddSprite(mechData.SpritePathProduction, 1, false, false, 23, 49) --(expected 46x49 pixels)
+
+	ds_map_add(mech, "sprite_small", spriteIndex)
 	--big sprite
-	ds_map_add(mech, "sprite_big", Common.AddSprite(mechData.SpriteBig, 0, false, false, 200, 343))
+	ds_map_add(mech, "sprite_big", Common.AddSprite(mechData.SpritePathBig, 1, false, false, 199, 343)) --(expected 398x343 pixels)
 	--battle sprite
-	ds_map_add(mech, "sprite_battle", Common.AddSprite(mechData.SpriteBattle, 2, true, false, 25, 25))
+	ds_map_add(mech, "sprite_battle", Common.AddSprite(mechData.SpritePathBattle, 2, false, false, 25, 25)) --(expected 100x50 pixels, 2 frames)
 	--dead sprite
-	ds_map_add(mech, "sprite_battle_dead", Common.AddSprite(mechData.SpriteBattleDead, 1, true, false, 25, 25))
+	ds_map_add(mech, "sprite_battle_dead", Common.AddSprite(mechData.SpritePathDestroyed, 1, false, false, 25, 25)) --(expected 50x50 pixels)
 
 	--Melee
 	if (mechData.HasMelee) then
-		if (mechData.SpriteMeleeVertical == nil) then
+		if (mechData.SpritePathMeleeVertical == nil) then
 			local message = "Trying add a melee function to the mech. But the vertical melee sprite is missing.\n"
 			message = message.."Please check the spritePath for 'SpriteMeleeVertical'.\n"
 			message = message.."Debug info:\nMech reference name: "..mechData.ReferenceName
 			Common.ShowError(message)
 		end
-		if (mechData.SpriteMeleeHorizontal == nil) then
+		if (mechData.SpritePathMeleeHorizontal == nil) then
 			local message = "Trying add a melee function to the mech. But the horizontal melee sprite is missing.\n"
 			message = message.."Please check the spritePath for 'SpriteMeleeHorizontal'.\n"
 			message = message.."Debug info:\nMech reference name: "..mechData.ReferenceName
@@ -95,9 +96,9 @@ function Database.AddMech(mechData)
 
 		ds_map_add(mech, "melee_option", mechData.HasMelee)
 		--melee vertical sprite
-		ds_map_add(mech, "sprite_battle_melee_ver", Common.AddSprite(mechData.SpriteMeleeVertical, 7, true, false, 25, 25))
+		ds_map_add(mech, "sprite_battle_melee_ver", Common.AddSprite(mechData.SpritePathMeleeVertical, 7, true, false, 25, 25)) --(expected 350x50 pixels, 7 frames)
 		--melee horizontal sprite
-		ds_map_add(mech, "sprite_battle_melee_hor", Common.AddSprite(mechData.SpriteMeleeHorizontal, 7, true, false, 25, 25))
+		ds_map_add(mech, "sprite_battle_melee_hor", Common.AddSprite(mechData.SpritePathMeleeHorizontal, 7, true, false, 25, 25)) --(expected 350x50 pixels, 7 frames)
 	end
 
 	--Add the map the the list
@@ -114,7 +115,7 @@ function Database.AddMech(mechData)
 		IsResearched = mechData.IsResearched,
 		CanBeConstructed = mechData.CanBeConstructed,
 		GiveFreeItem = mechData.GiveFreeItem,
-		SpriteIndex = smallSpriteIndex,
+		SpriteIndex = spriteIndex,
 	}
 	table.insert(Storage.ModdedComponentList, moddedComponent)
 
@@ -206,15 +207,9 @@ function Database.AddWeapon(weaponData)
 
 	--SPRITES
 	--small sprite
-	local smallSpriteIndex = Common.AddSprite(weaponData.SpriteSmall, 0, false, false, 0, 0)
-	ds_map_add(weapon, "sprite", smallSpriteIndex)
-	--huge sprite
-	local hugeSpriteIndex = Common.AddSprite(weaponData.SpriteHuge, 0, false, false, 199, 134)
-	--big sprite
-	local bigSpriteIndex = Common.AddSprite(weaponData.SpriteBig, 0, false, false, 199, 134)
-	--merge the big and huge sprites
-	Common.MergeSprite(bigSpriteIndex, hugeSpriteIndex)
-	ds_map_add(weapon, "sprite_big", bigSpriteIndex)
+	local smallIndex = Common.AddSprite(weaponData.SpritePathProduction, 1, false, false, 0, 0) --(expected 56x24 pixels)
+	ds_map_add(weapon, "sprite", smallIndex)
+	ds_map_add(weapon, "sprite_big", Common.AddSprite(weaponData.SpritePathBig, 2, false, false, 199, 134)) --(expected 796x134 pixels, 2 frames)
 
 	--Add the map the the list
 	weapon_stat[weaponIndex] = weapon
@@ -230,7 +225,7 @@ function Database.AddWeapon(weaponData)
 		IsResearched = weaponData.IsResearched,
 		CanBeConstructed = weaponData.CanBeConstructed,
 		GiveFreeItem = weaponData.GiveFreeItem,
-		SpriteIndex = smallSpriteIndex,
+		SpriteIndex = smallIndex,
 		WeaponData = {
 			Description = Common.GetLocalizedString("WeaponDescription", weaponData.ReferenceName, weaponData.Description),
 			BlueLength = weaponData.BlueLength,
@@ -277,7 +272,7 @@ function Database.AddSolenoid(solenoidData)
 	ds_map_add(solenoid, "type",			1)		--As far as i can see there is only type 1 for solenoids
 
 	--SPRITE
-	local spriteIndex = Common.AddSprite(solenoidData.Sprite, 0, false, false, 0, 0)
+	local spriteIndex = Common.AddSprite(solenoidData.SpritePath, 1, false, false, 0, 0) --(expected 37x33 pixels)
 	ds_map_add(solenoid, "sprite", spriteIndex)
 
 	--Add the map the the list
@@ -321,7 +316,7 @@ function Database.AddPilotTemplate(pilotData)
 	local pilot_stat = obj_database.pilot_stat
 	local pilotIndex = #pilot_stat + 1
 	local pilot = ds_map_create()
-	local sprite = Common.AddSprite(pilotData.Sprite, 4, false, false, 23, 23)
+	local sprite = Common.AddSprite(pilotData.SpritePath, 4, false, false, 23, 23) --(expected 184x46 pixels, 4 frames)
 
 	ds_map_add(pilot, "hp",						1000)									  --doesn't seem to do anything
 	ds_map_add(pilot, "type",					1)										  --Seems to be a default value
@@ -360,7 +355,7 @@ function Database.AddCustomComponent(componentData)
 
 	local componentType = Private.GetNextCustomComponentType()
 
-	local spriteIndex = Common.AddSprite(componentData.Sprite, 0, false, false, 0, 0)
+	local spriteIndex = Common.AddSprite(componentData.SpritePath, 0, false, false, 0, 0) --(expected 48x48 pixels)
 
 	---@type LocalizedShopDescriptionLine[]
 	local shopDescription = {}

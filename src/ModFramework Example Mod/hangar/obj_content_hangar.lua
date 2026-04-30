@@ -63,13 +63,13 @@ function create(q,v_modid)
 			Age = 666,				--the age of the pilot
 			IsCyborg = false,		--if true the pilot is a cyborg
 			WorkExperience = {		--the text for the work experience
-			--Data that represents a string that will be localized. Its recommended to be in english for code readability
-			--The other actual values will be pulled from the mods localization files
-			--Use the GenerateLocalizationFiles() function to generate the mods localization files in development
-			LocalizedString = { LocalizedDefaultValue = "Example of a reused work experience text." },
-			--We can reuse a previous localized reference if the value is the same
-			ReferenceName = "example_pilot_reuse"
-		},
+				--Data that represents a string that will be localized. Its recommended to be in english for code readability
+				--The other actual values will be pulled from the mods localization files
+				--Use the GenerateLocalizationFiles() function to generate the mods localization files in development
+				LocalizedString = { LocalizedDefaultValue = "Example of a reused work experience text." },
+				--We can reuse a previous localized reference if the value is the same
+				ReferenceName = "example_pilot_reuse"
+			},
 		})
 	end
 end

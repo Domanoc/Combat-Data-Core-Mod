@@ -12,7 +12,7 @@ use in "obj_content_weapons.lua" in the create function, for when adding items t
 ---@param q game_obj_content_weapons
 function create(q)--one time script when save is loaded
 	--load the mod framework as a global for use within this file
-	Mod = require("ModFrameworkModule")
+	Mod = require("ModFramework")
 
 	--This function is run every time the game is started
 	--We need to check if the this start is a new game or from a loaded save
@@ -32,8 +32,8 @@ function create(q)--one time script when save is loaded
 	--We need to check for nil since a the component we searched for might not have existed.
 	if (example_weapon ~= nil) then
 		--example on how to add 2 weapons, one is +sized
-		Mod.Engineering.AddWeapon(example_weapon.Index, false)
-		Mod.Engineering.AddWeapon(example_weapon.Index, true)
+		Mod.Engineering.AddWeapon(example_weapon.ResourceNumber, false)
+		Mod.Engineering.AddWeapon(example_weapon.ResourceNumber, true)
 	end
 
 	--If we want to add a base weapon we can use the Mod.Types.BaseWeapons references to add the correct one

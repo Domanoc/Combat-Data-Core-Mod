@@ -31,7 +31,7 @@ MirrorFolder -SourceFolder $ModFrameworkExampleModSource -DestinationFolder $Mod
 
 
 # Combat Data Core Source
-$CombatDataCoreSource = "D:\Mod Projects\Mech Engineer Mods\docs\Combat-Data-Core"
+$CombatDataCoreSource = "D:\Mod Projects\Mech Engineer Mods\src\Combat Data Core"
 $CombatDataCoreDestination = "C:\Users\mail\AppData\Local\Mech_Engineer\mods\_DEV_Combat Data Core"
 
 MirrorFolder -SourceFolder $CombatDataCoreSource -DestinationFolder $CombatDataCoreDestination

@@ -92,9 +92,9 @@ function Research.AddResearch(researchData)
 		end
 	end
 
-	--add research sprite as a sub image
-	local tmpSprite = Common.AddSprite(researchData.SpritePath, 0, false, false, 0, 0) --research sprite
-	local researchSpriteIndex = variable_global_get("research_items_spr")			   --get the current sprite
+	--Add research sprite as a sub image.
+	local tmpSprite = Common.AddSprite(researchData.SpritePath, 1, false, false, 0, 0) --Research sprite.
+	local researchSpriteIndex = variable_global_get("research_items_spr")			   --Get the current sprite.
 	local researchSprites = -1
     if (researchSpriteIndex ~= -4) then
     	researchSprites = sprite_duplicate(researchSpriteIndex)
@@ -102,9 +102,9 @@ function Research.AddResearch(researchData)
         researchSpriteIndex = asset_get_index("spr_research_items")
         researchSprites = sprite_duplicate(researchSpriteIndex)
     end
-    Common.MergeSprite(researchSprites, tmpSprite)				--adds to the end of the subimg
-	variable_global_set("research_items_spr", researchSprites)	--update the sprite variable
-	Common.DeleteSprite(tmpSprite)								--delete only tmp_sprite. research_sprites still contains id
+    Common.MergeSprite(researchSprites, tmpSprite)				--Add the temp sprite to researchSprites as a subimg.
+	variable_global_set("research_items_spr", researchSprites)	--Update the sprite variable for the next add.
+	Common.DeleteSprite(tmpSprite)								--Delete only tmp_sprite. ResearchSprites still used sprite data.
 
 	--send array back
 	obj_research_panel.mres = mres

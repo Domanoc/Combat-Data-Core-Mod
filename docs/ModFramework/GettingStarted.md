@@ -18,8 +18,8 @@ Lets go over the contents in your new mod
 
 ```text
 ModTemplate/
-├── GameClassDefinitions/
-├── ModFramework/
+├── _GameDefinitions/
+├── _ModFrameworkDefinitions/
 ├── sprites/
 ├── mod_mech_grid_help.png
 ├── obj_database.lua
@@ -28,7 +28,7 @@ ModTemplate/
 └── thumbnail.jpg
 ```
 
-- The 2 folders "GameClassDefinitions" and "ModFramework" can be ignored.   
+- The 2 folders "_GameDefinitions" and "_ModFrameworkDefinitions" can be ignored.   
    
    They contain reference files so you IDE (Integrated Development Environment) can understand what types and function are available. You don't have to do anything with the contents. However if your are updating you mod to use a newer version of the ModFramework. Then replace these folders with the ones from the ModTemplate in this repo.
 - The "sprites" folder is the place where you can add the mod sprites. If you don't plan on modding sprites it can safely be removed.
@@ -56,11 +56,17 @@ function create(q,v_modid)
 	--Check if the ModFramework can be found
 	CheckForModFramework()
 	--load the mod framework as a global for use within this file
-	Mod = require("ModFrameworkModule")
+	Mod = require("ModFramework")
 
     --Your code here
 end
 ```
+
+## Other game mod files
+Besides the included obj_database.lua there several more files where you can insert code into the game.
+The game itself comes shipped with an example_mod folder that includes all variants. Alteratively you can reuse files from other mods.
+
+Recommended is to reuse the files from the "[ModFramework Example Mod](../../src/ModFramework%20Example%20Mod/)" as it provides some additional function documentation to use.
 
 ## IDE Setup recommendation
 The ModFramework was made using the following setup.

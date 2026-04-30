@@ -18,9 +18,6 @@ function MirrorFolder {
 # The _GameDefinitions Source
 $GameDefinitions = "D:\Mod Projects\Mech Engineer Mods\src\ModFramework\_GameDefinitions"
 
-# The _GameDefinitions Source
-$ModFrameworkDefinitions = "D:\Mod Projects\Mech Engineer Mods\src\ModFramework\_ModFrameworkDefinitions"
-
 # The Destinations
 $ExampleMod = "D:\Mod Projects\Mech Engineer Mods\src\ModFramework Example Mod\_GameDefinitions"
 $ModTemplate = "D:\Mod Projects\Mech Engineer Mods\src\ModTemplate\_GameDefinitions"
@@ -30,6 +27,14 @@ $CombatDataCore = "D:\Mod Projects\Mech Engineer Mods\src\Combat Data Core\_Game
 MirrorFolder -SourceFolder $GameDefinitions -DestinationFolder $ExampleMod
 MirrorFolder -SourceFolder $GameDefinitions -DestinationFolder $ModTemplate
 MirrorFolder -SourceFolder $GameDefinitions -DestinationFolder $CombatDataCore
+
+# The _GameDefinitions Source
+$ModFrameworkDefinitions = "D:\Mod Projects\Mech Engineer Mods\src\ModFramework\_ModFrameworkDefinitions"
+
+# The Destinations
+$ExampleMod = "D:\Mod Projects\Mech Engineer Mods\src\ModFramework Example Mod\_ModFrameworkDefinitions"
+$ModTemplate = "D:\Mod Projects\Mech Engineer Mods\src\ModTemplate\_ModFrameworkDefinitions"
+$CombatDataCore = "D:\Mod Projects\Mech Engineer Mods\src\Combat Data Core\_ModFrameworkDefinitions"
 
 # Mirror _ModFrameworkDefinitions
 MirrorFolder -SourceFolder $ModFrameworkDefinitions -DestinationFolder $ExampleMod
