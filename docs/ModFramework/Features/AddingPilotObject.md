@@ -17,7 +17,7 @@ function create(q,v_modid)
 
 	--This function is run every time the game is started
 	--We need to check if the this start is a new game or from a loaded save
-	if(Mod.Common.IsLoadedGame()) then
+	if (Mod.Common.IsLoadedGame()) then
 		--Since we don't want to add new pilots on loaded saves we return the function here.
 		return
 	end

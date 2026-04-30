@@ -377,7 +377,7 @@ function Private.CalculateMaxSupportPage()
     }
 
     --Temporary work around for the "Robot Pilots Mod"
-    if(obj_component_shop.comp_robot_pilot ~= nil) then
+    if (obj_component_shop.comp_robot_pilot ~= nil) then
 		table.insert(components, obj_component_shop.comp_robot_pilot)
 	end
 
@@ -426,7 +426,7 @@ function Private.ArrangeSupportComponents()
     }
 
     --Temporary work around for the "Robot Pilots Mod"
-    if(obj_component_shop.comp_robot_pilot ~= nil) then
+    if (obj_component_shop.comp_robot_pilot ~= nil) then
 		table.insert(components, obj_component_shop.comp_robot_pilot)
 	end
 

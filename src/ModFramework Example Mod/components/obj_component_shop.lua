@@ -2,6 +2,8 @@
 ---One time script when the game is started
 ---@param q game_obj_component_shop
 function create(q)
+    --load the mod framework as a global for use within this file
+	Mod = require("ModFramework")
 end
 
 ---update information when item is picked

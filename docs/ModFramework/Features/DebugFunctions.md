@@ -66,7 +66,7 @@ local modPath = Mod.Common.GetModPathByName("ModFramework")
 Use to run code only on new save game, for example adding extra items or pilots.
 ```lua
 --We need to check if the this start is a new game or from a loaded save
-if(Mod.Common.IsLoadedGame()) then
+if (Mod.Common.IsLoadedGame()) then
 	--Since we don't want to add new items on loaded saves we return the function here.
 	return
 end

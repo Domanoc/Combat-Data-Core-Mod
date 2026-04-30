@@ -28,7 +28,7 @@ local Types = require("ModFrameworkTypes")
 ---@return number? resNumber The number for the research as found in the debug view (F6) of the research screen (upper left white number).
 function Research.AddResearch(researchData)
 	local checkPosition = Private.GetResearchByPosition(researchData.Position)
-	if(checkPosition ~= nil) then
+	if (checkPosition ~= nil) then
 		local message = "Trying to set the new research to a position that is already occupied.\n"
 		message = message.."Check if the correct position was given, or if a another mod in the load order assigned the position.\n\n"
 		message = message.."Debug info:\nResearch name: "..researchData.ReferenceName.."\nDesired position: "..researchData.Position
@@ -67,20 +67,20 @@ function Research.AddResearch(researchData)
 	local description = Common.GetLocalizedString("ResearchDescription", researchData.ReferenceName, researchData.Description)
 	newResearch[ResearchIndexes.Description] = description
 
-	if(researchData.PrerequisiteResearchResNumber ~= nil) then
+	if (researchData.PrerequisiteResearchResNumber ~= nil) then
 		local prerequisiteIndex = researchData.PrerequisiteResearchResNumber + 1
 		if (prerequisiteIndex ~= nil) then
 			local prerequisiteResearch = mres[prerequisiteIndex]
-			if(prerequisiteResearch == nil) then
+			if (prerequisiteResearch == nil) then
 				local message = "Trying to set the prerequisite research but the prerequisite reference was nil.\n"
 				message = message.."Check if the correct res number was given. Found in the debug view (F6) of the research screen (upper left white number)\n\n"
 				message = message.."Debug info:\nResearch name: "..researchData.ReferenceName.."\nPrerequisite res number: "..researchData.PrerequisiteResearchResNumber
 				Common.ShowError(message)
-			elseif(prerequisiteResearch[Types.ResearchIndexes.Link_1] == -4)  then
+			elseif (prerequisiteResearch[Types.ResearchIndexes.Link_1] == -4)  then
 				prerequisiteResearch[Types.ResearchIndexes.Link_1] = resNumber
-			elseif(prerequisiteResearch[Types.ResearchIndexes.Link_2] == -4)  then
+			elseif (prerequisiteResearch[Types.ResearchIndexes.Link_2] == -4)  then
 				prerequisiteResearch[Types.ResearchIndexes.Link_2] = resNumber
-			elseif(prerequisiteResearch[Types.ResearchIndexes.Link_3] == -4)  then
+			elseif (prerequisiteResearch[Types.ResearchIndexes.Link_3] == -4)  then
 				prerequisiteResearch[Types.ResearchIndexes.Link_3] = resNumber
 			else
 				local message = "Trying to set the prerequisite research but the prerequisite already has 3 linked researches.\n"
@@ -113,7 +113,7 @@ function Research.AddResearch(researchData)
 	---@type ModdedComponent[]
 	local unlockedComponents = {}
 	for _, value in pairs(researchData.UnlockedComponents) do
-		if(value ~= nil) then
+		if (value ~= nil) then
 			table.insert(unlockedComponents, value)
 		end
 	end
@@ -136,7 +136,7 @@ end
 ---@param position ResearchPosition The position number on the research tree where to move the research to.
 function Research.MoveResearch(resNumber, position)
 	local checkPosition = Private.GetResearchByPosition(position)
-	if(checkPosition ~= nil) then
+	if (checkPosition ~= nil) then
 		local message = "Trying to move a research to a position that is already occupied.\n"
 		message = message.."Check if the correct position was given, or if a another mod in the load order assigned the position.\n\n"
 		message = message.."Debug info:\nResearch res number: "..resNumber.."\nDesired position: "..position
@@ -151,7 +151,7 @@ function Research.MoveResearch(resNumber, position)
 	local mres = obj_research_panel.mres
 
 	local research = mres[resNumber + 1]
-	if(research == nil) then
+	if (research == nil) then
 		local message = "Trying to move a research but the reference was nil.\n"
 			message = message.."Check if the correct res number was given. Found in the debug view (F6) of the research screen (upper left white number)\n\n"
 			message = message.."Debug info:\nResearch res number: "..resNumber.."\nDesired position: "..position
@@ -177,7 +177,7 @@ function Research.ChangePrerequisite(resNumber, newPrerequisiteResNumber)
 	local mres = obj_research_panel.mres
 
 	local research = mres[resNumber + 1]
-	if(research == nil) then
+	if (research == nil) then
 		local message = "Trying to change the prerequisite of a research but the reference was nil.\n"
 		message = message.."Check if the correct res number was given. Found in the debug view (F6) of the research screen (upper left white number)\n\n"
 		message = message.."Debug info:\nResearch res number: "..resNumber
@@ -186,7 +186,7 @@ function Research.ChangePrerequisite(resNumber, newPrerequisiteResNumber)
 	end
 
 	local prerequisite = mres[newPrerequisiteResNumber + 1]
-	if(prerequisite == nil) then
+	if (prerequisite == nil) then
 		local message = "Trying to change the prerequisite of a research but the prerequisite reference was nil.\n"
 		message = message.."Check if the correct res number was given. Found in the debug view (F6) of the research screen (upper left white number)\n\n"
 		message = message.."Debug info:\nPrerequisite research res number: "..newPrerequisiteResNumber
@@ -196,7 +196,7 @@ function Research.ChangePrerequisite(resNumber, newPrerequisiteResNumber)
 
 	--unlink
 	local previousPrerequisiteIndex = Private.GetResearchByLink(resNumber)
-	if(previousPrerequisiteIndex ~= nil) then
+	if (previousPrerequisiteIndex ~= nil) then
 		local previousPrerequisite = mres[previousPrerequisiteIndex]
 		if (previousPrerequisite[ResearchIndexes.Link_1] == resNumber) then
 			previousPrerequisite[ResearchIndexes.Link_1] = -4 --unset
@@ -207,11 +207,11 @@ function Research.ChangePrerequisite(resNumber, newPrerequisiteResNumber)
 		end
 	end
 
-	if(prerequisite[ResearchIndexes.Link_1] == -4)  then
+	if (prerequisite[ResearchIndexes.Link_1] == -4)  then
 		prerequisite[Types.ResearchIndexes.Link_1] = resNumber
-	elseif(prerequisite[ResearchIndexes.Link_2] == -4)  then
+	elseif (prerequisite[ResearchIndexes.Link_2] == -4)  then
 		prerequisite[Types.ResearchIndexes.Link_2] = resNumber
-	elseif(prerequisite[ResearchIndexes.Link_3] == -4)  then
+	elseif (prerequisite[ResearchIndexes.Link_3] == -4)  then
 		prerequisite[Types.ResearchIndexes.Link_3] = resNumber
 	else
 		local message = "Trying to set the prerequisite research but the prerequisite already has 3 linked researches.\n"
@@ -236,7 +236,7 @@ function Research.ClearUnlockLinks(resNumber)
 	local mres = obj_research_panel.mres
 
 	local research = mres[resNumber + 1]
-	if(research == nil) then
+	if (research == nil) then
 		local message = "Trying to remove all links from a research but the reference was nil.\n"
 		message = message.."Check if the correct res number was given. Found in the debug view (F6) of the research screen (upper left white number)\n\n"
 		message = message.."Debug info:\nResearch res number: "..resNumber
@@ -352,7 +352,7 @@ end
 ---Recommended use in the draw_top_menu function of obj_database.lua
 function Research.UnlockAllResearch()
 	for _, research in ipairs(Storage.LoadedResearchList) do
-		if(research.condition ~= Types.ResearchConditions.Researched) then
+		if (research.condition ~= Types.ResearchConditions.Researched) then
 			research.condition = Types.ResearchConditions.Researching
 			research.require_days = 1
 		end

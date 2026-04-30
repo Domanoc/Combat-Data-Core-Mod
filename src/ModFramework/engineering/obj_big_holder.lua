@@ -30,7 +30,7 @@ end
 ---@param cur_item game_obj_big_holder_mech
 function draw_mechs(q,cur_item)
 	for _, weapon in ipairs(cur_item.mass_gun_id) do
-		if(weapon ~= -4) then --Filter nil values
+		if (weapon ~= -4) then --Filter nil values
 			Internal.Engineering.SetWeaponRange(weapon)
 		end
 	end

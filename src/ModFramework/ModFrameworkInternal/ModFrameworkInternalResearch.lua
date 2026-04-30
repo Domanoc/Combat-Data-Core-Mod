@@ -54,14 +54,14 @@ function Research.FixModdedResearch()
 	local isIniLoaded = obj_weapon_test.load_ini
 
 	--We can only fix the research after all the loading is done. so we can piggyback on the load flag for obj_weapon_test
-	if(obj_weapon_test.load_ini == false or isResearchFixed == true) then
+	if (obj_weapon_test.load_ini == false or isResearchFixed == true) then
 		return
 	end
 
 	for _, moddedResearch in ipairs(Storage.ModdedResearchList) do
 		local research = Storage.LoadedResearchList[moddedResearch.Index]
 
-		if(moddedResearch.InitialCondition ~= Types.ResearchConditions.Closed and research.condition == Types.ResearchConditions.Closed) then
+		if (moddedResearch.InitialCondition ~= Types.ResearchConditions.Closed and research.condition == Types.ResearchConditions.Closed) then
 			--special condition since this modded research item is set to condition other than closed on mod load we need force it back to initial condition if it was closed.
 			--all other states should be fine: 
 			--condition 1: it would mean the player stopped the research from continuing.
@@ -70,11 +70,11 @@ function Research.FixModdedResearch()
 
 			research.condition = moddedResearch.InitialCondition
 			research.require_days = research.require_days_max
-		elseif(research.condition == Types.ResearchConditions.Closed and research.require_days ~= research.require_days_max) then
+		elseif (research.condition == Types.ResearchConditions.Closed and research.require_days ~= research.require_days_max) then
 			--Condition 0 (closed) -> research has never been started/unlocked it should have the default require_days values
 
 			research.require_days = research.require_days_max
-		elseif(research.condition == Types.ResearchConditions.Opened and research.require_days == 0)  then
+		elseif (research.condition == Types.ResearchConditions.Opened and research.require_days == 0)  then
 			--Condition 1 (opened) -> it should have days remaining between 1 and require_days_max, 0 should be excluded as it would have moved to the condition 3
 			--We only care about the case where require_days is at 0 since this would indicate a newly added research that was set to opened because the linked research was completed before.
 
@@ -105,7 +105,7 @@ end
 ---@param res_number number the number for the research as found in the debug (F6) of the research screen (upper left white number)
 function Research.ProcessResearchCompletion(completedResearch, res_number)
 	for _, research in ipairs(Storage.ModdedResearchList) do
-		if(research.ResNumber == res_number) then
+		if (research.ResNumber == res_number) then
 			Private.ProcessResearchUnlocks(completedResearch, research.UnlockedComponents)
 		end
 	end
@@ -116,7 +116,7 @@ end
 ---@param unlockedComponents ModdedComponent[] the components that are unlocked
 function Private.ProcessResearchUnlocks(completedResearch, unlockedComponents)
 	for _, component in ipairs(unlockedComponents) do
-		if(component.ComponentType == Types.ComponentTypes.Mech) then
+		if (component.ComponentType == Types.ComponentTypes.Mech) then
 			Private.ProcessMechUnlock(component, completedResearch.give_item)
 		elseif (component.ComponentType == Types.ComponentTypes.Weapon) then
 			Private.ProcessWeaponUnlock(component, completedResearch.give_item)

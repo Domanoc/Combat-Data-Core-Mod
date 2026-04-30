@@ -17,7 +17,7 @@ function create(q,v_modid)--one time script when save is loaded
 
 	--This function is run every time the game is started
 	--We need to check if the this start is a new game or from a loaded save
-	if(Mod.Common.IsLoadedGame()) then
+	if (Mod.Common.IsLoadedGame()) then
 		--Since we don't want to add new items on loaded saves we return the function here.
 		return
 	end
@@ -31,7 +31,7 @@ function create(q,v_modid)--one time script when save is loaded
 	local example_solenoid = Mod.Common.GetModdedComponent("example_solenoid", componentTypes.Solenoid)
 
 	--We need to check for nil since a the component we searched for might not have existed.
-	if(example_solenoid ~= nil) then
+	if (example_solenoid ~= nil) then
 		--example on how to add 2 solenoids
 		Mod.Engineering.AddSolenoid(example_solenoid.Index)
 		Mod.Engineering.AddSolenoid(example_solenoid.Index)

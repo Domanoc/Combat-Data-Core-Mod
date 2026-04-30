@@ -7,7 +7,7 @@ function create(q)--one time script when save is loaded
 
 	--This function is run every time the game is started
 	--We need to check if the this start is a new game or from a loaded save
-	if(Mod.Common.IsLoadedGame()) then
+	if (Mod.Common.IsLoadedGame()) then
 		--Since we don't want to add new items on loaded saves we return the function here.
 		return
 	end
@@ -21,7 +21,7 @@ function create(q)--one time script when save is loaded
 	local example_weapon = Mod.Common.GetModdedComponent("example_weapon", componentTypes.Weapon)
 
 	--We need to check for nil since a the component we searched for might not have existed.
-	if(example_weapon ~= nil) then
+	if (example_weapon ~= nil) then
 		--example on how to add 2 weapons, one is +sized
 		Mod.Engineering.AddWeapon(example_weapon.ResourceNumber, false)
 		Mod.Engineering.AddWeapon(example_weapon.ResourceNumber, true)

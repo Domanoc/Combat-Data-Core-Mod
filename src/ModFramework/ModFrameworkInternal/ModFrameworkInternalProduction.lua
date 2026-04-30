@@ -71,7 +71,7 @@ end
 ---Used in the create function of obj_component_shop.lua
 ---Function needs to run before other functions use the list_weapon
 function Production.FixContentWeaponList()
-	if(Common.IsLoadedGame()) then
+	if (Common.IsLoadedGame()) then
 		--This issue is only present on new games
 		return
 	end
@@ -116,7 +116,7 @@ function Production.SetModdedSprites()
 		local itemIndex = hangar[hangerTableIndexes.item_index]
 
 		for _, modded_item in ipairs(Storage.ModdedComponentList) do
-			if(componentType == modded_item.ComponentType and itemIndex == modded_item.ResourceNumber) then
+			if (componentType == modded_item.ComponentType and itemIndex == modded_item.ResourceNumber) then
 				--When the reference matches the modded element we set the relevant mod sprite to the logo and logo index.
 				hangar[hangerTableIndexes.logo] = modded_item.SpriteIndex
 				hangar[hangerTableIndexes.logo_index] = modded_item.SpriteIndex
@@ -137,7 +137,7 @@ function Production.SetModdedWeaponDescriptions()
 	local obj_weapon_test = Common.GetObjWeaponTest()
 
 	--We check if the ini has been loaded or if the update is complete
-	if(obj_weapon_test.load_ini == false or isWeaponDescComplete == true) then
+	if (obj_weapon_test.load_ini == false or isWeaponDescComplete == true) then
 		return
 	end
 
@@ -145,7 +145,7 @@ function Production.SetModdedWeaponDescriptions()
 	local weaponDescriptions = obj_weapon_test.weapon_description
 
 	for _, component in ipairs(Storage.ModdedComponentList) do
-		if(component.ComponentType == Types.ComponentTypes.Weapon and
+		if (component.ComponentType == Types.ComponentTypes.Weapon and
 		   component.WeaponData ~= nil) then
 			weaponDescriptions[component.DatabaseIndex] = component.WeaponData.Description
 		end
@@ -194,7 +194,7 @@ function Production.StoreShopComponents()
 	end
 
 	--Temporary work around for the "Robot Pilots Mod"
-	if(obj_component_shop.comp_robot_pilot ~= nil) then
+	if (obj_component_shop.comp_robot_pilot ~= nil) then
 		table.insert(Storage.AllShopComponents, obj_component_shop.comp_robot_pilot)
 	end
 

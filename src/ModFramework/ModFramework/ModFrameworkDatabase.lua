@@ -80,13 +80,13 @@ function Database.AddMech(mechData)
 
 	--Melee
 	if (mechData.HasMelee) then
-		if(mechData.SpriteMeleeVertical == nil) then
+		if (mechData.SpriteMeleeVertical == nil) then
 			local message = "Trying add a melee function to the mech. But the vertical melee sprite is missing.\n"
 			message = message.."Please check the spritePath for 'SpriteMeleeVertical'.\n"
 			message = message.."Debug info:\nMech reference name: "..mechData.ReferenceName
 			Common.ShowError(message)
 		end
-		if(mechData.SpriteMeleeHorizontal == nil) then
+		if (mechData.SpriteMeleeHorizontal == nil) then
 			local message = "Trying add a melee function to the mech. But the horizontal melee sprite is missing.\n"
 			message = message.."Please check the spritePath for 'SpriteMeleeHorizontal'.\n"
 			message = message.."Debug info:\nMech reference name: "..mechData.ReferenceName
@@ -133,10 +133,10 @@ function Private.AddCells(mech, cells)
 		local cell = cells[i]
 		Private.AddCell(mech, i, cell)
 
-		if(cell.ModuleType == Types.MechModules.Aux) then
+		if (cell.ModuleType == Types.MechModules.Aux) then
 			auxCount = auxCount + 1
 		end
-		if(cell.ModuleType == Types.MechModules.Weapon) then
+		if (cell.ModuleType == Types.MechModules.Weapon) then
 			weaponCount = weaponCount + 1
 		end
 	end

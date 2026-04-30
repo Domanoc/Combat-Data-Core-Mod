@@ -76,7 +76,7 @@ function Engineering.AddMech(resourceNumber, name)
 	addedMech.my_num = arraySize
 	addedMech.mech_number = resourceNumber
 	addedMech.new_module = true
-	if(name ~= nil) then
+	if (name ~= nil) then
 		addedMech.mech_name = name
 	end
 	list_mech[itemIndex] = addedMech

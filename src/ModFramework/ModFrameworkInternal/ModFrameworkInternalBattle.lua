@@ -62,9 +62,9 @@ end
 ---@param q game_obj_battle_map the battle map reference
 function Battle.SetWeaponRange(q)
 	for _, mech in ipairs(q.mech_id) do 					--Loop all the mechs
-		if(mech ~= -4 and mech ~= 0) then 					--Filter nil values
+		if (mech ~= -4 and mech ~= 0) then 					--Filter nil values
 			for _, weapon in ipairs(mech.mass_gun_id) do 	--loop all the weapons of the mech
-				if(weapon ~= -4) then 						--Filter nil values
+				if (weapon ~= -4) then 						--Filter nil values
 					Engineering.SetWeaponRange(weapon)
 				end
 			end

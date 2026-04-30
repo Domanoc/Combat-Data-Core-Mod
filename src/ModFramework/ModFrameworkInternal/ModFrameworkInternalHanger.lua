@@ -26,7 +26,7 @@ function Hanger.ProcessPilotDataQueue()
     local obj_weapon_test = Common.GetObjWeaponTest()
 
 	--We check if the ini has been loaded
-	if(obj_weapon_test.load_ini == false) then
+	if (obj_weapon_test.load_ini == false) then
 		return
 	end
 

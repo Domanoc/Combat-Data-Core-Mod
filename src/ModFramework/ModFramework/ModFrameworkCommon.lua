@@ -158,6 +158,20 @@ function Common.GetModdedComponent(name, type)
 	return nil
 end
 
+---Gets the custom component.
+---@param name string The name of the component.
+---@return ModdedComponent? item The modded component if found, nil otherwise.
+function Common.GetCustomComponent(name)
+	for _, moddedComponent in ipairs(Storage.ModdedComponentList) do
+		if (moddedComponent.ReferenceName == name and 
+			moddedComponent.ComponentType >= 1000 and
+			moddedComponent.ComponentType < Storage.NextCustomComponentType) then
+			return moddedComponent
+		end
+	end
+	return nil
+end
+
 ---Gets the modded components based on the search criteria.
 ---@param searchCriteria ModdedComponentSearchCriteria[] The components to search for.
 ---@return ModdedComponent[] components The components found, or and empty list.
@@ -167,7 +181,7 @@ function Common.GetModdedComponents(searchCriteria)
 
 	for _, search in ipairs(searchCriteria) do
 		local component = Common.GetModdedComponent(search.ReferenceName, search.ComponentType)
-		if(component ~= nil) then
+		if (component ~= nil) then
 			table.insert(foundComponents, component)
 		end
 	end
@@ -309,7 +323,7 @@ end
 ---@return number spriteIndex The index for the loaded sprite.
 function Common.AddSprite(filepath, numberOfImages, removeback, smooth, xOrig, yOrig)
 	local imageIndex = sprite_add(filepath, numberOfImages, removeback, smooth, xOrig, yOrig)
-	if(imageIndex < 0) then
+	if (imageIndex < 0) then
 		local message = "The sprite loading from path: '"..filepath.."' failed.\n\n"
 		message = message.."Make sure the filepath of the sprite is correct."
 		Common.ShowError(message)
@@ -326,12 +340,12 @@ end
 ---@param firstSpriteIndex number The index for the sprite to merge.
 ---@param secondSpriteIndex number The index for the sprite to merge.
 function Common.MergeSprite(firstSpriteIndex, secondSpriteIndex)
-	if(firstSpriteIndex < 0) then
+	if (firstSpriteIndex < 0) then
 		local message = "Cannot merge sprites the first sprite index provided was not referencing a sprite.\n\n"
 		message = message.."Make sure the filepath of the sprite is correct."
 		Common.ShowError(message)
 	end
-	if(secondSpriteIndex < 0) then
+	if (secondSpriteIndex < 0) then
 		local message = "Cannot merge sprites the second sprite index provided was not referencing a sprite.\n\n"
 		message = message.."Make sure the filepath of the sprite is correct."
 		Common.ShowError(message)
@@ -347,7 +361,7 @@ end
 ---Use this instead of calling sprite_delete directly to prevent crashes when incorrect sprite data is passed.
 ---@param spriteIndex number The index for the sprite to delete.
 function Common.DeleteSprite(spriteIndex)
-	if(spriteIndex < 0) then
+	if (spriteIndex < 0) then
 		local message = "Cannot delete the sprite the index provided was not referencing a sprite."
 		Common.ShowError(message)
 		return
@@ -367,7 +381,7 @@ end
 ---@param yOrig number Indicate the y position of the origin in the sprite.
 function Common.ReplaceSprite(spriteIndex, filepath, numberOfImages, removeback, smooth, xOrig, yOrig)
 	local spriteName = sprite_get_name(spriteIndex)
-	if(spriteName == "<undefined>") then
+	if (spriteName == "<undefined>") then
 		local message = "Replacing the sprite with index: '"..spriteIndex.."' failed.\n\n"
 		message = message.."Make sure the index of the sprite is correct."
 		Common.ShowError(message)
@@ -415,23 +429,23 @@ function Common.DumpObjToMessage(ref)
 	local suffix = "\n"..Private.Traceback(3)
 	local values = {}
 
-	if(ref == nil) then
+	if (ref == nil) then
 		local message = "This is a nil value"
 		show_message(prefix..message)
 		return
 	end
 
-	if(type(ref) == "string") then
+	if (type(ref) == "string") then
 		show_message(prefix..ref)
 		return
 	end
 
-	if(type(ref) == "boolean") then
+	if (type(ref) == "boolean") then
 		show_message(prefix..tostring(ref))
 		return
 	end
 
-	if(type(ref) == "table") then
+	if (type(ref) == "table") then
 		prefix = prefix.."TABLE"..spacerLine
 		local keys = {}
 		for k in pairs(ref) do
@@ -521,7 +535,7 @@ function Common.ToClassTypeMessage(ref)
 	local prefix = "MOD FRAMEWORK"..spacerLine..callerPrint..spacerLine
 
 	local values = {}
-	if(type(ref) == "table") then
+	if (type(ref) == "table") then
 		show_message(prefix.."Can't convert a table.")
 	else
 		table.insert(values, "---This is an auto generated class definition.")
@@ -545,7 +559,7 @@ end
 ---@param level number? The level to any value more then 2 to skip util functions. Leave nil for 2.
 ---@return string traceback The traceback suffix for a message.
 function Private.Traceback(level)
-	if(level == nil or level < 2) then
+	if (level == nil or level < 2) then
 		level = 2
 	end
     local lines = {"Traceback:"}
