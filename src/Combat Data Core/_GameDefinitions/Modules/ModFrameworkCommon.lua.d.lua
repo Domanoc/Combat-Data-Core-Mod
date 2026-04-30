@@ -8,8 +8,14 @@ local Common = {}
 function Common.GenerateLocalizationFiles() end
 
 ---Gets the filepath to the mod folder.
----@return string? filepath The filepath to the mod folder or nil if the mod was not found.
+---@return string filepath The filepath to the mod folder.
 function Common.GetModPath() end
+
+---Gets the name of the mod making the function call.
+---
+---The name is the name of the mod mod folder.
+---@return string name The filepath to the mod folder.
+function Common.GetModName() end
 
 ---Gets the filepath to the mod folder.
 ---@param name string The name of the mod folder.
@@ -38,10 +44,15 @@ function Common.GetPhraseNumber(voice) end
 function Common.GetPilotTemplateIndex(name) end
 
 ---Gets the modded component.
----@param name string The name of the component.
+---@param referenceName string The reference name of the component.
 ---@param type GameComponentType The type of component.
 ---@return ModdedComponent? item The modded component if found, nil otherwise.
-function Common.GetModdedComponent(name, type) end
+function Common.GetModdedComponent(referenceName, type) end
+
+---Gets the custom component.
+---@param referenceName string The reference name of the component.
+---@return ModdedComponent? item The modded component if found, nil otherwise.
+function Common.GetCustomComponent(referenceName) end
 
 ---Gets the modded components based on the search criteria.
 ---@param searchCriteria ModdedComponentSearchCriteria[] The components to search for.

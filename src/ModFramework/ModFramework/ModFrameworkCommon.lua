@@ -27,7 +27,7 @@ function Common.GenerateLocalizationFiles()
 end
 
 ---Gets the filepath to the mod folder.
----@return string? filepath The filepath to the mod folder or nil if the mod was not found.
+---@return string filepath The filepath to the mod folder.
 function Common.GetModPath()
 	local level = 2
 	local source
@@ -45,6 +45,27 @@ function Common.GetModPath()
 	local modFolder = normalizedPath:match("\\mods\\([^\\]+)")
 	local modPath = root..modFolder.."\\"
 	return modPath
+end
+
+---Gets the name of the mod making the function call.
+---
+---The name is the name of the mod mod folder.
+---@return string name The filepath to the mod folder.
+function Common.GetModName()
+	local level = 2
+	local source
+	while true do
+        local info = debug.getinfo(level, "nSl")
+        if not info then break end
+		if (info.name == nil) then break end
+
+		source = info.source:gsub("/","\\")
+        level = level + 1
+    end
+
+	local normalizedPath = source:gsub("/","\\"):gsub("@","")
+	local modFolder = normalizedPath:match("\\mods\\([^\\]+)")
+	return modFolder
 end
 
 ---Gets the filepath to the mod folder.
@@ -146,12 +167,12 @@ end
 ------------------------------------------------------------------------------
 
 ---Gets the modded component.
----@param name string The name of the component.
+---@param referenceName string The reference name of the component.
 ---@param type GameComponentType The type of component.
 ---@return ModdedComponent? item The modded component if found, nil otherwise.
-function Common.GetModdedComponent(name, type)
+function Common.GetModdedComponent(referenceName, type)
 	for _, moddedComponent in ipairs(Storage.ModdedComponentList) do
-		if (moddedComponent.ReferenceName == name and moddedComponent.ComponentType == type) then
+		if (moddedComponent.ReferenceName == referenceName and moddedComponent.ComponentType == type) then
 			return moddedComponent
 		end
 	end
@@ -159,11 +180,11 @@ function Common.GetModdedComponent(name, type)
 end
 
 ---Gets the custom component.
----@param name string The name of the component.
+---@param referenceName string The reference name of the component.
 ---@return ModdedComponent? item The modded component if found, nil otherwise.
-function Common.GetCustomComponent(name)
+function Common.GetCustomComponent(referenceName)
 	for _, moddedComponent in ipairs(Storage.ModdedComponentList) do
-		if (moddedComponent.ReferenceName == name and 
+		if (moddedComponent.ReferenceName == referenceName and
 			moddedComponent.ComponentType >= 1000 and
 			moddedComponent.ComponentType < Storage.NextCustomComponentType) then
 			return moddedComponent

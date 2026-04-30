@@ -29,7 +29,7 @@ function Database.AddMech(mechData)
 	local component = Common.GetModdedComponent(mechData.ReferenceName, Types.ComponentTypes.Mech)
 	if (component ~= nil) then
 		local newName = string.sub(mechData.ReferenceName.."_"..tostring(irandom_range(1000, 10000000)), 1, -3)
-		local message = "Trying to add a new component, but the reference name was already used.\n"
+		local message = "Trying to add a new component, but the reference name was already used.\n\n"
 		message = message.."Please provide a reference name that is unique, consider adding a prefix or suffix referencing your mod to prevent other mods from using the same name.\n\n"
 		message = message.."Debug info:\nName given: "..mechData.ReferenceName.."\nGenerated name: "..newName
 		Common.ShowError(message)
@@ -169,7 +169,7 @@ function Database.AddWeapon(weaponData)
 	local component = Common.GetModdedComponent(weaponData.ReferenceName, Types.ComponentTypes.Weapon)
 	if (component ~= nil) then
 		local newName = string.sub(weaponData.ReferenceName.."_"..tostring(irandom_range(1000, 10000000)), 1, -3)
-		local message = "Trying to add a new component, but the reference name was already used.\n"
+		local message = "Trying to add a new component, but the reference name was already used.\n\n"
 		message = message.."Please provide a reference name that is unique, consider adding a prefix or suffix referencing your mod to prevent other mods from using the same name.\n\n"
 		message = message.."Debug info:\nName given: "..weaponData.ReferenceName.."\nGenerated name: "..newName
 		Common.ShowError(message)
@@ -248,7 +248,7 @@ function Database.AddSolenoid(solenoidData)
 	local component = Common.GetModdedComponent(solenoidData.ReferenceName, Types.ComponentTypes.Solenoid)
 	if (component ~= nil) then
 		local newName = string.sub(solenoidData.ReferenceName.."_"..tostring(irandom_range(1000, 10000000)), 1, -3)
-		local message = "Trying to add a new component, but the reference name was already used.\n"
+		local message = "Trying to add a new component, but the reference name was already used.\n\n"
 		message = message.."Please provide a reference name that is unique, consider adding a prefix or suffix referencing your mod to prevent other mods from using the same name.\n\n"
 		message = message.."Debug info:\nName given: "..solenoidData.ReferenceName.."\nGenerated name: "..newName
 		Common.ShowError(message)
@@ -308,7 +308,7 @@ function Database.AddPilotTemplate(pilotData)
 	local duplicate = Common.GetPilotTemplateIndex(pilotData.Name)
 	if (duplicate ~= nil) then
 		local newName = string.sub(pilotData.Name.."_"..tostring(irandom_range(1000, 10000000)), 1, -3)
-		local message = "Trying to add a new pilot template, but the reference name was already used.\n"
+		local message = "Trying to add a new pilot template, but the reference name was already used.\n\n"
 		message = message.."Please provide a reference name that is unique.\n\n"
 		message = message.."Debug info:\nName given: "..pilotData.Name.."\nGenerated name: "..newName
 		Common.ShowError(message)
@@ -348,6 +348,16 @@ end
 ---Reminder this will only create the shop listing. A completion trigger needs to manually created.
 ---@param componentData CustomComponentCreationData The dataset for adding a new custom component.
 function Database.AddCustomComponent(componentData)
+	local component = Common.GetCustomComponent(componentData.ReferenceName)
+	if (component ~= nil) then
+		local newName = string.sub(componentData.ReferenceName.."_"..tostring(irandom_range(1000, 10000000)), 1, -3)
+		local message = "Trying to add a new custom component, but the reference name was already used.\n\n"
+		message = message.."Please provide a reference name that is unique, consider adding a prefix or suffix referencing your mod to prevent other mods from using the same name.\n\n"
+		message = message.."Debug info:\nName given: "..componentData.ReferenceName.."\nGenerated name: "..newName
+		Common.ShowError(message)
+		componentData.ReferenceName = newName
+	end
+
 	local componentType = Private.GetNextCustomComponentType()
 
 	local spriteIndex = Common.AddSprite(componentData.Sprite, 0, false, false, 0, 0)
