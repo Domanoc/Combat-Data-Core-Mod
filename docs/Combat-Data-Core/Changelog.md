@@ -3,6 +3,15 @@
 ## [v2.0] - tbd
 ### Other
 - Started using the ModFramework
+- Added localization (Machine Translated) for:
+    - Japanese
+    - French
+    - German
+    - Italian
+    - Polish
+    - Portuguese-Brazil
+    - Russian
+    - Spanish
 
 ## [v1.8] - 2026-03-07
 ### Fixed

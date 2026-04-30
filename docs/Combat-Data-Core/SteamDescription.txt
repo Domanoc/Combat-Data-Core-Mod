@@ -38,6 +38,7 @@ Since it uses the lower rows of the research tree it should be compatible with t
 [h2]Change Log[/h2]
 [b][v2.0] - tbd[/b]
 -Started using the ModFramework
+-Added localization (Machine Translated) for: Japanese, French, German, Italian, Polish, Portuguese-Brazil, Russian and Spanish
 
 [h2]Credits[/h2]
 [b]KiberKreker[/b] - For creating the game that motivated me to make this mod.
