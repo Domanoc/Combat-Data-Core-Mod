@@ -11,7 +11,7 @@ Excluding my own mod "Combat Data Core" This mod has an update planned with full
 
 4 Mods failed the tests.  
 1 Mod failed even without the ModFramework.  
-All failed mods where fix with minimal edits and then passed all tests.  
+All failed mods where fixed with minimal edits and then passed all tests.  
 ### Failed mods:
 - Magic Wand (example mod)
 - Robot Pilots Mod
