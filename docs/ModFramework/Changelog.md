@@ -1,7 +1,7 @@
 # Changelog
 
 
-## [v0.1] - tbd
+## [v0.1] - 2026-01-05
 ### Added
 - Added auto rearrange for shop components
 - Added auto register shop items on unlock or item registration through the framework
