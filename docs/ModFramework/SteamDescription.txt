@@ -16,5 +16,5 @@ To use the [b]ModFramework[/b] it has to be first in the mod load order.
 For a full list of features visit the [url=https://github.com/Domanoc/Mech-Engineer-Mods]github page[/url]
 
 [h3]Want to create you own mod?[/h3]
-[*] See our getting started [url=https://github.com/Domanoc/Mech-Engineer-Mods/blob/master/docs/ModFramework/GettingStarted.md]guide[/url].
+[*] See our [url=https://github.com/Domanoc/Mech-Engineer-Mods/blob/master/docs/ModFramework/GettingStarted.md]getting started guide[/url].
 [*] See the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3717807705]Example Mod[/url].
