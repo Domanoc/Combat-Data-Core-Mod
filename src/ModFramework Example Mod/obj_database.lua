@@ -1,12 +1,17 @@
 
----Check if the ModFramework can be found
-function CheckForModFramework()
+---Gets the ModFramework.
+---Makes sure the require exception is handled is the framework cant be found.
+---
+---When the framework cant be found, a message is shown and then the game is close by forcing an error. This to prevent error message spam.
+---@return ModFramework
+function GetModFramework()
 	local isLoaded = variable_global_get("IsModFrameworkLoaded")
-	if isLoaded ~= true then
-		local spacerLine = "\n###################################################\n"
+    local ok, mod = pcall(require, "ModFramework")
+    if (not ok or isLoaded ~= true) then
+        local spacerLine = "\n###################################################\n"
 		local info = debug.getinfo(2, "Sl")
 		local caller = info.short_src:gsub("/","\\")
-		local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline
+		local callerPrint = "Called from: " ..caller.." line: "..info.currentline
 		local prefix = "MOD FRAMEWORK ERROR"..spacerLine
 		local suffix = spacerLine..callerPrint..spacerLine..debug.traceback("Error", 2).."\n\n"
 		local message = "Cannot find the ModFramework!!\n"
@@ -17,17 +22,16 @@ function CheckForModFramework()
 		--We force the game to crash
 		--if not the game will spam messages for every call it can make
 		sprite_merge(-999, -999)
-	end
+    end
+    return mod
 end
 
 ---One time script when the game is started
 ---@param q game_obj_database
 ---@param v_modid string
 function create(q,v_modid)
-	--Check if the ModFramework can be found
-	CheckForModFramework()
 	--load the mod framework as a global for use within this file
-	Mod = require("ModFramework")
+	Mod = GetModFramework()
 
 	--Mod.Common.GenerateLocalizationFiles()
 
