@@ -1,1 +1,20 @@
-wip
+[h2]ModFramework[/h2]
+The [b]ModFramework[/b] is a utility mod that aims to improve mod inter-operability while giving modders tools for creating new features.
+
+To use the [b]ModFramework[/b] it has to be first in the mod load order.
+
+[h2]Features[/h2]
+[list]
+[*]Localization support.
+[*]Component shop icon management.
+[*]Auto fixes for many known mod bugs.
+[*]Game Documentation for modders.
+[*]Mod documentation for modders.
+[*]And more...
+[/list]
+
+For a full list of features visit the [url=https://github.com/Domanoc/Mech-Engineer-Mods]github page[/url]
+
+[h3]Want to create you own mod?[/h3]
+[*] See our getting started [url=https://github.com/Domanoc/Mech-Engineer-Mods/blob/master/docs/ModFramework/GettingStarted.md]guide[/url].
+[*] See the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3717807705]Example Mod[/url].

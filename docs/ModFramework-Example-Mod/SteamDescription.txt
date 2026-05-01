@@ -1,1 +1,22 @@
-wip
+[h2]ModFramework Example Mod[/h2]
+The [b]ModFramework Example Mod[/b] is a showcase for the features that the [b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3717805872]ModFramework[/url][/b] provides.
+
+[h3]Features[/h3]
+Contains examples on:
+[list]
+[*] Adding components like cabins, motors, weapons, reactors and others.
+[*] Adding a new mech type.
+[*] Adding a new weapon type.
+[*] Adding a new solenoid type.
+[*] Adding a new pilot template.
+[*] Adding a new research.
+[*] Modifying existing research.
+[*] Adding custom components
+[*] Adding localization
+[*] Using debug features
+[/list]
+
+For a full list of features visit the [url=https://github.com/Domanoc/Mech-Engineer-Mods]github page[/url]
+
+[h3]Want to create you own mod?[/h3]
+[*] See our [url=https://github.com/Domanoc/Mech-Engineer-Mods/blob/master/docs/ModFramework/GettingStarted.md]getting started guide[/url].

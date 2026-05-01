@@ -3,10 +3,10 @@
 This is the git repo for several mods for the game "[Mech Engineer](https://store.steampowered.com/app/1428520/Mech_Engineer/)"  
 
 - This repo contains the source files for the steam mod "ModFramework"  
-  [SteamLink] pending   
+  [SteamLink](https://steamcommunity.com/sharedfiles/filedetails/?id=3717805872)   
   [Change log](./docs/ModFramework/Changelog.md)
 - This repo contains the source files for the steam mod "ModFramework Example Mod"  
-  [SteamLink] pending   
+  [SteamLink](https://steamcommunity.com/sharedfiles/filedetails/?id=3717807705)   
   [Change log](./docs/ModFramework-Example-Mod/Changelog.md)
 - This repo contains the source files for the steam mod "Combat Data Core"  
   [SteamLink](https://steamcommunity.com/sharedfiles/filedetails/?id=3581427607)   
