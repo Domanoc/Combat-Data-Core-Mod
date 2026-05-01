@@ -4,3 +4,6 @@ Weapons
 Reactors
 Modules
 Textures
+Battles
+Balance
+Translation
