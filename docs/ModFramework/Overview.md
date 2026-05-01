@@ -1,5 +1,9 @@
 # ModFramework - Overview
 
+## Guides
+- [Getting started](./GettingStarted.md)
+- [Accessing the framework](./AccessingTheFramework.md)
+
 ## Features
 - [Battle sound fix](./Features/BattleSoundFix.md)
 - [Component shop management](./Features/ComponentShop.md)

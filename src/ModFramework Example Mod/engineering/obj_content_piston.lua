@@ -15,7 +15,7 @@ function GetModFramework()
 		local prefix = "MOD FRAMEWORK ERROR"..spacerLine
 		local suffix = spacerLine..callerPrint..spacerLine..debug.traceback("Error", 2).."\n\n"
 		local message = "Cannot find the ModFramework!!\n"
-		message = message.."The ModFramework should be the first in the mod load order, please check an correct the mod load order."
+		message = message.."The ModFramework should be the first in the mod load order, please check and correct the mod load order."
 		message = message..spacerLine.."The mod will now purposefully make the game crash to prevent error message spam."
 		show_message(prefix..message..suffix)
 
