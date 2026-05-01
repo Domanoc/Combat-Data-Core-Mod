@@ -2,7 +2,7 @@
 ---One time script when the game is started
 ---@param q any
 ---@param v_modid string
-function create(q,v_modid)--one time script when save is loaded
+function create(q,v_modid)
 end
 
 --in draw event

@@ -68,22 +68,22 @@
 ---@field concomitant_text table
 ---@field concomitant_text_sound number
 ---@field damaged_districts number
----@field data_arrows number
----@field data_map_bases number
----@field data_map_biom number
----@field data_map_biomass number
----@field data_map_brucus number
----@field data_map_city number
----@field data_map_danger number
----@field data_map_guess number
----@field data_map_infection number
----@field data_map_key number
----@field data_map_level number
----@field data_map_num number
----@field data_map_resources number
----@field data_map_reveal number
----@field data_map_spawn number
----@field data_map_turret number
+---@field data_arrows ds_grid
+---@field data_map_bases ds_grid Grid of numbers (0|1), true and false flag for a base
+---@field data_map_biom ds_grid
+---@field data_map_biomass ds_grid
+---@field data_map_brucus ds_grid
+---@field data_map_city ds_grid
+---@field data_map_danger ds_grid
+---@field data_map_guess ds_grid
+---@field data_map_infection ds_grid
+---@field data_map_key ds_grid
+---@field data_map_level ds_grid Is an unused grid, position 0,0 is now used to store ModFramework data in saves
+---@field data_map_num ds_grid
+---@field data_map_resources ds_grid
+---@field data_map_reveal ds_grid
+---@field data_map_spawn ds_grid
+---@field data_map_turret ds_grid
 ---@field data_string_map table
 ---@field day_fri string
 ---@field day_mon string
@@ -138,7 +138,7 @@
 ---@field light_cell number
 ---@field light_cell_x number
 ---@field light_cell_y number
----@field list_mech table
+---@field list_mech table<number, -4|game_obj_mech_item>
 ---@field log_slot number
 ---@field log_surf_created boolean
 ---@field m_dist table

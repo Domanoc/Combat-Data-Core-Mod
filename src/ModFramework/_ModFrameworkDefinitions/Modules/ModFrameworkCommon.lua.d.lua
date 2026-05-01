@@ -22,6 +22,15 @@ function Common.GetModName() end
 ---@return string? filepath The filepath to the mod folder or nil if the mod was not found.
 function Common.GetModPathByName(name) end
 
+---Gets the filepath to the saved mod settings ini.
+---@return string filepath The filepath to the saved mod settings ini.
+function Common.GetModSettingsPath() end
+
+---Gets the filepath to the saved mod settings ini.
+---@param name string The name of the mod folder.
+---@return string filepath The filepath to the saved mod settings ini.
+function Common.GetModSettingsPathByName(name) end
+
 ---Checks if this is a game loaded from a save. 
 ---@return boolean isLoadedGame True if this is a game loaded from a save, false otherwise.
 function Common.IsLoadedGame() end
@@ -137,6 +146,22 @@ function Common.GetObjContentSolenoid() end
 ---@return game_obj_content_pilots obj_content_pilots The reference for "obj_content_pilots"
 function Common.GetObjContentPilots() end
 
+---Gets the reference for "obj_pilot_item"
+---@return game_obj_pilot_item obj_pilot_item The reference for "obj_pilot_item"
+function Common.GetObjPilotItem() end
+
+---Gets the reference for "obj_content_hangar"
+---@return game_obj_content_hangar obj_content_hangar The reference for "obj_content_hangar"
+function Common.GetObjContentHanger() end
+
+---Gets the reference for "obj_button_engineering"
+---@return game_obj_button_engineering obj_button_engineering The reference for "obj_button_engineering"
+function Common.GetObjButtonEngineering() end
+
+---Gets the reference for "game_obj_big_holder"
+---@return game_obj_big_holder game_obj_big_holder The reference for "game_obj_big_holder"
+function Common.GetObjBigHolder() end
+
 ---With this function you can add a sprite, loading it from an external source where the image file to be loaded should always be in either *.png, *.gif, *.jpg/jpeg
 ---
 ---Use this instead of calling sprite_add directly to prevent crashes when incorrect sprite data is passed.
@@ -197,6 +222,13 @@ function Common.ShowError(message) end
 ---The message box can be copied be selecting it and using ctrl+c and then dump in a text editor of choice.
 ---@param ref any The GameMaker struct reference or table reference.
 function Common.DumpObjToMessage(ref) end
+
+---A debug helper function:
+---Prints debug text lines next to the cursor.
+---
+---Use this in a draw function as the debug text is only drawn for 1 frame.
+---@param lines CursorDebuggerLine[] The lines to print
+function Common.DrawDebugCursor(lines) end
 
 ---A debug helper function:
 ---Prints a message box with the key and values of the GameMaker ds_map.

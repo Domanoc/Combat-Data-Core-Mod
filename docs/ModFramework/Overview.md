@@ -1,14 +1,24 @@
 # ModFramework - Overview
 
+## Guides
+- [Getting started](./GettingStarted.md)
+- [Accessing the framework](./AccessingTheFramework.md)
+- [How to use the documentation](./HowToUseTheDocumentation.md)
+
 ## Features
 - [Battle sound fix](./Features/BattleSoundFix.md)
 - [Component shop management](./Features/ComponentShop.md)
 - [Debug functions](./Features/DebugFunctions.md)
 - [GameObject documentation](./GameObjectDocumentation.md)
 - [GameObject Getters](./Features/GameObjectGetters.md)
+- [ModSettings Menu](./Features/ModSettingMenu.md)
 - [Localization](./Features/Localization.md)
 - [Research on existing saves fix](./Features/ResearchFix.md)
 - [Sprite function wrappers](./Features/SpriteFunctionWrappers.md)
+- [Quality of life features](./Features/QualityOfLife.md)
+
+## Settings
+- [Adding mod settings](./Features/AddingModSettings.md)
 
 ## Adding new types
 - [Adding a new mech type](./Features/AddingMechType.md)

@@ -35,6 +35,10 @@ local Types = require("ModFrameworkTypes")
 ---Access to Types used by the framework.
 ModFramework.Types = Types
 
+local Settings = require("ModFrameworkSettings")
+---Access to the Settings functions.
+ModFramework.Settings = Settings
+
 ------------------------------------------------------------------------------
 --- EXPORT MODFRAMEWORK ------------------------------------------------------
 ------------------------------------------------------------------------------

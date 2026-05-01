@@ -28,10 +28,6 @@ end
 ---check when placing city
 ---@param q game_obj_content_hangar
 function place_city(q,q_p)
-	--q_p = 1, if q_p = 0 can't place city on that cell
-	--mx = mouse_x
-	--my = mouse_y
-	--ds_grid_get(data_map_biom,mx,my) for checking bioms
 end
 
 ---skip day button

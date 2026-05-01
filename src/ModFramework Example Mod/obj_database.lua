@@ -1,35 +1,46 @@
 
----Check if the ModFramework can be found
-function CheckForModFramework()
+---Gets the ModFramework.
+---Makes sure the require exception is handled is the framework cant be found.
+---
+---When the framework cant be found, a message is shown and then the game is close by forcing an error. This to prevent error message spam.
+---@return ModFramework
+function GetModFramework()
 	local isLoaded = variable_global_get("IsModFrameworkLoaded")
-	if isLoaded ~= true then
-		local spacerLine = "\n###################################################\n"
+    local ok, mod = pcall(require, "ModFramework")
+    if (not ok or isLoaded ~= true) then
+        local spacerLine = "\n###################################################\n"
 		local info = debug.getinfo(2, "Sl")
 		local caller = info.short_src:gsub("/","\\")
-		local callerPrint = "Called from: " .. caller .. " line: " .. info.currentline
+		local callerPrint = "Called from: " ..caller.." line: "..info.currentline
 		local prefix = "MOD FRAMEWORK ERROR"..spacerLine
 		local suffix = spacerLine..callerPrint..spacerLine..debug.traceback("Error", 2).."\n\n"
 		local message = "Cannot find the ModFramework!!\n"
-		message = message.."The ModFramework should be the first in the mod load order, please check an correct the mod load order."
+		message = message.."The ModFramework should be the first in the mod load order, please check and correct the mod load order."
 		message = message..spacerLine.."The mod will now purposefully make the game crash to prevent error message spam."
 		show_message(prefix..message..suffix)
 
 		--We force the game to crash
 		--if not the game will spam messages for every call it can make
 		sprite_merge(-999, -999)
-	end
+    end
+    return mod
 end
 
 ---One time script when the game is started
 ---@param q game_obj_database
 ---@param v_modid string
 function create(q,v_modid)
-	--Check if the ModFramework can be found
-	CheckForModFramework()
 	--load the mod framework as a global for use within this file
-	Mod = require("ModFramework")
+	Mod = GetModFramework()
 
-	--Mod.Common.GenerateLocalizationFiles()
+	--An example for creating mod settings.
+	--Settings need to be registered before they can be used.
+	--The mod should expect that the setting value can change during runtime.
+	--Settings can be changed by the user in the mod settings menu, and the defaults can be overridden by the user.
+	Mod.Settings.RegisterBooleanSetting("example_setting_a", false, { LocalizedDefaultValue = "Description for Setting A" })
+	Mod.Settings.RegisterBooleanSetting("example_setting_b", true, { LocalizedDefaultValue = "Description for Setting B" })
+	Mod.Settings.RegisterBooleanSetting("example_setting_c", false, { LocalizedDefaultValue = "Description for Setting C" })
+	Mod.Settings.RegisterBooleanSetting("example_setting_d", true, { LocalizedDefaultValue = "Description for Setting D" })
 
 	--path to the mod folder
 	local modFilepath = Mod.Common.GetModPath()
@@ -205,6 +216,14 @@ function draw_top_menu(q)
 	if keyboard_check_pressed(keys.F11) then
 		--Debugger breakpoint
     end
+
+	--The value of a setting can be retrieved like this
+	local example_setting_a_value = Mod.Settings.GetBooleanSettingValue("example_setting_a")
+	--We can then for example use it to toggle a feature
+	if (example_setting_a_value == true) then
+		--We can for example show some debug information when toggled.
+		Mod.Common.DrawDebugCursor({{ Label = "Show the setting value", Value = example_setting_a_value }})
+	end
 end
 
 ---The draw call that runs every frame while debug is active (F6)
