@@ -3,15 +3,6 @@
 ---@param q game_obj_database
 ---@param v_modid string
 function create(q,v_modid)
-	--path to the current file
-	local currentFilePath = (mod_info[v_modid]):gsub("obj_database.lua","")
-
-	--Add current mod path to the package.path
-	--This ensures we can load the mod framework in every file in every mod
-	local modFramework = ";"..currentFilePath.."ModFramework\\?.lua"
-	local modFrameworkInternal = ";"..currentFilePath.."ModFrameworkInternal\\?.lua"
-	package.path = package.path..modFramework..modFrameworkInternal
-
 	--Only needed in the framework setup, is not needed for mods
 	Internal = require("ModFrameworkInternal")
 	Internal.RegisterFramework()

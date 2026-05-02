@@ -50,6 +50,10 @@ local Research = require("ModFrameworkInternalResearch")
 ---Access to the internal functions for the Research tab.
 ModFrameworkInternal.Research = Research
 
+local Debug = require("ModFrameworkInternalDebug")
+---Access to the internal functions for the Debugger.
+ModFrameworkInternal.Debug = Debug
+
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------

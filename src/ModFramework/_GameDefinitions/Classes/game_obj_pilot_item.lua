@@ -41,9 +41,9 @@
 ---@field mech_pilot_y number
 ---@field moving boolean
 ---@field my_last_place number
----@field my_mech number
+---@field my_mech -4|game_obj_mech_item
 ---@field my_medals number
----@field my_num number
+---@field my_num number The position of the pilot in the list.
 ---@field my_pilot number
 ---@field my_snd_index string
 ---@field my_toys number
@@ -69,7 +69,7 @@
 ---@field phrase_prior table
 ---@field phrase_said table
 ---@field phrase_sound table
----@field pilot_number number
+---@field pilot_number number The id of the pilot
 ---@field pilot_sprite number
 ---@field position_district number
 ---@field pulse_condition number
@@ -119,3 +119,5 @@
 ---@field weekends_colour number
 ---@field weekends_colour_next number
 ---@field weekends_dance boolean
+---@field x number The x position of the instance
+---@field y number The y position of the instance

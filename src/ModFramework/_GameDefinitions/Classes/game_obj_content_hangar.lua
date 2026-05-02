@@ -138,7 +138,7 @@
 ---@field light_cell number
 ---@field light_cell_x number
 ---@field light_cell_y number
----@field list_mech table
+---@field list_mech table<number, -4|game_obj_mech_item>
 ---@field log_slot number
 ---@field log_surf_created boolean
 ---@field m_dist table

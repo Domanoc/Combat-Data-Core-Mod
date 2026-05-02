@@ -342,6 +342,18 @@ function Common.GetObjContentPilots()
 	return asset_get_index("obj_content_pilots")
 end
 
+---Gets the reference for "obj_pilot_item"
+---@return game_obj_pilot_item obj_pilot_item The reference for "obj_pilot_item"
+function Common.GetObjPilotItem()
+	return asset_get_index("obj_pilot_item")
+end
+
+---Gets the reference for "obj_content_hangar"
+---@return game_obj_content_hangar obj_content_hangar The reference for "obj_content_hangar"
+function Common.GetObjContentHanger()
+	return asset_get_index("obj_content_hangar")
+end
+
 ------------------------------------------------------------------------------
 --- SPRITE FUNCTION WRAPPERS -------------------------------------------------
 ------------------------------------------------------------------------------
@@ -512,6 +524,17 @@ function Common.DumpObjToMessage(ref)
 	end
 	local message = table.concat(values, ",\n")
 	show_message(prefix..message..suffix)
+end
+
+---A debug helper function:
+---Prints debug text lines next to the cursor.
+---
+---Use this in a draw function as the debug text is only drawn for 1 frame.
+---@param lines CursorDebuggerLine[] The lines to print
+function Common.DrawDebugCursor(lines)
+	for _, line in ipairs(lines) do
+		table.insert(Storage.CursorDebuggerLines, line)
+	end
 end
 
 ---Convert a table into a single line of key value pairs.

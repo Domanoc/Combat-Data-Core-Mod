@@ -1,0 +1,3 @@
+---@class CursorDebuggerLine A debug line
+---@field Label string The label for the value
+---@field Value any The value that is drawn. The value is casted to string before being drawn.

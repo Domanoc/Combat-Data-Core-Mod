@@ -1,5 +1,8 @@
 # Changelog
 
+## [v0.2] - TBD
+- Added Quality of life feature: Shift+Left clicking pilots moves them into free mechs
+- Added Quality of life feature: Shift+Left clicking pilots moves them back into the hanger
 
 ## [v0.1] - 2026-01-05
 ### Added

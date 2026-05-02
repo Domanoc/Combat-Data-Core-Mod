@@ -16,6 +16,8 @@ local Private = {}
 local Storage = require("ModFrameworkStorage")
 ---Access to the Common functions.
 local Common = require("ModFrameworkCommon")
+---Access to Types used by the framework.
+local Types = require("ModFrameworkTypes")
 
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
@@ -120,12 +122,160 @@ end
 ---Create a new pilot instance
 ---@return game_obj_pilot_item objPilotItem the new obj_pilot_item instance
 function Private.AddPilotItemInstance()
-	local obj_pilot_item = asset_get_index("obj_pilot_item")
+	local obj_pilot_item = Common.GetObjPilotItem()
 	return instance_create_depth(0, 0, 0, obj_pilot_item)
 end
 
 ------------------------------------------------------------------------------
---- Optional Setters ---------------------------------------------------------
+--- PILOT MOVER --------------------------------------------------------------
+------------------------------------------------------------------------------
+
+---Listens for the input combination (shift+left mouse button)
+---When the input combination on the correct coordinates it will:
+---Move a pilot into a free mech.
+---Move the pilot back to the hangar.
+function Hanger.PilotClickListener()
+	local obj_content_hangar = Common.GetObjContentHanger()
+	local obj_content_pilots = Common.GetObjContentPilots()
+	local mx = window_mouse_get_x()
+	local my = window_mouse_get_y()
+	local minListY = 340
+	local maxListY = 1020
+	local pilotBoxHeight = 154
+	local pilotBoxWidth = 144
+
+	for _, pilot in ipairs(obj_content_pilots.list_pilot) do
+		local minX = pilot.x
+		local maxX = pilot.x + pilotBoxWidth
+		local minY = pilot.y
+		local maxY = pilot.y + pilotBoxHeight
+
+		if (mx > minX and
+			mx < maxX and
+			my > minY and
+			my < maxY and
+			my > minListY and
+			my < maxListY and
+			pilot.deleted == false) then
+
+			if (mouse_check_button_pressed(Types.MouseButtons.Left) and
+				keyboard_check(Types.VirtualKeys.Shift)) then
+				Private.PlacePilotIntoMech(pilot, obj_content_pilots)
+				return
+			end
+		end
+	end
+
+	for _, mech in ipairs(obj_content_hangar.list_mech) do
+		if (mech ~= -4 and mech.cur_item ~= 0) then
+			local pilot = mech.cur_item
+			---@cast mech game_obj_mech_item
+			---@cast pilot game_obj_pilot_item 
+
+			local minX = pilot.x
+			local maxX = pilot.x + pilotBoxWidth
+			local minY = pilot.y
+			local maxY = pilot.y + pilotBoxHeight
+
+			if (mx > minX and
+				mx < maxX and
+				my > minY and
+				my < maxY) then
+
+				if (mouse_check_button_pressed(Types.MouseButtons.Left) and
+					keyboard_check(Types.VirtualKeys.Shift)) then
+					Private.PlacePilotIntoHanger(mech, pilot)
+					return
+				end
+			end
+		end
+	end
+end
+
+---Place the given pilot in the first available mech.
+---If there are no free mechs do nothing.
+---@param pilot game_obj_pilot_item The pilot.
+---@param obj_content_pilots game_obj_content_pilots The hanger.
+function Private.PlacePilotIntoMech(pilot, obj_content_pilots)
+	local mech = Private.FindAvailableMech()
+	if mech == nil then
+		return
+	end
+
+	local numberOfItems = obj_content_pilots.number_of_items
+	local newListPilot = {}
+
+	--Update the pilots list
+	local i = 0
+	for _, value in ipairs(obj_content_pilots.list_pilot) do
+		if (pilot.my_num ~= value.my_num) then
+			value.my_num = i
+			table.insert(newListPilot, value)
+			i = i + 1
+		end
+	end
+
+	--Update the pilot
+	pilot.my_num = i
+	pilot.my_mech = mech
+	pilot.item_pos = 2
+	pilot.deleted = true
+	pilot.hover = true
+	table.insert(newListPilot, pilot)
+
+	--Update the mech receiving the pilot
+	mech.cur_item = pilot
+	mech.cur_item_type = 13
+	mech.new_item = pilot
+	mech.new_item_type = 13
+
+	--return the updated values
+	obj_content_pilots.list_pilot = newListPilot
+	obj_content_pilots.number_of_items = numberOfItems - 1
+end
+
+---Place the given pilot back into the hanger and clear the mech.
+---@param mech game_obj_mech_item The mech containing the pilot.
+---@param pilot game_obj_pilot_item The pilot.
+function Private.PlacePilotIntoHanger(mech, pilot)
+	local obj_content_pilots = Common.GetObjContentPilots()
+	local numberOfItems = obj_content_pilots.number_of_items
+
+	--Update the pilot
+	pilot.my_num = numberOfItems
+	pilot.my_mech = -4
+	pilot.item_pos = 0
+	pilot.deleted = false
+	pilot.hover = false
+	obj_content_pilots.list_pilot[numberOfItems] = pilot
+
+	--Update the mech receiving the pilot
+	mech.cur_item = 0
+	mech.cur_item_type = 0
+	mech.new_item = 0
+	mech.new_item_type = 0
+
+	obj_content_pilots.number_of_items = numberOfItems + 1
+end
+
+---Find a available mech for a pilot.
+---@return game_obj_mech_item? mech The mech when available, nil otherwise.
+function Private.FindAvailableMech()
+	local obj_content_hangar = Common.GetObjContentHanger()
+
+	for _, mech in ipairs(obj_content_hangar.list_mech) do
+		if (mech ~= -4 and
+			mech.cur_item == 0) then
+			---@cast mech game_obj_mech_item
+			return mech
+		end
+	end
+
+	return nil
+end
+
+------------------------------------------------------------------------------
+--- OPTIONAL SETTERS ---------------------------------------------------------
 ------------------------------------------------------------------------------
 
 ---Sets the optional name if set else uses the template data
