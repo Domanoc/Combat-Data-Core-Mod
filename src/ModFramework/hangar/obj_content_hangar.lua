@@ -3,6 +3,8 @@
 ---@param q game_obj_content_hangar
 ---@param v_modid string
 function create(q,v_modid)
+	--Only needed in the framework setup, is not needed for mods
+	Internal = require("ModFrameworkInternal")
 end
 
 ---every game tick if we are in the hangar menu and battle is not active
@@ -28,10 +30,6 @@ end
 ---check when placing city
 ---@param q game_obj_content_hangar
 function place_city(q,q_p)
-	--q_p = 1, if q_p = 0 can't place city on that cell
-	--mx = mouse_x
-	--my = mouse_y
-	--ds_grid_get(data_map_biom,mx,my) for checking bioms
 end
 
 ---skip day button
@@ -56,6 +54,11 @@ end
 
 ---@param q game_obj_content_hangar
 function draw_map(q)
+	Internal.Common.DrawDebugCursor({
+		{ Label = "q.data_map_level", Value = q.data_map_level },
+		{ Label = "q.map_size_x", Value = q.map_size_x },
+		{ Label = "q.map_size_y", Value = q.map_size_y },
+	})
 end
 
 ---@param q game_obj_content_hangar

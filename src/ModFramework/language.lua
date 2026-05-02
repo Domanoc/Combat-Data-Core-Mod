@@ -11,7 +11,8 @@ function language(q,v_modid)
 	--We do this in the language.lua since this is the first code that gets run.
 	local modFramework = ";"..currentFilePath.."ModFramework\\?.lua"
 	local modFrameworkInternal = ";"..currentFilePath.."ModFrameworkInternal\\?.lua"
-	package.path = package.path..modFramework..modFrameworkInternal
+	local lunajson = ";"..currentFilePath.."_lunajson\\?.lua"
+	package.path = package.path..modFramework..modFrameworkInternal..lunajson
 
 	--We wait for the rest of the mod registration until obj_database.lua
 	--So the translation mods have time to set the language
