@@ -91,10 +91,13 @@ Using this setup will allow you to get type info while you write code. The "ModT
 ## The creative process
 Now all that remains the the creative process. And to get you going some starting points.
 
-- [Take a look at the functions the framework provides.](./Overview.md)
+- Take a look at other other guides:
+    - [Accessing the framework](./AccessingTheFramework.md).
+    - [How to use the documentation](./HowToUseTheDocumentation.md).
+- Take a look at the [overview](./Overview.md).
 - Check out the "[ModFramework Example Mod](../../src/ModFramework%20Example%20Mod/)" as it provides basic examples on the framework features.
 - Check out what existing mods do.
-- Ask your questions on the mech engineer discord in the #mods-discussions
+- Ask your questions on the [mech engineer discord](https://discord.com/invite/nS3HUYEfaB) in the #mods-discussions
 - Finally a [how to steam workshop upload instruction](./UploadingModToSteamWorkshop.md)
 
 Good luck and happy modding.

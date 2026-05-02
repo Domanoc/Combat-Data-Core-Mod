@@ -3,6 +3,7 @@
 ## Guides
 - [Getting started](./GettingStarted.md)
 - [Accessing the framework](./AccessingTheFramework.md)
+- [How to use the documentation](./HowToUseTheDocumentation.md)
 
 ## Features
 - [Battle sound fix](./Features/BattleSoundFix.md)
