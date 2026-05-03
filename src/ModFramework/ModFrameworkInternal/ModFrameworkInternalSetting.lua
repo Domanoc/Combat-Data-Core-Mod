@@ -52,7 +52,6 @@ function InternalSettings.LoadData()
 
 	---@cast jsonData JsonModSettingData[]
 	Private.ParseModSettingData(jsonData)
-	Common.ShowMessage(lunaJson.encode(Storage.ModSettingData))
 end
 
 ---Parse the json data and set a valid dataset to storage.

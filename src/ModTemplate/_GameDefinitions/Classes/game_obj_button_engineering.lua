@@ -1,0 +1,10 @@
+---This is an auto generated class definition.
+---
+---Please use the found values as a starting point for your use.
+---As not all values may be present at every point of the game.
+---Or values could be missing from the definition.
+---@class game_obj_button_engineering
+---@field activated boolean
+---@field array_lua table
+---@field button_name string
+---@field st_lua table

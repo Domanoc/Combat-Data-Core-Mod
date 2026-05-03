@@ -354,6 +354,18 @@ function Common.GetObjContentHanger()
 	return asset_get_index("obj_content_hangar")
 end
 
+---Gets the reference for "obj_button_engineering"
+---@return game_obj_button_engineering obj_button_engineering The reference for "obj_button_engineering"
+function Common.GetObjButtonEngineering()
+	return asset_get_index("obj_button_engineering")
+end
+
+---Gets the reference for "game_obj_big_holder"
+---@return game_obj_big_holder game_obj_big_holder The reference for "game_obj_big_holder"
+function Common.GetObjBigHolder()
+	return asset_get_index("obj_big_holder")
+end
+
 ------------------------------------------------------------------------------
 --- SPRITE FUNCTION WRAPPERS -------------------------------------------------
 ------------------------------------------------------------------------------

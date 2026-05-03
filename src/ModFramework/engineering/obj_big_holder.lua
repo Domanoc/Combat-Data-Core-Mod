@@ -20,7 +20,7 @@ end
 function load_mech(q)
 end
 
----inside mouse_check_button_pressed(mb_left)
+---Triggers when the left mouse button is pressed
 ---@param q game_obj_big_holder
 function activate_menu(q)
 end

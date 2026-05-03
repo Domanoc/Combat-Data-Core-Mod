@@ -145,6 +145,14 @@ function Common.GetObjPilotItem() end
 ---@return game_obj_content_hangar obj_content_hangar The reference for "obj_content_hangar"
 function Common.GetObjContentHanger() end
 
+---Gets the reference for "obj_button_engineering"
+---@return game_obj_button_engineering obj_button_engineering The reference for "obj_button_engineering"
+function Common.GetObjButtonEngineering() end
+
+---Gets the reference for "game_obj_big_holder"
+---@return game_obj_big_holder game_obj_big_holder The reference for "game_obj_big_holder"
+function Common.GetObjBigHolder() end
+
 ---With this function you can add a sprite, loading it from an external source where the image file to be loaded should always be in either *.png, *.gif, *.jpg/jpeg
 ---
 ---Use this instead of calling sprite_add directly to prevent crashes when incorrect sprite data is passed.
