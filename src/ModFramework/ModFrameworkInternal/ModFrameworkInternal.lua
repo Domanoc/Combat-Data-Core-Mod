@@ -12,8 +12,6 @@ local Private = {}
 
 ------------------------------------------------------------------------------
 
----Access to the Storage of mod framework variables.
-local Storage = require("ModFrameworkStorage")
 ---Access to the Common functions.
 local Common = require("ModFrameworkCommon")
 
@@ -27,6 +25,7 @@ Internal.Common = Common
 local Types = require("ModFrameworkTypes")
 ---Access to Types used by the framework.
 Internal.Types = Types
+
 local Storage = require("ModFrameworkStorage")
 ---Access to the Storage of mod framework variables.
 Internal.Storage = Storage

@@ -27,6 +27,7 @@ local Settings = require("ModFrameworkSettings")
 
 InternalSettings.RegisterBooleanSetting = Settings.RegisterBooleanSetting
 InternalSettings.UpdateBooleanSetting = Settings.UpdateBooleanSetting
+InternalSettings.GetBooleanSettingValue = Settings.GetBooleanSettingValue
 
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------

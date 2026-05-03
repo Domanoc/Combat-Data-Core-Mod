@@ -43,7 +43,7 @@ function draw_top_menu(q)
 	Internal.Hanger.ProcessPilotDataQueue()
 
 	if keyboard_check_pressed(Internal.Types.VirtualKeys.F11) then
-		Internal.Settings.UpdateBooleanSetting("QuickMovePilots", false)
+		--Debug point
 	end
 end
 

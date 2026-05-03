@@ -12,9 +12,14 @@ local Settings = {}
 ---@param default boolean The default value.
 function Settings.RegisterBooleanSetting(settingsName, default) end
 
----comment
+---Update a boolean setting value for the mod.
 ---@param settingsName string The name of the setting.
 ---@param value boolean The value to be set.
 function Settings.UpdateBooleanSetting(settingsName, value) end
+
+---Get a boolean setting value for the mod.
+---@param settingsName string The name of the setting.
+---@return boolean value The value of the setting
+function Settings.GetBooleanSettingValue(settingsName) end
 
 return Settings

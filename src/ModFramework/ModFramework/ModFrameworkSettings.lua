@@ -66,14 +66,14 @@ function Settings.RegisterBooleanSetting(settingsName, default)
 	Private.SetCurrentSettingsToDefaults()
 end
 
----comment
+---Update a boolean setting value for the mod.
 ---@param settingsName string The name of the setting.
 ---@param value boolean The value to be set.
 function Settings.UpdateBooleanSetting(settingsName, value)
 	local modName = Common.GetModName()
 	local settings = Private.GetModSettings(modName)
 	if (settings == nil) then
-		local message = "Trying to set a value to a mod setting but it failed.\n"
+		local message = "Trying to set a settings value to a mod setting but it failed.\n"
 		message = message.."Check if the setting was correctly registered and of the same type. \n\n"
 		message = message.."Debug info:\nMod: "..modName.."\nSetting name: "..settingsName.."\nType: "..type(value)
 		Common.ShowError(message)
@@ -88,10 +88,40 @@ function Settings.UpdateBooleanSetting(settingsName, value)
 		end
 	end
 
-	local message = "Trying to set a value to a mod setting but it failed.\n"
+	local message = "Trying to set a settings value to a mod setting but it failed.\n"
 	message = message.."Check if the setting was correctly registered and of the same type. \n\n"
 	message = message.."Debug info:\nMod: "..modName.."\nSetting name: "..settingsName.."\nType: "..type(value)
 	Common.ShowError(message)
+end
+
+---Get a boolean setting value for the mod.
+---@param settingsName string The name of the setting.
+---@return boolean value The value of the setting
+function Settings.GetBooleanSettingValue(settingsName)
+	local modName = Common.GetModName()
+	local settings = Private.GetModSettings(modName)
+	if (settings == nil) then
+		local message = "Trying to get a settings value to a mod setting but it failed.\n"
+		message = message.."Check if the setting was correctly registered and of the same type. \n\n"
+		message = message.."Debug info:\nMod: "..modName.."\nSetting name: "..settingsName..
+		Common.ShowError(message)
+		return false
+	end
+
+	for _, setting in ipairs(settings.SettingsData) do
+		if (setting.SettingsName == settingsName and
+			type(setting.SettingsValue) == "boolean") then
+			local value = setting.SettingsValue
+			---@cast value boolean
+			return value
+		end
+	end
+
+	local message = "Trying to get a settings value to a mod setting but it failed.\n"
+	message = message.."Check if the setting was correctly registered and of the same type. \n\n"
+	message = message.."Debug info:\nMod: "..modName.."\nSetting name: "..settingsName..
+	Common.ShowError(message)
+	return false
 end
 
 ---Gets the mod default settings.
