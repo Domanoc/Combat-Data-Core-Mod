@@ -7,12 +7,20 @@
 local Storage = {}
 
 ------------------------------------------------------------------------------
-------------------------------------------------------------------------------
+--- MOD DATA -----------------------------------------------------------------
 ------------------------------------------------------------------------------
 
 ---A list of the registered mods.
 ---@type ModRegistration[]
 Storage.ModRegistrations = {}
+
+---A list of default settings data
+---@type ModDefaultSettingData[]
+Storage.ModDefaultData = {}
+
+---A list of setting data. This data will be saved to and loaded from the games save.
+---@type ModSettingData[]
+Storage.ModSettingData = {}
 
 ------------------------------------------------------------------------------
 --- LOCALIZATION -------------------------------------------------------------

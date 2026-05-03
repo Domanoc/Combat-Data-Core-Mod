@@ -14,6 +14,8 @@
         "${workspaceFolder}/src/ModFramework/_GameDefinitions/"
     ],
     "files.exclude": {
+        "**/ModFramework/_lunajson": true,
+
         "**/ModFramework Example Mod/_ModFrameworkDefinitions": true,
         "**/ModFramework Example Mod/_GameDefinitions": true,
 
@@ -24,6 +26,8 @@
         "**/Combat Data Core/_GameDefinitions": true,
     },
     "search.exclude": {
+        "**/ModFramework/_lunajson": true,
+        
         "**/ModFramework Example Mod/_ModFrameworkDefinitions": true,
         "**/ModFramework Example Mod/_GameDefinitions": true,
 

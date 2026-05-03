@@ -35,6 +35,10 @@ local Types = require("ModFrameworkTypes")
 ---Access to Types used by the framework.
 ModFramework.Types = Types
 
+local Save = require("ModFrameworkSave")
+---Access to the Save functions.
+ModFramework.Save = Save
+
 ------------------------------------------------------------------------------
 --- EXPORT MODFRAMEWORK ------------------------------------------------------
 ------------------------------------------------------------------------------

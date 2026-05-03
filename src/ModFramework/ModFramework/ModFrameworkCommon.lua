@@ -73,7 +73,7 @@ end
 ---@return string? filepath The filepath to the mod folder or nil if the mod was not found.
 function Common.GetModPathByName(name)
 	for _, mod in pairs(Storage.ModRegistrations) do
-		if (mod.Name == name) then
+		if (mod.ModName == name) then
 			return mod.Path
 		end
 	end
@@ -478,17 +478,17 @@ function Common.DumpObjToMessage(ref)
 
 	if (ref == nil) then
 		local message = "This is a nil value"
-		show_message(prefix..message)
+		show_message(prefix..message..suffix)
 		return
 	end
 
 	if (type(ref) == "string") then
-		show_message(prefix..ref)
+		show_message(prefix..ref..suffix)
 		return
 	end
 
 	if (type(ref) == "boolean") then
-		show_message(prefix..tostring(ref))
+		show_message(prefix..tostring(ref)..suffix)
 		return
 	end
 
@@ -508,7 +508,7 @@ function Common.DumpObjToMessage(ref)
 			table.insert(values, tostring(key).."::"..refValueString)
 		end
 		local message = table.concat(values, ",\n")
-		show_message(prefix..message)
+		show_message(prefix..message..suffix)
 		return
 	end
 
