@@ -71,7 +71,27 @@ end
 ---@param value boolean The value to be set.
 function Settings.UpdateBooleanSetting(settingsName, value)
 	local modName = Common.GetModName()
-	local defaults = Private.GetModSettings(modName)
+	local settings = Private.GetModSettings(modName)
+	if (settings == nil) then
+		local message = "Trying to set a value to a mod setting but it failed.\n"
+		message = message.."Check if the setting was correctly registered and of the same type. \n\n"
+		message = message.."Debug info:\nMod: "..modName.."\nSetting name: "..settingsName.."\nType: "..type(value)
+		Common.ShowError(message)
+		return
+	end
+
+	for _, setting in ipairs(settings.SettingsData) do
+		if (setting.SettingsName == settingsName and
+			type(setting.SettingsValue) == type(value)) then
+			setting.SettingsValue = value
+			return
+		end
+	end
+
+	local message = "Trying to set a value to a mod setting but it failed.\n"
+	message = message.."Check if the setting was correctly registered and of the same type. \n\n"
+	message = message.."Debug info:\nMod: "..modName.."\nSetting name: "..settingsName.."\nType: "..type(value)
+	Common.ShowError(message)
 end
 
 ---Gets the mod default settings.

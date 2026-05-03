@@ -26,6 +26,11 @@ local Settings = require("ModFrameworkSettings")
 ------------------------------------------------------------------------------
 
 InternalSettings.RegisterBooleanSetting = Settings.RegisterBooleanSetting
+InternalSettings.UpdateBooleanSetting = Settings.UpdateBooleanSetting
+
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 
 ---Adds the mod setting data to the save file
 function InternalSettings.SaveData()
@@ -67,7 +72,7 @@ function Private.ParseModSettingData(jsonData)
 		local modData = Private.FindModInJsonData(modName, jsonData)
 		if (modData ~= nil) then
 			--When we find json data we apply the parsed data
-			local parsedSettings = Private.ParseSettingDataJson(modData, defaults.DefaultSettingsData)
+			local parsedSettings = Private.ParseSettingDataJson(modData.SettingsData, defaults.DefaultSettingsData)
 			parsedModSetting.SettingsData = parsedSettings
 		else
 			--When there is no json data we create a copy of the default values
