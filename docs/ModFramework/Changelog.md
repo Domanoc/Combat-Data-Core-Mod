@@ -3,6 +3,7 @@
 ## [v0.2] - TBD
 - Added Quality of life feature: Shift+Left clicking pilots moves them into free mechs
 - Added Quality of life feature: Shift+Left clicking pilots moves them back into the hanger
+- Added Stored mod settings (currently only boolean type), Settings are stored in the save file
 - More Documentation
 
 ## [v0.1] - 2026-01-05
