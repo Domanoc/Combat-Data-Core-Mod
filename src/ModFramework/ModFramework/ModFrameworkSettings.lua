@@ -25,14 +25,14 @@ local Storage = require("ModFrameworkStorage")
 ---
 ---Settings are stored per mod.
 ---Will override settings with the same name.
----@param settingsName string The name of the setting
----@param default boolean The default value
+---@param settingsName string The name of the setting.
+---@param default boolean The default value.
 function Settings.RegisterBooleanSetting(settingsName, default)
 	local modName = Common.GetModName()
 	local defaults = Private.GetModDefaultSettings(modName)
 
 	if (defaults == nil) then
-		---@type ModDefaultSettingData
+		---@type DefaultModSettingData
 		local newDefaults = {
 			ModName = modName,
 			DefaultSettingsData = {
@@ -66,9 +66,17 @@ function Settings.RegisterBooleanSetting(settingsName, default)
 	Private.SetCurrentSettingsToDefaults()
 end
 
----Gets the mod default settings
+---comment
+---@param settingsName string The name of the setting.
+---@param value boolean The value to be set.
+function Settings.UpdateBooleanSetting(settingsName, value)
+	local modName = Common.GetModName()
+	local defaults = Private.GetModSettings(modName)
+end
+
+---Gets the mod default settings.
 ---@param modName string The mod name to look for.
----@return ModDefaultSettingData? value The value if found, nil otherwise.
+---@return DefaultModSettingData? value The value if found, nil otherwise.
 function Private.GetModDefaultSettings(modName)
 	for _, value in ipairs(Storage.ModDefaultData) do
 		if (value.ModName == modName) then
@@ -79,7 +87,20 @@ function Private.GetModDefaultSettings(modName)
 	return nil
 end
 
----Sets the current mod settings to the default values
+---Gets the current mod settings.
+---@param modName string The mod name to look for.
+---@return ModSettingData? value The value if found, nil otherwise.
+function Private.GetModSettings(modName)
+	for _, value in ipairs(Storage.ModSettingData) do
+		if (value.ModName == modName) then
+			return value
+		end
+	end
+
+	return nil
+end
+
+---Sets the current mod settings to the default values.
 ---Only works for new games as the default set is handled by the save parser instead.
 function Private.SetCurrentSettingsToDefaults()
 	if (Common.IsLoadedGame() == true) then

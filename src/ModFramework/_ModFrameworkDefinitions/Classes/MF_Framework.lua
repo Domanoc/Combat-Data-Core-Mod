@@ -12,15 +12,15 @@
 ---@field SettingsName string The key name.
 ---@field SettingsValue boolean|number|string The value.
 
----@class ModSettingDataJson Dataset containing the json parsed settings data for a mod.
+---@class JsonModSettingData Dataset containing the json parsed settings data for a mod.
 ---@field ModName string? The name of the mod that this data is for.
----@field SettingsData SettingDataJson[]? The data entries.
+---@field SettingsData JsonSettingData[]? The data entries.
 
----@class SettingDataJson Dataset containing the json parsed key value pair for a setting.
+---@class JsonSettingData Dataset containing the json parsed key value pair for a setting.
 ---@field SettingsName string? The key name.
 ---@field SettingsValue boolean|number|string|nil The value.
 
----@class ModDefaultSettingData Dataset containing the default settings data for a mod.
+---@class DefaultModSettingData Dataset containing the default settings data for a mod.
 ---@field ModName string The name of the mod that this data is for.
 ---@field DefaultSettingsData DefaultSettingData[] The data entries.
 

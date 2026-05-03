@@ -15,7 +15,7 @@ local Storage = {}
 Storage.ModRegistrations = {}
 
 ---A list of default settings data
----@type ModDefaultSettingData[]
+---@type DefaultModSettingData[]
 Storage.ModDefaultData = {}
 
 ---A list of setting data. This data will be saved to and loaded from the games save.
