@@ -54,9 +54,9 @@ local Research = require("ModFrameworkInternalResearch")
 ---Access to the internal functions for the Research tab.
 Internal.Research = Research
 
-local Save = require("ModFrameworkInternalSave")
----Access to the internal Save functions.
-Internal.Save = Save
+local Settings = require("ModFrameworkInternalSetting")
+---Access to the internal Settings functions.
+Internal.Settings = Settings
 
 local Debug = require("ModFrameworkInternalDebug")
 ---Access to the internal functions for the Debugger.

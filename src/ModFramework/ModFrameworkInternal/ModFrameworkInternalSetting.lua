@@ -1,10 +1,10 @@
 ------------------------------------------------------------------------------
---- INTERNAL SAVE FUNCTIONS --------------------------------------------------
+--- INTERNAL SETTINGS FUNCTIONS ----------------------------------------------
 ------------------------------------------------------------------------------
 
----Access to the functions for the Save.
+---Access to the internal functions for the Settings.
 ---@class ModFrameworkInternalSave
-local InternalSave = {}
+local InternalSettings = {}
 
 ---Access to the private functions in this file.
 ---@class ModFrameworkInternalSavePrivate
@@ -18,24 +18,24 @@ local lunaJson = require("lunajson")
 local Common = require("ModFrameworkCommon")
 ---Access to the Storage of mod framework variables.
 local Storage = require("ModFrameworkStorage")
----Access to the Save functions.
-local Save = require("ModFrameworkSave")
+---Access to the Settings functions.
+local Settings = require("ModFrameworkSettings")
 
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 
-InternalSave.RegisterBooleanSetting = Save.RegisterBooleanSetting
+InternalSettings.RegisterBooleanSetting = Settings.RegisterBooleanSetting
 
 ---Adds the mod setting data to the save file
-function InternalSave.SaveData()
+function InternalSettings.SaveData()
 	local obj_content_hangar = Common.GetObjContentHanger()
 	local json = lunaJson.encode(Storage.ModSettingData)
 	ds_grid_set(obj_content_hangar.data_map_level, 0, 0, json)
 end
 
 ---Loads the mod setting data from the save file back into storage
-function InternalSave.LoadData()
+function InternalSettings.LoadData()
 	local obj_content_hangar = Common.GetObjContentHanger()
 	local json = ds_grid_get(obj_content_hangar.data_map_level, 0, 0)
 	local ok, jsonData = pcall(lunaJson.decode, json)
@@ -46,7 +46,7 @@ function InternalSave.LoadData()
 
 	---@cast jsonData ModSettingDataJson[]
 	Private.ParseModSettingData(jsonData)
-	show_message(lunaJson.encode(Storage.ModSettingData))
+	Common.ShowMessage(lunaJson.encode(Storage.ModSettingData))
 end
 
 ---Parse the json data and set a valid dataset to storage.
@@ -155,7 +155,7 @@ function Private.FindSettingInJsonData(name, jsonData, default)
 end
 
 ------------------------------------------------------------------------------
---- EXPORT SAVE BATTLE -------------------------------------------------------
+--- EXPORT INTERNAL SETTINGS -------------------------------------------------
 ------------------------------------------------------------------------------
 
-return InternalSave
+return InternalSettings

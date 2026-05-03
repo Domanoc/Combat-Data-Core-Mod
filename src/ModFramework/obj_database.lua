@@ -8,13 +8,13 @@ function create(q,v_modid)
 	Internal.RegisterFramework()
 	Internal.ComponentShop.LoadShopSprites()
 
-	Internal.Save.RegisterBooleanSetting("QuickMovePilots", true)
+	Internal.Settings.RegisterBooleanSetting("QuickMovePilots", true)
 end
 
 ---saving system deletes the file and creates new one before saving new info
 ---@param q game_obj_database
 function save_game_pre_event(q)
-	Internal.Save.SaveData()
+	Internal.Settings.SaveData()
 end
 
 ---@param q game_obj_database
@@ -28,7 +28,7 @@ end
 ---Called after the game is loaded
 ---@param q game_obj_database
 function load_game_post_event(q)
-	Internal.Save.LoadData()
+	Internal.Settings.LoadData()
 	Internal.Production.SetModdedSprites()
 end
 

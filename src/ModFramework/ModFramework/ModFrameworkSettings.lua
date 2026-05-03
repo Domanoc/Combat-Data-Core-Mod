@@ -1,13 +1,13 @@
 ------------------------------------------------------------------------------
---- SAVE FUNCTIONS -----------------------------------------------------------
+--- SETTINGS FUNCTIONS -------------------------------------------------------
 ------------------------------------------------------------------------------
 
----Access to the Save functions.
----@type ModFrameworkSave
-local Save = {}
+---Access to the Settings functions.
+---@type ModFrameworkSettings
+local Settings = {}
 
 ---Access to the private functions in this file.
----@class ModFrameworkSavePrivate
+---@class ModFrameworkSettingsPrivate
 local Private = {}
 
 ------------------------------------------------------------------------------
@@ -27,7 +27,7 @@ local Storage = require("ModFrameworkStorage")
 ---Will override settings with the same name.
 ---@param settingsName string The name of the setting
 ---@param default boolean The default value
-function Save.RegisterBooleanSetting(settingsName, default)
+function Settings.RegisterBooleanSetting(settingsName, default)
 	local modName = Common.GetModName()
 	local defaults = Private.GetModDefaultSettings(modName)
 
@@ -74,7 +74,7 @@ function Private.GetModDefaultSettings(modName)
 end
 
 ------------------------------------------------------------------------------
---- EXPORT SAVE --------------------------------------------------------------
+--- EXPORT SETTINGS ----------------------------------------------------------
 ------------------------------------------------------------------------------
 
-return Save
+return Settings
