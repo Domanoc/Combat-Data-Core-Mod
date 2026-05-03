@@ -40,6 +40,8 @@ function Settings.RegisterBooleanSetting(settingsName, default)
 			}
 		}
 		table.insert(Storage.ModDefaultData, newDefaults)
+
+		Private.SetCurrentSettingsToDefaults()
 		return
 	end
 
@@ -47,6 +49,8 @@ function Settings.RegisterBooleanSetting(settingsName, default)
 		if (setting.SettingsName == settingsName) then
 			setting.SettingsValue = default
 			setting.SettingType = "boolean"
+
+			Private.SetCurrentSettingsToDefaults()
 			return
 		end
 	end
@@ -58,6 +62,8 @@ function Settings.RegisterBooleanSetting(settingsName, default)
 		SettingType = "boolean"
 	}
 	table.insert(defaults.DefaultSettingsData, newDefault)
+
+	Private.SetCurrentSettingsToDefaults()
 end
 
 ---Gets the mod default settings
@@ -71,6 +77,35 @@ function Private.GetModDefaultSettings(modName)
 	end
 
 	return nil
+end
+
+---Sets the current mod settings to the default values
+---Only works for new games as the default set is handled by the save parser instead.
+function Private.SetCurrentSettingsToDefaults()
+	if (Common.IsLoadedGame() == true) then
+		return
+	end
+
+	--Clear data
+	Storage.ModSettingData = {}
+
+	for _, defaults in ipairs(Storage.ModDefaultData) do
+		---@type ModSettingData
+		local modSetting = {
+			ModName = defaults.ModName,
+			SettingsData = {}
+		}
+
+		for _, default in ipairs(defaults.DefaultSettingsData) do
+			---@type SettingData
+			local setting = {
+				SettingsName = default.SettingsName,
+				SettingsValue = default.SettingsValue
+			}
+			table.insert(modSetting.SettingsData, setting)
+		end
+		table.insert(Storage.ModSettingData, modSetting)
+	end
 end
 
 ------------------------------------------------------------------------------
