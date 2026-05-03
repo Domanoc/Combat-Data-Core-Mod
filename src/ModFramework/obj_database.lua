@@ -7,6 +7,7 @@ function create(q,v_modid)
 	Internal = require("ModFrameworkInternal")
 	Internal.RegisterFramework()
 	Internal.ComponentShop.LoadShopSprites()
+	Internal.Settings.LoadMenuSprites()
 
 	Internal.Settings.RegisterBooleanSetting("QuickMovePilots", true)
 end
@@ -41,18 +42,15 @@ function draw_top_menu(q)
 	Internal.ComponentShop.FixRobotComponentBleed()
 	Internal.Research.FixModdedResearch()
 	Internal.Hanger.ProcessPilotDataQueue()
+	Internal.Settings.DrawMenu()
+
+
 
 	local obj_button_engineering = Internal.Common.GetObjButtonEngineering()
 	local game_obj_big_holder = Internal.Common.GetObjBigHolder()
-
-	if keyboard_check_pressed(Internal.Types.VirtualKeys.F11) then
-		--Debug point
-
-		Internal.Common.DumpObjToMessage(game_obj_big_holder)
-	end
-
 	Internal.Common.DrawDebugCursor({{Label= "obj_button_engineering.activated", Value = obj_button_engineering.activated}})
 	Internal.Common.DrawDebugCursor({{Label= "game_obj_big_holder.cur_item", Value = game_obj_big_holder.cur_item}})
+	Internal.Common.DrawDebugCursor({{Label= "IsSettingsMenuOpen", Value = Internal.Storage.IsSettingsMenuOpen}})
 end
 
 ---The draw call that runs every frame while debug is active (F6)

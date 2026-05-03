@@ -20,6 +20,8 @@ local Common = require("ModFrameworkCommon")
 local Storage = require("ModFrameworkStorage")
 ---Access to the Settings functions.
 local Settings = require("ModFrameworkSettings")
+---Access to Types used by the framework.
+local Types = require("ModFrameworkTypes")
 
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
@@ -157,6 +159,86 @@ function Private.FindSettingInJsonData(name, jsonData, default)
 		end
 	end
 	return nil
+end
+
+------------------------------------------------------------------------------
+--- SETTINGS MENU ------------------------------------------------------------
+------------------------------------------------------------------------------
+
+---Loads the needed menu sprites, so we can draw the settings menu.
+---
+---Used in the create function of obj_database.lua
+function InternalSettings.LoadMenuSprites()
+	local modPath = Common.GetModPathByName("ModFramework")
+	Storage.SpriteSettingsMenu = Common.AddSprite(modPath.."sprites\\ModFrameworkMenu.png", 1, false, false, 0, 0)
+	Storage.SpriteSettingsMenuBackground = Common.AddSprite(modPath.."sprites\\ModFrameworkSettingsMenuBackground.png", 1, false, false, 0, 0)
+	Storage.SpriteSettingsMenuButton = asset_get_index("spr_button_medium")
+
+	Storage.SettingsMenuTitleText = Common.GetLocalizedString("SettingsMenu", "SettingsMenu", { LocalizedDefaultValue = "MODFRAMEWORK MENU" })
+end
+
+---Draws the settings menu and buttons.
+function InternalSettings.DrawMenu()
+	local obj_button_engineering = Common.GetObjButtonEngineering()
+	local game_obj_big_holder = Common.GetObjBigHolder()
+
+	if (obj_button_engineering.activated == true and
+		game_obj_big_holder.cur_item == 0) then
+
+		Private.DrawButtonMenu()
+		Private.DrawOpenMenuButton()
+
+		Private.DrawSettingsMenu()
+	end
+end
+
+---Draws the menu and title for the settings menu button.
+function Private.DrawButtonMenu()
+	draw_sprite_ext(Storage.SpriteSettingsMenu, 0, 1434, 160, 2, 2, 0, 16777215, 1)
+
+	draw_set_halign(1)
+	draw_text_transformed(1434+170, 160+18, Storage.SettingsMenuTitleText, 2, 2, 0)
+end
+
+---Draws the settings menu button.
+function Private.DrawOpenMenuButton()
+	local mx = window_mouse_get_x()
+	local my = window_mouse_get_y()
+	local sprite = Storage.SpriteSettingsMenuButton
+	local buttonX = 1572
+	local buttonY = 224
+	local buttonWidth = 54
+	local buttonHeight = 34
+	local subImage = 0
+
+	if (Storage.IsSettingsMenuOpen == true) then
+		subImage = 3
+	end
+
+	if (mx > buttonX and
+		mx < (buttonX + buttonWidth) and
+		my > buttonY and
+		my < (buttonY + buttonHeight)) then
+		if (Storage.IsSettingsMenuOpen == false) then
+			subImage = subImage + 1
+		end
+
+		if (mouse_check_button_pressed(Types.MouseButtons.Left)) then
+			Storage.IsSettingsMenuOpen = not Storage.IsSettingsMenuOpen
+			subImage = subImage + 1
+		end
+	end
+
+	draw_sprite_ext(sprite, subImage, buttonX, buttonY, 2, 2, 0, 16777215, 1)
+end
+
+---comment
+function Private.DrawSettingsMenu()
+	if (Storage.IsSettingsMenuOpen == false) then
+		return
+	end
+
+	draw_sprite_ext(Storage.SpriteSettingsMenuBackground, 0, 574, 210, 2, 2, 0, 16777215, 1)
 end
 
 ------------------------------------------------------------------------------

@@ -129,7 +129,31 @@ Storage.SpriteShopRobotCompressed = -1
 Storage.IsShopUpdateNeeded = true
 
 ------------------------------------------------------------------------------
---- DEBUG STORAGE -----------------------------------------------------------
+--- SETTINGS MENU ------------------------------------------------------------
+------------------------------------------------------------------------------
+
+---The reference to the settings menu.
+---@type number
+Storage.SpriteSettingsMenu = -1
+
+---The reference to the settings menu background.
+---@type number
+Storage.SpriteSettingsMenuBackground = -1
+
+---The reference to the settings menu button.
+---@type number
+Storage.SpriteSettingsMenuButton = -1
+
+---The text used for the settings menu title.
+---@type string
+Storage.SettingsMenuTitleText = "MODFRAMEWORK MENU"
+
+---Flag indicating if the settings menu is open.
+---@type boolean
+Storage.IsSettingsMenuOpen = false
+
+------------------------------------------------------------------------------
+--- DEBUG STORAGE ------------------------------------------------------------
 ------------------------------------------------------------------------------
 
 ---The cursor debug lines that are drawn next frame.
