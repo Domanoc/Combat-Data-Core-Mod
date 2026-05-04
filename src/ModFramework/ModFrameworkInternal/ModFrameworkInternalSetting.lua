@@ -172,13 +172,20 @@ function InternalSettings.LoadMenuSprites()
 	local modPath = Common.GetModPathByName("ModFramework")
 	Storage.SpriteSettingsMenu = Common.AddSprite(modPath.."sprites\\ModFrameworkMenu.png", 1, false, false, 0, 0)
 	Storage.SpriteSettingsMenuBackground = Common.AddSprite(modPath.."sprites\\ModFrameworkSettingsMenuBackground.png", 1, false, false, 0, 0)
+	Storage.SpriteSettingsMenuLabel = Common.AddSprite(modPath.."sprites\\Label.png", 3, false, false, 0, 0)
 	Storage.SpriteSettingsMenuButton = asset_get_index("spr_button_medium")
+	Storage.SpriteSettingsMenuSwitch = asset_get_index("spr_circuits_switcher")
 
 	Storage.SettingsMenuTitleText = Common.GetLocalizedString("SettingsMenu", "SettingsMenu", { LocalizedDefaultValue = "MODFRAMEWORK MENU" })
 end
 
 ---Draws the settings menu and buttons.
 function InternalSettings.DrawMenu()
+	local modSettingCount = #Storage.ModSettingData
+	if (modSettingCount < 1) then
+		return
+	end
+
 	local obj_button_engineering = Common.GetObjButtonEngineering()
 	local game_obj_big_holder = Common.GetObjBigHolder()
 
@@ -189,15 +196,23 @@ function InternalSettings.DrawMenu()
 		Private.DrawOpenMenuButton()
 
 		Private.DrawSettingsMenu()
+	else
+		Storage.IsSettingsMenuOpen = false
 	end
 end
 
 ---Draws the menu and title for the settings menu button.
 function Private.DrawButtonMenu()
-	draw_sprite_ext(Storage.SpriteSettingsMenu, 0, 1434, 160, 2, 2, 0, 16777215, 1)
+	local menuX = 1434
+	local menuY = 160
+	local textOffsetX = 170
+	local textOffsetY = 18
 
+	draw_sprite_ext(Storage.SpriteSettingsMenu, 0, menuX, menuY, 2, 2, 0, 16777215, 1)
+
+	draw_set_color(make_colour_rgb(218, 172, 57))
 	draw_set_halign(1)
-	draw_text_transformed(1434+170, 160+18, Storage.SettingsMenuTitleText, 2, 2, 0)
+	draw_text_transformed(menuX + textOffsetX, menuY + textOffsetY, Storage.SettingsMenuTitleText, 2, 2, 0)
 end
 
 ---Draws the settings menu button.
@@ -237,8 +252,153 @@ function Private.DrawSettingsMenu()
 	if (Storage.IsSettingsMenuOpen == false) then
 		return
 	end
+	local modSettingCount = #Storage.ModSettingData
+	if (modSettingCount < 1) then
+		return
+	end
 
+	local SelectedModSettings = Storage.ModSettingData[Storage.CurrentSettingsMenuIndex]
+	local titleY = 224
+	local pageButtonsY = 231
+	local startSettingsY = 284
+	local settingsHeight = 45
+
+	--Draw the background
 	draw_sprite_ext(Storage.SpriteSettingsMenuBackground, 0, 574, 210, 2, 2, 0, 16777215, 1)
+
+	if (modSettingCount > 1) then
+		Private.DrawButton(Storage.SpriteShopButtonLeft, 588, pageButtonsY, Private.PreviousMod)
+		Private.DrawButton(Storage.SpriteShopButtonRight, 618, pageButtonsY, Private.NextMod)
+	end
+	Private.DrawLabel(650, titleY, SelectedModSettings.ModName, 29)
+
+	local i = 0
+	for _, setting in ipairs(SelectedModSettings.SettingsData) do
+		local y = startSettingsY + (i * settingsHeight)
+		if (type(setting.SettingsValue) == "boolean") then
+			Private.AddBooleanSetting(y, setting)
+		end
+		i = i + 1
+	end
+end
+
+---Add a boolean setting to the settings menu.
+---@param startY number The starting y position.
+---@param setting SettingData The boolean setting that is added.
+function Private.AddBooleanSetting(startY, setting)
+	local startX = 614
+	local switchOffsetY = 18
+	local subImage = 0
+	if setting.SettingsValue == false then
+		subImage = 1
+	end
+
+	draw_sprite_ext(Storage.SpriteSettingsMenuSwitch, subImage, startX, startY + switchOffsetY, 2, 2, 0, 16777215, 1)
+
+	local switchWidth = 36
+	local LabelX = startX + switchWidth
+	Private.DrawLabel(LabelX, startY, setting.SettingsName, 29)
+	Private.BooleanButtonHandler(startX, startY, setting)
+end
+
+---Handles the boolean button operation for the setting.
+---@param startX number The starting x position.
+---@param startY number The starting y position.
+---@param setting SettingData The boolean setting that is set by the button.
+function Private.BooleanButtonHandler(startX, startY, setting)
+	local mx = window_mouse_get_x()
+	local my = window_mouse_get_y()
+	local buttonOffsetX = 34
+	local buttonWidth = 64
+	local buttonHeight = 36
+	local buttonMinX = startX - buttonOffsetX
+	local buttonMaxX = startX + buttonWidth - buttonOffsetX
+	local buttonMinY = startY
+	local buttonMaxY = startY + buttonHeight
+
+	if (mx > buttonMinX and
+		mx < buttonMaxX and
+		my > buttonMinY and
+		my < buttonMaxY) then
+		if (mouse_check_button_pressed(Types.MouseButtons.Left)) then
+			setting.SettingsValue = not setting.SettingsValue
+		end
+	end
+end
+
+---Draws a settings label
+---@param startX number The starting x position.
+---@param startY number The starting y position.
+---@param label string The label text to draw.
+---@param maxSegments number The max amount of segments to use.
+---@return number endX The ending position for x.
+function Private.DrawLabel(startX, startY, label, maxSegments)
+	local textOffsetY = 4
+	local subImage = 0
+	local textWidth = string_width(label) * 2 --2x scaling
+	local padding = 24
+	local segmentWidth = 24
+	local segmentAmount = math.ceil((textWidth + (padding * 2)) / segmentWidth) - 1
+
+	--Set the limit
+	if segmentAmount > maxSegments then
+		segmentAmount = maxSegments
+	end
+
+	segmentAmount = maxSegments
+
+	for i = 0, segmentAmount, 1 do
+		if (i == segmentAmount) then
+			subImage = 2
+		elseif i > 0 then
+			subImage = 1
+		end
+
+		local x = startX + (i * segmentWidth)
+		draw_sprite_ext(Storage.SpriteSettingsMenuLabel, subImage, x, startY, 2, 2, 0, 16777215, 1)
+	end
+
+	draw_set_color(make_colour_rgb(218, 172, 57))
+	draw_set_halign(0)
+	draw_text_transformed(startX + padding, startY + textOffsetY, label, 2, 2, 0)
+
+	return startX + (segmentAmount * segmentWidth)
+end
+
+---Draws a button and listens for mouse left button press.
+---@param image number The index of the image.
+---@param x number The x coordinate where to draw.
+---@param y number The y coordinate where to draw.
+---@param func fun() The action on mouse left button press.
+function Private.DrawButton(image, x, y, func)
+	local mx = window_mouse_get_x()
+	local my = window_mouse_get_y()
+	local isButtonDown
+	if (mx > x and mx < x + 22 and my > y and my < y + 24) then
+		isButtonDown = 1
+		if (mouse_check_button_pressed(Types.MouseButtons.Left)) then
+			func()
+		end
+	else
+		isButtonDown = 0
+	end
+	draw_sprite(image, isButtonDown, x, y)
+end
+
+---Select the previous mod settings.
+function Private.PreviousMod()
+	Storage.CurrentSettingsMenuIndex = Storage.CurrentSettingsMenuIndex - 1
+	if (Storage.CurrentSettingsMenuIndex < 1) then
+		Storage.CurrentSettingsMenuIndex = #Storage.ModSettingData
+	end
+end
+
+---Select the next mod settings.
+function Private.NextMod()
+	Storage.CurrentSettingsMenuIndex = Storage.CurrentSettingsMenuIndex + 1
+	if (Storage.CurrentSettingsMenuIndex > #Storage.ModSettingData) then
+		Storage.CurrentSettingsMenuIndex = 1
+	end
 end
 
 ------------------------------------------------------------------------------

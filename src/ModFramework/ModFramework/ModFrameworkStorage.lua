@@ -144,6 +144,14 @@ Storage.SpriteSettingsMenuBackground = -1
 ---@type number
 Storage.SpriteSettingsMenuButton = -1
 
+---The reference to the settings menu label.
+---@type number
+Storage.SpriteSettingsMenuLabel = -1
+
+---The reference to the settings menu switch.
+---@type number
+Storage.SpriteSettingsMenuSwitch = -1
+
 ---The text used for the settings menu title.
 ---@type string
 Storage.SettingsMenuTitleText = "MODFRAMEWORK MENU"
@@ -151,6 +159,10 @@ Storage.SettingsMenuTitleText = "MODFRAMEWORK MENU"
 ---Flag indicating if the settings menu is open.
 ---@type boolean
 Storage.IsSettingsMenuOpen = false
+
+---The mod setting index for the settings menu.
+---@type number
+Storage.CurrentSettingsMenuIndex = 1
 
 ------------------------------------------------------------------------------
 --- DEBUG STORAGE ------------------------------------------------------------

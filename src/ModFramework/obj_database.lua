@@ -44,13 +44,7 @@ function draw_top_menu(q)
 	Internal.Hanger.ProcessPilotDataQueue()
 	Internal.Settings.DrawMenu()
 
-
-
-	local obj_button_engineering = Internal.Common.GetObjButtonEngineering()
-	local game_obj_big_holder = Internal.Common.GetObjBigHolder()
-	Internal.Common.DrawDebugCursor({{Label= "obj_button_engineering.activated", Value = obj_button_engineering.activated}})
-	Internal.Common.DrawDebugCursor({{Label= "game_obj_big_holder.cur_item", Value = game_obj_big_holder.cur_item}})
-	Internal.Common.DrawDebugCursor({{Label= "IsSettingsMenuOpen", Value = Internal.Storage.IsSettingsMenuOpen}})
+	Internal.Common.DrawDebugCursor({{Label = "", Value = ""}})
 end
 
 ---The draw call that runs every frame while debug is active (F6)
