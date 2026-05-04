@@ -173,6 +173,7 @@ function InternalSettings.LoadMenuSprites()
 	Storage.SpriteSettingsMenu = Common.AddSprite(modPath.."sprites\\ModFrameworkMenu.png", 1, false, false, 0, 0)
 	Storage.SpriteSettingsMenuBackground = Common.AddSprite(modPath.."sprites\\ModFrameworkSettingsMenuBackground.png", 1, false, false, 0, 0)
 	Storage.SpriteSettingsMenuLabel = Common.AddSprite(modPath.."sprites\\Label.png", 3, false, false, 0, 0)
+	Storage.SpriteSaveDefaultsButton = Common.AddSprite(modPath.."sprites\\SaveDefaultsButton.png", 2, false, false, 0, 0)
 	Storage.SpriteSettingsMenuButton = asset_get_index("spr_button_medium")
 	Storage.SpriteSettingsMenuSwitch = asset_get_index("spr_circuits_switcher")
 
@@ -247,7 +248,7 @@ function Private.DrawOpenMenuButton()
 	draw_sprite_ext(sprite, subImage, buttonX, buttonY, 2, 2, 0, 16777215, 1)
 end
 
----comment
+---Draws the mod settings menu for the current selected settings
 function Private.DrawSettingsMenu()
 	if (Storage.IsSettingsMenuOpen == false) then
 		return
@@ -267,10 +268,11 @@ function Private.DrawSettingsMenu()
 	draw_sprite_ext(Storage.SpriteSettingsMenuBackground, 0, 574, 210, 2, 2, 0, 16777215, 1)
 
 	if (modSettingCount > 1) then
-		Private.DrawButton(Storage.SpriteShopButtonLeft, 588, pageButtonsY, Private.PreviousMod)
-		Private.DrawButton(Storage.SpriteShopButtonRight, 618, pageButtonsY, Private.NextMod)
+		Private.DrawPageButton(Storage.SpriteShopButtonLeft, 588, pageButtonsY, Private.PreviousMod)
+		Private.DrawPageButton(Storage.SpriteShopButtonRight, 618, pageButtonsY, Private.NextMod)
 	end
-	Private.DrawLabel(650, titleY, SelectedModSettings.ModName, 29)
+	Private.DrawLabel(650, titleY, SelectedModSettings.ModName, 27)
+	Private.SaveDefaultsButton(1332, titleY, Private.SaveAsDefaults)
 
 	local i = 0
 	for _, setting in ipairs(SelectedModSettings.SettingsData) do
@@ -345,8 +347,6 @@ function Private.DrawLabel(startX, startY, label, maxSegments)
 		segmentAmount = maxSegments
 	end
 
-	segmentAmount = maxSegments
-
 	for i = 0, segmentAmount, 1 do
 		if (i == segmentAmount) then
 			subImage = 2
@@ -365,22 +365,37 @@ function Private.DrawLabel(startX, startY, label, maxSegments)
 	return startX + (segmentAmount * segmentWidth)
 end
 
+---Draws the save as defaults button and listens for mouse left button press.
+---@param x number The x coordinate where to draw.
+---@param y number The y coordinate where to draw.
+---@param func fun() The action on mouse left button press.
+function Private.SaveDefaultsButton(x, y, func)
+	local mx = window_mouse_get_x()
+	local my = window_mouse_get_y()
+	local isButtonDown = 0
+	if mx > x and mx < x + 38 and my > y and my < y + 38 then
+		isButtonDown = 1
+		if (mouse_check_button_pressed(Types.MouseButtons.Left)) then
+			func()
+		end
+	end
+	draw_sprite(Storage.SpriteSaveDefaultsButton, isButtonDown, x, y)
+end
+
 ---Draws a button and listens for mouse left button press.
 ---@param image number The index of the image.
 ---@param x number The x coordinate where to draw.
 ---@param y number The y coordinate where to draw.
 ---@param func fun() The action on mouse left button press.
-function Private.DrawButton(image, x, y, func)
+function Private.DrawPageButton(image, x, y, func)
 	local mx = window_mouse_get_x()
 	local my = window_mouse_get_y()
-	local isButtonDown
+	local isButtonDown = 0
 	if (mx > x and mx < x + 22 and my > y and my < y + 24) then
 		isButtonDown = 1
 		if (mouse_check_button_pressed(Types.MouseButtons.Left)) then
 			func()
 		end
-	else
-		isButtonDown = 0
 	end
 	draw_sprite(image, isButtonDown, x, y)
 end
@@ -399,6 +414,18 @@ function Private.NextMod()
 	if (Storage.CurrentSettingsMenuIndex > #Storage.ModSettingData) then
 		Storage.CurrentSettingsMenuIndex = 1
 	end
+end
+
+---Save the settings as the default settings.
+function Private.SaveAsDefaults()
+	local SelectedModSettings = Storage.ModSettingData[Storage.CurrentSettingsMenuIndex]
+	local settingsPath = Common.GetModSettingsPathByName(SelectedModSettings.ModName)
+
+	ini_open(settingsPath)
+	for _, setting in ipairs(SelectedModSettings.SettingsData) do
+		ini_write_string("ModSettings", setting.SettingsName, tostring(setting.SettingsValue))
+	end
+	ini_close()
 end
 
 ------------------------------------------------------------------------------

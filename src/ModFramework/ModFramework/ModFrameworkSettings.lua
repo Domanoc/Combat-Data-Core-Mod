@@ -31,6 +31,18 @@ function Settings.RegisterBooleanSetting(settingsName, default)
 	local modName = Common.GetModName()
 	local defaults = Private.GetModDefaultSettings(modName)
 
+	local settingsPath = Common.GetModSettingsPath()
+	ini_open(settingsPath)
+	local iniValue = ini_read_string("ModSettings", settingsName, tostring(default))
+	ini_close()
+
+	--Override the given default with the ini setting if present
+	if (iniValue == "true") then
+		default = true
+	else
+		default = false
+	end
+
 	if (defaults == nil) then
 		---@type DefaultModSettingData
 		local newDefaults = {

@@ -152,6 +152,10 @@ Storage.SpriteSettingsMenuLabel = -1
 ---@type number
 Storage.SpriteSettingsMenuSwitch = -1
 
+---The reference to the save defaults button.
+---@type number
+Storage.SpriteSaveDefaultsButton = -1
+
 ---The text used for the settings menu title.
 ---@type string
 Storage.SettingsMenuTitleText = "MODFRAMEWORK MENU"

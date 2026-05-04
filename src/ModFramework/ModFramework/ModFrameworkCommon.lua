@@ -80,6 +80,26 @@ function Common.GetModPathByName(name)
 	return nil
 end
 
+---Gets the filepath to the saved mod settings ini.
+---@return string filepath The filepath to the saved mod settings ini.
+function Common.GetModSettingsPath()
+	local modPath = Common.GetModPath()
+	local modName = Common.GetModName()
+	local mechEngineerFolder = modPath:match("^(.-)mods\\")
+	local settingPath = mechEngineerFolder.."data\\"..modName.."\\DefaultSettings.ini"
+	return settingPath
+end
+
+---Gets the filepath to the saved mod settings ini.
+---@param name string The name of the mod folder.
+---@return string filepath The filepath to the saved mod settings ini.
+function Common.GetModSettingsPathByName(name)
+	local modPath = Common.GetModPath()
+	local mechEngineerFolder = modPath:match("^(.-)mods\\")
+	local settingPath = mechEngineerFolder.."data\\"..name.."\\DefaultSettings.ini"
+	return settingPath
+end
+
 ---Checks if this is a game loaded from a save. 
 ---@return boolean isLoadedGame True if this is a game loaded from a save, false otherwise.
 function Common.IsLoadedGame()

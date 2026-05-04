@@ -22,6 +22,15 @@ function Common.GetModName() end
 ---@return string? filepath The filepath to the mod folder or nil if the mod was not found.
 function Common.GetModPathByName(name) end
 
+---Gets the filepath to the saved mod settings ini.
+---@return string filepath The filepath to the saved mod settings ini.
+function Common.GetModSettingsPath() end
+
+---Gets the filepath to the saved mod settings ini.
+---@param name string The name of the mod folder.
+---@return string filepath The filepath to the saved mod settings ini.
+function Common.GetModSettingsPathByName(name) end
+
 ---Checks if this is a game loaded from a save. 
 ---@return boolean isLoadedGame True if this is a game loaded from a save, false otherwise.
 function Common.IsLoadedGame() end

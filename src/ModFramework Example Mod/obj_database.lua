@@ -39,8 +39,6 @@ function create(q,v_modid)
 	Mod.Settings.RegisterBooleanSetting("Example Setting B", true)
 	Mod.Settings.RegisterBooleanSetting("Example Setting C", true)
 	Mod.Settings.RegisterBooleanSetting("Example Setting D", true)
-	Mod.Settings.RegisterBooleanSetting("Example Setting E", true)
-	Mod.Settings.RegisterBooleanSetting("Example Setting F", true)
 
 	--path to the mod folder
 	local modFilepath = Mod.Common.GetModPath()
