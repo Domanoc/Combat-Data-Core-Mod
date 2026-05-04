@@ -16,6 +16,8 @@ local Private = {}
 local Storage = require("ModFrameworkStorage")
 ---Access to the Common functions.
 local Common = require("ModFrameworkCommon")
+---Access to the Settings functions.
+local Settings = require("ModFrameworkSettings")
 ---Access to Types used by the framework.
 local Types = require("ModFrameworkTypes")
 
@@ -135,6 +137,11 @@ end
 ---Move a pilot into a free mech.
 ---Move the pilot back to the hangar.
 function Hanger.PilotClickListener()
+	local quickMovePilots = Settings.GetBooleanSettingValue("QuickMovePilots")
+	if (quickMovePilots == false) then
+		return
+	end
+
 	local obj_content_hangar = Common.GetObjContentHanger()
 	local obj_content_pilots = Common.GetObjContentPilots()
 	local mx = window_mouse_get_x()
