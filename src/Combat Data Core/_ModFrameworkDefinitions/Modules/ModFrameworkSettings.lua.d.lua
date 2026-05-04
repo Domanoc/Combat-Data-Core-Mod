@@ -20,7 +20,7 @@ function Settings.UpdateBooleanSetting(settingsName, value) end
 
 ---Get a boolean setting value for the mod.
 ---@param settingsName string The name of the setting.
----@return boolean value The value of the setting
+---@return boolean? value The value of the setting if found, nil otherwise.
 function Settings.GetBooleanSettingValue(settingsName) end
 
 return Settings
