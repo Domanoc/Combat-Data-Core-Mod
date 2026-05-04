@@ -27,7 +27,8 @@ local Storage = require("ModFrameworkStorage")
 ---Will override settings with the same name.
 ---@param settingsName string The name of the setting.
 ---@param default boolean The default value.
-function Settings.RegisterBooleanSetting(settingsName, default)
+---@param description LocalizedString The description text shown in the mod settings menu.
+function Settings.RegisterBooleanSetting(settingsName, default, description)
 	local modName = Common.GetModName()
 	local defaults = Private.GetModDefaultSettings(modName)
 
@@ -47,8 +48,12 @@ function Settings.RegisterBooleanSetting(settingsName, default)
 		---@type DefaultModSettingData
 		local newDefaults = {
 			ModName = modName,
-			DefaultSettingsData = {
-				{ SettingsName = settingsName, SettingsValue = default, SettingType = "boolean" }
+			DefaultSettingsData = {{ 
+					SettingsName = settingsName,
+					SettingsValue = default,
+					SettingType = "boolean",
+					Description = Common.GetLocalizedString("ShopDescription", settingsName, description)
+				}
 			}
 		}
 		table.insert(Storage.ModDefaultData, newDefaults)
@@ -61,6 +66,7 @@ function Settings.RegisterBooleanSetting(settingsName, default)
 		if (setting.SettingsName == settingsName) then
 			setting.SettingsValue = default
 			setting.SettingType = "boolean"
+			setting.Description = Common.GetLocalizedString("ShopDescription", settingsName, description)
 
 			Private.SetCurrentSettingsToDefaults()
 			return
@@ -71,7 +77,8 @@ function Settings.RegisterBooleanSetting(settingsName, default)
 	local newDefault = {
 		SettingsName = settingsName,
 		SettingsValue = default,
-		SettingType = "boolean"
+		SettingType = "boolean",
+		Description = Common.GetLocalizedString("ShopDescription", settingsName, description)
 	}
 	table.insert(defaults.DefaultSettingsData, newDefault)
 

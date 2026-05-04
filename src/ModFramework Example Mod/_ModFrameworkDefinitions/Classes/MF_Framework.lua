@@ -27,4 +27,5 @@
 ---@class DefaultSettingData Dataset containing a key value pair for a setting default value.
 ---@field SettingsName string The key name.
 ---@field SettingsValue boolean|number|string The value.
----@field SettingType "boolean"|"number"|"string" The data type for the setting
+---@field SettingType "boolean"|"number"|"string" The data type for the setting.
+---@field Description string The description text shown in the mod settings menu.

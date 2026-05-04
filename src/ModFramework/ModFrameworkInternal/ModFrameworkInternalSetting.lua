@@ -177,7 +177,7 @@ function InternalSettings.LoadMenuSprites()
 	Storage.SpriteSettingsMenuButton = asset_get_index("spr_button_medium")
 	Storage.SpriteSettingsMenuSwitch = asset_get_index("spr_circuits_switcher")
 
-	Storage.SettingsMenuTitleText = Common.GetLocalizedString("SettingsMenu", "SettingsMenu", { LocalizedDefaultValue = "MODFRAMEWORK MENU" })
+	Storage.SettingsMenuTitleText = Common.GetLocalizedString("SettingsMenu", "SettingsMenu", { LocalizedDefaultValue = "MOD SETTINGS MENU" })
 end
 
 ---Draws the settings menu and buttons.
@@ -278,7 +278,7 @@ function Private.DrawSettingsMenu()
 	for _, setting in ipairs(SelectedModSettings.SettingsData) do
 		local y = startSettingsY + (i * settingsHeight)
 		if (type(setting.SettingsValue) == "boolean") then
-			Private.AddBooleanSetting(y, setting)
+			Private.AddBooleanSetting(y, setting, SelectedModSettings.ModName)
 		end
 		i = i + 1
 	end
@@ -287,7 +287,8 @@ end
 ---Add a boolean setting to the settings menu.
 ---@param startY number The starting y position.
 ---@param setting SettingData The boolean setting that is added.
-function Private.AddBooleanSetting(startY, setting)
+---@param modName string The name of the mod.
+function Private.AddBooleanSetting(startY, setting, modName)
 	local startX = 614
 	local switchOffsetY = 18
 	local subImage = 0
@@ -297,9 +298,10 @@ function Private.AddBooleanSetting(startY, setting)
 
 	draw_sprite_ext(Storage.SpriteSettingsMenuSwitch, subImage, startX, startY + switchOffsetY, 2, 2, 0, 16777215, 1)
 
+	local description = Private.GetSettingsDescription(modName, setting.SettingsName)
 	local switchWidth = 36
 	local LabelX = startX + switchWidth
-	Private.DrawLabel(LabelX, startY, setting.SettingsName, 29)
+	Private.DrawLabel(LabelX, startY, description, 29)
 	Private.BooleanButtonHandler(startX, startY, setting)
 end
 
@@ -426,6 +428,46 @@ function Private.SaveAsDefaults()
 		ini_write_string("ModSettings", setting.SettingsName, tostring(setting.SettingsValue))
 	end
 	ini_close()
+end
+
+---Get the description for the given setting.
+---@param modName string The name of the mod.
+---@param settingsName string The name of the setting.
+---@return string description The description for the setting when found, or an empty string.
+function Private.GetSettingsDescription(modName, settingsName)
+	local settings = Private.GetModDefaultSettings(modName)
+	if (settings == nil) then
+		local message = "Trying to get a settings description for a mod setting but it failed.\n"
+		message = message.."Check if the setting was correctly registered. \n\n"
+		message = message.."Debug info:\nMod: "..modName.."\nSetting name: "..settingsName
+		Common.ShowError(message)
+		return ""
+	end
+
+	for _, setting in ipairs(settings.DefaultSettingsData) do
+		if (setting.SettingsName == settingsName) then
+			return setting.Description
+		end
+	end
+
+	local message = "Trying to get a settings description for a mod setting but it failed.\n"
+	message = message.."Check if the setting was correctly registered. \n\n"
+	message = message.."Debug info:\nMod: "..modName.."\nSetting name: "..settingsName
+	Common.ShowError(message)
+	return ""
+end
+
+---Gets the mod default settings.
+---@param modName string The mod name to look for.
+---@return DefaultModSettingData? value The value if found, nil otherwise.
+function Private.GetModDefaultSettings(modName)
+	for _, value in ipairs(Storage.ModDefaultData) do
+		if (value.ModName == modName) then
+			return value
+		end
+	end
+
+	return nil
 end
 
 ------------------------------------------------------------------------------

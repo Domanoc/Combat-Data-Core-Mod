@@ -158,7 +158,7 @@ Storage.SpriteSaveDefaultsButton = -1
 
 ---The text used for the settings menu title.
 ---@type string
-Storage.SettingsMenuTitleText = "MODFRAMEWORK MENU"
+Storage.SettingsMenuTitleText = "MOD SETTINGS MENU"
 
 ---Flag indicating if the settings menu is open.
 ---@type boolean

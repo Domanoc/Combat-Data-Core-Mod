@@ -5,11 +5,12 @@
 function create(q,v_modid)
 	--Only needed in the framework setup, is not needed for mods
 	Internal = require("ModFrameworkInternal")
+
 	Internal.RegisterFramework()
 	Internal.ComponentShop.LoadShopSprites()
 	Internal.Settings.LoadMenuSprites()
 
-	Internal.Settings.RegisterBooleanSetting("QuickMovePilots", true)
+	Internal.Settings.RegisterBooleanSetting("QuickMovePilots", true, { LocalizedDefaultValue = "Allow pilots to moved by using shift + left mouse button" })
 end
 
 ---saving system deletes the file and creates new one before saving new info
@@ -43,8 +44,6 @@ function draw_top_menu(q)
 	Internal.Research.FixModdedResearch()
 	Internal.Hanger.ProcessPilotDataQueue()
 	Internal.Settings.DrawMenu()
-
-	Internal.Common.DrawDebugCursor({{Label = "", Value = ""}})
 end
 
 ---The draw call that runs every frame while debug is active (F6)

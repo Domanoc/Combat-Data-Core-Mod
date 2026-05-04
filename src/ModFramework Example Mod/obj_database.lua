@@ -35,10 +35,10 @@ function create(q,v_modid)
 
 	--Mod.Common.GenerateLocalizationFiles()
 
-	Mod.Settings.RegisterBooleanSetting("Example Setting A", true)
-	Mod.Settings.RegisterBooleanSetting("Example Setting B", true)
-	Mod.Settings.RegisterBooleanSetting("Example Setting C", true)
-	Mod.Settings.RegisterBooleanSetting("Example Setting D", true)
+	Mod.Settings.RegisterBooleanSetting("Example Setting A", true, { LocalizedDefaultValue = "Description for Setting A" })
+	Mod.Settings.RegisterBooleanSetting("Example Setting B", true, { LocalizedDefaultValue = "Description for Setting B" })
+	Mod.Settings.RegisterBooleanSetting("Example Setting C", true, { LocalizedDefaultValue = "Description for Setting C" })
+	Mod.Settings.RegisterBooleanSetting("Example Setting D", true, { LocalizedDefaultValue = "Description for Setting D" })
 
 	--path to the mod folder
 	local modFilepath = Mod.Common.GetModPath()

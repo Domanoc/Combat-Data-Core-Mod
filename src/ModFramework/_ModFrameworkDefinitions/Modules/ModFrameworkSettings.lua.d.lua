@@ -10,7 +10,8 @@ local Settings = {}
 ---Will override settings with the same name.
 ---@param settingsName string The name of the setting.
 ---@param default boolean The default value.
-function Settings.RegisterBooleanSetting(settingsName, default) end
+---@param description LocalizedString The description text shown in the mod settings menu.
+function Settings.RegisterBooleanSetting(settingsName, default, description) end
 
 ---Update a boolean setting value for the mod.
 ---@param settingsName string The name of the setting.
