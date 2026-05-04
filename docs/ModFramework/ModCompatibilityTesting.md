@@ -126,7 +126,7 @@ New tests with fixed mod.
 - Can i save and reload without errors (research unlocked)? ✅
 - This mod provides a custom component type.   
 This might create conflicts with the rearranging of the shop components by the framework.   
-Although this is currently in a section that doesn't see a growing list of items. ⚠️ 
+Although this is currently in a section that doesn't see a growing list of items. ⚠️   
 Created a temporary catch to get this item and add it back to the shop with the rearrange support. ✅
 
 ## Test Scenarios: Simple Autocannon

@@ -11,9 +11,13 @@
 - [Debug functions](./Features/DebugFunctions.md)
 - [GameObject documentation](./GameObjectDocumentation.md)
 - [GameObject Getters](./Features/GameObjectGetters.md)
+- [ModSettings Menu](./Features/ModSettingMenu.md)
 - [Localization](./Features/Localization.md)
 - [Research on existing saves fix](./Features/ResearchFix.md)
 - [Sprite function wrappers](./Features/SpriteFunctionWrappers.md)
+
+## Settings
+- [Adding mod settings](./Features/AddingModSettings.md)
 
 ## Adding new types
 - [Adding a new mech type](./Features/AddingMechType.md)

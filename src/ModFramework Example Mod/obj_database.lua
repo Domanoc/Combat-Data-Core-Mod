@@ -33,11 +33,13 @@ function create(q,v_modid)
 	--load the mod framework as a global for use within this file
 	Mod = GetModFramework()
 
-	--Mod.Common.GenerateLocalizationFiles()
-
-	Mod.Settings.RegisterBooleanSetting("example_setting_a", true, { LocalizedDefaultValue = "Description for Setting A" })
+	--An example for creating mod settings.
+	--Settings need to be registered before they can be used.
+	--The mod should expect that the setting value can change during runtime.
+	--Settings can be changed by the user in the mod settings menu, and the defaults can be overridden by the user.
+	Mod.Settings.RegisterBooleanSetting("example_setting_a", false, { LocalizedDefaultValue = "Description for Setting A" })
 	Mod.Settings.RegisterBooleanSetting("example_setting_b", true, { LocalizedDefaultValue = "Description for Setting B" })
-	Mod.Settings.RegisterBooleanSetting("example_setting_c", true, { LocalizedDefaultValue = "Description for Setting C" })
+	Mod.Settings.RegisterBooleanSetting("example_setting_c", false, { LocalizedDefaultValue = "Description for Setting C" })
 	Mod.Settings.RegisterBooleanSetting("example_setting_d", true, { LocalizedDefaultValue = "Description for Setting D" })
 
 	--path to the mod folder
@@ -214,6 +216,14 @@ function draw_top_menu(q)
 	if keyboard_check_pressed(keys.F11) then
 		--Debugger breakpoint
     end
+
+	--The value of a setting can be retrieved like this
+	local example_setting_a_value = Mod.Settings.GetBooleanSettingValue("example_setting_a")
+	--We can then for example use it to toggle a feature
+	if (example_setting_a_value == true) then
+		--We can for example show some debug information when toggled.
+		Mod.Common.DrawDebugCursor({{ Label = "Show the setting value", Value = example_setting_a_value }})
+	end
 end
 
 ---The draw call that runs every frame while debug is active (F6)
