@@ -339,6 +339,8 @@ end
 function Private.DrawLabel(startX, startY, label, maxSegments)
 	local textOffsetY = 4
 	local subImage = 0
+	local scaling = 2
+	local maxTextWidth = 672
 	local textWidth = string_width(label) * 2 --2x scaling
 	local padding = 24
 	local segmentWidth = 24
@@ -347,6 +349,10 @@ function Private.DrawLabel(startX, startY, label, maxSegments)
 	--Set the limit
 	if segmentAmount > maxSegments then
 		segmentAmount = maxSegments
+	end
+	--Change scaling if needed
+	if (textWidth > maxTextWidth) then
+		scaling = (scaling * maxTextWidth) / textWidth
 	end
 
 	for i = 0, segmentAmount, 1 do
@@ -362,7 +368,7 @@ function Private.DrawLabel(startX, startY, label, maxSegments)
 
 	draw_set_color(make_colour_rgb(218, 172, 57))
 	draw_set_halign(0)
-	draw_text_transformed(startX + padding, startY + textOffsetY, label, 2, 2, 0)
+	draw_text_transformed(startX + padding, startY + textOffsetY, label, scaling, scaling, 0)
 
 	return startX + (segmentAmount * segmentWidth)
 end

@@ -10,7 +10,7 @@ function create(q,v_modid)
 	Internal.ComponentShop.LoadShopSprites()
 	Internal.Settings.LoadMenuSprites()
 
-	Internal.Settings.RegisterBooleanSetting("QuickMovePilots", true, { LocalizedDefaultValue = "Allow pilots to moved by using shift + left mouse button" })
+	Internal.Settings.RegisterBooleanSetting("QuickMovePilots", true, { LocalizedDefaultValue = "Allow pilots to be moved by using shift + left mouse button" })
 end
 
 ---saving system deletes the file and creates new one before saving new info
