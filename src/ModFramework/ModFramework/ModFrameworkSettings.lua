@@ -115,16 +115,12 @@ end
 
 ---Get a boolean setting value for the mod.
 ---@param settingsName string The name of the setting.
----@return boolean value The value of the setting
+---@return boolean? value The value of the setting if found, nil otherwise.
 function Settings.GetBooleanSettingValue(settingsName)
 	local modName = Common.GetModName()
 	local settings = Private.GetModSettings(modName)
 	if (settings == nil) then
-		local message = "Trying to get a settings value to a mod setting but it failed.\n"
-		message = message.."Check if the setting was correctly registered and of the same type. \n\n"
-		message = message.."Debug info:\nMod: "..modName.."\nSetting name: "..settingsName..
-		Common.ShowError(message)
-		return false
+		return nil
 	end
 
 	for _, setting in ipairs(settings.SettingsData) do
@@ -136,11 +132,7 @@ function Settings.GetBooleanSettingValue(settingsName)
 		end
 	end
 
-	local message = "Trying to get a settings value to a mod setting but it failed.\n"
-	message = message.."Check if the setting was correctly registered and of the same type. \n\n"
-	message = message.."Debug info:\nMod: "..modName.."\nSetting name: "..settingsName..
-	Common.ShowError(message)
-	return false
+	return nil
 end
 
 ---Gets the mod default settings.
