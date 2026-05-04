@@ -15,6 +15,7 @@
 - [Localization](./Features/Localization.md)
 - [Research on existing saves fix](./Features/ResearchFix.md)
 - [Sprite function wrappers](./Features/SpriteFunctionWrappers.md)
+- [Quality of life features](./Features/QualityOfLife.md)
 
 ## Settings
 - [Adding mod settings](./Features/AddingModSettings.md)
