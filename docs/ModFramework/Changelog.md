@@ -1,8 +1,15 @@
 # Changelog
 
 ## [v0.2] - TBD
-- Added Quality of life feature: Shift+Left clicking pilots moves them into free mechs
-- Added Quality of life feature: Shift+Left clicking pilots moves them back into the hanger
+- Added Quality of life feature: Quick move pilots
+    - Shift+Left clicking pilots moves them into free mechs
+    - Shift+Left clicking pilots moves them back into the hanger
+    - Option is toggleable from the mod settings menu
+- Added Quality of life feature: RTS unit selection
+    - Default selection with 1-8 to select that mech and unselect the rest
+    - Shift + 1-8 selects the mech and keeps the previous selection
+    - Ctrl + 1-8 stores the current selection to the number
+    - Option is toggleable from the mod settings menu
 - Added Stored mod settings (currently only boolean type), Settings are stored in the save file
 - Added Mod Settings Menu:
     - Can change settings during gameplay
