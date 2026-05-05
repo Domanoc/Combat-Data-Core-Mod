@@ -98,7 +98,7 @@
 ---@field map_storm boolean
 ---@field map_task number
 ---@field map_type number
----@field mech_id table
+---@field mech_id table Contains the mechs in battle. Starting at index 2.
 ---@field mech_phy_id table
 ---@field mech_selecting boolean
 ---@field mech_selecting_x number
