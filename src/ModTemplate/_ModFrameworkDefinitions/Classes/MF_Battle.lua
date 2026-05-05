@@ -1,0 +1,3 @@
+---@class BattleControlGroup Dataset containing the info for a battle unit control group
+---@field VirtualKey number The virtual Key used to selected the control group
+---@field Units number[] The units that are in the control group

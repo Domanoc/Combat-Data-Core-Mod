@@ -17,6 +17,8 @@ end
 ---One time trigger before the battle start
 ---@param q game_obj_battle_map
 function creating_map_start(q)
+	Internal.Battle.ResetAllyList()
+	Internal.Battle.SetDefaultControlGroups()
 end
 
 ---Triggers once per mech that is going into the battle
@@ -89,4 +91,5 @@ end
 ---Triggers after draw
 ---@param q game_obj_battle_map
 function draw_end(q)
+	Internal.Battle.OverrideUnitSelectionNew()
 end
