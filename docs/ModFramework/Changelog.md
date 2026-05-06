@@ -10,6 +10,8 @@
     - Shift + 1-8 selects the mech and keeps the previous selection
     - Ctrl + 1-8 stores the current selection to the number
     - Option is toggleable from the mod settings menu
+- Added Quality of life feature: Partial mech assembly
+    - Option to partial complete a mech assembly when you don't have enough engineers
 - Added Stored mod settings (currently only boolean type), Settings are stored in the save file
 - Added Mod Settings Menu:
     - Can change settings during gameplay
