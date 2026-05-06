@@ -34,6 +34,8 @@ function draw_mechs(q,cur_item)
 			Internal.Engineering.SetWeaponRange(weapon)
 		end
 	end
+
+	Internal.Engineering.PartialMechEngineering(cur_item)
 end
 
 ---draws buttons and some info

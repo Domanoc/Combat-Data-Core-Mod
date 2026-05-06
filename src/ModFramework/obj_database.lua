@@ -7,11 +7,13 @@ function create(q,v_modid)
 	Internal = require("ModFrameworkInternal")
 
 	Internal.RegisterFramework()
-	Internal.ComponentShop.LoadShopSprites()
 	Internal.Settings.LoadMenuSprites()
+	Internal.Engineering.LoadMenuSprites()
+	Internal.ComponentShop.LoadShopSprites()
 
 	Internal.Settings.RegisterBooleanSetting("QuickMovePilots", true, { LocalizedDefaultValue = "Allow pilots to be moved by using shift + left mouse button" })
 	Internal.Settings.RegisterBooleanSetting("RTSSelectionStyle", false, { LocalizedDefaultValue = "Replace the battle selection methods with an RTS style one" })
+	Internal.Settings.RegisterBooleanSetting("PartialEngineering", false, { LocalizedDefaultValue = "Allow engineers to do partial mech assembly" })
 end
 
 ---saving system deletes the file and creates new one before saving new info
