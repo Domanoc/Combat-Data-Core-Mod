@@ -22,6 +22,13 @@ With this feature enabled it changes to:
 
 Default setting: Disabled
 
+## Allow partial mech assembly
+With this feature when you don't have enough staff to complete the assembly of a mech you can instead do a partial assembly of the mech.   
+
+Example: if you need 80 engineers to complete the assembly but only have 70 available. Then you get the option to do the work for 64 engineers. Leaving 16 engineers of work for when you do have enough.
+
+Default setting: Disabled
+
 ---
 #### [Back to overview](../Overview.md)
 ---
