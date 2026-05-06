@@ -1,6 +1,7 @@
 # Changelog
 
 ## [v0.2] - TBD
+### Added
 - Added Quality of life feature: Quick move pilots
     - Shift+Left clicking pilots moves them into free mechs
     - Shift+Left clicking pilots moves them back into the hanger
