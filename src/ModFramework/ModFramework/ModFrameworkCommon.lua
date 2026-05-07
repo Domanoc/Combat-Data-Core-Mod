@@ -73,11 +73,31 @@ end
 ---@return string? filepath The filepath to the mod folder or nil if the mod was not found.
 function Common.GetModPathByName(name)
 	for _, mod in pairs(Storage.ModRegistrations) do
-		if (mod.Name == name) then
+		if (mod.ModName == name) then
 			return mod.Path
 		end
 	end
 	return nil
+end
+
+---Gets the filepath to the saved mod settings ini.
+---@return string filepath The filepath to the saved mod settings ini.
+function Common.GetModSettingsPath()
+	local modPath = Common.GetModPath()
+	local modName = Common.GetModName()
+	local mechEngineerFolder = modPath:match("^(.-)mods\\")
+	local settingPath = mechEngineerFolder.."data\\"..modName.."\\DefaultSettings.ini"
+	return settingPath
+end
+
+---Gets the filepath to the saved mod settings ini.
+---@param name string The name of the mod folder.
+---@return string filepath The filepath to the saved mod settings ini.
+function Common.GetModSettingsPathByName(name)
+	local modPath = Common.GetModPath()
+	local mechEngineerFolder = modPath:match("^(.-)mods\\")
+	local settingPath = mechEngineerFolder.."data\\"..name.."\\DefaultSettings.ini"
+	return settingPath
 end
 
 ---Checks if this is a game loaded from a save. 
@@ -342,6 +362,30 @@ function Common.GetObjContentPilots()
 	return asset_get_index("obj_content_pilots")
 end
 
+---Gets the reference for "obj_pilot_item"
+---@return game_obj_pilot_item obj_pilot_item The reference for "obj_pilot_item"
+function Common.GetObjPilotItem()
+	return asset_get_index("obj_pilot_item")
+end
+
+---Gets the reference for "obj_content_hangar"
+---@return game_obj_content_hangar obj_content_hangar The reference for "obj_content_hangar"
+function Common.GetObjContentHanger()
+	return asset_get_index("obj_content_hangar")
+end
+
+---Gets the reference for "obj_button_engineering"
+---@return game_obj_button_engineering obj_button_engineering The reference for "obj_button_engineering"
+function Common.GetObjButtonEngineering()
+	return asset_get_index("obj_button_engineering")
+end
+
+---Gets the reference for "game_obj_big_holder"
+---@return game_obj_big_holder game_obj_big_holder The reference for "game_obj_big_holder"
+function Common.GetObjBigHolder()
+	return asset_get_index("obj_big_holder")
+end
+
 ------------------------------------------------------------------------------
 --- SPRITE FUNCTION WRAPPERS -------------------------------------------------
 ------------------------------------------------------------------------------
@@ -466,17 +510,17 @@ function Common.DumpObjToMessage(ref)
 
 	if (ref == nil) then
 		local message = "This is a nil value"
-		show_message(prefix..message)
+		show_message(prefix..message..suffix)
 		return
 	end
 
 	if (type(ref) == "string") then
-		show_message(prefix..ref)
+		show_message(prefix..ref..suffix)
 		return
 	end
 
 	if (type(ref) == "boolean") then
-		show_message(prefix..tostring(ref))
+		show_message(prefix..tostring(ref)..suffix)
 		return
 	end
 
@@ -496,7 +540,7 @@ function Common.DumpObjToMessage(ref)
 			table.insert(values, tostring(key).."::"..refValueString)
 		end
 		local message = table.concat(values, ",\n")
-		show_message(prefix..message)
+		show_message(prefix..message..suffix)
 		return
 	end
 
@@ -512,6 +556,17 @@ function Common.DumpObjToMessage(ref)
 	end
 	local message = table.concat(values, ",\n")
 	show_message(prefix..message..suffix)
+end
+
+---A debug helper function:
+---Prints debug text lines next to the cursor.
+---
+---Use this in a draw function as the debug text is only drawn for 1 frame.
+---@param lines CursorDebuggerLine[] The lines to print
+function Common.DrawDebugCursor(lines)
+	for _, line in ipairs(lines) do
+		table.insert(Storage.CursorDebuggerLines, line)
+	end
 end
 
 ---Convert a table into a single line of key value pairs.

@@ -1,0 +1,46 @@
+---This is an auto generated class definition.
+---
+---Please use the found values as a starting point for your use.
+---As not all values may be present at every point of the game.
+---Or values could be missing from the definition.
+---@class game_obj_small_holder
+---@field add_active_armor_faster boolean
+---@field appear number
+---@field armor_layer table
+---@field armor_layers number
+---@field armor_type_mv_x number
+---@field armor_type_mv_y number
+---@field array_lua table
+---@field aux_num number
+---@field blink_module_type number
+---@field change boolean
+---@field change_img boolean
+---@field circuits_current number
+---@field circuits_image number
+---@field cur_item number
+---@field cur_item_type number
+---@field def_active_armor_scroll number
+---@field dest boolean
+---@field determ number
+---@field electricity number
+---@field first_create boolean
+---@field new_item number
+---@field new_item_type number
+---@field overclock_img number
+---@field processor_img number
+---@field processor_snd_1 number
+---@field processor_snd_2 number
+---@field processor_snd_3 number
+---@field program_checked number
+---@field reactor_x number
+---@field reactor_y number
+---@field selected_armor_have number
+---@field selected_armor_layer number
+---@field selected_armor_type number
+---@field st_lua table
+---@field take_circuit_minus boolean
+---@field take_circuit_plus boolean
+---@field type_holder number
+---@field vertbar_new_y number
+---@field vertbar_y number
+---@field your_mech number

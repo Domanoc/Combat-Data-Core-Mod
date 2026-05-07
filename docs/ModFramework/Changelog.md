@@ -1,7 +1,26 @@
 # Changelog
 
+## [v0.2] - 2026-05-07
+### Added
+- Added Quality of life feature: Quick move pilots
+    - Shift+Left clicking pilots moves them into free mechs
+    - Shift+Left clicking pilots moves them back into the hanger
+    - Option is toggleable from the mod settings menu
+- Added Quality of life feature: RTS unit selection
+    - Default selection with 1-8 to select that mech and unselect the rest
+    - Shift + 1-8 selects the mech and keeps the previous selection
+    - Ctrl + 1-8 stores the current selection to the number
+    - Option is toggleable from the mod settings menu
+- Added Quality of life feature: Partial mech assembly
+    - Option to partial complete a mech assembly when you don't have enough engineers
+    - Option is toggleable from the mod settings menu
+- Added Stored mod settings (currently only boolean type), Settings are stored in the save file
+- Added Mod Settings Menu:
+    - Can change settings during gameplay
+    - Can save settings as default settings for new saves
+- More Documentation
 
-## [v0.1] - 2026-01-05
+## [v0.1] - 2026-05-01
 ### Added
 - Added auto rearrange for shop components
 - Added auto register shop items on unlock or item registration through the framework

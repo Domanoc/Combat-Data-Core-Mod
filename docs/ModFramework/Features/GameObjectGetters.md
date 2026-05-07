@@ -12,7 +12,7 @@ This can help to ease the pain of not knowing what is inside a game object. Howe
 All functions expect the framework to be loaded in the file. Recommended place to load is the create function.
 ```lua
 --load the mod framework as a global for use within this file
-Mod = require("ModFramework")
+Mod = GetModFramework()
 ```
 
 ### GetObjDatabase

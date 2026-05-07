@@ -31,7 +31,7 @@
 ---@field circuits_using number
 ---@field created boolean
 ---@field cur_guns number
----@field cur_item number
+---@field cur_item 0|game_obj_pilot_item
 ---@field cur_item_type number
 ---@field custom_sprite string
 ---@field dead boolean
@@ -104,7 +104,7 @@
 ---@field name_sh_speed string
 ---@field name_sh_temp string
 ---@field name_sh_weight string
----@field new_item number
+---@field new_item number|game_obj_pilot_item
 ---@field new_item_type number
 ---@field new_module boolean
 ---@field num_of_modules number

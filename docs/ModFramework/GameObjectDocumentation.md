@@ -26,6 +26,8 @@ ds_grid_create, ds_grid_write, ds_grid_read, ds_grid_set, ds_grid_get
 The documentation files are included in the "[ModTemplate](../../src/ModTemplate/)" and "[ModFramework Example Mod](../../src/ModFramework%20Example%20Mod/)"   
 Or you can view then in the repo [here](../../src/ModFramework/_GameDefinitions/)
 
+### How to use it
+[How to use the documentation](./HowToUseTheDocumentation.md)
 
 ---
 #### [Back to overview](./Overview.md)

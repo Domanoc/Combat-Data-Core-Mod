@@ -1,0 +1,38 @@
+---This is an auto generated class definition.
+---
+---Please use the found values as a starting point for your use.
+---As not all values may be present at every point of the game.
+---Or values could be missing from the definition.
+---@class game_obj_language
+---@field cabin_research number
+---@field in_mouse number
+---@field in_resource_waste number
+---@field last_music number
+---@field m_exit boolean
+---@field mech_research number
+---@field motor_research number
+---@field prev_m_x number
+---@field prev_m_y number
+---@field s_radio_noise number
+---@field tutorial_atom_showed boolean
+---@field tutorial_battle_showed boolean
+---@field tutorial_beacon_showed boolean
+---@field tutorial_calendar_showed boolean
+---@field tutorial_components_showed boolean
+---@field tutorial_defence_showed boolean
+---@field tutorial_defend_city boolean
+---@field tutorial_district_showed boolean
+---@field tutorial_electro_showed boolean
+---@field tutorial_eng_showed boolean
+---@field tutorial_hangar_showed boolean
+---@field tutorial_hantwo_showed boolean
+---@field tutorial_map_showed boolean
+---@field tutorial_paint_showed boolean
+---@field tutorial_pilots_blinked boolean
+---@field tutorial_pilots_showed boolean
+---@field tutorial_put_mech_showed boolean
+---@field tutorial_put_reactor_showed boolean
+---@field tutorial_repair_showed boolean
+---@field tutorial_research_showed boolean
+---@field tutorial_weapon_showed boolean
+---@field was_ambient boolean

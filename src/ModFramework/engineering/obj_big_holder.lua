@@ -20,7 +20,7 @@ end
 function load_mech(q)
 end
 
----inside mouse_check_button_pressed(mb_left)
+---Triggers when the left mouse button is pressed
 ---@param q game_obj_big_holder
 function activate_menu(q)
 end
@@ -34,6 +34,8 @@ function draw_mechs(q,cur_item)
 			Internal.Engineering.SetWeaponRange(weapon)
 		end
 	end
+
+	Internal.Engineering.PartialMechEngineering(cur_item)
 end
 
 ---draws buttons and some info

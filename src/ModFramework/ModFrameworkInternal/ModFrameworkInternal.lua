@@ -4,12 +4,14 @@
 
 ---Access to the Common functions.
 ---@class ModFrameworkInternal
-local ModFrameworkInternal = {}
+local Internal = {}
+
+---Access to the private functions in this file.
+---@class ModFrameworkInternalPrivate
+local Private = {}
 
 ------------------------------------------------------------------------------
 
----Access to the Storage of mod framework variables.
-local Storage = require("ModFrameworkStorage")
 ---Access to the Common functions.
 local Common = require("ModFrameworkCommon")
 
@@ -18,44 +20,56 @@ local Common = require("ModFrameworkCommon")
 ------------------------------------------------------------------------------
 
 ---Access to the Common functions.
-ModFrameworkInternal.Common = Common
+Internal.Common = Common
 
 local Types = require("ModFrameworkTypes")
 ---Access to Types used by the framework.
-ModFrameworkInternal.Types = Types
+Internal.Types = Types
+
+local Storage = require("ModFrameworkStorage")
+---Access to the Storage of mod framework variables.
+Internal.Storage = Storage
 
 ------------------------------------------------------------------------------
 
 local Battle = require("ModFrameworkInternalBattle")
 ---Access to the internal functions for the Battle.
-ModFrameworkInternal.Battle = Battle
+Internal.Battle = Battle
 
 local ComponentShop = require("ModFrameworkInternalComponentShop")
 ---Access to the functions for the Component shop.
-ModFrameworkInternal.ComponentShop = ComponentShop
+Internal.ComponentShop = ComponentShop
 
 local Engineering = require("ModFrameworkInternalEngineering")
 ---Access to the internal functions for the Engineering tab.
-ModFrameworkInternal.Engineering = Engineering
+Internal.Engineering = Engineering
 
 local Hanger = require("ModFrameworkInternalHanger")
 ---Access to the internal functions for the Hanger tab.
-ModFrameworkInternal.Hanger = Hanger
+Internal.Hanger = Hanger
 
 local Production = require("ModFrameworkInternalProduction")
 ---Access to the internal functions for the Production tab.
-ModFrameworkInternal.Production = Production
+Internal.Production = Production
 
 local Research = require("ModFrameworkInternalResearch")
 ---Access to the internal functions for the Research tab.
-ModFrameworkInternal.Research = Research
+Internal.Research = Research
+
+local Settings = require("ModFrameworkInternalSetting")
+---Access to the internal Settings functions.
+Internal.Settings = Settings
+
+local Debug = require("ModFrameworkInternalDebug")
+---Access to the internal functions for the Debugger.
+Internal.Debug = Debug
 
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 
 ---Registers the framework and loaded mods.
-function ModFrameworkInternal.RegisterFramework()
+function Internal.RegisterFramework()
 	local keys = {}
 	for k in pairs(mod_info) do
 		table.insert(keys, k)
@@ -74,7 +88,7 @@ function ModFrameworkInternal.RegisterFramework()
 			---@type ModRegistration
 			local mod = {
 				LoadOrderId = loadOrderId,
-				Name = modFolder,
+				ModName = modFolder,
 				Path = modPath,
 			}
 			Storage.ModRegistrations[loadOrderId] = mod
@@ -101,4 +115,4 @@ end
 --- EXPORT MODFRAMEWORK INTERNALS --------------------------------------------
 ------------------------------------------------------------------------------
 
-return ModFrameworkInternal
+return Internal

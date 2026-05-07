@@ -33,7 +33,7 @@ function ds_grid_read(index,str) end
 ---@param grid ds_grid the reference handle
 ---@param x number The x position of the cell to set.
 ---@param y number The y position of the cell to set.
----@param value any The value with which to set the cell.
+---@param value number|string The value with which to set the cell.
 function ds_grid_set(grid, x, y, value) end
 
 ---This function can be used to get the value from any cell within the given DS grid. 
@@ -41,5 +41,5 @@ function ds_grid_set(grid, x, y, value) end
 ---@param grid ds_grid the reference handle
 ---@param x number The x position of the cell you want to find the value of.
 ---@param y number The y position of the cell you want to find the value of.
----@return any
+---@return number|string value The value at the given coordinates.
 function ds_grid_get(grid, x, y) end

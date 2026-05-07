@@ -36,5 +36,6 @@ $CombatDataCoreDestination = "C:\Users\mail\AppData\Local\Mech_Engineer\mods\_DE
 
 MirrorFolder -SourceFolder $CombatDataCoreSource -DestinationFolder $CombatDataCoreDestination
 
+(New-Object Media.SoundPlayer "C:\Windows\Media\Windows Notify Messaging.wav").PlaySync()
 
 exit 0
