@@ -42,12 +42,13 @@ function Engineering.PartialMechEngineering(currentMech)
 		return
 	end
 
+	local module_eng_move_cost = variable_global_get("module_eng_move_cost")
 	local res_staff = variable_global_get("res_staff")
 	local isMechValid = Private.ValidateMech(currentMech)
 	local staffCost = Private.GetMechEngineeringCost(currentMech)
-	local partialEngineering = res_staff < staffCost and res_staff > 8 and isMechValid
+	local canPartialAssemble = res_staff < staffCost and res_staff > module_eng_move_cost and isMechValid
 
-	if (partialEngineering == true) then
+	if (canPartialAssemble == true) then
 		Private.DrawPartialMechButton(currentMech)
 	end
 end
@@ -85,6 +86,7 @@ end
 ---Update the mech and staff to do the partial engineering.
 ---@param currentMech game_obj_big_holder_mech The mech being partially engineered.
 function Private.PartiallyEngineerMech(currentMech)
+	local module_eng_move_cost = variable_global_get("module_eng_move_cost")
 	local res_staff = variable_global_get("res_staff")
 	local res_staff_back = variable_global_get("res_staff_back")
 	local maxAffordableStaff = Private.GetMaxAffordableEngineeringCost()
@@ -99,7 +101,7 @@ function Private.PartiallyEngineerMech(currentMech)
 		if ((value == 1 or value == true) and
 			maxAffordableStaff > 0) then
 			value = false
-			maxAffordableStaff = maxAffordableStaff - 8
+			maxAffordableStaff = maxAffordableStaff - module_eng_move_cost
 		end
 		table.insert(newChange, value)
 	end
@@ -137,13 +139,15 @@ end
 ---@param currentMech game_obj_big_holder_mech The mech being checked.
 ---@return number cost The engineer cost for the mech.
 function Private.GetMechEngineeringCost(currentMech)
-	return currentMech.num_of_modules * 8
+	local module_eng_move_cost = variable_global_get("module_eng_move_cost")
+	return currentMech.num_of_modules * module_eng_move_cost
 end
 
 ---Get the max amount of staff that can be used to do a partial construction.
 function Private.GetMaxAffordableEngineeringCost()
+	local module_eng_move_cost = variable_global_get("module_eng_move_cost")
 	local res_staff = variable_global_get("res_staff")
-	local maxAffordableStaff = math.floor(res_staff / 8) * 8
+	local maxAffordableStaff = math.floor(res_staff / module_eng_move_cost) * module_eng_move_cost
 	return maxAffordableStaff
 end
 
