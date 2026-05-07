@@ -1,6 +1,6 @@
 # Changelog
 
-## [v0.2] - TBD
+## [v0.2] - 2026-05-07
 ### Added
 - Added Quality of life feature: Quick move pilots
     - Shift+Left clicking pilots moves them into free mechs
@@ -20,7 +20,7 @@
     - Can save settings as default settings for new saves
 - More Documentation
 
-## [v0.1] - 2026-01-05
+## [v0.1] - 2026-05-01
 ### Added
 - Added auto rearrange for shop components
 - Added auto register shop items on unlock or item registration through the framework
