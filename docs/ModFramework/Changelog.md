@@ -13,6 +13,7 @@
     - Option is toggleable from the mod settings menu
 - Added Quality of life feature: Partial mech assembly
     - Option to partial complete a mech assembly when you don't have enough engineers
+    - Option is toggleable from the mod settings menu
 - Added Stored mod settings (currently only boolean type), Settings are stored in the save file
 - Added Mod Settings Menu:
     - Can change settings during gameplay
