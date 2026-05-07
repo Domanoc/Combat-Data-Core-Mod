@@ -5,7 +5,7 @@ The excavation unit drilling through the collapsed sub-levels of Sector Gamma, s
 Add a new research tree that allows for a separate tech progression. Progression is gated behind decrypting cycles of the data core. Includes 4 new mech types. 2 new weapons and a solenoid for the thermonuclear reactor. The mod tries to stay balanced for the early and mid game. And offers some boosted upgrades for the endgame.
 
 [h2]ModFramework[/h2]
-To use this mod the "ModFramework" is required. Please ensure the first mod in the load order is the "ModFramework".
+To use this mod the "ModFramework" is required. Please ensure the first mod in the load order is the "ModFramework". If you want to continue playing with the non framework version you can download version 1.8 from [url=https://github.com/Domanoc/Mech-Engineer-Mods]github[/url]
 
 [h2]Mechs[/h2]
 [h3]Nova[/h3]
@@ -34,6 +34,9 @@ Adds a new solenoid that has better heat resistance. Allowing for high powered t
 For the best experience it’s best to use a new save. But it has been tested with adding it to an existing save.
 
 Since it uses the lower rows of the research tree it should be compatible with the other mech & weapon mods.
+
+[h2]Localization[/h2]
+This mod offers localization support made with machine translations.
 
 [h2]Change Log[/h2]
 [b][v2.0] - tbd[/b]

@@ -11,6 +11,9 @@ This is the git repo for several mods for the game "[Mech Engineer](https://stor
 - This repo contains the source files for the steam mod "Combat Data Core"  
   [SteamLink](https://steamcommunity.com/sharedfiles/filedetails/?id=3581427607)   
   [Change log](./docs/Combat-Data-Core/Changelog.md)
+- This repo contains the source files for the steam mod "Combat Data Core"  
+  [SteamLink]   
+  [Change log](./docs/Direct-Control/Changelog.md)
 
 ## ModFramework
 - Looking for an overview on the ModFramework features?   
@@ -31,4 +34,5 @@ This is the git repo for several mods for the game "[Mech Engineer](https://stor
 - [ModFramework](./docs/ModFramework/Index.md)
 - [ModFramework Example Mod](./docs/ModFramework-Example-Mod/index.md)
 - [Combat Data Core](./docs/Combat-Data-Core/Index.md)
+- [Direct Control](./docs/Direct-Control/Index.md)
 - [Docs](./docs/Index.md)

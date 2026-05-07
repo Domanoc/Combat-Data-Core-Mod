@@ -380,10 +380,16 @@ function Common.GetObjButtonEngineering()
 	return asset_get_index("obj_button_engineering")
 end
 
----Gets the reference for "game_obj_big_holder"
----@return game_obj_big_holder game_obj_big_holder The reference for "game_obj_big_holder"
+---Gets the reference for "obj_big_holder"
+---@return game_obj_big_holder obj_big_holder The reference for "obj_big_holder"
 function Common.GetObjBigHolder()
 	return asset_get_index("obj_big_holder")
+end
+
+---Gets the reference for "obj_battle_map"
+---@return game_obj_battle_map obj_battle_map The reference for "obj_battle_map"
+function Common.GetObjBattleMap()
+	return asset_get_index("obj_battle_map")
 end
 
 ------------------------------------------------------------------------------

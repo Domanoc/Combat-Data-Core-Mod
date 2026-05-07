@@ -32,9 +32,17 @@ MirrorFolder -SourceFolder $ModFrameworkExampleModSource -DestinationFolder $Mod
 
 # Combat Data Core Source
 $CombatDataCoreSource = "D:\Mod Projects\Mech Engineer Mods\src\Combat Data Core"
-$CombatDataCoreDestination = "C:\Users\mail\AppData\Local\Mech_Engineer\mods\_DEV_Combat Data Core"
+$CombatDataCoreDestination = "C:\Users\mail\AppData\Local\Mech_Engineer\mods\Combat Data Core"
 
 MirrorFolder -SourceFolder $CombatDataCoreSource -DestinationFolder $CombatDataCoreDestination
+
+
+# Combat Data Core Source
+$DirectControlSource = "D:\Mod Projects\Mech Engineer Mods\src\Direct Control"
+$DirectControlDestination = "C:\Users\mail\AppData\Local\Mech_Engineer\mods\Direct Control"
+
+MirrorFolder -SourceFolder $DirectControlSource -DestinationFolder $DirectControlDestination
+
 
 (New-Object Media.SoundPlayer "C:\Windows\Media\Windows Notify Messaging.wav").PlaySync()
 

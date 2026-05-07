@@ -1,7 +1,7 @@
 [h2]ModFramework Example Mod[/h2]
 The [b]ModFramework Example Mod[/b] is a showcase for the features that the [b][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3717805872]ModFramework[/url][/b] provides.
 
-[h3]Features[/h3]
+[h2]Features[/h2]
 Contains examples on:
 [list]
 [*] Adding components like cabins, motors, weapons, reactors and others.
@@ -20,3 +20,6 @@ For a full list of features visit the [url=https://github.com/Domanoc/Mech-Engin
 
 [h3]Want to create you own mod?[/h3]
 [*] See our [url=https://github.com/Domanoc/Mech-Engineer-Mods/blob/master/docs/ModFramework/GettingStarted.md]getting started guide[/url].
+
+[h2]Localization[/h2]
+This mod offers localization support made with machine translations.

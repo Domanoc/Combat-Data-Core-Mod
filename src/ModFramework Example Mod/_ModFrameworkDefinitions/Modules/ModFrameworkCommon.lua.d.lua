@@ -158,9 +158,13 @@ function Common.GetObjContentHanger() end
 ---@return game_obj_button_engineering obj_button_engineering The reference for "obj_button_engineering"
 function Common.GetObjButtonEngineering() end
 
----Gets the reference for "game_obj_big_holder"
----@return game_obj_big_holder game_obj_big_holder The reference for "game_obj_big_holder"
+---Gets the reference for "obj_big_holder"
+---@return game_obj_big_holder obj_big_holder The reference for "obj_big_holder"
 function Common.GetObjBigHolder() end
+
+---Gets the reference for "obj_battle_map"
+---@return game_obj_battle_map obj_battle_map The reference for "obj_battle_map"
+function Common.GetObjBattleMap() end
 
 ---With this function you can add a sprite, loading it from an external source where the image file to be loaded should always be in either *.png, *.gif, *.jpg/jpeg
 ---
