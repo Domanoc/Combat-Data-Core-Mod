@@ -13,7 +13,7 @@ use in "obj_content_safety.lua" in the create function, for when adding items to
 ---@param v_modid string
 function create(q,v_modid)
 	--load the mod framework as a global for use within this file
-	Mod = require("ModFramework")
+	Mod = GetModFramework()
 
 	--This function is run every time the game is started
 	--We need to check if the this start is a new game or from a loaded save

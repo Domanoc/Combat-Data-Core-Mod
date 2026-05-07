@@ -23,7 +23,7 @@ There is currently no support for custom sprite sizes in the framework. So for b
 ## Code example
 ```lua
 --load the mod framework
-Mod = require("ModFramework")
+Mod = GetModFramework()
 
 --path to the mod folder
 local modFilepath = Mod.Common.GetModPath()

@@ -11,6 +11,7 @@ end
 ---@param q game_obj_fui_render
 function draw_gui(q)
 	Internal.ComponentShop.ShopDraw()
+	Internal.Debug.DrawDebugCursor()
 end
 
 ---player won the game

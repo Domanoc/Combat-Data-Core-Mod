@@ -7,12 +7,20 @@
 local Storage = {}
 
 ------------------------------------------------------------------------------
-------------------------------------------------------------------------------
+--- MOD DATA -----------------------------------------------------------------
 ------------------------------------------------------------------------------
 
 ---A list of the registered mods.
 ---@type ModRegistration[]
 Storage.ModRegistrations = {}
+
+---A list of default settings data
+---@type DefaultModSettingData[]
+Storage.ModDefaultData = {}
+
+---A list of setting data. This data will be saved to and loaded from the games save.
+---@type ModSettingData[]
+Storage.ModSettingData = {}
 
 ------------------------------------------------------------------------------
 --- LOCALIZATION -------------------------------------------------------------
@@ -119,6 +127,70 @@ Storage.SpriteShopRobotCompressed = -1
 ---Flag indicating if the shop icons need to be updated.
 ---@type boolean
 Storage.IsShopUpdateNeeded = true
+
+------------------------------------------------------------------------------
+--- SETTINGS MENU ------------------------------------------------------------
+------------------------------------------------------------------------------
+
+---The reference to the settings menu.
+---@type number
+Storage.SpriteSettingsMenu = -1
+
+---The reference to the settings menu background.
+---@type number
+Storage.SpriteSettingsMenuBackground = -1
+
+---The reference to the settings menu button.
+---@type number
+Storage.SpriteSettingsMenuButton = -1
+
+---The reference to the settings menu label.
+---@type number
+Storage.SpriteSettingsMenuLabel = -1
+
+---The reference to the settings menu switch.
+---@type number
+Storage.SpriteSettingsMenuSwitch = -1
+
+---The reference to the save defaults button.
+---@type number
+Storage.SpriteSaveDefaultsButton = -1
+
+---The text used for the settings menu title.
+---@type string
+Storage.SettingsMenuTitleText = "MOD SETTINGS MENU"
+
+---Flag indicating if the settings menu is open.
+---@type boolean
+Storage.IsSettingsMenuOpen = false
+
+---The mod setting index for the settings menu.
+---@type number
+Storage.CurrentSettingsMenuIndex = 1
+
+------------------------------------------------------------------------------
+--- BATTLE STORAGE -----------------------------------------------------------
+------------------------------------------------------------------------------
+
+---The battle control groups.
+---@type BattleControlGroup[]
+Storage.BattleControlGroups = {}
+
+------------------------------------------------------------------------------
+--- ENGINEERING STORAGE ------------------------------------------------------
+------------------------------------------------------------------------------
+
+---The reference to the partial mech button.
+---@type number
+Storage.SpritePartialMechButton = -1
+
+------------------------------------------------------------------------------
+--- DEBUG STORAGE ------------------------------------------------------------
+------------------------------------------------------------------------------
+
+---The cursor debug lines that are drawn next frame.
+---@type CursorDebuggerLine[]
+Storage.CursorDebuggerLines = {}
 
 ------------------------------------------------------------------------------
 --- EXPORT STORAGE -----------------------------------------------------------

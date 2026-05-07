@@ -1,5 +1,6 @@
 # ModFramework - Getting started
-
+#### [Back to overview](./Overview.md)
+---
 In this guide we will explain how to setup a new ModFramework mod from scratch. If have some mech engineer modding experience already you can skip this and lookup the functions you want to use directly.
 
 ## Creating the mod folder
@@ -46,17 +47,15 @@ ModTemplate/
 ## obj_database.lua
 This is the starting point for your code. In here your are able to to interact with the game directly or through the framework. Lets go over what is included in the template
 
-First we have the create function, this function is called by the game on startup. Many of the default mod files have this function. It can be used as an constructor of sorts. The game runs several of these create functions in order of mod load order. When using the mod framework its recommended to check if the Framework is loaded before using it. To do this the function CheckForModFramework() is provided. Last we can load the framework as a global to use throughout the file.   
+First we have the create function, this function is called by the game on startup. Many of the default mod files have this function. It can be used as an constructor of sorts. The game runs several of these create functions in order of mod load order. When using the mod framework its recommended to check if the Framework is loaded before using it. To do this the function GetModFramework() is provided. This function will handle the event when the framework is not present and will explain the user what went wrong.
 **Note:** Global variables are sandboxed to stay within the file itself and cannot be accessed in other files. There are ways to interact across files, the ModFramework is one of them.
 ```lua
 ---One time script when the game is started
 ---@param q game_obj_database
 ---@param v_modid string
 function create(q,v_modid)
-	--Check if the ModFramework can be found
-	CheckForModFramework()
 	--load the mod framework as a global for use within this file
-	Mod = require("ModFramework")
+	Mod = GetModFramework()
 
     --Your code here
 end
@@ -66,7 +65,7 @@ end
 Besides the included obj_database.lua there several more files where you can insert code into the game.
 The game itself comes shipped with an example_mod folder that includes all variants. Alteratively you can reuse files from other mods.
 
-Recommended is to reuse the files from the "[ModFramework Example Mod](../../src/ModFramework%20Example%20Mod/)" as it provides some additional function documentation to use.
+Recommended is to reuse the files from the "[ModFramework Example Mod](../../src/ModFramework%20Example%20Mod/)" as it provides some additional functions and documentation to use.
 
 ## IDE Setup recommendation
 The ModFramework was made using the following setup.
@@ -92,13 +91,18 @@ Using this setup will allow you to get type info while you write code. The "ModT
 ## The creative process
 Now all that remains the the creative process. And to get you going some starting points.
 
-- [Take a look at the functions the framework provides.](./Overview.md)
+- Take a look at other other guides:
+    - [Accessing the framework](./AccessingTheFramework.md).
+    - [How to use the documentation](./HowToUseTheDocumentation.md).
+- Take a look at the [overview](./Overview.md).
 - Check out the "[ModFramework Example Mod](../../src/ModFramework%20Example%20Mod/)" as it provides basic examples on the framework features.
 - Check out what existing mods do.
-- Ask your questions on the mech engineer discord in the #mods-discussions
+- Ask your questions on the [mech engineer discord](https://discord.com/invite/nS3HUYEfaB) in the #mods-discussions
 - Finally a [how to steam workshop upload instruction](./UploadingModToSteamWorkshop.md)
 
 Good luck and happy modding.
 
+---
+#### [Back to overview](./Overview.md)
 ---
 ##### [Home](../../readme.md)
