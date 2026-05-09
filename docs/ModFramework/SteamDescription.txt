@@ -17,16 +17,18 @@ To use the [b]ModFramework[/b] it has to be first in the mod load order.
 For a full list of features visit the [url=https://github.com/Domanoc/Mech-Engineer-Mods]github page[/url]
 
 [h3]Want to create you own mod?[/h3]
+[list]
 [*] See our [url=https://github.com/Domanoc/Mech-Engineer-Mods/blob/master/docs/ModFramework/GettingStarted.md]getting started guide[/url].
 [*] See the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3717807705]Example Mod[/url].
+[/list]
 
 [h2]Quality of life[/h2]
-[b]Moving pilots with key combination:[/b]
+[h3]Moving pilots with key combination:[/h3]
 Pilots can be moved into the first available mech by clicking on the pilot in the hanger with the use of the key combination "_shift + left mouse button_". This will ignore the pilot states where you can normally not interact with them. And in reverse the pilots can be moved back into the hangar with the same key combination.
 
 Default setting: Enabled
 
-[b]RTS style unit selection controls:[/b]
+[h3]RTS style unit selection controls:[/h3]
 By default the game unit selection method is:
 - Numbers 1-8 toggles the selection of the mech with the same number.
 - Shift + Numbers 1-8 will select only that mech and unselect the others.
@@ -38,7 +40,7 @@ With this feature enabled it changes to:
 
 Default setting: Disabled
 
-[b]Allow partial mech assembly[/b]
+[h3]Allow partial mech assembly[/h3]
 With this feature when you don't have enough staff to complete the assembly of a mech you can instead do a partial assembly of the mech.   
 
 Example: if you need 80 engineers to complete the assembly but only have 70 available. Then you get the option to do the work for 64 engineers. Leaving 16 engineers of work for when you do have enough.

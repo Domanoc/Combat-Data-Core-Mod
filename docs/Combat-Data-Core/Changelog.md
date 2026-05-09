@@ -1,6 +1,6 @@
 # Changelog
 
-## [v2.0] - tbd
+## [v2.0] - 2026-5-9
 Started using the ModFramework
 ### Added
 - Added localization (Machine Translated) for:

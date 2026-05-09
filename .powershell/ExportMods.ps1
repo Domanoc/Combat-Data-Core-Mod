@@ -37,7 +37,7 @@ $CombatDataCoreDestination = "C:\Users\mail\AppData\Local\Mech_Engineer\mods\Com
 MirrorFolder -SourceFolder $CombatDataCoreSource -DestinationFolder $CombatDataCoreDestination
 
 
-# Combat Data Core Source
+# Direct Control Source
 $DirectControlSource = "D:\Mod Projects\Mech Engineer Mods\src\Direct Control"
 $DirectControlDestination = "C:\Users\mail\AppData\Local\Mech_Engineer\mods\Direct Control"
 
