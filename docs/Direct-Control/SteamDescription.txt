@@ -12,10 +12,14 @@ To use this mod the "ModFramework" is required. Please ensure the first mod in t
 -You can ask the squad members to hold position. 
 
 [h2]Controls[/h2]
-Movement keys: WSAD
+Movement keys: WASD
 Force reload: R
+Shoot: LMB
 Tell squad members to follow you: F1
 Tell squad members to hold position: F2
 
 [h2]Localization[/h2]
 This mod offers localization support made with machine translations.
+
+[h2]Change Log[/h2]
+For the change logs visit the [url=https://github.com/Domanoc/Mech-Engineer-Mods]github page[/url]
