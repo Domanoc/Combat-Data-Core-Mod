@@ -11,7 +11,7 @@ This is the git repo for several mods for the game "[Mech Engineer](https://stor
 - This repo contains the source files for the steam mod "Combat Data Core"  
   [SteamLink](https://steamcommunity.com/sharedfiles/filedetails/?id=3581427607)   
   [Change log](./docs/Combat-Data-Core/Changelog.md)
-- This repo contains the source files for the steam mod "Combat Data Core"  
+- This repo contains the source files for the steam mod "Direct Control"  
   [SteamLink](https://steamcommunity.com/sharedfiles/filedetails/?id=3722622126)   
   [Change log](./docs/Direct-Control/Changelog.md)
 
