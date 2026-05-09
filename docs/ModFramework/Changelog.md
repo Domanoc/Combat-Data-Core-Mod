@@ -1,5 +1,12 @@
 # Changelog
 
+## [v1.0] - 2026-05-09
+Public release on steam
+### Added
+- More Documentation
+### Fixed
+- Error with the Quality of life feature: Partial mech assembly
+
 ## [v0.2] - 2026-05-07
 ### Added
 - Added Quality of life feature: Quick move pilots

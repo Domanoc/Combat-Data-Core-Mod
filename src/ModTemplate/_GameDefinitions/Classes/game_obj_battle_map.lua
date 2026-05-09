@@ -53,7 +53,7 @@
 ---@field fast_room boolean
 ---@field first_battle number
 ---@field first_pause number
----@field fullscreen_battle boolean
+---@field fullscreen_battle boolean True if the battle is shown fullscreen, false otherwise.
 ---@field giant_damage_x number
 ---@field giant_damage_y number
 ---@field giant_id number

@@ -1,0 +1,32 @@
+---This is an auto generated class definition.
+---
+---Please use the found values as a starting point for your use.
+---As not all values may be present at every point of the game.
+---Or values could be missing from the definition.
+---@class game_obj_district
+---@field add_swat boolean
+---@field array_lua table
+---@field create_notification boolean
+---@field dep_x number
+---@field dep_y number
+---@field dependence number
+---@field district_desc string
+---@field district_name string
+---@field have_bonus boolean
+---@field have_cult number
+---@field have_resources boolean
+---@field have_swat number
+---@field highlight boolean
+---@field level number
+---@field m_module table
+---@field my_number number
+---@field notification_reason number
+---@field picked boolean
+---@field price_brn number
+---@field price_details number
+---@field price_energy number
+---@field price_met number
+---@field price_mun number
+---@field price_skl number
+---@field st_lua table
+---@field upgrade boolean

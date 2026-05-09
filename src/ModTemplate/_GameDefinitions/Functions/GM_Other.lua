@@ -29,3 +29,17 @@ function show_message(value) end
 ---@param blue number The blue component of the color
 ---@return number
 function make_colour_rgb(red, green, blue) end
+
+---Creates a bullet on the mech.
+---
+---Needs to be called from a valid object like game_obj_ally.
+function lua_create_bullet() end
+
+---With this function you can find the value that equates to the position between two other values for a given percentage.
+---
+---Example lerp(0, 10, 0.5) results in 5
+---@param a number The first value.
+---@param b number The second value.
+---@param amt number The amount to interpolate.
+---@return number lerp
+function lerp(a, b, amt) end

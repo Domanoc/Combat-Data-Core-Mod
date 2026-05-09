@@ -1,0 +1,21 @@
+[h2]Description[/h2]
+This mod is based on "Magic Wand (example mod)" from KiberKreker. It offers you the ability to control a mech directly on the battle map.
+
+[h2]ModFramework[/h2]
+To use this mod the "ModFramework" is required. Please ensure the first mod in the load order is the "ModFramework".
+
+[h2]Features[/h2]
+-You control the first mech assigned to the battle.
+-You can unlock extra squad members by upgrading district 5.
+-Squad members will follow you by positioning on you flanks.
+-The CBS Skill of the leader will determine how often the squad members get a reposition order.
+-You can ask the squad members to hold position. 
+
+[h2]Controls[/h2]
+Movement keys: WSAD
+Force reload: R
+Tell squad members to follow you: F1
+Tell squad members to hold position: F2
+
+[h2]Localization[/h2]
+This mod offers localization support made with machine translations.

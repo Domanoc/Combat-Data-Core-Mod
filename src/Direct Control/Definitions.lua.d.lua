@@ -1,0 +1,11 @@
+---@class game_obj_battle_map_ext : game_obj_battle_map
+---@field Allies game_obj_ally_ext[]
+
+---@class game_obj_ally_ext : game_obj_ally
+---@field IsControlled boolean True if the mech is under direct player control, false otherwise.
+---@field IsShooting boolean True if the controlled mech is shooting, false otherwise.
+---@field DesiredSquadPosX number
+---@field DesiredSquadPosY number
+---@field RedAmmoStillLoaded number The remaining red ammo if the reload was started early.
+---@field WhiteAmmoStillLoaded number The remaining white ammo if the reload was started early.
+---@field YellowAmmoStillLoaded number The remaining yellow ammo if the reload was started early.

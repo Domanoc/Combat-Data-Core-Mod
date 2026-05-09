@@ -42,7 +42,7 @@ function Engineering.PartialMechEngineering(currentMech)
 		return
 	end
 
-	local module_eng_move_cost = variable_global_get("module_eng_move_cost")
+	local module_eng_move_cost = 8
 	local res_staff = variable_global_get("res_staff")
 	local isMechValid = Private.ValidateMech(currentMech)
 	local staffCost = Private.GetMechEngineeringCost(currentMech)
@@ -86,7 +86,7 @@ end
 ---Update the mech and staff to do the partial engineering.
 ---@param currentMech game_obj_big_holder_mech The mech being partially engineered.
 function Private.PartiallyEngineerMech(currentMech)
-	local module_eng_move_cost = variable_global_get("module_eng_move_cost")
+	local module_eng_move_cost = 8
 	local res_staff = variable_global_get("res_staff")
 	local res_staff_back = variable_global_get("res_staff_back")
 	local maxAffordableStaff = Private.GetMaxAffordableEngineeringCost()
@@ -139,13 +139,13 @@ end
 ---@param currentMech game_obj_big_holder_mech The mech being checked.
 ---@return number cost The engineer cost for the mech.
 function Private.GetMechEngineeringCost(currentMech)
-	local module_eng_move_cost = variable_global_get("module_eng_move_cost")
+	local module_eng_move_cost = 8
 	return currentMech.num_of_modules * module_eng_move_cost
 end
 
 ---Get the max amount of staff that can be used to do a partial construction.
 function Private.GetMaxAffordableEngineeringCost()
-	local module_eng_move_cost = variable_global_get("module_eng_move_cost")
+	local module_eng_move_cost = 8
 	local res_staff = variable_global_get("res_staff")
 	local maxAffordableStaff = math.floor(res_staff / module_eng_move_cost) * module_eng_move_cost
 	return maxAffordableStaff

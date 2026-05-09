@@ -1,10 +1,11 @@
 # Changelog
 
 ## [v2.0] - tbd
-### Other
-- Started using the ModFramework
+Started using the ModFramework
+### Added
 - Added localization (Machine Translated) for:
     - Japanese
+    - Chinese
     - French
     - German
     - Italian

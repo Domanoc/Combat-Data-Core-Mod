@@ -1,7 +1,14 @@
 # Changelog
 
+## [v1.0] - 2026-05-09
+Public release on steam
 
-## [v1.0] - 2026-01-05
+## [v0.2] - 2026-05-07
+### Added
+- Added example on adding settings to a mod
+- Added example on a toggleable mod feature
+
+## [v0.1] - 2026-05-01
 ### Added
 - ### Cabin
     - Added example for adding cabin items on game start

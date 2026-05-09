@@ -46,12 +46,12 @@
 ---@field cool_condition boolean
 ---@field crit_chance number
 ---@field cur_reactor_heat number
----@field cur_reload_time_red number
----@field cur_reload_time_white number
----@field cur_reload_time_yellow number
----@field current_max_reload_time_red number
----@field current_max_reload_time_white number
----@field current_max_reload_time_yellow number
+---@field cur_reload_time_red number The percentage that red ammo type is full with 1000 being full and 0 empty
+---@field cur_reload_time_white number The percentage that white ammo type is full with 1000 being full and 0 empty
+---@field cur_reload_time_yellow number The percentage that yellow ammo type is full with 1000 being full and 0 empty
+---@field current_max_reload_time_red number The time it takes to reload red, only set after the first reload.
+---@field current_max_reload_time_white number The time it takes to reload white, only set after the first reload.
+---@field current_max_reload_time_yellow number The time it takes to reload yellow, only set after the first reload.
 ---@field damage_field_fire boolean
 ---@field dead boolean
 ---@field destruct_sys_active boolean
@@ -196,12 +196,12 @@
 ---@field reload_debuf_barage number
 ---@field reload_timer number
 ---@field reload_type number
----@field reload_type_red boolean
----@field reload_type_red_timer number
----@field reload_type_white boolean
----@field reload_type_white_timer number
----@field reload_type_yellow boolean
----@field reload_type_yellow_timer number
+---@field reload_type_red boolean True if actively reloading red, false otherwise.
+---@field reload_type_red_timer number The time remaining for the red reload to complete.
+---@field reload_type_white boolean True if actively reloading white, false otherwise.
+---@field reload_type_white_timer number The time remaining for the white reload to complete.
+---@field reload_type_yellow boolean True if actively reloading yellow, false otherwise.
+---@field reload_type_yellow_timer number The time remaining for the yellow reload to complete.
 ---@field repair number
 ---@field repeat_alarm_task boolean
 ---@field resist_current number
@@ -253,3 +253,5 @@
 ---@field underwater boolean
 ---@field view_number number
 ---@field wait_time number
+---@field x number The x position of the instance
+---@field y number The y position of the instance

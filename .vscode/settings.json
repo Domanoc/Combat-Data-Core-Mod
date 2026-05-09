@@ -24,6 +24,9 @@
 
         "**/Combat Data Core/_ModFrameworkDefinitions": true,
         "**/Combat Data Core/_GameDefinitions": true,
+
+        "**/Direct Control/_ModFrameworkDefinitions": true,
+        "**/Direct Control/_GameDefinitions": true,
     },
     "search.exclude": {
         "**/ModFramework/_lunajson": true,
@@ -36,6 +39,9 @@
 
         "**/Combat Data Core/_ModFrameworkDefinitions": true,
         "**/Combat Data Core/_GameDefinitions": true,
+
+        "**/Direct Control/_ModFrameworkDefinitions": true,
+        "**/Direct Control/_GameDefinitions": true,
     },
     "git.addAICoAuthor": "off",
     "cSpell.words": [
@@ -49,7 +55,9 @@
         "bjorn",
         "colour",
         "currentline",
+        "defence",
         "Dsmap",
+        "enem",
         "FREEZ",
         "GAMEMAKER",
         "Gamemode",
@@ -62,6 +70,8 @@
         "JENIPHER",
         "KAWAII",
         "KiberKreker",
+        "lengthdir",
+        "lerp",
         "lunajson",
         "mechs",
         "metallite",

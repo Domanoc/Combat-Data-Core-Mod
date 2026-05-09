@@ -2,7 +2,7 @@
 ---Triggers per mech that is created in battle
 ---@param q game_obj_ally
 ---@param v_modid string
-function create(q,v_modid)--one time script when save is loaded
+function create(q,v_modid)
 	--Only needed in the framework setup, is not needed for mods
 	Internal = require("ModFrameworkInternal")
 	--Set a default value for OverrideSelected
