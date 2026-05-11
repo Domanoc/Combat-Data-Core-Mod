@@ -18,7 +18,8 @@ By default the game unit selection method is:
 With this feature enabled it changes to:
 - Numbers 1-8 will select only that mech and unselect the others.
 - Shift + Numbers 1-8 will add that mech to the current selection.
-- Ctrl + Numbers 1-8 will save the current selection to the given number
+- Ctrl + Numbers 1-8 will save the current selection to the given number.
+- BackQuote will select all mechs.
 
 Default setting: Disabled
 

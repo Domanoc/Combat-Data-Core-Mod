@@ -21,6 +21,28 @@ local Storage = require("ModFrameworkStorage")
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 
+---Check if the settings menu is currently opened.
+---@return boolean flag True if the settings menu is opened, false otherwise.
+function Settings.IsSettingMenuOpen()
+	return Storage.IsSettingsMenuOpen
+end
+
+---Check if the settings menu is currently opened for a given mod.
+---@param name string The name of the mod to check for.
+---@return boolean flag True if the settings menu for the given mod is opened, false otherwise.
+function Settings.IsModsSettingsMenuOpen(name)
+	if (#Storage.ModSettingData == 0) then
+		return false
+	end
+
+	local SelectedModSettings = Storage.ModSettingData[Storage.CurrentSettingsMenuIndex]
+	if (SelectedModSettings.ModName == name and
+		Storage.IsSettingsMenuOpen) then
+		return true
+	end
+	return false
+end
+
 ---Register a boolean setting for the mod.
 ---
 ---Settings are stored per mod.
@@ -52,7 +74,7 @@ function Settings.RegisterBooleanSetting(settingsName, default, description)
 					SettingsName = settingsName,
 					SettingsValue = default,
 					SettingType = "boolean",
-					Description = Common.GetLocalizedString("ShopDescription", settingsName, description)
+					Description = Common.GetLocalizedString("SettingsMenu", settingsName, description)
 				}
 			}
 		}
@@ -66,7 +88,7 @@ function Settings.RegisterBooleanSetting(settingsName, default, description)
 		if (setting.SettingsName == settingsName) then
 			setting.SettingsValue = default
 			setting.SettingType = "boolean"
-			setting.Description = Common.GetLocalizedString("ShopDescription", settingsName, description)
+			setting.Description = Common.GetLocalizedString("SettingsMenu", settingsName, description)
 
 			Private.SetCurrentSettingsToDefaults()
 			return
@@ -78,7 +100,7 @@ function Settings.RegisterBooleanSetting(settingsName, default, description)
 		SettingsName = settingsName,
 		SettingsValue = default,
 		SettingType = "boolean",
-		Description = Common.GetLocalizedString("ShopDescription", settingsName, description)
+		Description = Common.GetLocalizedString("SettingsMenu", settingsName, description)
 	}
 	table.insert(defaults.DefaultSettingsData, newDefault)
 
@@ -133,6 +155,113 @@ function Settings.GetBooleanSettingValue(settingsName)
 	end
 
 	return nil
+end
+
+---Register a key bind setting for the mod.
+---
+---Settings are stored per mod.
+---Will override settings with the same name.
+---@param settingsName string The name of the setting.
+---@param default number The default value.
+---@param description LocalizedString The description text shown in the mod settings menu.
+function Settings.RegisterKeyBindSetting(settingsName, default, description)
+	local modName = Common.GetModName()
+	local defaults = Private.GetModDefaultSettings(modName)
+
+	local settingsPath = Common.GetModSettingsPath()
+	ini_open(settingsPath)
+	default = ini_read_real("ModSettings", settingsName, default)
+	ini_close()
+
+	if (defaults == nil) then
+		---@type DefaultModSettingData
+		local newDefaults = {
+			ModName = modName,
+			DefaultSettingsData = {{ 
+					SettingsName = settingsName,
+					SettingsValue = default,
+					SettingType = "number",
+					Description = Common.GetLocalizedString("SettingsMenu", settingsName, description)
+				}
+			}
+		}
+		table.insert(Storage.ModDefaultData, newDefaults)
+
+		Private.SetCurrentSettingsToDefaults()
+		return
+	end
+
+	for _, setting in ipairs(defaults.DefaultSettingsData) do
+		if (setting.SettingsName == settingsName) then
+			setting.SettingsValue = default
+			setting.SettingType = "number"
+			setting.Description = Common.GetLocalizedString("SettingsMenu", settingsName, description)
+
+			Private.SetCurrentSettingsToDefaults()
+			return
+		end
+	end
+
+	---@type DefaultSettingData
+	local newDefault = {
+		SettingsName = settingsName,
+		SettingsValue = default,
+		SettingType = "number",
+		Description = Common.GetLocalizedString("SettingsMenu", settingsName, description)
+	}
+	table.insert(defaults.DefaultSettingsData, newDefault)
+
+	Private.SetCurrentSettingsToDefaults()
+end
+
+---Get a key bind setting value for the mod.
+---@param settingsName string The name of the setting.
+---@return number? value The value of the setting if found, nil otherwise.
+function Settings.GetKeyBindSettingValue(settingsName)
+	local modName = Common.GetModName()
+	local settings = Private.GetModSettings(modName)
+	if (settings == nil) then
+		return nil
+	end
+
+	for _, setting in ipairs(settings.SettingsData) do
+		if (setting.SettingsName == settingsName and
+			type(setting.SettingsValue) == "number") then
+			local value = setting.SettingsValue
+			---@cast value number
+			return value
+		end
+	end
+
+	return nil
+end
+
+---Update a bind setting setting value for the mod.
+---@param settingsName string The name of the setting.
+---@param value number The value to be set.
+function Settings.UpdateKeyBindSetting(settingsName, value)
+	local modName = Common.GetModName()
+	local settings = Private.GetModSettings(modName)
+	if (settings == nil) then
+		local message = "Trying to set a settings value to a mod setting but it failed.\n"
+		message = message.."Check if the setting was correctly registered and of the same type. \n\n"
+		message = message.."Debug info:\nMod: "..modName.."\nSetting name: "..settingsName.."\nType: "..type(value)
+		Common.ShowError(message)
+		return
+	end
+
+	for _, setting in ipairs(settings.SettingsData) do
+		if (setting.SettingsName == settingsName and
+			type(setting.SettingsValue) == type(value)) then
+			setting.SettingsValue = value
+			return
+		end
+	end
+
+	local message = "Trying to set a settings value to a mod setting but it failed.\n"
+	message = message.."Check if the setting was correctly registered and of the same type. \n\n"
+	message = message.."Debug info:\nMod: "..modName.."\nSetting name: "..settingsName.."\nType: "..type(value)
+	Common.ShowError(message)
 end
 
 ---Gets the mod default settings.

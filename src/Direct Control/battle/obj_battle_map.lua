@@ -325,8 +325,8 @@ end
 ---Triggers the reload on user input.
 ---@param mech game_obj_ally_ext The mech that is reloading.
 function SetReload(mech)
-	local keys = Mod.Types.VirtualKeys
-	if (keyboard_check_pressed(keys.R)) then
+	local reloadKey = GetReloadKey()
+	if (keyboard_check_pressed(reloadKey)) then
 		ReloadWhiteAmmo(mech)
 		ReloadRedAmmo(mech)
 		ReloadYellowAmmo(mech)
@@ -442,17 +442,20 @@ end
 ---@return number newX The new x position.
 ---@return number newY The new y position.
 function GetMovementInput(startX, StartY)
-	local keys = Mod.Types.VirtualKeys
-	if (keyboard_check(keys.W) == true) then
+	local moveUp = GetMoveUpKey()
+	local moveDown = GetMoveDownKey()
+	local moveLeft = GetMoveLeftKey()
+	local moveRight = GetMoveRightKey()
+	if (keyboard_check(moveUp) == true) then
 		StartY = StartY - 4
 	end
-	if (keyboard_check(keys.S) == true) then
+	if (keyboard_check(moveDown) == true) then
 		StartY = StartY + 4
 	end
-	if (keyboard_check(keys.A) == true) then
+	if (keyboard_check(moveLeft) == true) then
 		startX = startX - 4
 	end
-	if (keyboard_check(keys.D) == true) then
+	if (keyboard_check(moveRight) == true) then
 		startX = startX + 4
 	end
 	return startX, StartY
@@ -518,13 +521,14 @@ end
 
 ---Sets the squad order based on user input
 function SetSquadOrder()
-	local keys = Mod.Types.VirtualKeys
-	if (keyboard_check_pressed(keys.F1)) then
+	local squadFollow = GetSquadFollowKey()
+	local squadHold = GetSquadHoldKey()
+	if (keyboard_check_pressed(squadFollow)) then
 		SquadOrder = "FormUp"
 		OrderDisplayText = localizedFormUp
 		OrderTimer = 120
 	end
-	if (keyboard_check_pressed(keys.F2)) then
+	if (keyboard_check_pressed(squadHold)) then
 		SquadOrder = "HoldPosition"
 		OrderDisplayText = localizedHoldPosition
 		OrderTimer = 120
@@ -556,4 +560,81 @@ end
 function LoadLocalization()
 	localizedFormUp = Mod.Common.GetLocalizedString("Custom", "FormUp", { LocalizedDefaultValue = "Get in position"})
 	localizedHoldPosition = Mod.Common.GetLocalizedString("Custom", "HoldPosition", { LocalizedDefaultValue = "Hold position"})
+end
+
+---Get the key code for reload.
+---@return number key The key code for reload.
+function GetReloadKey()
+	local reloadKey = Mod.Settings.GetKeyBindSettingValue("Reload")
+	if (reloadKey == nil) then
+		local keys = Mod.Types.VirtualKeys
+		reloadKey = keys.R
+	end
+	return reloadKey
+end
+
+---Get the key code for move up.
+---@return number key The key code for move up.
+function GetMoveUpKey()
+	local moveDown = Mod.Settings.GetKeyBindSettingValue("MoveUp")
+	if (moveDown == nil) then
+		local keys = Mod.Types.VirtualKeys
+		moveDown = keys.W
+	end
+	return moveDown
+end
+
+---Get the key code for move down.
+---@return number key The key code for move down.
+function GetMoveDownKey()
+	local moveDown = Mod.Settings.GetKeyBindSettingValue("MoveDown")
+	if (moveDown == nil) then
+		local keys = Mod.Types.VirtualKeys
+		moveDown = keys.S
+	end
+	return moveDown
+end
+
+---Get the key code for move left.
+---@return number key The key code for move left.
+function GetMoveLeftKey()
+	local moveLeft = Mod.Settings.GetKeyBindSettingValue("MoveLeft")
+	if (moveLeft == nil) then
+		local keys = Mod.Types.VirtualKeys
+		moveLeft = keys.A
+	end
+	return moveLeft
+end
+
+---Get the key code for move right.
+---@return number key The key code for move right.
+function GetMoveRightKey()
+	local moveRight = Mod.Settings.GetKeyBindSettingValue("MoveRight")
+	if (moveRight == nil) then
+		local keys = Mod.Types.VirtualKeys
+		moveRight = keys.D
+	end
+	return moveRight
+end
+
+---Get the key code for squad follow.
+---@return number key The key code for squad follow.
+function GetSquadFollowKey()
+	local squadFollow = Mod.Settings.GetKeyBindSettingValue("SquadFollow")
+	if (squadFollow == nil) then
+		local keys = Mod.Types.VirtualKeys
+		squadFollow = keys.D
+	end
+	return squadFollow
+end
+
+---Get the key code for squad hold.
+---@return number key The key code for squad hold.
+function GetSquadHoldKey()
+	local squadHold = Mod.Settings.GetKeyBindSettingValue("SquadHold")
+	if (squadHold == nil) then
+		local keys = Mod.Types.VirtualKeys
+		squadHold = keys.D
+	end
+	return squadHold
 end

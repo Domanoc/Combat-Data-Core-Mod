@@ -144,8 +144,8 @@ function Hanger.PilotClickListener()
 
 	local obj_content_hangar = Common.GetObjContentHanger()
 	local obj_content_pilots = Common.GetObjContentPilots()
-	local mx = window_mouse_get_x()
-	local my = window_mouse_get_y()
+	local mx = window_views_mouse_get_x()
+	local my = window_views_mouse_get_y()
 	local minListY = 340
 	local maxListY = 1020
 	local pilotBoxHeight = 154
@@ -247,6 +247,7 @@ end
 function Private.PlacePilotIntoHanger(mech, pilot)
 	local obj_content_pilots = Common.GetObjContentPilots()
 	local numberOfItems = obj_content_pilots.number_of_items
+	local list_pilot = obj_content_pilots.list_pilot
 
 	--Update the pilot
 	pilot.my_num = numberOfItems
@@ -254,7 +255,7 @@ function Private.PlacePilotIntoHanger(mech, pilot)
 	pilot.item_pos = 0
 	pilot.deleted = false
 	pilot.hover = false
-	obj_content_pilots.list_pilot[numberOfItems] = pilot
+	list_pilot[numberOfItems + 1] = pilot
 
 	--Update the mech receiving the pilot
 	mech.cur_item = 0
@@ -262,6 +263,7 @@ function Private.PlacePilotIntoHanger(mech, pilot)
 	mech.new_item = 0
 	mech.new_item_type = 0
 
+	obj_content_pilots.list_pilot = list_pilot
 	obj_content_pilots.number_of_items = numberOfItems + 1
 end
 

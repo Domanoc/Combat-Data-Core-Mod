@@ -166,8 +166,8 @@ function DirectControlShooting(mech)
 	end
 
 	--Check if the camera is in the battle port window
-	local mx = window_mouse_get_x()
-	local my = window_mouse_get_y()
+	local mx = window_views_mouse_get_x()
+	local my = window_views_mouse_get_y()
 	local battlePortCenterX = 604 * 2
 	local battlePortCenterY = 318 * 2
 	local portCenterDistance = point_distance(battlePortCenterX, battlePortCenterY, mx, my)

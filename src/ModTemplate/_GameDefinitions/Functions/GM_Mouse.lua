@@ -23,10 +23,14 @@ function mouse_check_button_released(numb) end
 function mouse_check_button(numb) end
 
 ---Gets the mouse position x in window/screen coordinates, (0,0) = top-left of the window
+---
+---Use window_view_mouse_get_x(0) instead to have full screen support
 ---@return number x the mouse position x in window/screen coordinates
 function window_mouse_get_x() end
 
 ---Gets the mouse position y in window/screen coordinates, (0,0) = top-left of the window
+---
+---Use window_view_mouse_get_y(0) instead to have full screen support
 ---@return number y the mouse position y in window/screen coordinates
 function window_mouse_get_y() end
 

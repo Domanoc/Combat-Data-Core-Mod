@@ -33,8 +33,17 @@ function create(q,v_modid)
 	--load the mod framework as a global for use within this file
 	Mod = GetModFramework()
 
-	Mod.Settings.RegisterBooleanSetting("DirectControl", true, { LocalizedDefaultValue = "Enable direct control"})
-	Mod.Settings.RegisterBooleanSetting("MechCamera", true, { LocalizedDefaultValue = "Force camera to follow the controlled mech"})
+	Mod.Settings.RegisterBooleanSetting("DirectControl", true, { LocalizedDefaultValue = "Enable direct control" })
+	Mod.Settings.RegisterBooleanSetting("MechCamera", true, { LocalizedDefaultValue = "Force camera to follow the controlled mech" })
+
+	local keys = Mod.Types.VirtualKeys
+	Mod.Settings.RegisterKeyBindSetting("MoveUp", keys.W, { LocalizedDefaultValue = "Move up" })
+	Mod.Settings.RegisterKeyBindSetting("MoveDown", keys.S, { LocalizedDefaultValue = "Move down" })
+	Mod.Settings.RegisterKeyBindSetting("MoveLeft", keys.A, { LocalizedDefaultValue = "Move left" })
+	Mod.Settings.RegisterKeyBindSetting("MoveRight", keys.D, { LocalizedDefaultValue = "Move right" })
+	Mod.Settings.RegisterKeyBindSetting("Reload", keys.R, { LocalizedDefaultValue = "Reload" })
+	Mod.Settings.RegisterKeyBindSetting("SquadFollow", keys.F1, { LocalizedDefaultValue = "Squad order: Follow me" })
+	Mod.Settings.RegisterKeyBindSetting("SquadHold", keys.F2, { LocalizedDefaultValue = "Squad order: Hold position" })
 end
 
 ---saving system deletes the file and creates new one before saving new info
@@ -58,10 +67,26 @@ end
 ---The draw call that runs every frame
 ---@param q game_obj_database
 function draw_top_menu(q)
-	--Set the squad size
+	SetSquadSize()
+end
+
+---The draw call that runs every frame while debug is active (F6)
+---@param q game_obj_database
+function draw_debug(q)
+end
+
+
+------------------------------------------------------------------------------
+--- MOD FUNCTIONS ------------------------------------------------------------
+------------------------------------------------------------------------------
+
+
+---Set the squad size based on the district 5 level.
+function SetSquadSize()
 	local obj_content_hangar = Mod.Common.GetObjContentHanger()
+	---@type game_obj_district
 	local district5 = obj_content_hangar.m_dist[6][1]
-	---@cast district5 game_obj_district
+
 	if (district5.level == 0) then
 		variable_global_set("squad_size", 1)
 	elseif (district5.level == 1) then
@@ -71,9 +96,4 @@ function draw_top_menu(q)
 	elseif (district5.level == 3) then
 		variable_global_set("squad_size", 4)
 	end
-end
-
----The draw call that runs every frame while debug is active (F6)
----@param q game_obj_database
-function draw_debug(q)
 end

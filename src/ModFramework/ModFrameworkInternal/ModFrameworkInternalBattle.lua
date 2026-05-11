@@ -90,6 +90,7 @@ end
 function Battle.SetDefaultControlGroups()
 	local keys = Types.VirtualKeys
 	Storage.BattleControlGroups = {
+		{ VirtualKey = keys.BackQuote, Units = { 1,2,3,4,5,6,7,8 } },
 		{ VirtualKey = keys.Number_1, Units = { 1 } },
 		{ VirtualKey = keys.Number_2, Units = { 2 } },
 		{ VirtualKey = keys.Number_3, Units = { 3 } },

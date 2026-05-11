@@ -35,6 +35,14 @@ InternalSettings.GetBooleanSettingValue = Settings.GetBooleanSettingValue
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 
+---The name of the setting that is waiting for a key.
+---@type string?
+local WaitingForKey = nil
+
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+
 ---Adds the mod setting data to the save file
 function InternalSettings.SaveData()
 	local obj_content_hangar = Common.GetObjContentHanger()
@@ -174,6 +182,7 @@ function InternalSettings.LoadMenuSprites()
 	Storage.SpriteSettingsMenuBackground = Common.AddSprite(modPath.."sprites\\ModFrameworkSettingsMenuBackground.png", 1, false, false, 0, 0)
 	Storage.SpriteSettingsMenuLabel = Common.AddSprite(modPath.."sprites\\Label.png", 3, false, false, 0, 0)
 	Storage.SpriteSaveDefaultsButton = Common.AddSprite(modPath.."sprites\\SaveDefaultsButton.png", 2, false, false, 0, 0)
+	Storage.SpriteKeyBindButton = Common.AddSprite(modPath.."sprites\\KeyBindButton.png", 3, false, false, 0, 0)
 	Storage.SpriteSettingsMenuButton = asset_get_index("spr_button_medium")
 	Storage.SpriteSettingsMenuSwitch = asset_get_index("spr_circuits_switcher")
 
@@ -199,6 +208,7 @@ function InternalSettings.DrawMenu()
 		Private.DrawSettingsMenu()
 	else
 		Storage.IsSettingsMenuOpen = false
+		WaitingForKey = nil
 	end
 end
 
@@ -218,8 +228,8 @@ end
 
 ---Draws the settings menu button.
 function Private.DrawOpenMenuButton()
-	local mx = window_mouse_get_x()
-	local my = window_mouse_get_y()
+	local mx = window_views_mouse_get_x()
+	local my = window_views_mouse_get_y()
 	local sprite = Storage.SpriteSettingsMenuButton
 	local buttonX = 1572
 	local buttonY = 224
@@ -251,6 +261,7 @@ end
 ---Draws the mod settings menu for the current selected settings
 function Private.DrawSettingsMenu()
 	if (Storage.IsSettingsMenuOpen == false) then
+		WaitingForKey = nil
 		return
 	end
 	local modSettingCount = #Storage.ModSettingData
@@ -271,7 +282,7 @@ function Private.DrawSettingsMenu()
 		Private.DrawPageButton(Storage.SpriteShopButtonLeft, 588, pageButtonsY, Private.PreviousMod)
 		Private.DrawPageButton(Storage.SpriteShopButtonRight, 618, pageButtonsY, Private.NextMod)
 	end
-	Private.DrawLabel(650, titleY, SelectedModSettings.ModName, 27)
+	Private.DrawLabel(650, titleY, SelectedModSettings.ModName, 47)
 	Private.SaveDefaultsButton(1332, titleY, Private.SaveAsDefaults)
 
 	local i = 0
@@ -279,6 +290,8 @@ function Private.DrawSettingsMenu()
 		local y = startSettingsY + (i * settingsHeight)
 		if (type(setting.SettingsValue) == "boolean") then
 			Private.AddBooleanSetting(y, setting, SelectedModSettings.ModName)
+		elseif (type(setting.SettingsValue) == "number") then
+			Private.AddKeyBindSetting(y, setting, SelectedModSettings.ModName)
 		end
 		i = i + 1
 	end
@@ -301,7 +314,7 @@ function Private.AddBooleanSetting(startY, setting, modName)
 	local description = Private.GetSettingsDescription(modName, setting.SettingsName)
 	local switchWidth = 36
 	local LabelX = startX + switchWidth
-	Private.DrawLabel(LabelX, startY, description, 29)
+	Private.DrawLabel(LabelX, startY, description, 51)
 	Private.BooleanButtonHandler(startX, startY, setting)
 end
 
@@ -310,8 +323,8 @@ end
 ---@param startY number The starting y position.
 ---@param setting SettingData The boolean setting that is set by the button.
 function Private.BooleanButtonHandler(startX, startY, setting)
-	local mx = window_mouse_get_x()
-	local my = window_mouse_get_y()
+	local mx = window_views_mouse_get_x()
+	local my = window_views_mouse_get_y()
 	local buttonOffsetX = 34
 	local buttonWidth = 64
 	local buttonHeight = 36
@@ -330,6 +343,65 @@ function Private.BooleanButtonHandler(startX, startY, setting)
 	end
 end
 
+---Add a key bind setting to the settings menu.
+---@param startY number The starting y position.
+---@param setting SettingData The boolean setting that is added.
+---@param modName string The name of the mod.
+function Private.AddKeyBindSetting(startY, setting, modName)
+	local startX = 596
+	local keyCode = setting.SettingsValue
+	---@cast keyCode number
+	local keyName = Private.GetVirtualKeyName(keyCode)
+	local description = Private.GetSettingsDescription(modName, setting.SettingsName)
+	local buttonWidth = 54
+	local LabelX = startX + buttonWidth
+
+	local keyLabelOffsetX = 14
+	local keyLabelX = Private.DrawLabel(LabelX, startY, description, 34)
+	keyLabelX = keyLabelX + keyLabelOffsetX
+	Private.DrawLabel(keyLabelX, startY, keyName, 15)
+	Private.KeyBindButtonHandler(startX, startY, setting)
+end
+
+---Handles the boolean button operation for the setting.
+---@param startX number The starting x position.
+---@param startY number The starting y position.
+---@param setting SettingData The boolean setting that is set by the button.
+function Private.KeyBindButtonHandler(startX, startY, setting)
+	local mx = window_views_mouse_get_x()
+	local my = window_views_mouse_get_y()
+	local buttonWidth = 39
+	local buttonHeight = 39
+	local buttonMinX = startX
+	local buttonMaxX = startX + buttonWidth
+	local buttonMinY = startY
+	local buttonMaxY = startY + buttonHeight
+	local subImage = 0
+
+	if (mx > buttonMinX and
+		mx < buttonMaxX and
+		my > buttonMinY and
+		my < buttonMaxY) then
+		subImage = 1
+		if (mouse_check_button_pressed(Types.MouseButtons.Left)) then
+			WaitingForKey = setting.SettingsName
+		end
+	end
+
+	local keyPress = GetKeyPress()
+	if (WaitingForKey == setting.SettingsName and
+		keyPress ~= nil) then
+		setting.SettingsValue = keyPress
+		WaitingForKey = nil
+	end
+
+	if (WaitingForKey == setting.SettingsName) then
+		subImage = 2
+	end
+
+	draw_sprite(Storage.SpriteKeyBindButton, subImage, startX, startY)
+end
+
 ---Draws a settings label
 ---@param startX number The starting x position.
 ---@param startY number The starting y position.
@@ -340,16 +412,17 @@ function Private.DrawLabel(startX, startY, label, maxSegments)
 	local textOffsetY = 4
 	local subImage = 0
 	local scaling = 2
-	local maxTextWidth = 672
 	local textWidth = string_width(label) * 2 --2x scaling
-	local padding = 24
-	local segmentWidth = 24
+	local padding = 20
+	local segmentWidth = 14
 	local segmentAmount = math.ceil((textWidth + (padding * 2)) / segmentWidth) - 1
+	local maxTextWidth = (maxSegments * segmentWidth) - padding
 
 	--Set the limit
 	if segmentAmount > maxSegments then
 		segmentAmount = maxSegments
 	end
+
 	--Change scaling if needed
 	if (textWidth > maxTextWidth) then
 		scaling = (scaling * maxTextWidth) / textWidth
@@ -370,7 +443,7 @@ function Private.DrawLabel(startX, startY, label, maxSegments)
 	draw_set_halign(0)
 	draw_text_transformed(startX + padding, startY + textOffsetY, label, scaling, scaling, 0)
 
-	return startX + (segmentAmount * segmentWidth)
+	return startX + (segmentAmount * segmentWidth) + segmentWidth
 end
 
 ---Draws the save as defaults button and listens for mouse left button press.
@@ -378,8 +451,8 @@ end
 ---@param y number The y coordinate where to draw.
 ---@param func fun() The action on mouse left button press.
 function Private.SaveDefaultsButton(x, y, func)
-	local mx = window_mouse_get_x()
-	local my = window_mouse_get_y()
+	local mx = window_views_mouse_get_x()
+	local my = window_views_mouse_get_y()
 	local isButtonDown = 0
 	if mx > x and mx < x + 38 and my > y and my < y + 38 then
 		isButtonDown = 1
@@ -396,8 +469,8 @@ end
 ---@param y number The y coordinate where to draw.
 ---@param func fun() The action on mouse left button press.
 function Private.DrawPageButton(image, x, y, func)
-	local mx = window_mouse_get_x()
-	local my = window_mouse_get_y()
+	local mx = window_views_mouse_get_x()
+	local my = window_views_mouse_get_y()
 	local isButtonDown = 0
 	if (mx > x and mx < x + 22 and my > y and my < y + 24) then
 		isButtonDown = 1
@@ -414,6 +487,7 @@ function Private.PreviousMod()
 	if (Storage.CurrentSettingsMenuIndex < 1) then
 		Storage.CurrentSettingsMenuIndex = #Storage.ModSettingData
 	end
+	WaitingForKey = nil
 end
 
 ---Select the next mod settings.
@@ -422,6 +496,7 @@ function Private.NextMod()
 	if (Storage.CurrentSettingsMenuIndex > #Storage.ModSettingData) then
 		Storage.CurrentSettingsMenuIndex = 1
 	end
+	WaitingForKey = nil
 end
 
 ---Save the settings as the default settings.
@@ -469,6 +544,37 @@ end
 function Private.GetModDefaultSettings(modName)
 	for _, value in ipairs(Storage.ModDefaultData) do
 		if (value.ModName == modName) then
+			return value
+		end
+	end
+
+	return nil
+end
+
+---Finds the name for a given virtual key code.
+---@param key number The virtual key code to lookup
+---@return string name The name of the key if found, "unknown" otherwise.
+function Private.GetVirtualKeyName(key)
+	local keys = Types.VirtualKeys
+
+	for name, value in pairs(keys) do
+		if (key == value) then
+			return name
+		end
+	end
+
+	return "Unknown"
+end
+
+---Search for a keypress that was made
+---@return number? virtualKey The virtual key press that was found or nil if non was found.
+function GetKeyPress()
+	local keys = Types.VirtualKeys
+
+	for _, value in pairs(keys) do
+		if (value == keys.Escape) then
+			--The game uses the escape and we don't want to double map to it.
+		elseif (keyboard_check_pressed(value)) then
 			return value
 		end
 	end

@@ -18,7 +18,7 @@ Contains examples on:
 
 For a full list of features visit the [url=https://github.com/Domanoc/Mech-Engineer-Mods]github page[/url]
 
-[h3]Want to create you own mod?[/h3]
+[h3]Want to create your own mod?[/h3]
 [list]
 [*] See our [url=https://github.com/Domanoc/Mech-Engineer-Mods/blob/master/docs/ModFramework/GettingStarted.md]getting started guide[/url].
 [/list]
