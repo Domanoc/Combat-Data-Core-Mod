@@ -408,6 +408,10 @@ local VirtualKeys = {
 	F10 = 121,
 	F11 = 122,
 	F12 = 123,
+
+	--Other
+
+	BackQuote = 192
 }
 Types.VirtualKeys = VirtualKeys
 

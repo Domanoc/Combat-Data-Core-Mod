@@ -178,8 +178,8 @@ end
 ---@param y number The y coordinate where to draw.
 ---@param func fun() The action on mouse left button press.
 function Private.DrawButton(image, x, y, func)
-	local mx = window_mouse_get_x()
-	local my = window_mouse_get_y()
+	local mx = window_views_mouse_get_x()
+	local my = window_views_mouse_get_y()
 	local isButtonDown
 	if (mx > x and mx < x + 22 and my > y and my < y + 24) then
 		isButtonDown = 1
@@ -195,8 +195,8 @@ end
 ---Draws the mouse cursor at the mouse coordinates.
 function Private.DrawMouseCursor()
     local cursor = asset_get_index("spr_cursor")
-    local mx = window_mouse_get_x()
-	local my = window_mouse_get_y()
+    local mx = window_views_mouse_get_x()
+	local my = window_views_mouse_get_y()
 	local isButtonDown
 	if (mouse_check_button(Types.MouseButtons.Left)) then
 		isButtonDown = 1

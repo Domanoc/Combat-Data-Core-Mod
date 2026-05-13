@@ -61,8 +61,8 @@ function Private.DrawPartialMechButton(currentMech)
 	local hitBoxWidth = 46
 	local hitBoxHeight = 46
 
-	local mx = window_mouse_get_x()
-	local my = window_mouse_get_y()
+	local mx = window_views_mouse_get_x()
+	local my = window_views_mouse_get_y()
 	local isButtonDown = 0
 	if (mx > hitBoxX and
 		mx < hitBoxX + hitBoxWidth and

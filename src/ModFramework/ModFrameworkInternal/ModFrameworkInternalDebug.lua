@@ -23,8 +23,8 @@ function Debug.DrawDebugCursor()
     if (#lines == 0) then
         return
     end
-	local mx = window_mouse_get_x()
-	local my = window_mouse_get_y()
+	local mx = window_views_mouse_get_x()
+	local my = window_views_mouse_get_y()
 	local xOffset = 6
 	local yOffset = 10
 	local row = 1

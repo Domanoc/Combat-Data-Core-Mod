@@ -16,7 +16,7 @@ To use the [b]ModFramework[/b] it has to be first in the mod load order.
 
 For a full list of features visit the [url=https://github.com/Domanoc/Mech-Engineer-Mods]github page[/url]
 
-[h3]Want to create you own mod?[/h3]
+[h3]Want to create your own mod?[/h3]
 [list]
 [*] See our [url=https://github.com/Domanoc/Mech-Engineer-Mods/blob/master/docs/ModFramework/GettingStarted.md]getting started guide[/url].
 [*] See the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3717807705]Example Mod[/url].
@@ -36,7 +36,8 @@ By default the game unit selection method is:
 With this feature enabled it changes to:
 - Numbers 1-8 will select only that mech and unselect the others.
 - Shift + Numbers 1-8 will add that mech to the current selection.
-- Ctrl + Numbers 1-8 will save the current selection to the given number
+- Ctrl + Numbers 1-8 will save the current selection to the given number.
+- BackQuote will select all mechs.
 
 Default setting: Disabled
 

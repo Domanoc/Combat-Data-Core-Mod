@@ -156,6 +156,10 @@ Storage.SpriteSettingsMenuSwitch = -1
 ---@type number
 Storage.SpriteSaveDefaultsButton = -1
 
+---The reference to the key bind button.
+---@type number
+Storage.SpriteKeyBindButton = -1
+
 ---The text used for the settings menu title.
 ---@type string
 Storage.SettingsMenuTitleText = "MOD SETTINGS MENU"

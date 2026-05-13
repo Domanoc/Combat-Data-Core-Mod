@@ -1,5 +1,9 @@
 # Changelog
 
+## [v1.1] - 2026-05-13
+### Added
+- Added the option to rebind the keyboard controls
+
 ## [v1.0] - 2026-05-09
 Public release on steam
 ### Added

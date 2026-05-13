@@ -1,5 +1,19 @@
 # Changelog
 
+## [v1.2] - 2026-05-13
+### Added
+- Added settings support for keybindings
+- Added a select all button for the RTS controls (`)
+
+## [v1.2] - 2026-05-13
+### Fixed
+- Selecting components causes a nil exception.
+- Fullscreen mode not having the correct mouse coordinates.
+
+## [v1.1] - 2026-05-12
+### Fixed
+- Pilots being deleted when returning to the hanger.
+
 ## [v1.0] - 2026-05-09
 Public release on steam
 ### Added

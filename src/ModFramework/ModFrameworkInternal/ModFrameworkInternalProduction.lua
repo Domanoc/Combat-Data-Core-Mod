@@ -253,7 +253,7 @@ function Production.UpdateCustomTypePrices()
 	local obj_component_shop = Common.GetObjComponentShop()
 	local component = Private.GetCustomComponent(obj_component_shop.cur_item.comp_type)
 
-	if (component ~= nil and 
+	if (component ~= nil and
 		component.comp_type >= 1000 and
 		component.comp_type < Storage.NextCustomComponentType and
 		component.CustomData ~= nil) then
@@ -396,6 +396,10 @@ end
 ---@return game_obj_component? component The found component, nil otherwise.
 function Private.GetCustomComponent(componentType)
 	local obj_component_shop = Common.GetObjComponentShop()
+	if (obj_component_shop.CustomComponents == nil) then
+		return nil
+	end
+
 	for _, component in ipairs(obj_component_shop.CustomComponents) do
 		if (component.comp_type == componentType) then
 			return component
