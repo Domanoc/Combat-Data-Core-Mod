@@ -1,6 +1,10 @@
 # Changelog
 
-## [v1.2] - 2026-05-13
+## [v1.4] - 2026-05-13
+### Fixed
+- Fix the error when a mech was destroyed with the RTS controls enabled
+
+## [v1.3] - 2026-05-13
 ### Added
 - Added settings support for keybindings
 - Added a select all button for the RTS controls (`)
