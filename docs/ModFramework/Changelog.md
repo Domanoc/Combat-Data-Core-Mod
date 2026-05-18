@@ -1,6 +1,6 @@
 # Changelog
 
-## [v1.4] - 2026-05-13
+## [v1.4] - 2026-05-18
 ### Fixed
 - Fix the error when a mech was destroyed with the RTS controls enabled
 
