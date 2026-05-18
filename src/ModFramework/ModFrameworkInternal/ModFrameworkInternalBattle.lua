@@ -126,9 +126,11 @@ function Battle.OverrideSelection(q)
 end
 
 ---Overrides the unit selection logic.
-function Battle.OverrideUnitSelectionNew()
+function Battle.OverrideUnitSelections()
 	for _, ally in ipairs(battleAllies) do
-		Private.OverrideUnitSelection(ally)
+		if (instance_exists(ally) == true) then
+			Private.OverrideUnitSelection(ally)
+		end
 	end
 end
 

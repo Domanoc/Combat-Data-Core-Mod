@@ -91,5 +91,5 @@ end
 ---Triggers after draw
 ---@param q game_obj_battle_map
 function draw_end(q)
-	Internal.Battle.OverrideUnitSelectionNew()
+	Internal.Battle.OverrideUnitSelections()
 end
